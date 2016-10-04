@@ -6,9 +6,9 @@ For the last year I've been working on a Particle Engine written in Java; a prog
 
 ## Prerequisities
 
-What you'll need to build your own fork or to run the program
+What you'll need to build your own version or to run the program
 
-### Forking:
+### Project Development / Setup:
 ```
 Java JDK 8 + Java JRE 8 - Minimum due to use of lambda functions
 Any text editor of your choice
@@ -20,7 +20,7 @@ Editors I highly recommend:
 [Sublime Text 3](https://www.sublimetext.com/3)
 
 
-### Running the jar:
+### Running the Program:
 ```
 Give examples
 ```
