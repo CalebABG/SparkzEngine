@@ -1,4 +1,4 @@
-# Sparkz Engine - A Snazzy yet Swift Particle Engine
+# Sparkz Engine - A Snazzy Yet Swift Particle Engine
 ![Alt text](res/enginesplash.gif?raw=true "Engine Logo") 
 -------------------------------------------------------
 Built for exploration and creativity; a tool designed for education and most importantly fun!
