@@ -1,4 +1,4 @@
-# Sparkz Engine - A Snazzy Yet Swift Particle Engine
+# A Snazzy Yet Swift Particle Engine
 ![](res/enginelogo2.png?raw=true "Engine Logo") 
 
 ## Synopsis
