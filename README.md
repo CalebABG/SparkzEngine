@@ -1,7 +1,8 @@
 # Sparkz Engine - A Snazzy Yet Swift Particle Engine
-> Built for exploration and creativity; a tool designed for education and most importantly fun!
-![Alt text](res/enginelogo2.png?raw=true "Engine Logo") 
--------------------------------------------------------
+> ### Built for exploration and creativity; a tool designed for education and most importantly fun!
+
+
+![](res/enginelogo2.png?raw=true "Engine Logo") 
 
 ## Synopsis
 For the last year I've been working on a Particle Engine written in Java; a program for people who like to explore and create, for people who like to experiment, for education, and most importantly for having fun. It's been one of the most fun things I've done and I've learned so much and I couldn't be more proud of sticking with an idea which I didn't think at first was possible. I'm incredibly happy to be able to share this with you all! Thank you to everyone who has and continues to support me!
