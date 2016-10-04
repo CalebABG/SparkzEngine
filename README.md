@@ -1,5 +1,5 @@
 # Sparkz Engine - A Snazzy Yet Swift Particle Engine
-Built for exploration and creativity; a tool designed for education and most importantly fun!
+> Built for exploration and creativity; a tool designed for education and most importantly fun!
 ![Alt text](res/enginelogo2.png?raw=true "Engine Logo") 
 -------------------------------------------------------
 
