@@ -40,15 +40,15 @@ In order to both run and create your own projects you need to hava Java installe
 
 #### Windows:
 
-Open Command Prompt: (Windows key + r), then type in the text field  ```cmd``` and press enter.
+Open Command Prompt: ```(Windows key + r)```, then type in the text field  ```cmd``` and press enter.
 
 #### Mac:
 
-Open Terminal: (Apple key + space-bar), then type in ```Terminal``` and when the Terminal Icon appears press enter.
+Open Terminal: ```(Apple key + space-bar)```, then type in ```Terminal``` and when the Terminal Icon appears press enter.
 
 #### Linux: 
 
-Open Terminal (if running Ubuntu or Linux Mint): Keyboard shortcut = (Ctrl+Alt+T)
+Open Terminal (if running Ubuntu or Linux Mint): Keyboard shortcut = ```(Ctrl+Alt+T)```
 
 
 ### Step 2:
