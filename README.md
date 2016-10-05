@@ -4,7 +4,7 @@
 ## Synopsis
 For the last year I've been working on a Particle Engine written in Java; a program for people who like to explore and create, for people who like to experiment, for education, and most importantly for having fun. It's been one of the most fun things I've done and I've learned so much and I couldn't be more proud of sticking with an idea which I didn't think at first was possible. I'm incredibly happy to be able to share this with you all! Thank you to everyone who has and continues to support me!
 
-### Documentation
+### Documentation: 
 [Sparkz Engine Documentation](http://www.google.com)
 
 ## Prerequisities
@@ -48,13 +48,12 @@ Open Terminal: ```(Apple key + space-bar)```, then type in ```Terminal``` and wh
 
 #### Linux: 
 
-Open Terminal (if running Ubuntu or Linux Mint): Keyboard shortcut = ```(Ctrl+Alt+T)```
+Open Terminal (if running Ubuntu or Linux Mint): Keyboard shortcut = ```(Ctrl + Alt + T)```
 
 
 ### Step 2:
 
-Once either command prompt or terminal windows are open on your respective system(s), enter this command: 
-```java -version``` and then press enter.
+In the command prompt or Terminal window, enter this command: ```java -version``` and then press enter.
 
 
 ### Installing Needed Software
