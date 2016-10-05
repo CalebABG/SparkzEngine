@@ -34,7 +34,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Checking for Java
 
-In order to both run and create your own projects you need to hava Java installed. Here's how to check on each system (Windows, Mac, or Linux)
+In order to both run and create your own projects you need to hava Java installed. Here's how to check for Java on each system (Windows, Mac, or Linux)
 
 ### Step 1:
 
