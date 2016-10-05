@@ -7,7 +7,7 @@ For the last year I've been working on a Particle Engine written in Java; a prog
 ### Documentation: [Sparkz Engine Documentation](https://github.com/CalebABG/Sparkz_Engine)
 ---
 
-## Prerequisities
+## Prerequisites
 
 What you'll need to build your own version or to run the program
 
@@ -32,7 +32,7 @@ Java JRE 8 - Minimum due to use of lambda functions
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes! :D
 
-### Checking for Java
+### Checking for Java Installation
 
 In order to both run and create your own projects you need to hava Java installed. Here's how to check for Java on each system (Windows, Mac, or Linux)
 
