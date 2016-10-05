@@ -53,7 +53,37 @@ Open Terminal (if running Ubuntu or Linux Mint): Keyboard shortcut = ```(Ctrl + 
 
 ### Step 2:
 
-In the command prompt or Terminal window, enter this command: ```java -version``` and then press enter.
+In the Command Prompt or Terminal window, enter this command: ```java -version``` and then press enter.
+
+If you get output from the window displaying something along the lines of: ```java version "1.x.x_xxx"```,
+where the x's are the specific versions of the Java SE Runtime Environment. 
+
+If your version of The JRE is greater than or equal to ```version "1.8.0"``` then you're done :D, you can skip step 3.
+
+
+### Step 3:
+
+If in the Command Prompt or Terminal window you got somthing similar to this: 
+```
+'java' is not recognized as an internal or external command, operable program or batch file.
+```
+don't worry :), all you need is the Java Development Kit (it includes the JRE).
+
+### Obtaining the Java 8 Development Kit:
+
+#### Before you download, you may want to know whether your computer is 32 bit or 64 bit. 
+
+To check to tell whether you've got a 32 bit machince or a 64 bit one, first repeat step 1 to obtain a console window.
+
+Then, if you're running Windows type this command into the window ```echo %PROCESSOR_ARCHITECTURE%``` and then press enter.
+
+#### Download Links:
+
+Windows: [32 Bit JDK](http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-windows-i586.exe) --- [64 Bit JDK](http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-windows-x64.exe)
+
+Mac: [64 Bit JDK(only Intel Mac's)](http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-macosx-x64.dmg)
+
+Linux: [32 Bit JDK](http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-linux-i586.tar.gz) --- [64 Bit JDK](http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-linux-x64.tar.gz)
 
 
 ### Installing Needed Software
