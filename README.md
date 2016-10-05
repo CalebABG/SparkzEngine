@@ -53,9 +53,8 @@ Open Terminal (if running Ubuntu or Linux Mint): Keyboard shortcut = ```(Ctrl+Al
 
 ### Step 2:
 
-Once either command prompt or terminal windows are open on your respective system(s), enter this command: ```java -version```
-
-and then press enter.
+Once either command prompt or terminal windows are open on your respective system(s), enter this command: 
+```java -version``` and then press enter.
 
 
 ### Installing Needed Software
