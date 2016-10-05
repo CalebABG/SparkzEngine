@@ -73,9 +73,15 @@ don't worry :), all you need is the Java Development Kit (it includes the JRE).
 
 #### Before you download, you may want to know whether your computer is 32 bit or 64 bit. 
 
-To check to tell whether you've got a 32 bit machince or a 64 bit one, first repeat step 1 to obtain a console window.
+To check whether you've got a 32 bit machince or a 64 bit one, first repeat step 1 to obtain a console window.
 
 Then, if you're running Windows type this command into the window ```echo %PROCESSOR_ARCHITECTURE%``` and then press enter.
+
+If you get an output that looks like this: ```AMD64``` then you've got a 64 bit machine; if you get this: ```x86``` then you've got a 32 bit machine.
+
+If you're running Linux type this command into the window: ```uname -m``` and then press enter.
+
+If you get an output that looks like this: ```x86_64``` then you've got a 64 bit machine; if you get this: ```i686 or i386 or i586``` then you've got a 32 bit machine.
 
 #### Download Links:
 
