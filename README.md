@@ -14,10 +14,10 @@ Java JDK 8 + Java JRE 8 - Minimum due to use of lambda functions
 Any text editor of your choice
 ```
 Editors I highly recommend:
-[IntelliJ IDEA](https://www.jetbrains.com/idea/) --
-[Eclipse](https://eclipse.org/) --
-[Atom](https://atom.io/) --
-[Sublime Text 3](https://www.sublimetext.com/3)
+* [IntelliJ IDEA](https://www.jetbrains.com/idea/)
+* [Eclipse](https://eclipse.org/)
+* [Atom](https://atom.io/)
+* [Sublime Text 3](https://www.sublimetext.com/3)
 
 ---
 
