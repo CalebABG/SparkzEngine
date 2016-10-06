@@ -6,19 +6,7 @@ The Sparkz Engine is a one of a kind particle engine written in Java; a program 
 It has many features which encourage exploration and experimentation. With five distinct modes: ```Normal, Multi, Fireworks, Graph, and Ragdoll```, just when you think you've discovered everything it just keeps on giving!
 
 ### Normal Mode
-Lets you create thousands of colorful particles! Each particle has the ability to think, to determine its color based on its velocity. The particles can have up to 5 colors for which they can change their color to based on their velocity. Their color is determined by this evaluation:
-```
-Color c = null;
-if ((vx >= 1 || vx <= -1) || (vy >= 1 || vy <= -1)) {c = thinkingColors[0];}
-if ((vx >= 2 || vx <= -2) || (vy >= 2 || vy <= -2)) {c = thinkingColors[1];}
-if ((vx >= 3 || vx <= -3) || (vy >= 3 || vy <= -3)) {c = thinkingColors[2];}
-if ((vx >= 4 || vx <= -4) || (vy >= 4 || vy <= -4)) {c = thinkingColors[3];}
-if ((vx >= 5 || vx <= -5) || (vy >= 5 || vy <= -5)) {c = thinkingColors[4];}
-if (c == null) c = thinkingColors[0]; return c;
-```
-Now if you've not coded before don't panic, the code may look daunting but it's actually not too bad :), let's step through what its doing. If the particles velocity is between 1 and -1 then the particle gets assigned a color from ```index 0``` of the ```thinkingColors``` array. If its velocity is between 2 and -2 then it gets assigned a color from ```index 1``` of the ```thinkingColors``` array. Each particle continues to evaluate this up to velocity being between 5 and -5 to determine its color.
-
-Normal mode also lets you spawn up to 9 different particle types: ```Particle, Gravity Point, Emitter, Flux, Q.E.D, Ion, Black Hole, Duplex, and Portal```, which can interact with each other depending on particle type.
+Lets you create thousands of colorful particles! Each particle has the ability to think, to determine its color based on its velocity. The particles can have up to 5 colors for which they can change their color to based on their velocity. You can also spawn up to 9 different particle types: ```Particle, Gravity Point, Emitter, Flux, Q.E.D, Ion, Black Hole, Duplex, and Portal```, which can interact with each other depending on particle type.
 
 ### Multi Mode
 A pretty simplistic mode, it lets you spawn multiples of certain particle types at a time.
