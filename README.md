@@ -18,7 +18,7 @@ if (c == null) c = thinkingColors[0]; return c;
 ```
 Now if you've not coded before don't panic, the code may look daunting but it's actually not too bad :), let's step through what its doing. If the particles velocity is between 1 and -1 then the particle gets assigned a color from ```index 0``` of the ```thinkingColors``` array. If its velocity is between 2 and -2 then it gets assigned a color from ```index 1``` of the ```thinkingColors``` array. Each particle continues to evaluate this up to velocity being between 5 and -5 to determine its color.
 
-Normal mode also lets you spawn up to 9 different particle types: ```Particle, Gravity Point, Emitter, Flux, Q.E.D, Ion, Black Hole, Duplex, and Portal```, which can interact between each other depending on each others particle type.
+Normal mode also lets you spawn up to 9 different particle types: ```Particle, Gravity Point, Emitter, Flux, Q.E.D, Ion, Black Hole, Duplex, and Portal```, which can interact with each other depending on particle type.
 
 ### Multi Mode
 A pretty simplistic mode, it lets you spawn multiples of certain particle types at a time.
