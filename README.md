@@ -104,11 +104,13 @@ don't worry :), all you need is the Java Development Kit (it includes the JRE).
 
 To check whether you've got a 32 bit machine or a 64 bit one, first repeat step 1 to obtain a console window.
 
-Then, if you're running Windows type this command into the window ```echo %PROCESSOR_ARCHITECTURE%``` and then press enter.
+### Windows
+Type this command into the window ```echo %PROCESSOR_ARCHITECTURE%``` and then press enter.
 
 If you get an output that looks like this: ```AMD64``` then you've got a 64 bit machine; if you get this: ```x86``` then you've got a 32 bit machine.
 
-If you're running Linux* type this command into the window: ```uname -m``` and then press enter.
+### Linux*
+Type this command into the window: ```uname -m``` and then press enter.
 
 If you get an output that looks like this: ```x86_64``` then you've got a 64 bit machine; if you get this: ```i686 or i386 or i586``` then you've got a 32 bit machine.
 
@@ -123,13 +125,14 @@ If you get an output that looks like this: ```x86_64``` then you've got a 64 bit
 
 If you needed to download the JDK then you'll need to now install it :D
 
-If you're on Windows navigate to the folder where you saved the downloaded Java JDK. Then you'll want to find the JDK installer and double click it to
-start the installer. Proceed through the steps provided by the installer to complete your installation.
+### Windows
+Navigate to the folder where you saved the downloaded Java JDK. Then you'll want to find the JDK installer and double click it to start the installer. Proceed through the steps provided by the installer to complete your installation.
 
-If you're on Mac navigate to where you downloaded the JDK. Then double click on the .dmg file for the JDK to mount the volume. You can click ```skip``` on the
-dialog boxes saying ```checking``` and ```verifying```. Once the volume opens double click the .pkg installer to start the JDK installation. Proceed through the steps provided by the installer to complete your installation.
+### Mac
+Navigate to where you downloaded the JDK. Then double click on the .dmg file for the JDK to mount the volume. You can click ```skip``` on the dialog boxes saying ```checking``` and ```verifying```. Once the volume opens double click the .pkg installer to start the JDK installation. Proceed through the steps provided by the installer to complete your installation.
 
-If you're on Linux open a Terminal window (step 1) and then enter these commands into the window separately, line by line and press enter to execute the command.
+### Linux
+Open a Terminal window (step 1) and then enter these commands into the window separately, line by line and press enter to execute the command.
 
 ```
 sudo add-apt-repository ppa:webupd8team/java
