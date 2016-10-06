@@ -15,7 +15,7 @@ if ((vx >= 4 || vx <= -4) || (vy >= 4 || vy <= -4)) {c = thinkingColors[3];}
 if ((vx >= 5 || vx <= -5) || (vy >= 5 || vy <= -5)) {c = thinkingColors[4];}
 if (c == null) c = thinkingColors[0]; return c;
 ```
-Now if you've not coded before don't panic, the code may look daunting but it's actually not too bad :), let's step through what its doing. If the particles velocity is between 1 and -1 then the particle gets assigned a color from index 0 of the thinkingColors array. If its velocity is between 2 and -2 then it gets assigned a color from index 1 of the thinkingColors array. Each particle continues to evaluate this up to velocity being between 5 and -5 to determine its color.
+Now if you've not coded before don't panic, the code may look daunting but it's actually not too bad :), let's step through what its doing. If the particles velocity is between 1 and -1 then the particle gets assigned a color from ```index 0``` of the ```thinkingColors``` array. If its velocity is between 2 and -2 then it gets assigned a color from ```index 1``` of the ```thinkingColors``` array. Each particle continues to evaluate this up to velocity being between 5 and -5 to determine its color.
 
 Normal mode also lets you spawn up to 9 different particle types: ```Particle, Gravity Point, Emitter, Flux, Q.E.D, Ion, Black Hole, Duplex, and Portal```, which can interact between each other depending on each others particle type.
 
@@ -25,7 +25,7 @@ Fireworks mode lets you create realistic fireworks. Clicking at a certain point 
 
 Graph mode is built for visualizing equations :D, a very handy feature, one which I personally use to help understand exactly what's going on in a particular function. In this mode the equation / function parser is powered by Javas JavaScript Script Engine. You are able to enter virtually any function (as long as it's in terms of y=) and be able to graph it. It has many handy functions such as: ```Sin, Cos, Tan, Asin, Acos, Atan, Log, Sqrt(square root), Abs(absolute value)```; just to name a few.
 
-Ragdoll mode is a mode for simulating realistic physics using [Verlet Integration](https://en.wikipedia.org/wiki/Verlet_integration). In this mode you're able to create different elements which model real life object that are affected by the real worlds forces, such as gravity and friction. The elements are: Points, Sticks, IK Chains, Boxes, Elastic Meshes, Solid Meshes and Cloth.
+Ragdoll mode is a mode for simulating realistic physics using [Verlet Integration](https://en.wikipedia.org/wiki/Verlet_integration). In this mode you're able to create different elements which model real life object that are affected by the real worlds forces, such as gravity and friction. The elements are: ```Points, Sticks, IK Chains, Boxes, Elastic Meshes, Solid Meshes and Cloth```.
 
 Developing this Engine has been one of the most fun things I've done and I've learned so much and I couldn't be more proud of sticking with an idea which I didn't think at first was possible. I'm incredibly happy to be able to share this with you all! Thank you to everyone who has and continues to support me!
 
