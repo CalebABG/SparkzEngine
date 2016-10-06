@@ -140,7 +140,7 @@ sudo apt-get update
 sudo apt-get install oracle-java8-installer
 ```
 
-### Congratulations, you should now have the JDK installed on your Windows, Mac or Linux system(s)!
+#### Congratulations, you should now have the JDK installed on your Windows, Mac or Linux system(s)!
 
 ---
 
