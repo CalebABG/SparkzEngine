@@ -6,7 +6,7 @@ The Sparkz Engine is a one of a kind particle engine written in Java; a program 
 It has many features which encourage exploration and experimentation. With four distinct modes: Normal, Multi, Fireworks, Graph, and Ragdoll, just when you think you've discovered everything it just keeps on giving!
 
 ### Normal Mode
-Lets you create thousands of colorful particles! Each particle has the ability to think, to determine its color based on its velocity. The particles can have up to 5 colors for which they can change their color to based on their velocity. The color is determined by this evaluation:
+Lets you create thousands of colorful particles! Each particle has the ability to think, to determine its color based on its velocity. The particles can have up to 5 colors for which they can change their color to based on their velocity. Their color is determined by this evaluation:
 ```
 Color c = null;
 if ((vx >= 1 || vx <= -1) || (vy >= 1 || vy <= -1)) {c = thinkingColors[0];}
