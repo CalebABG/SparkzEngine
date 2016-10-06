@@ -21,10 +21,6 @@ Editors I highly recommend:
 [Atom](https://atom.io/) --
 [Sublime Text 3](https://www.sublimetext.com/3)
 
-### Running the Program (Jar file):
-```
-Java JRE 8 - Minimum due to use of lambda functions
-```
 ---
 
 ## Getting Started
