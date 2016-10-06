@@ -5,7 +5,7 @@ The Sparkz Engine is a one of a kind particle engine written in Java; a program 
 
 It has many features which encourage exploration and experimentation. With four distinct modes: Normal, Multi, Fireworks, Graph, and Ragdoll, just when you think you've discovered everything it just keeps on giving!
 
-Normal mode lets you create thousands of colorful particles! Each particle has the ability to think, to determine it's color based on its velocity. The particles can have up to 5 colors for which they can change their color to based on their velocity. The color is determined by this evaluation:
+Normal mode lets you create thousands of colorful particles! Each particle has the ability to think, to determine its color based on its velocity. The particles can have up to 5 colors for which they can change their color to based on their velocity. The color is determined by this evaluation:
 ```
 Color c = null;
 if ((vx >= 1 || vx <= -1) || (vy >= 1 || vy <= -1)) {c = thinkingColors[0];}
@@ -17,12 +17,20 @@ if (c == null) c = thinkingColors[0]; return c;
 ```
 Now if you've not coded before don't panic, the code may look daunting but it's actually not too bad :), let's step through what its doing. If the particles velocity is between 1 and -1 then the particle gets assigned a color from index 0 of the thinkingColors array. If its velocity is between 2 and -2 then it gets assigned a color from index 1 of the thinkingColors array. Each particle continues to evaluate this up to velocity being between 5 and -5 to determine its color.
 
-Normal mode also lets you spawn up to 9 different particle types: Particle, Gravity Point, Emitter, Flux, Q.E.D, Ion, Black Hole, Duplex, and Portal, which can interact between each other depending on each others particle type.  
+Normal mode also lets you spawn up to 9 different particle types: Particle, Gravity Point, Emitter, Flux, Q.E.D, Ion, Black Hole, Duplex, and Portal, which can interact between each other depending on each others particle type.
 
+Multi mode is pretty simplistic, it lets you spawn multiples of certain particle types at a time.
 
-It's been one of the most fun things I've done and I've learned so much and I couldn't be more proud of sticking with an idea which I didn't think at first was possible. I'm incredibly happy to be able to share this with you all! Thank you to everyone who has and continues to support me!
+Fireworks mode lets you create realistic fireworks. Clicking at a certain point on the screen will launch a particle at an (x, y) coordinate, where x is half of the width of the screen and y being the height of the screen, and accelerating in the direction, being the angle between the (x, y) coordinate and the position of the mouse cursor. In this mode each particle has a life amount, determining when it should explode to create the fireworks effect. Just as in the regular mode each particle has thinking colors, and in this mode that feature is extended. The launch particle has thinking colors and in addition the fireworks from the particle have thinking colors as well, which you can customize! You're also able to control many other features of how the fireworks work, altering the size, speed, jitter, wind, and type of the fireworks.
 
-### Documentation: [Sparkz Engine Documentation](https://github.com/CalebABG/Sparkz_Engine)
+Graph mode is built for visualizing equations :D, a very handy feature, one which I personally use to help understand exactly what's going on in a particular function. In this mode the equation / function parser is powered by Javas JavaScript Script Engine. You are able to enter virtually any function (as long as it's in terms of y=) and be able to graph it. It has many handy functions such as: Sin, Cos, Tan, Asin, Acos, Atan, Log, Sqrt(square root), Abs(absolute value); just to name a few.
+
+Ragdoll mode is a mode for simulating realistic physics using Verlet Integration. In this mode you're able to create different elements which model real life object that are affected by the real worlds forces, such as gravity and friction. The elements are: Points, Sticks, IK Chains, Boxes, Elastic Meshes, Solid Meshes and Cloth.
+
+Developing this Engine has been one of the most fun things I've done and I've learned so much and I couldn't be more proud of sticking with an idea which I didn't think at first was possible. I'm incredibly happy to be able to share this with you all! Thank you to everyone who has and continues to support me!
+
+### If you'd like a more in depth understanding of any of the methods or functions within the Engine take a look at its Documentation :), thank you once again!
+#### Documentation: [Sparkz Engine Documentation](https://github.com/CalebABG/Sparkz_Engine)
 
 ---
 
