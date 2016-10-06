@@ -1,9 +1,29 @@
 ![](Resources/enginelogo2.png?raw=true "Engine Logo")
 
 ## Synopsis
-For the last year I've been working on a Particle Engine written in Java; a program for people who like to explore and create, for people who like to experiment, for education, and most importantly for having fun. It's been one of the most fun things I've done and I've learned so much and I couldn't be more proud of sticking with an idea which I didn't think at first was possible. I'm incredibly happy to be able to share this with you all! Thank you to everyone who has and continues to support me!
+The Sparkz Engine is a one of a kind particle engine written in Java; a program for people who like to explore and create, for people who like to experiment, for education, and most importantly for having fun!
+
+It has many features which encourage exploration and experimentation. With four distinct modes: Normal, Multi, Fireworks, Graph, and Ragdoll, just when you think you've discovered everything it just keeps on giving!
+
+Normal mode lets you create thousands of colorful particles! Each particle has the ability to think, to determine it's color based on its velocity. The particles can have up to 5 colors for which they can change their color to based on their velocity. The color is determined by this evaluation:
+```
+Color c = null;
+if ((vx >= 1 || vx <= -1) || (vy >= 1 || vy <= -1)) {c = thinkingColors[0];}
+if ((vx >= 2 || vx <= -2) || (vy >= 2 || vy <= -2)) {c = thinkingColors[1];}
+if ((vx >= 3 || vx <= -3) || (vy >= 3 || vy <= -3)) {c = thinkingColors[2];}
+if ((vx >= 4 || vx <= -4) || (vy >= 4 || vy <= -4)) {c = thinkingColors[3];}
+if ((vx >= 5 || vx <= -5) || (vy >= 5 || vy <= -5)) {c = thinkingColors[4];}
+if (c == null) c = thinkingColors[0]; return c;
+```
+Now if you've not coded before don't panic, the code may look daunting but it's actually not too bad :), let's step through what its doing. If the particles velocity is between 1 and -1 then the particle gets assigned a color from index 0 of the thinkingColors array. If its velocity is between 2 and -2 then it gets assigned a color from index 1 of the thinkingColors array. Each particle continues to evaluate this up to velocity being between 5 and -5 to determine its color.
+
+Normal mode also lets you spawn up to 9 different particle types: Particle, Gravity Point, Emitter, Flux, Q.E.D, Ion, Black Hole, Duplex, and Portal, which can interact between each other depending on each others particle type.  
+
+
+It's been one of the most fun things I've done and I've learned so much and I couldn't be more proud of sticking with an idea which I didn't think at first was possible. I'm incredibly happy to be able to share this with you all! Thank you to everyone who has and continues to support me!
 
 ### Documentation: [Sparkz Engine Documentation](https://github.com/CalebABG/Sparkz_Engine)
+
 ---
 
 ## Prerequisites
@@ -11,9 +31,9 @@ For the last year I've been working on a Particle Engine written in Java; a prog
 What you'll need to build your own version or to run the program
 ```
 Java JDK 8 + Java JRE 8 - Minimum due to use of lambda functions
-Any text editor of your choice
+Any text editor or IDE of your choice
 ```
-#### Editors I highly recommend:
+#### Editors and IDE's I highly recommend:
 * [IntelliJ IDEA](https://www.jetbrains.com/idea/)
 * [Eclipse](https://eclipse.org/)
 * [Atom](https://atom.io/)
@@ -33,11 +53,11 @@ In order to both run and create your own projects you need to have Java installe
 
 #### Windows:
 
-Open Command Prompt: ```(Windows key + r)```, then type in the text field  ```cmd``` and press enter.
+Open Command Prompt: ```(Windows Key + R)```, then type in the text field  ```cmd``` and press enter.
 
 #### Mac:
 
-Open Terminal: ```(Apple key + space-bar)```, then type in ```Terminal``` and when the Terminal Icon appears press enter.
+Open Terminal: ```(Apple Key + Space-bar)```, then type in ```Terminal``` and when the Terminal Icon appears press enter.
 
 #### Linux:
 
