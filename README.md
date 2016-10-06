@@ -72,18 +72,34 @@ Then, if you're running Windows type this command into the window ```echo %PROCE
 
 If you get an output that looks like this: ```AMD64``` then you've got a 64 bit machine; if you get this: ```x86``` then you've got a 32 bit machine.
 
-If you're running Linux type this command into the window: ```uname -m``` and then press enter.
+If you're running Linux* type this command into the window: ```uname -m``` and then press enter.
 
 If you get an output that looks like this: ```x86_64``` then you've got a 64 bit machine; if you get this: ```i686 or i386 or i586``` then you've got a 32 bit machine.
 
 #### JDK Download Link:
 [Java JDK 8 - Windows, Mac and Linux](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+##### * If on Linux there is an alternative and quicker, less painful way to download and install the Java 8 JDK; proceed to Installing Needed Software to see the alternative.
 
 ---
 
 ### Installing Needed Software
 
+If you needed to download the JDK then you'll need to now install it :D
 
+If you're on Windows navigate to the folder where you saved the downloaded Java JDK. Then you'll want to find the JDK installer and double click it to
+start the installer. Proceed through the steps provided by the installer to complete your installation.
+
+If you're on Mac navigate to where you
+
+If you're on Linux open a Terminal window (step 1) and then enter these commands into the window separately, line by line and press enter to execute the command.
+
+```
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+```
+
+Congratulations, you should now have the JDK installed on your Windows, Mac or Linux system(s)!
 
 ---
 
