@@ -77,12 +77,7 @@ If you're running Linux type this command into the window: ```uname -m``` and th
 If you get an output that looks like this: ```x86_64``` then you've got a 64 bit machine; if you get this: ```i686 or i386 or i586``` then you've got a 32 bit machine.
 
 #### Download Links:
-
-Windows: [32 Bit JDK](http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-windows-i586.exe) --- [64 Bit JDK](http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-windows-x64.exe)
-
-Mac: [64 Bit JDK(only Intel Mac's)](http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-macosx-x64.dmg)
-
-Linux: [32 Bit JDK](http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-linux-i586.tar.gz) --- [64 Bit JDK](http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-linux-x64.tar.gz)
+[Java JDK 8 - Windows, Mac and Linux](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 ---
 
