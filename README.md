@@ -129,6 +129,28 @@ sudo apt-get update
 sudo apt-get install oracle-java8-installer
 ```
 
+Then you'll want to double check that the new version of the Java JDK has been selected as the JDK the system uses. Enter this command into the window:
+
+```
+sudo update-alternatives --config java
+```
+then press enter. You should get an output that may show something like this:
+
+```
+Selection    Path                                            Priority   Status
+------------------------------------------------------------
+* 0            /usr/lib/jvm/java-8-oracle/jre/bin/java          1062      auto mode
+  1            /usr/lib/jvm/java-6-openjdk-amd64/jre/bin/java   1061      manual mode
+  2            /usr/lib/jvm/java-7-oracle/jre/bin/java          1062      manual mode
+
+Press enter to keep the current choice[*], or type selection number:
+```
+
+If the asterisk (\*) is on the left hand side of the Selection which is the Java 8 JRE then you're all set, just press enter to complete without changing anything.
+
+If it's not set to the Java 8 JRE then you'll want to look at the list and find which Selection number corresponds to the Java 8 JRE and enter that number into the window, and then press enter to set it to the newly installed JRE.
+
+
 #### Congratulations, you should now have the JDK installed on your Windows, Mac or Linux system(s)!
 
 ---
