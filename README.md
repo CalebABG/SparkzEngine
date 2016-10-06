@@ -30,7 +30,7 @@ Java JRE 8 - Minimum due to use of lambda functions
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes! :D
+These instructions will help you prepare your machine for development and testing purposes! :D
 
 ### Checking for Java Installation
 
