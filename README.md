@@ -90,7 +90,8 @@ If you needed to download the JDK then you'll need to now install it :D
 If you're on Windows navigate to the folder where you saved the downloaded Java JDK. Then you'll want to find the JDK installer and double click it to
 start the installer. Proceed through the steps provided by the installer to complete your installation.
 
-If you're on Mac navigate to where you
+If you're on Mac navigate to where you downloaded the JDK. Then double click on the .dmg file for the JDK to mount the volume. You can click ```skip``` on the
+dialog boxes saying ```checking``` and ```verifying```. Once the volume opens double click the .pkg installer to start the JDK installation. Proceed through the steps provided by the installer to complete your installation.
 
 If you're on Linux open a Terminal window (step 1) and then enter these commands into the window separately, line by line and press enter to execute the command.
 
