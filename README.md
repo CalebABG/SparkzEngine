@@ -76,7 +76,7 @@ If you're running Linux type this command into the window: ```uname -m``` and th
 
 If you get an output that looks like this: ```x86_64``` then you've got a 64 bit machine; if you get this: ```i686 or i386 or i586``` then you've got a 32 bit machine.
 
-#### Download Links:
+#### JDK Download Link:
 [Java JDK 8 - Windows, Mac and Linux](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 ---
