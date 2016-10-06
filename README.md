@@ -29,12 +29,14 @@ Lets you create realistic fireworks. Clicking at a certain point on the screen w
 ### Graph Mode
 Built for visualizing equations or functions :D, a very handy feature, one which I personally use to help understand exactly what's going on in a particular function. In this mode the equation / function parser is powered by Javas JavaScript Script Engine. You are able to enter virtually any function (as long as it's in terms of y=) and be able to graph it. It has many handy functions such as: ```Sin, Cos, Tan, Asin, Acos, Atan, Log, Sqrt(square root), Abs(absolute value)```; just to name a few.
 
-### Ragdoll Mode 
+### Ragdoll Mode
 A mode for simulating realistic physics using [Verlet Integration](https://en.wikipedia.org/wiki/Verlet_integration). In this mode you're able to create different elements which model real life object that are affected by the real worlds forces, such as gravity and friction. The elements are: ```Points, Sticks, IK Chains, Boxes, Elastic Meshes, Solid Meshes and Cloth```.
 
-Developing this Engine has been one of the most fun things I've done and I've learned so much and I couldn't be more proud of sticking with an idea which I didn't think at first was possible. I'm incredibly happy to be able to share this with you all! Thank you to everyone who has and continues to support me!
+---
 
-### If you'd like a more in depth understanding of any of the methods or functions within the Engine check out its documentation: [Sparkz Engine Documentation](https://github.com/CalebABG/Sparkz_Engine) :), thank you once again!
+### Developing this Engine has been one of the most fun things I've done and I've learned so much and I couldn't be more proud of sticking with an idea which I didn't think at first was possible. I'm incredibly happy to be able to share this with you all! Thank you to everyone who has and continues to support me!
+
+#### If you'd like a more in depth understanding of any of the methods or functions within the Engine check out its documentation: [Sparkz Engine Documentation](https://github.com/CalebABG/Sparkz_Engine) :), thank you once again!
 
 ---
 
