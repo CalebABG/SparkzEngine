@@ -13,7 +13,7 @@ What you'll need to build your own version or to run the program
 Java JDK 8 + Java JRE 8 - Minimum due to use of lambda functions
 Any text editor of your choice
 ```
-Editors I highly recommend:
+### Editors I highly recommend:
 * [IntelliJ IDEA](https://www.jetbrains.com/idea/)
 * [Eclipse](https://eclipse.org/)
 * [Atom](https://atom.io/)
