@@ -62,6 +62,8 @@ If in the Command Prompt or Terminal window you got something similar to this:
 ```
 don't worry :), all you need is the Java Development Kit (it includes the JRE).
 
+---
+
 ### Obtaining the Java 8 Development Kit:
 
 #### Before you download, you may want to know whether your computer is 32 bit or 64 bit.
