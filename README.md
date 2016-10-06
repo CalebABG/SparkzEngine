@@ -29,8 +29,7 @@ Ragdoll mode is a mode for simulating realistic physics using Verlet Integration
 
 Developing this Engine has been one of the most fun things I've done and I've learned so much and I couldn't be more proud of sticking with an idea which I didn't think at first was possible. I'm incredibly happy to be able to share this with you all! Thank you to everyone who has and continues to support me!
 
-### If you'd like a more in depth understanding of any of the methods or functions within the Engine take a look at its Documentation :), thank you once again!
-#### Documentation: [Sparkz Engine Documentation](https://github.com/CalebABG/Sparkz_Engine)
+### If you'd like a more in depth understanding of any of the methods or functions within the Engine take a look at its Documentation: [Sparkz Engine Documentation](https://github.com/CalebABG/Sparkz_Engine) :), thank you once again!
 
 ---
 
