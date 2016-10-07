@@ -3,82 +3,13 @@
 <head>
   <meta charset="UTF-8">
     <title>Sparkz Engine | Docs</title>
-    <link rel="shortcut icon" href="enginelogo.ico">
-    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+    <link rel="shortcut icon" href="imgs/enginelogo.ico">
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<style>
-    body {
-      font-family: "Lato", sans-serif;
-      transition: background-color .5s;
-    }
-
-    #logo {
-      padding-bottom: 10px;
-    }
-
-    .sidenav {
-      height: 100%;
-      width: 250;
-      position: fixed;
-      z-index: 1;
-      top: 0;
-      left: 0;
-      background-color: #272f38;
-      overflow-x: hidden;
-      transition: 0.5s;
-      padding-top: 0px;
-    }
-
-    .sidenav a {
-      padding: 8px 8px 8px 32px;
-      text-decoration: none;
-      font-size: 20px;
-      color: #fff;
-      display: block;
-      transition: 0.3s
-    }
-
-    .sidenav a:hover {
-      color: #ff5b48;
-    }
-
-    .sidenav .closebtn {
-      position: absolute;
-      top: 0;
-      right: 25px;
-      font-size: 36px;
-      margin-left: 50px;
-    }
-
-    .inner-EH ul {
-      margin: 0;
-      list-style-type: none;
-    }
-
-    .inner-EH ul li a {
-      font-size: 18.3px;
-    }
-
-    #main {
-      transition: margin-left .5s;
-      padding: 16px;
-      margin-left: 250px;
-    }
-
-    @media screen and (max-height: 450px) {
-        .sidenav {
-          padding-top: 15px;
-        }
-        .sidenav a {
-          font-size: 18px;
-        }
-    }
-</style>
-
 <body>
-
     <div id="mySidenav" class="sidenav">
-        <img id="logo" src="enginelogo.png" alt="Engine Logo" />
+        <img id="logo" src="imgs/enginelogo.png" alt="Engine Logo" />
+
         <a href="#">Engine Helpers</a>
         <div class="inner-EH">
           <ul>
@@ -216,40 +147,9 @@
     </div>
 
     <div id="main">
-      <!-- <span style="font-size:30px; cursor:pointer" onclick="toggleNav()">&#9776;</span> -->
-        <h2>Sidenav Push Example</h2>
-        <p>Click on the element below to open the side navigation menu, and push this content to the right. Notice that we add a black see-through background-color to body when the sidenav is opened.</p>
+      <h2>Sidenav Push Example</h2>
+      <p>Click on the element below to open the side navigation menu, and push this content to the right. Notice that we add a black see-through background-color to body when the sidenav is opened.</p>
     </div>
-
-    <!-- <script>
-      var navOpen = true;
-
-      function toggle(bool){
-        return !bool;
-      }
-
-      function toggleNav(){
-        navOpen = toggle(navOpen);
-        if (navOpen) {
-          closeNav();
-        }
-        else {
-          openNav();
-        }
-      }
-
-      function openNav() {
-          document.getElementById("mySidenav").style.width = "250px";
-          document.getElementById("main").style.marginLeft = "250px";
-          document.body.style.backgroundColor = "rgba(0, 0, 0)";
-      }
-
-      function closeNav() {
-          document.getElementById("mySidenav").style.width = "0";
-          document.getElementById("main").style.marginLeft = "0";
-          document.body.style.backgroundColor = "white";
-      }
-    </script> -->
 
 </body>
 </html>
