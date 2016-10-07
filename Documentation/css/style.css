@@ -1,10 +1,24 @@
+html{
+  border: 1px dashed purple;
+  background-color: #353e49;
+}
+
 body {
   font-family: "Lato", sans-serif;
-  transition: background-color .5s;
+  border: 1px dashed red;
 }
 
 #logo {
   padding-bottom: 10px;
+}
+
+.welcome-wrapper{
+  border: 1px solid black;
+}
+
+#welcome-header{
+  text-align: center;
+  border: 1px solid green;
 }
 
 .sidenav {
@@ -50,17 +64,18 @@ body {
   font-size: 18.3px;
 }
 
-#main {
+#page-content {
   transition: margin-left .5s;
   padding: 16px;
   margin-left: 250px;
 }
 
 @media screen and (max-height: 450px) {
-    .sidenav {
-      padding-top: 15px;
-    }
-    .sidenav a {
-      font-size: 18px;
-    }
+  .sidenav {
+    padding-top: 15px;
+  }
+
+  .sidenav a {
+    font-size: 18px;
+  }
 }
