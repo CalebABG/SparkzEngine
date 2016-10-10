@@ -22,9 +22,9 @@ A mode for simulating realistic physics using [Verlet Integration](https://en.wi
 
 ---
 
-### Developing this Engine has been one of the most fun things I've done and I've learned so much and I couldn't be more proud of sticking with an idea which I didn't think at first was possible. I'm incredibly happy to be able to share this with you all! Thank you to everyone who has and continues to support me!
+#### Developing this Engine has been one of the most fun things I've done and I've learned so much and I couldn't be more proud of sticking with an idea which I didn't think at first was possible. I'm incredibly happy to be able to share this with you all! Thank you to everyone who has and continues to support me!
 
-### If you'd like a more in depth understanding of any of the methods or functions within the Engine check out its documentation: [Sparkz Engine Documentation](https://rawgit.com/CaleBABG/Sparkz_Engine/master/Documentation/Sparkz Engine Docs.html) :), thank you once again!
+#### If you'd like a more in depth understanding of any of the methods or functions within the Engine check out its documentation: [Sparkz Engine Documentation](https://rawgit.com/CaleBABG/Sparkz_Engine/master/Documentation/Sparkz Engine Docs.html) :), thank you once again!
 
 ---
 
