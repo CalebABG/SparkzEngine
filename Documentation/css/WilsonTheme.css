@@ -536,6 +536,21 @@ a.more-link,
 /*--------------------------------------------------------------
 5.2 Menus
 --------------------------------------------------------------*/
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgb(0,0,0);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #272f38;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgb(10,10,10);
+}
+
 .main-navigation {
 	clear: both;
 	display: block;
