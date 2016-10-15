@@ -1,3 +1,4 @@
+## Official Release: December 20, 2016!
 ![](Resources/enginelogo2.png?raw=true "Engine Logo")
 
 ## Synopsis
