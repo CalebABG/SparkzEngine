@@ -64,7 +64,7 @@ abstract public class EConstants {
     public static boolean DUPLEXMODE = false;
     public static boolean SMOOTH = true;
 
-    //Particle and Fireworks ArrayLists
+    //Particle ArrayLists
     public static List<Particle> ParticlesArray = Collections.synchronizedList(new ArrayList<>());
     public static List<GravityPoint> GravityPointsArray = Collections.synchronizedList(new ArrayList<>());
     public static List<Fireworks> FireworksArray = Collections.synchronizedList(new ArrayList<>());
@@ -90,9 +90,4 @@ abstract public class EConstants {
     public static Thread thread;
     private static GraphicsDevice GD = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     public static int width = GD.getDisplayMode().getWidth(), height = GD.getDisplayMode().getHeight();
-
-    //
-    public static int fps;
-    public static int tps;
-    public static double currentFPS = 120.0D;
 }
