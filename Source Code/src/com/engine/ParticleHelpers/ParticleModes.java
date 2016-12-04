@@ -71,7 +71,7 @@ public class ParticleModes {
 
     public static void multiParticle(double x, double y) {
         for (int i = 0; i < fireworksAmount; i++) {
-            singleParticle(x,y);
+            singleParticle(x, y);
         }
     }
 
@@ -84,7 +84,7 @@ public class ParticleModes {
      */
     public static void fireworksMode(double x, double y) {
         for (int i = 0; i < fireworksAmount; i++) {
-            Fireworks z = new Fireworks((x), (y), Math.random() * fireworksSizeMaxVal + fireworksSizeMinVal,
+            Fireworks z = new Fireworks(x, y, Math.random() * fireworksSizeMaxVal + fireworksSizeMinVal,
                     Math.random() * fireworksSpeedVal, (int) (Math.random() * 360));
             FireworksArray.add(z);
         }
@@ -92,7 +92,7 @@ public class ParticleModes {
 
     public static void fireworksMode(double x, double y, int wind, int speed) {
         for (int i = 0; i < fireworksAmount; i++) {
-            Fireworks z = new Fireworks((x), (y), Math.random() * fireworksSizeMaxVal + fireworksSizeMinVal,
+            Fireworks z = new Fireworks(x, y, Math.random() * fireworksSizeMaxVal + fireworksSizeMinVal,
                     Math.random() * speed, (int) (Math.random() * 360), wind);
             FireworksArray.add(z);
         }
@@ -100,14 +100,14 @@ public class ParticleModes {
 
     public static void fireworksMode(double x, double y, int wind, double speed, int amount) {
         for (int i = 0; i < amount; i++) {
-            Fireworks z = new Fireworks((x), (y), Math.random() * fireworksSizeMaxVal + fireworksSizeMinVal,
+            Fireworks z = new Fireworks(x, y, Math.random() * fireworksSizeMaxVal + fireworksSizeMinVal,
                     Math.random() * speed, (int) (Math.random() * 360), wind);
             FireworksArray.add(z);
         }
     }
 
     public static void singleFirework(double x, double y) {
-        Fireworks z = new Fireworks((x), (y), Math.random() * fireworksSizeMaxVal + fireworksSizeMinVal,
+        Fireworks z = new Fireworks(x, y, Math.random() * fireworksSizeMaxVal + fireworksSizeMinVal,
                 Math.random() * 5.32, (int) (Math.random() * 360));
         FireworksArray.add(z);
     }

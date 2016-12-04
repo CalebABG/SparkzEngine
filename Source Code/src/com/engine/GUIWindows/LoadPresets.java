@@ -56,8 +56,7 @@ public class LoadPresets {
         button = new JButton("<html><body style='color:blue; font-size: 12px'>Refresh Colors</body></html>");
         button.setBounds(350, 15, 160, 40);
         button.setVisible(true);
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {if (e.getSource() == button) {refreshButton();}}});
+        button.addActionListener(e -> {if (e.getSource() == button) {refreshButton();}});
         frame.add(button);
 
         colorSlider = new JSlider(0, ((Settings.PRESET_INDEXES - 1) == 0) ? 0 : (Settings.PRESET_INDEXES - 1), 0);
@@ -66,11 +65,9 @@ public class LoadPresets {
         colorSlider.setMinorTickSpacing(1);
         colorSlider.setMajorTickSpacing(5);
         colorSlider.setBounds(10, frame.getHeight() - 85, 500, 43);
-        colorSlider.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                SCChoices.setPresetColors(Settings.convertColors(colorSlider.getValue()), Particle.thinkingColors);
-                setLabelColors(Settings.convertColors(colorSlider.getValue()));
-            }
+        colorSlider.addChangeListener(e -> {
+            SCChoices.setPresetColors(Settings.convertColors(colorSlider.getValue()), Particle.thinkingColors);
+            setLabelColors(Settings.convertColors(colorSlider.getValue()));
         });
 
         frame.add(colorSlider);

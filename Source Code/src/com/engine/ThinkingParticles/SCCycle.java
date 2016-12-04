@@ -18,8 +18,7 @@ public class SCCycle {
             }}, 0, (cycleRate * 1000));
     }
     public static void stopCycle() {
-        time.cancel();
-        time.purge();
+        time.cancel(); time.purge();
     }
 
     public static void regularCycle() {

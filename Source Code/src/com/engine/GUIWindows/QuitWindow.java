@@ -16,8 +16,8 @@ public class QuitWindow {
     private static JFrame frame;
     private static CLabel label, label2, label3;
     public int width = 350, height = 80;
-    private Color optionno = new Color(72, 0, 18, 255);
-    private Color optionyes = new Color(21, 50, 21, 255);
+    private Color option_no = new Color(72, 0, 18, 255);
+    private Color option_yes = new Color(21, 50, 21, 255);
 
     //public static void main(String[] args) {new QuitWindow();}
 
@@ -30,7 +30,6 @@ public class QuitWindow {
         frame.setIconImage(Settings.getIcon());
         frame.setUndecorated(true);
         frame.setResizable(false);
-        //frame.setOpacity(0.9f);
         frame.setBounds(0, 0, width, height);
         frame.setShape(new RoundRectangle2D.Double(0, 0, width, height, 30, 30));
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -43,29 +42,29 @@ public class QuitWindow {
         panel.setLayout(null);
         frame.getContentPane().add(panel, BorderLayout.CENTER);
 
-        label = new CLabel(new Rectangle(frame.getWidth()/2-100, frame.getHeight()/2-45, 200, 90), "Exit?",
+        label = new CLabel(new Rectangle(frame.getWidth() / 2 - 100, frame.getHeight() / 2 - 45, 200, 90), "Exit?",
                 new Font("Times", Font.PLAIN, 45), Color.white, new Color(0.0f, 0.0f, 0.0f, 0.0f));
         panel.add(label);
 
-        label2 = new CLabel(new Rectangle(20, frame.getHeight()/2-(26), 90, 50), "Yes", new
-                Font("Times", Font.PLAIN, 45), Color.white, optionyes);
+        label2 = new CLabel(new Rectangle(20, frame.getHeight() / 2 - (26), 90, 50), "Yes", new
+                Font("Times", Font.PLAIN, 45), Color.white, option_yes);
         label2.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {System.exit(0);}
             public void mousePressed(MouseEvent e) {} public void mouseReleased(MouseEvent e) {}
-            public void mouseEntered(MouseEvent e) {label2.setBackground(optionyes.brighter());}
+            public void mouseEntered(MouseEvent e) {label2.setBackground(option_yes.brighter());}
             public void mouseExited(MouseEvent e) {
-                label2.setBackground(optionyes.darker());
+                label2.setBackground(option_yes.darker());
             }
         });
         panel.add(label2);
 
-        label3 = new CLabel(new Rectangle((frame.getWidth() - 109), frame.getHeight()/2-(26), 90, 50), "No", new
-                Font("Times", Font.PLAIN, 45), Color.white, optionno);
+        label3 = new CLabel(new Rectangle((frame.getWidth() - 109), frame.getHeight() / 2 - (26), 90, 50), "No", new
+                Font("Times", Font.PLAIN, 45), Color.white, option_no);
         label3.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {exitScreen = null; frame.dispose();}
             public void mousePressed(MouseEvent e) {} public void mouseReleased(MouseEvent e) {}
-            public void mouseEntered(MouseEvent e) {label3.setBackground(optionno.brighter());}
-            public void mouseExited(MouseEvent e) {label3.setBackground(optionno.darker());}
+            public void mouseEntered(MouseEvent e) {label3.setBackground(option_no.brighter());}
+            public void mouseExited(MouseEvent e) {label3.setBackground(option_no.darker());}
         });
         panel.add(label3);
         frame.setVisible(true);

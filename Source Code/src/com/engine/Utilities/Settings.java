@@ -4,6 +4,10 @@ import com.engine.EngineHelpers.EngineMethods;
 import com.engine.GUIWindows.EException;
 import static com.engine.EngineHelpers.EConstants.*;
 import com.engine.ParticleTypes.Particle;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import static com.engine.Utilities.ColorConverter.HEXAtoRGBA;
 import java.awt.*;
 import java.io.*;
@@ -32,6 +36,18 @@ public class Settings {
     public static boolean StoBool(String s, boolean def_val){if (s.equalsIgnoreCase("TRUE")) {return true;}
     else if (s.equalsIgnoreCase("FALSE")) {return false;} else {return def_val;}}
     public static Image getIcon(){return image;}
+
+    public static String fileChooser(String _null) {
+        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception x){x.printStackTrace();}
+        JFileChooser chooser = new JFileChooser(System.getProperty("user.home"));
+        JFrame window = new JFrame();
+        window.setIconImage(getIcon());
+        chooser.setDialogTitle("Choose a file");
+        int returnVal = chooser.showOpenDialog(window);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {return chooser.getSelectedFile().getAbsolutePath();
+        } else return _null;
+    }
+
     /**
      * This method returns an array of 5 colors at a particular index of another color array
      *

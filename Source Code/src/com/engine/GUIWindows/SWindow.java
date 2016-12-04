@@ -8,13 +8,14 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
+import java.util.*;
+import java.util.Timer;
 
 public class SWindow {
     private static SWindow sWindow = null;
     public static JFrame frame;
     private int timeout = 860;
-    private static String s3 = "text-align: center; font-size: 42px; " +
-            "font-family: Times; font-weight: light; color: white";
+    private static String s3 = "text-align: center; font-size: 42px; font-family: Times; font-weight: light; color: white";
 
     public static SWindow getInstance(String t, int w, int h) {
         if (sWindow == null) {sWindow = new SWindow(t,w,h);} return sWindow;}

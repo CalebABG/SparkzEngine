@@ -288,7 +288,7 @@ public class EngineMethods {
      * Dialog window for adjusting the particles size in different modes (Single Click, Multi) and particle size
      * while upon drag creation.
      */
-    private static void ptSizeSeedOptions(){
+    private static void particleSizeSeedOptions(){
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception x){x.printStackTrace();}
         String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, WindowText.particleSizeSeedOptions()), null, JOptionPane.PLAIN_MESSAGE);
         int seedOpt = (InputWrapper.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
@@ -304,7 +304,7 @@ public class EngineMethods {
      * Dialog window for adjusting the particles speed in different modes (Single Click, Multi) and particle size
      * while upon drag creation.
      */
-    private static void ptSpeedSeedOptions(){
+    private static void particleSpeedSeedOptions(){
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception x){x.printStackTrace();}
         String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, WindowText.particleSpeedSeedOptions()), null, JOptionPane.PLAIN_MESSAGE);
         int seedOpt = (InputWrapper.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
@@ -396,8 +396,8 @@ public class EngineMethods {
             case 4: ParticleTypeUI.getInstance(0); break;
             case 5: ColorConverter.setColor(); break;
             case 6: gravitationOptions(); break;
-            case 7: ptSizeSeedOptions(); break;
-            case 8: ptSpeedSeedOptions(); break;
+            case 7: particleSizeSeedOptions(); break;
+            case 8: particleSpeedSeedOptions(); break;
             case 9: realFireworks(); break;
             case 10: ParticleTypeUI.getInstance(1); break;
             case 11: ParticleColor.getInstance(); break;

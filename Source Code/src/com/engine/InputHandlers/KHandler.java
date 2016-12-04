@@ -27,7 +27,8 @@ public class KHandler extends KeyAdapter{
 
         //Keyboard button: DOWN
         if (pressed == KeyEvent.VK_DOWN) {
-            if (dragAmount < 2) {dragAmount += 1;} dragAmount-=1;
+            dragAmount--;
+            if (dragAmount <= 1) dragAmount = 1;
         }
 
         //Keyboard button: 1

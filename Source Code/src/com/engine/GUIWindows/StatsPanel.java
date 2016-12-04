@@ -121,18 +121,15 @@ public class StatsPanel {
         for (JComponent comps : components) {panel.add(comps);} root.add(panel);
     }
 
-    public static void startTimer() {
+    private static void startTimer() {
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 freeMem = (Runtime.getRuntime().freeMemory() / (Math.pow(1024, 2)));
-                if (freemem != null){freemem.setText("Free Memory: "+decimalFormat.format(freeMem) + " MB");}
-            }}, 0, (1500));
+                if (freemem != null){freemem.setText("Free Memory: "+decimalFormat.format(freeMem) + " MB");}}}, 0, 1500);
     }
-    public static void stopTimer() {
-        timer.cancel();
-        timer.purge();
-    }
+
+    private static void stopTimer() {timer.cancel(); timer.purge();}
 
     public static void update() {
         try {if (particleAmount != null) {
@@ -153,7 +150,5 @@ public class StatsPanel {
         } catch (Exception ex) {EException.append(ex);}
     }
 
-    private static void close(){
-        statsUI = null; stopTimer(); frame.dispose();
-    }
+    private static void close(){statsUI = null; stopTimer(); frame.dispose();}
 }

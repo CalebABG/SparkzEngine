@@ -17,11 +17,11 @@ public class SCChoices {
     }
 
     public static Color[] randomColor() {
-        Color f = new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
-        Color s = new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
-        Color thr = new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
-        Color fr = new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
-        Color l = new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
+        Color f = new Color((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
+        Color s = new Color((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
+        Color thr = new Color((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
+        Color fr = new Color((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
+        Color l = new Color((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
         return new Color[]{f, s, thr, fr, l};
     }
 

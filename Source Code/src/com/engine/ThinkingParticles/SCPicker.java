@@ -15,9 +15,6 @@ public class SCPicker {
         Particle.thinkingColors[scParticleIndex] = (color != null) ? color : Particle.thinkingColors[scParticleIndex];
         ParticleColor.labels[scParticleIndex].setBackground(setAlpha(Particle.thinkingColors[scParticleIndex], 255));
     }
-    public static void particleColor1() {pickColor(ParticleColor.frame, 0, "Color 1");}
-    public static void particleColor2() {pickColor(ParticleColor.frame, 1, "Color 2");}
-    public static void particleColor3() {pickColor(ParticleColor.frame, 2, "Color 3");}
-    public static void particleColor4() {pickColor(ParticleColor.frame, 3, "Color 4");}
-    public static void particleColor5() {pickColor(ParticleColor.frame, 4, "Color 5");}
+
+    public static void particleColor(int index) {pickColor(ParticleColor.frame, index, "Color " + (index + 1));}
 }

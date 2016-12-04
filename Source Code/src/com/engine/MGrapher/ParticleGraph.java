@@ -5,23 +5,15 @@ import com.engine.JComponents.CTextField;
 import com.engine.JComponents.RButton;
 import com.engine.JComponents.RLabel;
 import static com.engine.EngineHelpers.EConstants.*;
-import static java.awt.SystemColor.text;
-
 import com.engine.ParticleTypes.Particle;
 import com.engine.GUIWindows.EException;
 import com.engine.Utilities.Settings;
-
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class ParticleGraph { // Best scale for all functions = 0.02
     private static ParticleGraph particleGraph = null;
@@ -43,7 +35,7 @@ public class ParticleGraph { // Best scale for all functions = 0.02
     private static double scaleY = 40; //Best at 40
     private static double scaleX = 0.02;
 
-    //public static void main(String[] args) {}
+//    public static void main(String[] args){}
 
     public static ParticleGraph getInstance() {
         if (particleGraph == null) {particleGraph = new ParticleGraph();}frame.toFront(); return particleGraph;
@@ -145,8 +137,7 @@ public class ParticleGraph { // Best scale for all functions = 0.02
         else {
             for (int i = 0; i < w; i++) {
                 double a = i / res; engine.put("x", a * scaleX); Particle p = ParticlesArray.get(i);
-                if (ParticlesArray.size() < canvas.getWidth() * res)
-                {try {try{setGraph(p, a, h);} catch(Exception e){EException.append(e);} setGraph(a, h);}
+                if (ParticlesArray.size() < canvas.getWidth() * res) {try {try{setGraph(p, a, h);} catch(Exception e){EException.append(e);} setGraph(a, h);}
                 catch (Exception e){throwError(textFields[0]); break;}}
                 else{try {setGraph(p, a, h);} catch (Exception e) {throwError(textFields[0]); break;}}
             }
@@ -186,5 +177,4 @@ public class ParticleGraph { // Best scale for all functions = 0.02
     }
 
     private static void throwError(CTextField textField) {textField.setForeground(Color.red);}
-    private static void throwError(CTextField textField, Exception e) {textField.setForeground(Color.red); EException.append(e);}
 }

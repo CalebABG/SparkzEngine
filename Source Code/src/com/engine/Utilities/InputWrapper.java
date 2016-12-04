@@ -8,8 +8,8 @@ import javax.swing.*;
 import static com.engine.Utilities.H5Wrapper.H;
 
 public class InputWrapper {
-    public static boolean canParseStringInt(String input) {try {Integer.parseInt(input); return true;}catch (NumberFormatException e){return false;}}
-    public static boolean canParseStringDouble(String input) {try {Double.parseDouble(input); return true;}catch (NumberFormatException e){return false;}}
+    public static boolean canParseStringInt(String input) {try {int n = Integer.parseInt(input); return true;}catch (NumberFormatException e){return false;}}
+    public static boolean canParseStringDouble(String input) {try {float n = ((float) Double.parseDouble(input)); return true;}catch (NumberFormatException e){return false;}}
 
     public static double minValueGuard(double min, double default_val, String promptText) {
         String amount = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, promptText),null,JOptionPane.PLAIN_MESSAGE);
@@ -38,9 +38,7 @@ public class InputWrapper {
     }
 
     public static int intTextfieldGuard(int min, int max, int default_val, String input) {
-        if (input == null || input.equalsIgnoreCase("") || input.equalsIgnoreCase(" ") || input.isEmpty()) {
-            return default_val;
-        }
+        if (input == null || input.isEmpty()) {return default_val;}
         else {
             if (canParseStringInt(input)) {if (Integer.parseInt(input) <= max && Integer.parseInt(input) >= min) {return Integer.parseInt(input);} else {return default_val;}}
             else {return default_val;}
@@ -48,7 +46,7 @@ public class InputWrapper {
     }
 
     public static int intTextfieldGuardDefault(int min, int default_val, String input) {
-        if (input == null || input.equalsIgnoreCase("") || input.equalsIgnoreCase(" ") || input.isEmpty()) {
+        if (input == null || input.isEmpty()) {
             return default_val;
         }
         else {
@@ -58,9 +56,7 @@ public class InputWrapper {
     }
 
     public static double doubleTextfieldGuardDefault(double min, double default_val, String input) {
-        if (input == null || input.equalsIgnoreCase("") || input.equalsIgnoreCase(" ") || input.isEmpty()) {
-            return default_val;
-        }
+        if (input == null || input.isEmpty()) {return default_val;}
         else {
             if (canParseStringDouble(input)) {if (Double.parseDouble(input) >= min) {return Double.parseDouble(input);} else {return default_val;}}
             else {return default_val;}
@@ -68,7 +64,7 @@ public class InputWrapper {
     }
 
     public static boolean boolTextfieldGuard(boolean default_val, String input) {
-        if (input.isEmpty()) {return default_val;}
+        if (input == null || input.isEmpty()) {return default_val;}
         else {return Settings.StoBool(input, default_val);}
     }
 }

@@ -20,7 +20,7 @@ public class ParticleTypeUI {
         else {if (particleTypeUIs[1] == null) {particleTypeUIs[1] = new ParticleTypeUI(1);}frame.toFront(); return particleTypeUIs[1];}
     }
 
-    private ParticleTypeUI(final int type) {
+    private ParticleTypeUI(int type) {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception x){x.printStackTrace();}
         frame = new JFrame();
         frame.setIconImage(Settings.getIcon());
@@ -69,8 +69,7 @@ public class ParticleTypeUI {
                                     ParticleTypeOptions.realFireworksOptions(Integer.parseInt(textField.getText()));
                                 }
                             }
-                        }catch (Exception ex){
-                            EException.append(ex);}
+                        }catch (Exception ex){EException.append(ex);}
                     }
                 }
             }

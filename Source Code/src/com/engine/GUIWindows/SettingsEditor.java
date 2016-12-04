@@ -95,8 +95,7 @@ public class SettingsEditor {
         intelliEdit.setToolTipText("<html> Enabling this will show changes in values. <br> If values = variables: color is blue. If values are not the same: color is black. <br> " +
                 "Only on Ints & Doubles. </html>");
         intelliEdit.setFont(new Font("Times", Font.PLAIN, 15));
-        intelliEdit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {intelliEditorMode();}});
+        intelliEdit.addActionListener(e -> intelliEditorMode());
         menuBar.add(intelliEdit);
 
         Component horizontalStrut = Box.createHorizontalStrut(11);
@@ -105,28 +104,23 @@ public class SettingsEditor {
         JButton quicksave = new JButton("Quick Save");
         quicksave.setMargin(new Insets(1, 1, 1, 1));
         quicksave.setFont(new Font("Times", Font.PLAIN, 13));
-        quicksave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {saveButton();}});
+        quicksave.addActionListener(e -> saveButton());
         menuBar.add(quicksave);
 
         mntmSave = new JMenuItem("Save Settings");
-        mntmSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) { saveButton(); }});
+        mntmSave.addActionListener(e -> saveButton());
         mnFile.add(mntmSave);
 
         currentSettings = new JMenuItem("Load Settings");
-        currentSettings.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) { loadButton(); }});
+        currentSettings.addActionListener(e -> loadButton());
         mnFile.add(currentSettings);
 
         refreshUI = new JMenuItem("Refresh Editor");
-        refreshUI.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {refreshUI();}});
+        refreshUI.addActionListener(e -> refreshUI());
         mnFile.add(refreshUI);
 
         clearAll = new JMenuItem("Clear All");
-        clearAll.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {clearText();}});
+        clearAll.addActionListener(e -> clearText());
         mnFile.add(clearAll);
 
         RLabel lblNewLabel = new RLabel("-- Ints --", new Font("Times", Font.BOLD, 18), 2, new Insets(3, 0, 5, 0), new int[]{0, 0});
@@ -401,9 +395,9 @@ public class SettingsEditor {
         checkValuesDouble(dragSpeedVal, Double.parseDouble(textFields[24].getText()), textFields[24]);
     }
 
-    public static void guardValuesInt(int var, String comparison, JComponent component) {
+    private static void guardValuesInt(int var, String comparison, JComponent component) {
         if (InputWrapper.canParseStringInt(comparison)) {checkValuesInt(var, Integer.parseInt(comparison), component);}}
-    public static void guardValuesDouble(double var, String comparison, JComponent component) {
+    private static void guardValuesDouble(double var, String comparison, JComponent component) {
         if (InputWrapper.canParseStringDouble(comparison)) {checkValuesDouble(var, Double.parseDouble(comparison), component);}}
 
     private static void checkValuesInt(int default_var, int comparison_val, JComponent component) {
@@ -416,7 +410,7 @@ public class SettingsEditor {
         else {component.setForeground(Color.BLACK);}
     }
 
-    public static void saveSettings() {
+    private static void saveSettings() {
         try{
             new File("./" + "Settings").mkdir();
             FileOutputStream out = new FileOutputStream(("." + Paths.get("/" + "Settings") + "/" + "settings.txt"), false);
@@ -519,11 +513,10 @@ public class SettingsEditor {
             writer.write("DUPLEXMODE: " + InputWrapper.boolTextfieldGuard(DUPLEXMODE, textFields[31].getText()) + "\n");
             /*-------------------------------------------------------*/
             writer.close(); out.close();
-        }catch (Exception e){
-            EException.append(e);}
+        }catch (Exception e){EException.append(e);}
     }
 
-    public static void refreshUI() {
+    private static void refreshUI() {
         textFields[0].setText(""+ switchMode); textFields[1].setText(""+ particleType); textFields[2].setText(""+ ptGravitationInt);
         textFields[3].setText(""+ fireworksAmount); textFields[4].setText(""+ particleMode); textFields[5].setText(""+ dragAmount);
         textFields[6].setText(""+ baseLife); textFields[7].setText(""+ rfParticleMode); textFields[8].setText(""+ rfLife);
@@ -541,5 +534,5 @@ public class SettingsEditor {
         }
     }
 
-    public static void clearText() {for (int i = 0; i < textFields.length; i++) {textFields[i].setText("");}}
+    private static void clearText() {for (int i = 0; i < textFields.length; i++) {textFields[i].setText("");}}
 }
