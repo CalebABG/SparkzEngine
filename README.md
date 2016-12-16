@@ -156,14 +156,6 @@ If it's not set to the Java 8 JRE then you'll want to look at the list and find 
 
 ---
 
-## Acknowledgments
-
-* ...
-* ...
-* ...
-
----
-
 ## Closing Comments
 If you've stuck with reading up to this point I highly appreciate it! I'll keep this short. This project is officially Open Source!
 I'll be pushing updates to this Engine as I can, and feel free to fork or port this to other languages! I'd love to see your creations,
