@@ -1,4 +1,3 @@
-## Source Released!
 ![](Resources/enginelogo2.png?raw=true "Engine Logo")
 
 ## Synopsis
