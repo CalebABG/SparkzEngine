@@ -8,8 +8,6 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
-import java.util.*;
-import java.util.Timer;
 
 public class SWindow {
     private static SWindow sWindow = null;

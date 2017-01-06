@@ -16,14 +16,13 @@ import java.awt.event.*;
 // TODO: 3/11/2016 Create Thinking Color Time-Machine
 // TODO: 3/25/2016 Fix catch-up delay, stress on CPU, runs FPS higher than desired, long wait to stabilize
 // TODO: 5/23/16 Reminder: Additions to Settings File - total lines in file cannot be an odd number
-// TODO: 8/27/2016 Reminder for Splash Screen - edit manifest file in .jar -> add line: SplashScreen-Image: enginesplash.gif
+// TODO: 8/27/2016 Reminder for Splash Screen - edit manifest file in .jar -> add line: SplashScreen-Image: enginelogo.png
 
 /*
  Engine Configuration Windows:
-  -splash:src/enginesplash.gif
+  -splash:src/enginelogo.png
 
  Engine Configuration Mac:
- -splash:src/enginesplash.gif
  -Xdock:icon=src/enginelogo.png
  -Xdock:name="Sparkz Engine"
  -Dapple.laf.useScreenMenuBar=true
@@ -111,10 +110,12 @@ public class Engine implements Runnable {
     private void draw() {
         graphics2D.setColor(BGColor);
         graphics2D.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        if (switchMode == 3) graphics2D.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
+        else graphics2D.translate(0, 0);
         StatsPanel.update(); EException.update(); handleRenders();
     }
 
     public static void main(String[] args) {
-        try{Thread.sleep(1500);}catch (Exception e){EException.append(e);} new Engine().start();
+        try{Thread.sleep(1500);} catch (Exception e){EException.append(e);} new Engine().start();
     }
 }

@@ -5,8 +5,7 @@ import javax.swing.*;
 
 public class ParticleSeed {
     public static void singleClickSizeSeed() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }catch (Exception x){x.getCause();}
 
         JTextField min = new JTextField();

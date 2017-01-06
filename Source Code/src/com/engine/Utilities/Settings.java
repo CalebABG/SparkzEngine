@@ -6,7 +6,6 @@ import static com.engine.EngineHelpers.EConstants.*;
 import com.engine.ParticleTypes.Particle;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import static com.engine.Utilities.ColorConverter.HEXAtoRGBA;
 import java.awt.*;

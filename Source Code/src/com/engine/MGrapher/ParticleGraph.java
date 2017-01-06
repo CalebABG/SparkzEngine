@@ -1,6 +1,8 @@
 package com.engine.MGrapher;
 
 import com.engine.GUIWindows.GraphInstructions;
+import com.engine.GUIWindows.SampleFunctions;
+import com.engine.JComponents.AutoComplete;
 import com.engine.JComponents.CTextField;
 import com.engine.JComponents.RButton;
 import com.engine.JComponents.RLabel;
@@ -14,12 +16,14 @@ import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 
 public class ParticleGraph { // Best scale for all functions = 0.02
     private static ParticleGraph particleGraph = null;
     public static JFrame frame;
     private static JButton mnHelp;
-    private static CTextField[] textFields = new CTextField[5];
+    private static JButton sampleFunctions;
+    public static CTextField[] textFields = new CTextField[5];
     public static String[] mathFunctions = {
             "var sin = Math.sin", "var cos = Math.cos", "var tan = Math.tan",
             "var asin = Math.asin", "var acos = Math.acos", "var atan = Math.atan",
@@ -27,7 +31,24 @@ public class ParticleGraph { // Best scale for all functions = 0.02
             "var e = Math.E", "var abs = Math.abs", "var exp = Math.exp", "var pow = Math.pow",
             "var rand = function(max, min){return (Math.random()*max)+min};",
             "var signum = function(xpr){return (xpr / Math.abs(xpr))};",
-            "var mod = function(x, y){return (x - y * Math.floor(x / y))};"
+            "var mod = function(x, y){return (x - y * Math.floor(x / y))};",
+            "var sec = function(x){return 1/Math.cos(x);}",
+            "var csc = function(x){return 1/Math.sin(x);}",
+            "var cot = function(x){return 1/Math.tan(x);}",
+            "var lerp = function(start, stop, amt) {return start + (stop - start) * amt;}",
+            "var norm = function(value, start, stop) {return (value - start) / (stop - start);}",
+            "var clamp = function(val, min, max){return Math.min(Math.min(val, min), max);}",
+            "var map = function(value, sMin, sMax, dMin, dMax) {return dMin + (dMax - dMin) * ((value - sMin) / (sMax - sMin));}"
+    };
+
+    private static String[] suggestions = {
+            "sin(x)", "cos(x)", "tan(x)",
+            "asin(x)", "acos(x)", "atan(x)",
+            "log(x)", "sqrt(x)", "abs(x)",
+            "exp(x)", "pow(x, 2)", "rand(x,0)",
+            "signum(x)", "mod(x,x)", "lerp(0,x,.5)",
+            "norm(x,0,0)", "clamp(x,0,1)", "map(sin(x),-1,1,-1,1)",
+            "sec(x)", "csc(x)", "cot(x)"
     };
 
     public static ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
@@ -69,10 +90,15 @@ public class ParticleGraph { // Best scale for all functions = 0.02
         //Add Helper Math functions to JavaScript Engine at window creation
         try {for (int i = 0; i < mathFunctions.length; i++) {engine.eval(mathFunctions[i]);}} catch (Exception e){EException.append(e);}
 
-        mnHelp = new JButton("Help/Functions");
+        mnHelp = new JButton("Help");
         mnHelp.setFont(new Font("Times", Font.PLAIN, 18));
         mnHelp.addActionListener(e -> {if (e.getSource() == mnHelp) {GraphInstructions.getInstance(frame);}});
         menuBar.add(mnHelp);
+
+        sampleFunctions = new JButton("Samples");
+        sampleFunctions.setFont(new Font("Times", Font.PLAIN, 18));
+        sampleFunctions.addActionListener(e -> SampleFunctions.getInstance(frame));
+        menuBar.add(sampleFunctions);
 
         JLabel syntaxErr = new JLabel("<html><span style='color:red;font-style:italic'>Red Text</span> = Syntax Error</html>", SwingConstants.CENTER);
         syntaxErr.setFont(new Font("Times", Font.PLAIN, 18));
@@ -90,6 +116,14 @@ public class ParticleGraph { // Best scale for all functions = 0.02
             }
         });
         panel.add(textFields[0], textFields[0].gridBagConstraints);
+
+        /////Textfield AutoSuggest Functions
+        String COMMIT_ACTION = "commit";
+        AutoComplete autoComplete = new AutoComplete(textFields[0], Arrays.asList(suggestions));
+        textFields[0].getDocument().addDocumentListener(autoComplete);
+        textFields[0].getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
+        textFields[0].getActionMap().put(COMMIT_ACTION, autoComplete.new CommitAction());
+        /////
 
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem cut = new JMenuItem("Cut");
@@ -109,6 +143,9 @@ public class ParticleGraph { // Best scale for all functions = 0.02
 
         textFields[1] = new CTextField("" + scaleY, new Font("Times", Font.PLAIN, 19), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 11});
         textFields[1].addKeyListener(new KeyAdapter() {public void keyPressed(KeyEvent e) {textFields[1].setForeground(Color.black);}});
+        textFields[1].addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER) graphFunction();}
+        });
         panel.add(textFields[1], textFields[1].gridBagConstraints);
 
         RLabel xscale = new RLabel("X Scale", new Font("Times", Font.BOLD, 18), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 12);
@@ -117,40 +154,44 @@ public class ParticleGraph { // Best scale for all functions = 0.02
 
         textFields[2] = new CTextField("" + scaleX, new Font("Times", Font.PLAIN, 19), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 12});
         textFields[2].addKeyListener(new KeyAdapter() {public void keyPressed(KeyEvent e) {textFields[2].setForeground(Color.black);}});
+        textFields[2].addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER) graphFunction();}
+        });
         panel.add(textFields[2], textFields[2].gridBagConstraints);
 
         RButton graphButton = new RButton("<html><span style='color:#008DCB'>Graph Function</span></html>",
                 new Font("Times New Roman", Font.PLAIN, 23), 2, GridBagConstraints.HORIZONTAL, new int[]{0, 13}, new int[]{20, 15});
-        graphButton.addActionListener(e -> graphFunction());
+        graphButton.addActionListener(e -> {if (e.getSource() == graphButton) {graphFunction();}});
         panel.add(graphButton, graphButton.gridBagConstraints);
         frame.setVisible(true);
     }
 
-    private static void graph() throws ScriptException {
-        int res = 5, w = canvas.getWidth() * res, h = (canvas.getHeight() / 2), rem = ParticlesArray.size() - (canvas.getWidth() * res);
-        if (rem > 0) {for (int i = ParticlesArray.size() - 1; i >= 0; i--) {ParticlesArray.remove(i);}}
-        if (ParticlesArray.size() == 0 || ParticlesArray.isEmpty()){
-            for (int i = 0; i < w; i++) {
-                double a = i / (res); engine.put("x", a * scaleX); try {setGraph(a, h);} catch (Exception e){throwError(textFields[0]); break;}
+    private static void graph() throws Exception {
+        try {
+            ParticlesArray.clear();
+            int resolution = 1;
+            double positive_width = (canvas.getWidth() / 2) * resolution;
+            double negative_width = -positive_width;
+
+            for (double i = negative_width; i < positive_width; i += .04) {
+                double a = i / (resolution);
+                engine.put("x", a * scaleX);
+                try {
+                    setGraph(a, .95);
+                } catch (Exception e) {
+                    throwError(textFields[0]);
+                    break;
+                }
             }
-        }
-        else {
-            for (int i = 0; i < w; i++) {
-                double a = i / res; engine.put("x", a * scaleX); Particle p = ParticlesArray.get(i);
-                if (ParticlesArray.size() < canvas.getWidth() * res) {try {try{setGraph(p, a, h);} catch(Exception e){EException.append(e);} setGraph(a, h);}
-                catch (Exception e){throwError(textFields[0]); break;}}
-                else{try {setGraph(p, a, h);} catch (Exception e) {throwError(textFields[0]); break;}}
-            }
-        }
+        } catch (Exception e) { EException.append(e);}
     }
 
-    private static void setGraph(double a, int MID) throws Exception {ParticlesArray.add(new Particle(a, (-(evaluateExpr(mathExpression) * scaleY) + MID), 1, 0, (int) (Math.random() * 360)));}
-    private static void setGraph(Particle p, double a, int MID) throws Exception {p.setPos(a, (-(evaluateExpr(mathExpression) * scaleY) + MID));}
+    private static void setGraph(double x, double r) throws Exception {ParticlesArray.add(new Particle(x, (-(evaluateExpr(mathExpression) * scaleY) + 0), r));}
 
-    private static void evalInput() {
+    private static void evalInput(int mode, String express) {
         scaleY = guardDouble(textFields[1].getText(),textFields[1]);
         scaleX = guardDouble(textFields[2].getText(),textFields[2]);
-        mathExpression = textFields[0].getText();
+        mathExpression = (mode == 0) ? textFields[0].getText() : express;
     }
 
     private static double evaluateExpr(String express) throws Exception {
@@ -159,9 +200,8 @@ public class ParticleGraph { // Best scale for all functions = 0.02
         else return 0;
     }
 
-    private static void graphFunction() {
-        try {evalInput(); graph();} catch (Exception e1) {EException.append(e1);}
-    }
+    private static void graphFunction() {try {evalInput(0, ""); graph();} catch (Exception e1) {EException.append(e1);}}
+    public static void graphFunction(String express) {try {evalInput(1, express); graph();} catch (Exception e1) {EException.append(e1);}}
 
     private static double guardDouble(String expr, CTextField textField){
         double result = 0;

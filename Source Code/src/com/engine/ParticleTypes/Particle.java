@@ -28,6 +28,10 @@ public class Particle extends Molecule {
         super(_x, _y, cos((atan2((tY - pY), (tX - pX)))) * speed, sin((atan2((tY - pY), (tX - pX)))) * speed, _radius);
     }
 
+    public Particle(double _x, double _y, double _radius) {
+        super(_x, _y, 0, 0, _radius);
+    }
+
     private static int[] getRGBA(int index) {
         return new int[]{thinkingColors[index].getRed(), thinkingColors[index].getGreen(),
                 thinkingColors[index].getBlue(), thinkingColors[index].getAlpha()
@@ -113,6 +117,26 @@ public class Particle extends Molecule {
         }
     }
 
+    public void boundsCheck() {
+        if (switchMode != 3){
+            super.boundsCheck();
+        }
+        else {
+            if (this.x > canvas.getWidth()/2) {
+                this.x = -canvas.getWidth()/2;
+            }
+            if (this.x < -canvas.getWidth()/2) {
+                this.x = canvas.getWidth()/2;
+            }
+            if (this.y > canvas.getHeight()/2) {
+                this.y = -canvas.getHeight()/2;
+            }
+            if (this.y < -canvas.getHeight()/2) {
+                this.y = canvas.getHeight()/2;
+            }
+        }
+    }
+
     //Correct Implementation - but less cool
     //public static void updateOrganicMotionForces(){
         //if (angle >= 100 * (2 * PI)) {angle = 0.0;} angle += angleIncrement; particleScriptEngine.put("x", angle);
@@ -125,7 +149,8 @@ public class Particle extends Molecule {
     }
 
     public void update() {
-        boundsCheck(); if (mouseGravitation) {gravitateTo(Mouse);}
+        boundsCheck();
+        if (mouseGravitation) {gravitateTo(Mouse);}
         if ((switchMode == 0 || switchMode == 1) && ptGravitationInt == 7 && ParticlesArray.size() <= 265){
             accelerateTo(evaluateExpr(expressionForceX), evaluateExpr(expressionForceY));
             if (angle >= 100 * (2 * PI)) {angle = 0.0;} angle += angleIncrement; particleScriptEngine.put("x", angle);

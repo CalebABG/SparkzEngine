@@ -6,12 +6,7 @@ import static com.engine.EngineHelpers.EConstants.*;
 import com.engine.JComponents.CSlider;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
-import javax.swing.border.CompoundBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 

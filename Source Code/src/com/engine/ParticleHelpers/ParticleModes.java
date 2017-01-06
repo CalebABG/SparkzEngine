@@ -5,7 +5,6 @@ import static com.engine.EngineHelpers.EConstants.*;
 import com.engine.Verlet.*;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
-import static com.engine.Utilities.ColorConverter.randHSLColor;
 
 public class ParticleModes {
     /**

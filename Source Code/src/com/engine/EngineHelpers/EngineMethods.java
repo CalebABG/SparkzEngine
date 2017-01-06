@@ -341,7 +341,7 @@ public class EngineMethods {
      * Dialog window to set the radius of all particles in the ParticlesArray.
      */
     private static void particleSize(){
-        String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3,"Change Particle Size To (Integer or Decimal)"), null, JOptionPane.PLAIN_MESSAGE);
+        String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, "Change Particle Size To (Integer or Decimal)"), null, JOptionPane.PLAIN_MESSAGE);
         if (InputWrapper.canParseStringInt(input) && Double.parseDouble(input) >= 0) {
             if (ParticlesArray.size() > 0) {for (int i = 0; i < ParticlesArray.size(); i++)
             {ParticlesArray.get(i).radius = Double.parseDouble(input);}}
@@ -543,9 +543,11 @@ public class EngineMethods {
      * Draws a horizontal line with a mid point for the Engines Graph mode.
      */
     public static void drawMid() {
-        int W = canvas.getWidth(), H = canvas.getHeight(); graphics2D.setColor(Color.gray);
-        graphics2D.drawLine(0, H / 2, W, H / 2); graphics2D.drawLine(W / 2, H / 2, W / 2, H / 2 - 20);
-        graphics2D.drawLine(W / 2, H / 2, W / 2, H / 2 + 20);
+        int neg_W = -canvas.getWidth() / 2, pos_W = canvas.getWidth() / 2;
+        graphics2D.setColor(Color.gray);
+        graphics2D.drawLine(neg_W, 0, pos_W, 0);
+        graphics2D.drawLine(0, 0, 0, -20);
+        graphics2D.drawLine(0, 0, 0, 20);
     }
 
     /**
@@ -635,7 +637,7 @@ public class EngineMethods {
                 updateParticlesArray(); updateGravityPointsArray(); updateFwParticlesArray();
                 updateEmitterArray(); updateFluxArray(); updateObstructArray();
                 updateQEDArray(); updateIonsArray(); updateBlackHoleArray();
-                updateDuplexArray(); updatePortalArray(); //updateOrganicMotionForces();
+                updateDuplexArray(); updatePortalArray();
             }
         }catch (IndexOutOfBoundsException e){EException.append(e);}
     }
