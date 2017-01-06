@@ -25,7 +25,6 @@ public class SWindow {
         frame.setIconImage(Settings.getIcon());
         frame.setUndecorated(true);
         frame.setResizable(false);
-//        frame.setOpacity(0.8f);
         frame.setBounds(0, 0, width, height);
         frame.setShape(new RoundRectangle2D.Double(0, 0, width, height, 30, 30));
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

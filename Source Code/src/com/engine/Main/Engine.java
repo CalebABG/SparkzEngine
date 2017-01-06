@@ -1,6 +1,8 @@
 package com.engine.Main;
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EngineMethods.*;
+
+import com.engine.EngineHelpers.EngineSplash;
 import com.engine.GUIWindows.StatsPanel;
 import com.engine.JComponents.CMenuBar;
 import com.engine.GUIWindows.QuitWindow;
@@ -116,6 +118,6 @@ public class Engine implements Runnable {
     }
 
     public static void main(String[] args) {
-        try{Thread.sleep(1500);} catch (Exception e){EException.append(e);} new Engine().start();
+        new EngineSplash(1500).display(); SwingUtilities.invokeLater(() -> new Engine().start());
     }
 }
