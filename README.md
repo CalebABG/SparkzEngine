@@ -1,4 +1,4 @@
-![](Resources/enginelogo2.png?raw=true "Engine Logo")
+![](Resources/enginebackground3.png?raw=true "Engine Logo")
 
 ## Synopsis
 The Sparkz Engine is a one of a kind particle engine written in Java; a program for people who like to explore and create, for people who like to experiment, for education, and most importantly for having fun!
