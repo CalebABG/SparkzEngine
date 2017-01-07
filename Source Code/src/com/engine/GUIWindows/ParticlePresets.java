@@ -3,8 +3,6 @@ package com.engine.GUIWindows;
 import com.engine.Utilities.Settings;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 

@@ -7,7 +7,6 @@ import java.awt.*;
 
 public class EngineSplash extends JWindow {
     private int duration;
-    private int imgSize = 256;
 
     public EngineSplash(int d) {duration = d;}
 
@@ -15,10 +14,11 @@ public class EngineSplash extends JWindow {
         SplashPanel content = new SplashPanel();
         this.setContentPane(content);
 
+        int w = 690, h = 534;
         Dimension screen =  Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (screen.width - imgSize) / 2;
-        int y = (screen.height - imgSize) / 2;
-        setBounds(x, y, imgSize, imgSize);
+        int x = (screen.width - w) / 2;
+        int y = (screen.height - h) / 2;
+        setBounds(x, y, w, h);
         setVisible(true);
         try {Thread.sleep(duration);} catch (Exception e) {EException.append(e);}
         setVisible(false);
@@ -26,7 +26,7 @@ public class EngineSplash extends JWindow {
 
     private class SplashPanel extends JPanel {
         Image image;
-        public SplashPanel() {try {image = Settings.getIcon();} catch (Exception e) {EException.append(e);}}
+        public SplashPanel() {try {image = Settings.getSplashImage();} catch (Exception e) {EException.append(e);}}
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             if (image != null) {

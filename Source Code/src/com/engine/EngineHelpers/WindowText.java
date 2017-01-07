@@ -66,11 +66,9 @@ public class WindowText {
                 "<p style='font-size:13px'><span style='font-size:15px;color:blue'>9 - </span> Fireworks Options.</p>" +
                 "<p style='font-size:13px'><span style='font-size:15px;color:blue'>10 - </span> Change Fireworks Particle Type.</p>" +
                 "<p style='font-size:13px'><span style='font-size:15px;color:blue'>11 - </span> Thinking Particle Color Options.</p>" +
-                "<p style='font-size:13px'><span style='font-size:15px;color:blue'>12 - </span> Simulation Speed " +
+                "<p style='font-size:13px'><span style='font-size:15px;color:blue'>12 - </span> Adjust Particle Safety Amount " +
                 "(<span style='font-size:13px;color:red'>Adjust With Caution</span>)!</p>" +
-                "<p style='font-size:13px'><span style='font-size:15px;color:blue'>13 - </span> Adjust Particle Safety Amount " +
-                "(<span style='font-size:13px;color:red'>Adjust With Caution</span>)!</p>" +
-                "<p style='font-size:13px'><span style='font-size:15px;color:blue'>14 - </span> Change Color Cycle Time.</p>" +
+                "<p style='font-size:13px'><span style='font-size:15px;color:blue'>13 - </span> Change Color Cycle Time.</p>" +
                 "</p> <br>" +
                 "</html>";
     }

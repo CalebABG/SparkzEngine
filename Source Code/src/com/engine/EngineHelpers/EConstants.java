@@ -20,9 +20,10 @@ abstract public class EConstants {
     public static int rfParticleMode = 1, /*Limit @ 19*/ rfLife = 90, rfWind = 2, rfJitter = 5;
     public static int FPS = 60;
     public static int oldMouseX = -1, oldMouseY = -1, pMouseX = 0, pMouseY = 0;
-    public static int safetyAmount = 60;
+    public static int safetyAmount = 120;
     public static int cycleRate = 5;
     public static int maxParticleType = 8; // Limit @ 8
+    public static int tps = 0, fps = 0; //Used for proper sim-loop
 
     //Doubles + Seed Variables
     public static double singleClickSizeMaxVal = 1.5, singleClickSizeMinVal = .8;
@@ -33,7 +34,7 @@ abstract public class EConstants {
             fireworksSpeedVal = 5.19, dragSpeedVal = 1.2354;
 
     //Engine Title
-    public static String title = "Sparkz Engine©";
+    public static String title = "Sparkz Engine :D";
 
     //Particles Custom Text String
     public static String customParticleText = "*", rfCustomParticleText = "*";

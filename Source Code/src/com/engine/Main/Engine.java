@@ -61,20 +61,33 @@ public class Engine implements Runnable {
 
     /**
      * Engines Thread.run() method. Used as the main 'game-loop' to control the updates and renders of the program.
-     * Tries to constrain the fps to around 60 initially, however, the user can manually specify an fps rate.
+     * Tries to constrain the fps to around 60(capped).
      */
     public void run() {
-        long lastUpdateTime = System.nanoTime();
-        while (running) {
-            float desiredFPS = (int)(1000000000.0 / FPS);
+        long lastTime = System.nanoTime();
+        double nsPerTick = 1.0E9D / FPS, deltaTime = 0.0D;
+        int frames = 0, ticks = 0;
+        long lastTimer = System.currentTimeMillis();
+
+        while(running) {
             long now = System.nanoTime();
-            //Check whether an if will suffice rather than a while loop
-            if ((now - lastUpdateTime) > desiredFPS) {
-                render(); if (!isPaused) {update();}
-                lastUpdateTime += (desiredFPS);
+            deltaTime += (double)(now - lastTime) / nsPerTick;
+            lastTime = now;
+
+            boolean shouldRender;
+            for(shouldRender = false; deltaTime >= 1.0D; shouldRender = true) {
+                ++ticks;
+                if (!isPaused) update();
+                --deltaTime;
             }
+
+            if(shouldRender) {++frames; render();}
+            try {Thread.sleep(1L);} catch (Exception e) {EException.append(e);}
+            if(System.currentTimeMillis() - lastTimer >= 1000L) {
+                lastTimer += 1000L; tps = ticks; fps = frames; frames = 0; ticks = 0;
+            }
+            Toolkit.getDefaultToolkit().sync();
         }
-        stop();
     }
 
     /**
@@ -85,7 +98,7 @@ public class Engine implements Runnable {
     /**
      * Synchronized stop of the program; Stops the Engines Thread, set's the disposes of the programs window, and then shuts down the program.
      */
-    private synchronized void stop(){running = false; EFrame.setVisible(false); try{thread.join();} catch(Exception e){System.exit(0);}}
+    public static synchronized void stop(){running = false; EFrame.setVisible(false); try{thread.join();} catch(Exception e){EException.append(e);} finally {System.exit(0);}}
 
     /**
      * Method actively updates the programs Particle Arrays. It is used within the programs main Thread.
@@ -114,10 +127,10 @@ public class Engine implements Runnable {
         graphics2D.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         if (switchMode == 3) graphics2D.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
         else graphics2D.translate(0, 0);
-        StatsPanel.update(); EException.update(); handleRenders();
+        EException.update(); handleRenders();
     }
 
     public static void main(String[] args) {
-        new EngineSplash(1500).display(); SwingUtilities.invokeLater(() -> new Engine().start());
+        new EngineSplash(2000).display(); SwingUtilities.invokeLater(() -> new Engine().start());
     }
 }

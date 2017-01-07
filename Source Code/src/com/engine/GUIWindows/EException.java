@@ -60,7 +60,7 @@ public class EException {
 
     private static String logException(Exception e){StringWriter sw = new StringWriter(); e.printStackTrace(new PrintWriter(sw)); return sw.toString();}
     public static void write(String s){ELOG += s+"\n";}
-    public static void setText(String s){textArea.setText(s);}
+    private static void setText(String s){textArea.setText(s);}
     public static void append(Exception except){ELOG += "" + new SimpleDateFormat("h:mm:ss a").format(new Date()) + " - " + (logException(except)) + "\n";}
     public static void update(){try {if (textArea != null) {textArea.setText(ELOG);}} catch (Exception ex) {append(ex);}}
     private static void closeWindow() {EException = null; frame.dispose();}

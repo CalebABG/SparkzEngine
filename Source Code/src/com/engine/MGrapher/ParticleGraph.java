@@ -7,12 +7,13 @@ import com.engine.JComponents.CTextField;
 import com.engine.JComponents.RButton;
 import com.engine.JComponents.RLabel;
 import static com.engine.EngineHelpers.EConstants.*;
+import static com.engine.JComponents.AutoComplete.makeUndoable;
+
 import com.engine.ParticleTypes.Particle;
 import com.engine.GUIWindows.EException;
 import com.engine.Utilities.Settings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -45,8 +46,8 @@ public class ParticleGraph { // Best scale for all functions = 0.02
             "sin(x)", "cos(x)", "tan(x)",
             "asin(x)", "acos(x)", "atan(x)",
             "log(x)", "sqrt(x)", "abs(x)",
-            "exp(x)", "pow(x, 2)", "rand(x,0)",
-            "signum(x)", "mod(x,x)", "lerp(0,x,.5)",
+            "exp(x)", "pow(x, 2)", "rand(sin(x),0)",
+            "signum(x)", "mod(x,sin(x))", "lerp(X,sin(x),.5)",
             "norm(x,0,0)", "clamp(x,0,1)", "map(sin(x),-1,1,-1,1)",
             "sec(x)", "csc(x)", "cot(x)"
     };
@@ -109,12 +110,15 @@ public class ParticleGraph { // Best scale for all functions = 0.02
 
         textFields[0] = new CTextField(mathExpression, new Font("Times", Font.PLAIN, 20), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{0, 1});
         textFields[0].gridBagConstraints.gridwidth = 2;
+        textFields[0].setFocusTraversalKeysEnabled(false);
         textFields[0].addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {if (e.getKeyCode() != KeyEvent.VK_ENTER) {textFields[0].setForeground(Color.black);}}
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) graphFunction();
             }
         });
+
+        makeUndoable(textFields[0]);
         panel.add(textFields[0], textFields[0].gridBagConstraints);
 
         /////Textfield AutoSuggest Functions
@@ -135,6 +139,9 @@ public class ParticleGraph { // Best scale for all functions = 0.02
         JMenuItem paste = new JMenuItem("Paste");
         paste.addActionListener(e -> {if (e.getSource() == paste) {textFields[0].paste();}});
         popupMenu.add(paste);
+        JMenuItem clear = new JMenuItem("Clear");
+        clear.addActionListener(e -> {if (e.getSource() == clear) {textFields[0].setText("");}});
+        popupMenu.add(clear);
         addPopup(textFields[0], popupMenu);
 
         RLabel yscale = new RLabel("Y Scale", new Font("Times", Font.BOLD, 18), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 11);

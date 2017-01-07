@@ -22,7 +22,8 @@ public class Settings {
     public static DecimalFormat dcFormat = new DecimalFormat("0.000");
     @SuppressWarnings("deprecation")
     public static final double PROJECT_LOG = Double.parseDouble((dcFormat.format(((new Date().getTime() - new Date("November 22, 2015").getTime()) / (1000.0 * 60 * 60 * (24 * 7 * 4))))));
-    private static Image image = Toolkit.getDefaultToolkit().getImage(Settings.class.getResource("/enginelogo.png"));
+    private static Image iconImage = Toolkit.getDefaultToolkit().getImage(Settings.class.getResource("/enginelogo.png"));
+    private static Image splashImage = Toolkit.getDefaultToolkit().getImage(Settings.class.getResource("/enginesplash.png"));
     public static int PRESET_INDEXES = 1;
     private static String folderName = "User-Presets", fileName = "saved-presets.txt", spliceChar = ";";
     private static Path dir = Paths.get("/" + folderName), fileDir = Paths.get("." + dir + "/" + fileName);
@@ -34,7 +35,8 @@ public class Settings {
     public static boolean doesSettingsExist(){return Files.exists(Paths.get("." + (Paths.get("/" + "Settings")) + "/" + "settings.txt"));}
     public static boolean StoBool(String s, boolean def_val){if (s.equalsIgnoreCase("TRUE")) {return true;}
     else if (s.equalsIgnoreCase("FALSE")) {return false;} else {return def_val;}}
-    public static Image getIcon(){return image;}
+    public static Image getIcon(){return iconImage;}
+    public static Image getSplashImage(){return splashImage;}
 
     public static String fileChooser(String _null) {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception x){x.printStackTrace();}

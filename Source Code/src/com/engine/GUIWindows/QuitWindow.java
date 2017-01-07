@@ -2,6 +2,7 @@ package com.engine.GUIWindows;
 
 import static com.engine.EngineHelpers.EConstants.*;
 import com.engine.JComponents.CLabel;
+import com.engine.Main.Engine;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
@@ -49,7 +50,7 @@ public class QuitWindow {
         label2 = new CLabel(new Rectangle(20, frame.getHeight() / 2 - (26), 90, 50), "Yes", new
                 Font("Times", Font.PLAIN, 45), Color.white, option_yes);
         label2.addMouseListener(new MouseListener() {
-            public void mouseClicked(MouseEvent e) {System.exit(0);}
+            public void mouseClicked(MouseEvent e) {Engine.stop();}
             public void mousePressed(MouseEvent e) {} public void mouseReleased(MouseEvent e) {}
             public void mouseEntered(MouseEvent e) {label2.setBackground(option_yes.brighter());}
             public void mouseExited(MouseEvent e) {

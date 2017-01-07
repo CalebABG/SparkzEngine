@@ -17,7 +17,6 @@ public class StatsPanel {
     private static StatsPanel statsUI = null;
     private static JFrame frame;
     private static Timer timer;
-    private static double freeMem = 0;
     public JPanel panel;
     private int h = -6;
     private static CLabel exit, particleAmount, shortCts, dragamount, freemem,
@@ -123,10 +122,7 @@ public class StatsPanel {
 
     private static void startTimer() {
         timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            public void run() {
-                freeMem = (Runtime.getRuntime().freeMemory() / (Math.pow(1024, 2)));
-                if (freemem != null){freemem.setText("Free Memory: "+decimalFormat.format(freeMem) + " MB");}}}, 0, 1500);
+        timer.scheduleAtFixedRate(new TimerTask() {public void run() {update();}}, 0, 16);
     }
 
     private static void stopTimer() {timer.cancel(); timer.purge();}
@@ -146,6 +142,7 @@ public class StatsPanel {
             if(connect != null) {connect.setText(EngineMethods.getConnectText());}
             if(atm != null) {atm.setText(EngineMethods.getMouseAttraction());}
             if(ptFriction != null) {ptFriction.setText(EngineMethods.getFrictionText());}
+            if (freemem != null){freemem.setText("Free Memory: "+decimalFormat.format((Runtime.getRuntime().freeMemory() / (Math.pow(1024, 2)))) + " MB");}
             if(screenSize != null) {screenSize.setText(String.format("Window Size: %d x %d", canvas.getWidth(), canvas.getHeight()));}
         } catch (Exception ex) {EException.append(ex);}
     }

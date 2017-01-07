@@ -101,19 +101,12 @@ public class EngineMethods {
      */
     public static void handleGraphicsSmoothing(){
         if (SMOOTH){
-            if (switchMode == 4) {
+            //Included 3 for Graph Mode : tested seems to have no effect but better to have the option
+            if (switchMode == 4 || switchMode == 3) {
                 RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 graphics2D.setRenderingHints(rh);
             }
         }
-    }
-
-    /**
-     * Displays the relative change in pixels of the mouse since the last update.
-     */
-    public static void showMouseAcceleration(){
-        graphics2D.setColor(Color.white);
-        graphics2D.drawString("" + pMouseX + " : " + pMouseY, canvas.getWidth() / 2, canvas.getHeight() / 2);
     }
 
     /**
@@ -364,7 +357,6 @@ public class EngineMethods {
     //
     private static void particleDrag() {dragAmount = (int) minValueGuard(1, dragAmount, "Enter Drag Amount (Integer Only)");}
     private static void safetyAmountOptions() {safetyAmount = (int) minValueGuard(1, safetyAmount, "Enter Safety Amount (Integer Only)");}
-    private static void simSpeedOptions() {FPS = (int) minValueGuard(1, FPS, "Enter Simulation Speed (Integer Only)");}
     private static void particleFireworks() {fireworksAmount = (int) minValueGuard(1, fireworksAmount, "Enter Fireworks Amount (Integer Only)");}
 
     /**
@@ -401,9 +393,8 @@ public class EngineMethods {
             case 9: realFireworks(); break;
             case 10: ParticleTypeUI.getInstance(1); break;
             case 11: ParticleColor.getInstance(); break;
-            case 12: simSpeedOptions(); break;
-            case 13: safetyAmountOptions(); break;
-            case 14: cycleTimeOptions(); break;
+            case 12: safetyAmountOptions(); break;
+            case 13: cycleTimeOptions(); break;
             default: break;
         }
     }

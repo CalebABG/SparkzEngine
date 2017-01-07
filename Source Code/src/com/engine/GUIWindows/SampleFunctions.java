@@ -30,7 +30,7 @@ public class SampleFunctions {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e1){e1.printStackTrace();}
         frame = new JFrame("Sample Functions");
         frame.setIconImage(Settings.getIcon());
-        frame.setSize(371, 427);
+        frame.setSize(444, 322);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {close();}});
         frame.setLocationRelativeTo(parent);
@@ -39,18 +39,16 @@ public class SampleFunctions {
         frame.getContentPane().add(panel, BorderLayout.CENTER);
         panel.setLayout(new BorderLayout(0, 0));
 
-        if (functions == null) {
-            try {
-                InputStream fin = SampleFunctions.class.getResourceAsStream("/Samples.ev");
-                BufferedReader br = new BufferedReader(new InputStreamReader(fin));
-                functions = Collections.synchronizedList(new ArrayList<>());
-                String line;
-                while ((line = br.readLine()) != null) {functions.add(line.trim());}
-                br.close();
-                fin.close();
-                for (String s : functions) {listModel.addElement(s);}
-            } catch (Exception e){e.printStackTrace();}
-        }
+        try {
+            InputStream fin = SampleFunctions.class.getResourceAsStream("/Samples.ev");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fin));
+            functions = Collections.synchronizedList(new ArrayList<>());
+            String line;
+            while ((line = br.readLine()) != null) {functions.add(line.trim());}
+            br.close();
+            fin.close();
+            for (String s : functions) {listModel.addElement(s);}
+        } catch (Exception e){e.printStackTrace();}
 
         list = new JList<>(listModel);
         list.setVisibleRowCount(-1);
