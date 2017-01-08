@@ -14,7 +14,7 @@ public class EngineSplash extends JWindow {
         SplashPanel content = new SplashPanel();
         this.setContentPane(content);
 
-        int w = 690, h = 534;
+        int w = 434, h = 536;
         Dimension screen =  Toolkit.getDefaultToolkit().getScreenSize();
         int x = (screen.width - w) / 2;
         int y = (screen.height - h) / 2;

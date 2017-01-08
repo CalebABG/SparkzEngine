@@ -243,7 +243,6 @@ public class EngineMethods {
      */
     public static void thinkingParticlesMode() {thinkingParticles = toggle(thinkingParticles);}
 
-
     /**
      * Determines which gravitation mode to use for particles in the ParticlesArray ArrayList.
      */
@@ -261,7 +260,6 @@ public class EngineMethods {
             default: ptGravitationInt = 0; break;
         }
     }
-
 
     /**
      * Dialog window for adjusting the fireworks options (Wind, Life, Jitter)

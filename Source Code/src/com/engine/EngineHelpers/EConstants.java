@@ -18,7 +18,7 @@ abstract public class EConstants {
     public static int dragAmount = 1;  //Change before building
     public static int baseLife = 65;
     public static int rfParticleMode = 1, /*Limit @ 19*/ rfLife = 90, rfWind = 2, rfJitter = 5;
-    public static int FPS = 60;
+    public static int FPS = 60, timerFPS = (int) Math.floor(1000.0 / FPS);
     public static int oldMouseX = -1, oldMouseY = -1, pMouseX = 0, pMouseY = 0;
     public static int safetyAmount = 120;
     public static int cycleRate = 5;

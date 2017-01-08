@@ -1,7 +1,6 @@
 package com.engine.Main;
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EngineMethods.*;
-
 import com.engine.EngineHelpers.EngineSplash;
 import com.engine.GUIWindows.StatsPanel;
 import com.engine.JComponents.CMenuBar;
@@ -12,24 +11,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-// Project started on: 11/22/2015 :D
-// Project REQUIRES Java version 1.8 (lambda functions used) or higher to edit
-
+// Project started on: 11/22/2015 :D -- REQUIRES Java version 1.8 (lambda functions used) or higher to edit
 // TODO: 3/11/2016 Create Thinking Color Time-Machine
-// TODO: 3/25/2016 Fix catch-up delay, stress on CPU, runs FPS higher than desired, long wait to stabilize
 // TODO: 5/23/16 Reminder: Additions to Settings File - total lines in file cannot be an odd number
-// TODO: 8/27/2016 Reminder for Splash Screen - edit manifest file in .jar -> add line: SplashScreen-Image: enginelogo.png
-
-/*
- Engine Configuration Windows:
-  -splash:src/enginelogo.png
-
- Engine Configuration Mac:
- -Xdock:icon=src/enginelogo.png
- -Xdock:name="Sparkz Engine"
- -Dapple.laf.useScreenMenuBar=true
- -Dcom.apple.macos.use-file-dialog-packages=true
-*/
 
 public class Engine implements Runnable {
     /**
@@ -44,7 +28,8 @@ public class Engine implements Runnable {
         EFrame.setLocationRelativeTo(null);
         EFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         EFrame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {QuitWindow.getInstance();}});
-        Settings.loadSettings(); CMenuBar.setUpMenuBar(EFrame);
+        Settings.loadSettings();
+        CMenuBar.setUpMenuBar(EFrame);
         canvas.requestFocusInWindow();
         //Mouse Click Listener
         canvas.addMouseListener(mListener);
@@ -64,10 +49,9 @@ public class Engine implements Runnable {
      * Tries to constrain the fps to around 60(capped).
      */
     public void run() {
-        long lastTime = System.nanoTime();
+        long lastTime = System.nanoTime(), lastTimer = System.currentTimeMillis();
         double nsPerTick = 1.0E9D / FPS, deltaTime = 0.0D;
         int frames = 0, ticks = 0;
-        long lastTimer = System.currentTimeMillis();
 
         while(running) {
             long now = System.nanoTime();
@@ -82,7 +66,7 @@ public class Engine implements Runnable {
             }
 
             if(shouldRender) {++frames; render();}
-            try {Thread.sleep(1L);} catch (Exception e) {EException.append(e);}
+
             if(System.currentTimeMillis() - lastTimer >= 1000L) {
                 lastTimer += 1000L; tps = ticks; fps = frames; frames = 0; ticks = 0;
             }
@@ -98,7 +82,7 @@ public class Engine implements Runnable {
     /**
      * Synchronized stop of the program; Stops the Engines Thread, set's the disposes of the programs window, and then shuts down the program.
      */
-    public static synchronized void stop(){running = false; EFrame.setVisible(false); try{thread.join();} catch(Exception e){EException.append(e);} finally {System.exit(0);}}
+    public static synchronized void stop(){running = false; EFrame.setVisible(false); try{thread.join();} catch(Exception e){EException.append(e);}}
 
     /**
      * Method actively updates the programs Particle Arrays. It is used within the programs main Thread.
@@ -127,10 +111,10 @@ public class Engine implements Runnable {
         graphics2D.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         if (switchMode == 3) graphics2D.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
         else graphics2D.translate(0, 0);
-        EException.update(); handleRenders();
+        handleRenders();
     }
 
     public static void main(String[] args) {
-        new EngineSplash(2000).display(); SwingUtilities.invokeLater(() -> new Engine().start());
+        new EngineSplash(2720).display(); SwingUtilities.invokeLater(() -> new Engine().start());
     }
 }

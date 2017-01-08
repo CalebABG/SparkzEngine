@@ -60,7 +60,7 @@ public class ParticleGraph { // Best scale for all functions = 0.02
 //    public static void main(String[] args){}
 
     public static ParticleGraph getInstance() {
-        if (particleGraph == null) {particleGraph = new ParticleGraph();}frame.toFront(); return particleGraph;
+        if (particleGraph == null) {particleGraph = new ParticleGraph();} frame.toFront(); return particleGraph;
     }
 
     private ParticleGraph() {
@@ -81,8 +81,7 @@ public class ParticleGraph { // Best scale for all functions = 0.02
         gbl_panel.columnWidths = new int[]{138, 64, 0};
         gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         gbl_panel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-        gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         panel.setLayout(gbl_panel);
 
         JMenuBar menuBar = new JMenuBar();
@@ -169,6 +168,11 @@ public class ParticleGraph { // Best scale for all functions = 0.02
         RButton graphButton = new RButton("<html><span style='color:#008DCB'>Graph Function</span></html>",
                 new Font("Times New Roman", Font.PLAIN, 23), 2, GridBagConstraints.HORIZONTAL, new int[]{0, 13}, new int[]{20, 15});
         graphButton.addActionListener(e -> {if (e.getSource() == graphButton) {graphFunction();}});
+        graphButton.gridBagConstraints.gridwidth=GridBagConstraints.REMAINDER;
+        graphButton.gridBagConstraints.fill =    GridBagConstraints.HORIZONTAL;
+        graphButton.gridBagConstraints.anchor =  GridBagConstraints.SOUTHWEST;
+        graphButton.gridBagConstraints.weightx = 0.5;
+        graphButton.gridBagConstraints.weighty = 0.5;
         panel.add(graphButton, graphButton.gridBagConstraints);
         frame.setVisible(true);
     }
@@ -176,19 +180,13 @@ public class ParticleGraph { // Best scale for all functions = 0.02
     private static void graph() throws Exception {
         try {
             ParticlesArray.clear();
-            int resolution = 1;
-            double positive_width = (canvas.getWidth() / 2) * resolution;
+            double positive_width = canvas.getWidth() / 2;
             double negative_width = -positive_width;
 
             for (double i = negative_width; i < positive_width; i += .04) {
-                double a = i / (resolution);
-                engine.put("x", a * scaleX);
-                try {
-                    setGraph(a, .95);
-                } catch (Exception e) {
-                    throwError(textFields[0]);
-                    break;
-                }
+                engine.put("x", i * scaleX);
+                try {setGraph(i, .95);
+                } catch (Exception e) {throwError(textFields[0]); break;}
             }
         } catch (Exception e) { EException.append(e);}
     }

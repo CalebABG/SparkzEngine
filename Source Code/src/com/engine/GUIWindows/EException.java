@@ -11,13 +11,15 @@ import java.awt.event.WindowEvent;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
+import java.util.Timer;
 
 public class EException {
     private static EException EException = null;
     private static String ELOG = "";
     public static JFrame frame;
     private static JTextArea textArea;
+    private static Timer timer;
 
     //public static void main(String[] args) {}
 
@@ -55,13 +57,21 @@ public class EException {
         scrollPane.setBackground(Color.BLACK);
         scrollPane.getViewport().add(textArea);
         panel.add(scrollPane, BorderLayout.CENTER);
+        startTimer();
         frame.setVisible(true);
     }
+
+    private static void startTimer() {
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {public void run() {update();}}, 0, timerFPS);
+    }
+
+    private static void stopTimer() {timer.cancel(); timer.purge();}
 
     private static String logException(Exception e){StringWriter sw = new StringWriter(); e.printStackTrace(new PrintWriter(sw)); return sw.toString();}
     public static void write(String s){ELOG += s+"\n";}
     private static void setText(String s){textArea.setText(s);}
     public static void append(Exception except){ELOG += "" + new SimpleDateFormat("h:mm:ss a").format(new Date()) + " - " + (logException(except)) + "\n";}
     public static void update(){try {if (textArea != null) {textArea.setText(ELOG);}} catch (Exception ex) {append(ex);}}
-    private static void closeWindow() {EException = null; frame.dispose();}
+    private static void closeWindow() {EException = null; stopTimer(); frame.dispose();}
 }

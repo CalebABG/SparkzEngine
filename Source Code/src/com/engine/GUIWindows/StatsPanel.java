@@ -27,14 +27,13 @@ public class StatsPanel {
 
     //public static void main(String[] args) {getInstance();}
 
-    public static StatsPanel getInstance() {if (statsUI == null) {statsUI = new StatsPanel();}frame.toFront(); return statsUI;}
+    public static StatsPanel getInstance() {if (statsUI == null) {statsUI = new StatsPanel();} frame.toFront(); return statsUI;}
 
     private StatsPanel() {
         frame = new JFrame("Stats Panel");
         frame.setIconImage(Settings.getIcon());
         frame.setUndecorated(true);
         frame.setResizable(false);
-        //frame.setOpacity(0.96f);
         frame.setBounds(0, 0, width, height);
         frame.setShape(new RoundRectangle2D.Double(0, 0, width, height, 30, 30));
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -122,7 +121,7 @@ public class StatsPanel {
 
     private static void startTimer() {
         timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {public void run() {update();}}, 0, 16);
+        timer.scheduleAtFixedRate(new TimerTask() {public void run() {update();}}, 0, timerFPS);
     }
 
     private static void stopTimer() {timer.cancel(); timer.purge();}
