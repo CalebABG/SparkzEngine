@@ -15,6 +15,9 @@ import java.awt.event.WindowEvent;
 public class OptionsMenu {
     private static OptionsMenu optionsMenu = null;
     public static JFrame frame;
+    public static JTextField textField;
+
+    //public static void main(String[] args) {getInstance();}
 
     public static OptionsMenu getInstance() {
         if (optionsMenu == null) {optionsMenu = new OptionsMenu();}frame.toFront(); return optionsMenu;
@@ -29,42 +32,37 @@ public class OptionsMenu {
         frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {close();}});
         frame.setLocationRelativeTo(EFrame);
 
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new BorderLayout());
-        frame.add(topPanel);
+        JScrollPane jScrollPane1 = new JScrollPane();
 
-        JScrollPane scrollPane = new JScrollPane();
-        topPanel.add(scrollPane, BorderLayout.CENTER);
+        JPanel jPanel1 = new JPanel();
+        jPanel1.setLayout(new BorderLayout());
 
-        JSplitPane splitPane = new JSplitPane();
-        splitPane.setResizeWeight(0.96);
-        splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        scrollPane.setViewportView(splitPane);
+        JButton jButton1 = new JButton();
+        jButton1.setFont(new Font("Times", Font.BOLD, 14));
+        jButton1.setText("Enter/Cancel");
+        jButton1.addActionListener(e -> getOption());
+        jPanel1.add(jButton1, BorderLayout.LINE_END);
 
-        JPanel panel = new JPanel();
-        splitPane.setLeftComponent(panel);
-        panel.setLayout(new BorderLayout(0, 0));
-
-        JLabel lblHey = new JLabel(WindowText.generalOptions());
-        lblHey.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(lblHey, BorderLayout.CENTER);
-
-        final JTextField textField = new JTextField(1);
+        textField = new JTextField();
+        textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setFont(new Font("Times", Font.PLAIN, 17));
-        textField.setHorizontalAlignment(SwingConstants.CENTER);
-        splitPane.setRightComponent(textField);
-        textField.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER){
-                    if (textField.getText() != null) {
-                        if (InputWrapper.canParseStringInt(textField.getText())) {
-                            EngineMethods.getOptions(Integer.parseInt(textField.getText()));
-                        }
-                    }
-                }
-            }
-        });
+        textField.addKeyListener(new KeyAdapter() {public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER) getOption();}});
+        jPanel1.add(textField, BorderLayout.CENTER);
+
+        frame.add(jPanel1, BorderLayout.PAGE_END);
+
+        JLabel jLabel2 = new JLabel();
+        jLabel2.setText(WindowText.generalOptions());
+        jScrollPane1.setViewportView(jLabel2);
+
+        frame.add(jScrollPane1, BorderLayout.CENTER);
         frame.setVisible(true);
+    }
+
+    private static void getOption() {
+        if (textField.getText() != null) {
+            if (InputWrapper.canParseStringInt(textField.getText())) {EngineMethods.getOptions(Integer.parseInt(textField.getText()));}
+        }
     }
 
     private void close(){optionsMenu = null;frame.dispose();}

@@ -18,8 +18,7 @@ public class StatsPanel {
     private static JFrame frame;
     private static Timer timer;
     public JPanel panel;
-    private int h = -6;
-    private static CLabel exit, particleAmount, shortCts, dragamount, freemem,
+    private static CLabel exit, particleAmount, dragamount, freemem,
             safetyamount, ptMode, smartPt, connect, atm, ptFriction, screenSize;
     private static DecimalFormat decimalFormat = new DecimalFormat("#,###");
     private Point mpt = new Point();
@@ -59,53 +58,54 @@ public class StatsPanel {
             public void mouseExited(MouseEvent e) {exit.setBackground(new Color(66, 66, 68));}
         });
 
-        shortCts = new CLabel(new Rectangle(330-18, 5, 250, 40), "Short-Cuts", new
+        CLabel shortCts = new CLabel(new Rectangle(330 - 18, 5, 250, 40), "Short-Cuts", new
                 Font(Font.SERIF, Font.PLAIN, 35), new Color(98, 138, 137), new Color(29, 32, 34));
 
-        particleAmount = new CLabel(new Rectangle(5, 10+h, 300, 40), "Particles: 0", new
+        int offset = -6;
+        particleAmount = new CLabel(new Rectangle(5, 10 + offset, 300, 40), "Particles: 0", new
                 Font(Font.SERIF, Font.PLAIN, 25), Color.white, new Color(20, 23, 25).brighter());
 
-        dragamount = new CLabel(new Rectangle(5, 55+h, 300, 40), "Drag Amount: ", new
+        dragamount = new CLabel(new Rectangle(5, 55 + offset, 300, 40), "Drag Amount: ", new
                 Font(Font.SERIF, Font.PLAIN, 25), Color.white, new Color(20, 23, 25).brighter());
 
-        safetyamount = new CLabel(new Rectangle(5, 100+h, 300, 40), "Safety Amount:  ", new
+        safetyamount = new CLabel(new Rectangle(5, 100 + offset, 300, 40), "Safety Amount:  ", new
                 Font(Font.SERIF, Font.PLAIN, 25), Color.white, new Color(20, 23, 25).brighter());
 
-        ptMode = new CLabel(new Rectangle(5, 145+h, 300, 40), "Particle Mode: " , new
+        ptMode = new CLabel(new Rectangle(5, 145 + offset, 300, 40), "Particle Mode: ", new
                 Font(Font.SERIF, Font.PLAIN, 25), Color.white, new Color(20, 23, 25).brighter());
 
-        smartPt = new CLabel(new Rectangle(5, 190+h, 300, 40), "Thinking Particles: ", new
+        smartPt = new CLabel(new Rectangle(5, 190 + offset, 300, 40), "Thinking Particles: ", new
                 Font(Font.SERIF, Font.PLAIN, 25), Color.white, new Color(20, 23, 25).brighter());
 
-        connect = new CLabel(new Rectangle(5, 235+h, 300, 40), "Link Mode: ", new
+        connect = new CLabel(new Rectangle(5, 235 + offset, 300, 40), "Link Mode: ", new
                 Font(Font.SERIF, Font.PLAIN, 25), Color.white, new Color(20, 23, 25).brighter());
 
-        atm = new CLabel(new Rectangle(5, 280+h, 300, 40), "Mouse Attraction: " , new
+        atm = new CLabel(new Rectangle(5, 280 + offset, 300, 40), "Mouse Attraction: ", new
                 Font(Font.SERIF, Font.PLAIN, 25), Color.white, new Color(20, 23, 25).brighter());
 
-        ptFriction = new CLabel(new Rectangle(5, 325+h, 300, 40), "Particle Friction: ", new
+        ptFriction = new CLabel(new Rectangle(5, 325 + offset, 300, 40), "Particle Friction: ", new
                 Font(Font.SERIF, Font.PLAIN, 25), Color.white, new Color(20, 23, 25).brighter());
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        screenSize = new CLabel(new Rectangle(330-18, 325+h, 320, 40), "Window Size: 0 x 0", new
+        screenSize = new CLabel(new Rectangle(330 - 18, 325 + offset, 320, 40), "Window Size: 0 x 0", new
                 Font(Font.SERIF, Font.PLAIN, 25), Color.white, new Color(20, 23, 25).brighter());
 
-        CLabel a = new CLabel(new Rectangle(330-18, 56+h, 320, 40), "Press: (On Sparkz Engine)", new
+        CLabel a = new CLabel(new Rectangle(330 - 18, 56 + offset, 320, 40), "Press: (On Sparkz Engine)", new
                 Font(Font.SERIF, Font.PLAIN, 25), Color.white, new Color(20, 23, 25).brighter());
 
-        CLabel b = new CLabel(new Rectangle(330-18, 100+h, 320, 40), "Q = Engine Instructions", new
+        CLabel b = new CLabel(new Rectangle(330 - 18, 100 + offset, 320, 40), "Q = Engine Instructions", new
                 Font(Font.SERIF, Font.PLAIN, 25), Color.white, new Color(20, 23, 25).brighter());
 
-        CLabel c = new CLabel(new Rectangle(330-18, 145+h, 320, 40), "7 = Options Menu", new
+        CLabel c = new CLabel(new Rectangle(330 - 18, 145 + offset, 320, 40), "7 = Options Menu", new
                 Font(Font.SERIF, Font.PLAIN, 25), Color.white, new Color(20, 23, 25).brighter());
 
-        CLabel e = new CLabel(new Rectangle(330-18, 235+h, 320, 40), "W = Particle Color Editor", new
+        CLabel e = new CLabel(new Rectangle(330 - 18, 235 + offset, 320, 40), "W = Particle Color Editor", new
                 Font(Font.SERIF, Font.PLAIN, 25), Color.white, new Color(20, 23, 25).brighter());
 
-        CLabel d = new CLabel(new Rectangle(330-18, 190+h, 320, 40), "R = Change Background Color", new
+        CLabel d = new CLabel(new Rectangle(330 - 18, 190 + offset, 320, 40), "R = Change Background Color", new
                 Font(Font.SERIF, Font.PLAIN, 25), Color.white, new Color(20, 23, 25).brighter());
 
-        freemem = new CLabel(new Rectangle(330-18, 280+h, 320, 40), "Free Memory: ", new
+        freemem = new CLabel(new Rectangle(330 - 18, 280 + offset, 320, 40), "Free Memory: ", new
                 Font(Font.SERIF, Font.PLAIN, 24), Color.white, new Color(20, 23, 25).brighter());
 
         addComps(frame, panel, particleAmount, exit, dragamount, safetyamount,

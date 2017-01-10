@@ -7,8 +7,6 @@ import java.awt.event.MouseMotionListener;
 import static com.engine.EngineHelpers.EngineMethods.updateMouse;
 
 public class MMotionListener implements MouseMotionListener {
-    public void mouseDragged(MouseEvent e) {
-        updateMouse(e); ParticleModes.dragMode(e);}
-    public void mouseMoved(MouseEvent e) {
-        updateMouse(e);}
+    public void mouseDragged(MouseEvent e) {ParticleModes.dragMode(e); updateMouse(e);}
+    public void mouseMoved(MouseEvent e) {updateMouse(e);}
 }

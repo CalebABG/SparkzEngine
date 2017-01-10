@@ -11,18 +11,19 @@ public class Eraser extends Molecule {
     public Eraser(){super();}
     public Eraser(double _x, double _y, double _radius, double speed, int direction) {
         super(_x, _y, Math.cos(direction) * speed, Math.sin(direction) * speed, _radius);
+        color = Color.orange;
     }
 
     private void destroy() {
         for (int i = 0; i < ParticlesArray.size(); i++) {
             Particle p = ParticlesArray.get(i);
             double dx = p.x - x, dy = p.y - y, distance = Math.sqrt(dx * dx + dy * dy);
-            if (distance < (2.5 * radius)) {ParticlesArray.remove(p);}
+            if (distance < (1.2 * radius)) {color = Color.red; ParticlesArray.remove(p);}
         }
     }
 
     public void giveStyle() {
-        graphics2D.setColor(Color.ORANGE.darker());
+        graphics2D.setColor(color);
         graphics2D.draw(new Ellipse2D.Double(x, y, radius, radius));
     }
 

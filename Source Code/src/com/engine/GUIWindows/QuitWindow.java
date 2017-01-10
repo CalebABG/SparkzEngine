@@ -2,7 +2,6 @@ package com.engine.GUIWindows;
 
 import static com.engine.EngineHelpers.EConstants.*;
 import com.engine.JComponents.CLabel;
-import com.engine.Main.Engine;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;

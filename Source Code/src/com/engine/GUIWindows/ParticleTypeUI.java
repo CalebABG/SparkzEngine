@@ -14,6 +14,7 @@ import java.awt.event.WindowEvent;
 public class ParticleTypeUI {
     private static ParticleTypeUI[] particleTypeUIs = new ParticleTypeUI[2];
     public static JFrame frame;
+    public static JTextField textField;
 
     public static ParticleTypeUI getInstance(int type) {
         if (type == 0) {if (particleTypeUIs[0] == null) {particleTypeUIs[0] = new ParticleTypeUI(0);}frame.toFront(); return particleTypeUIs[0];}
@@ -30,52 +31,48 @@ public class ParticleTypeUI {
         frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {close(type);}});
         frame.setLocationRelativeTo(OptionsMenu.frame);
 
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new BorderLayout());
-        frame.add(topPanel);
+        JScrollPane jScrollPane1 = new JScrollPane();
 
-        JScrollPane scrollPane = new JScrollPane();
-        topPanel.add(scrollPane, BorderLayout.CENTER);
+        JPanel jPanel1 = new JPanel();
+        jPanel1.setLayout(new BorderLayout());
 
-        JSplitPane splitPane = new JSplitPane();
-        splitPane.setResizeWeight(0.96);
-        splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        scrollPane.setViewportView(splitPane);
+        JButton jButton1 = new JButton();
+        jButton1.setFont(new Font("Times", Font.BOLD, 14));
+        jButton1.setText("Enter/Cancel");
+        jButton1.addActionListener(e -> getOption(type));
+        jPanel1.add(jButton1, BorderLayout.LINE_END);
 
-        JPanel panel = new JPanel();
-        splitPane.setLeftComponent(panel);
-        panel.setLayout(new BorderLayout(0, 0));
-
-        JLabel lblHey = new JLabel(WindowText.particleDrawOptions());
-        lblHey.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(lblHey, BorderLayout.CENTER);
-
-        final JTextField textField = new JTextField(1);
+        textField = new JTextField();
+        textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setFont(new Font("Times", Font.PLAIN, 17));
-        textField.setHorizontalAlignment(SwingConstants.CENTER);
-        splitPane.setRightComponent(textField);
-        textField.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER){
-                    if (textField.getText() != null) {
-                        try {
-                            if (type == 0) {
-                                if (InputWrapper.canParseStringInt(textField.getText())) {
-                                    ParticleTypeOptions.baseParticleOptions(Integer.parseInt(textField.getText()));
-                                }
-                            }
-                            else if (type == 1) {
-                                if (InputWrapper.canParseStringInt(textField.getText())) {
-                                    ParticleTypeOptions.realFireworksOptions(Integer.parseInt(textField.getText()));
-                                }
-                            }
-                        }catch (Exception ex){EException.append(ex);}
-                    }
-                }
-            }
-        });
+        textField.addKeyListener(new KeyAdapter() {public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER) getOption(type);}});
+        jPanel1.add(textField, BorderLayout.CENTER);
+
+        frame.add(jPanel1, BorderLayout.PAGE_END);
+
+        JLabel jLabel2 = new JLabel();
+        jLabel2.setText(WindowText.particleDrawOptions());
+        jScrollPane1.setViewportView(jLabel2);
+
+        frame.add(jScrollPane1, BorderLayout.CENTER);
         frame.setVisible(true);
     }
 
+    private static void getOption(int type){
+        if (textField.getText() != null) {
+            try {
+                if (type == 0) {
+                    if (InputWrapper.canParseStringInt(textField.getText())) {
+                        ParticleTypeOptions.baseParticleOptions(Integer.parseInt(textField.getText()));
+                    }
+                }
+                else if (type == 1) {
+                    if (InputWrapper.canParseStringInt(textField.getText())) {
+                        ParticleTypeOptions.realFireworksOptions(Integer.parseInt(textField.getText()));
+                    }
+                }
+            }catch (Exception ex){EException.append(ex);}
+        }
+    }
     private void close(int index){particleTypeUIs[index] = null; frame.dispose();}
 }

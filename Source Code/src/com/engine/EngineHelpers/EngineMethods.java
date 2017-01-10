@@ -8,7 +8,6 @@ import static com.engine.Verlet.Point.displayPointArraySize;
 import com.engine.GUIWindows.*;
 import com.engine.JComponents.CMenuBar;
 import com.engine.ParticleHelpers.ParticleModes;
-import com.engine.ParticleHelpers.ParticleSeed;
 import com.engine.Verlet.*;
 import com.engine.ThinkingParticles.SCCycle;
 import com.engine.Utilities.ColorConverter;
@@ -101,11 +100,7 @@ public class EngineMethods {
      */
     public static void handleGraphicsSmoothing(){
         if (SMOOTH){
-            //Included 3 for Graph Mode : tested seems to have no effect but better to have the option
-            if (switchMode == 4 || switchMode == 3) {
-                RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                graphics2D.setRenderingHints(rh);
-            }
+            if (switchMode == 4) graphics2D.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
         }
     }
 
@@ -284,9 +279,9 @@ public class EngineMethods {
         String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, WindowText.particleSizeSeedOptions()), null, JOptionPane.PLAIN_MESSAGE);
         int seedOpt = (InputWrapper.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
         switch (seedOpt){
-            case 1: ParticleSeed.singleClickSizeSeed(); break;
-            case 2: ParticleSeed.fireworksSizeSeed(); break;
-            case 3: ParticleSeed.dragSizeSeed(); break;
+            case 1: ParticleSizeSeed.getInstance(0); break;
+            case 2: ParticleSizeSeed.getInstance(1); break;
+            case 3: ParticleSizeSeed.getInstance(2); break;
             default: break;
         }
     }
@@ -300,9 +295,9 @@ public class EngineMethods {
         String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, WindowText.particleSpeedSeedOptions()), null, JOptionPane.PLAIN_MESSAGE);
         int seedOpt = (InputWrapper.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
         switch (seedOpt){
-            case 1: ParticleSeed.singleClickSpeedSeed(); break;
-            case 2: ParticleSeed.fireworksSpeedSeed(); break;
-            case 3: ParticleSeed.dragSpeedSeed(); break;
+            case 1: ParticleSpeedSeed.getInstance(0); break;
+            case 2: ParticleSpeedSeed.getInstance(1); break;
+            case 3: ParticleSpeedSeed.getInstance(2); break;
             default: break;
         }
     }

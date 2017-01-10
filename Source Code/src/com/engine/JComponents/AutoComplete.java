@@ -5,8 +5,6 @@ import com.engine.GUIWindows.EException;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.event.UndoableEditEvent;
-import javax.swing.event.UndoableEditListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
 import javax.swing.undo.UndoManager;
@@ -81,7 +79,7 @@ public class AutoComplete implements DocumentListener {
         public void actionPerformed(ActionEvent ev) {
             if (mode == Mode.COMPLETION) {
                 int pos = textField.getSelectionEnd();
-                StringBuffer sb = new StringBuffer(textField.getText());
+                StringBuilder sb = new StringBuilder(textField.getText());
                 sb.insert(pos, " ");
                 textField.setText(sb.toString());
                 textField.setCaretPosition(pos + 1);

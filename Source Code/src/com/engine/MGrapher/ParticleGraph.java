@@ -47,7 +47,7 @@ public class ParticleGraph { // Best scale for all functions = 0.02
             "asin(x)", "acos(x)", "atan(x)",
             "log(x)", "sqrt(x)", "abs(x)",
             "exp(x)", "pow(x, 2)", "rand(sin(x),0)",
-            "signum(x)", "mod(x,sin(x))", "lerp(X,sin(x),.5)",
+            "signum(x)", "mod(x,sin(x))", "lerp(sin(x),x/3,.5)",
             "norm(x,0,0)", "clamp(x,0,1)", "map(sin(x),-1,1,-1,1)",
             "sec(x)", "csc(x)", "cot(x)"
     };
@@ -112,21 +112,17 @@ public class ParticleGraph { // Best scale for all functions = 0.02
         textFields[0].setFocusTraversalKeysEnabled(false);
         textFields[0].addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {if (e.getKeyCode() != KeyEvent.VK_ENTER) {textFields[0].setForeground(Color.black);}}
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) graphFunction();
-            }
+            public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER) graphFunction();}
         });
 
-        makeUndoable(textFields[0]);
-        panel.add(textFields[0], textFields[0].gridBagConstraints);
-
-        /////Textfield AutoSuggest Functions
+        //Textfield AutoSuggest Functions
         String COMMIT_ACTION = "commit";
         AutoComplete autoComplete = new AutoComplete(textFields[0], Arrays.asList(suggestions));
         textFields[0].getDocument().addDocumentListener(autoComplete);
         textFields[0].getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
         textFields[0].getActionMap().put(COMMIT_ACTION, autoComplete.new CommitAction());
-        /////
+        makeUndoable(textFields[0]);
+        panel.add(textFields[0], textFields[0].gridBagConstraints);
 
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem cut = new JMenuItem("Cut");
@@ -168,11 +164,11 @@ public class ParticleGraph { // Best scale for all functions = 0.02
         RButton graphButton = new RButton("<html><span style='color:#008DCB'>Graph Function</span></html>",
                 new Font("Times New Roman", Font.PLAIN, 23), 2, GridBagConstraints.HORIZONTAL, new int[]{0, 13}, new int[]{20, 15});
         graphButton.addActionListener(e -> {if (e.getSource() == graphButton) {graphFunction();}});
-        graphButton.gridBagConstraints.gridwidth=GridBagConstraints.REMAINDER;
-        graphButton.gridBagConstraints.fill =    GridBagConstraints.HORIZONTAL;
-        graphButton.gridBagConstraints.anchor =  GridBagConstraints.SOUTHWEST;
-        graphButton.gridBagConstraints.weightx = 0.5;
-        graphButton.gridBagConstraints.weighty = 0.5;
+        graphButton.gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        graphButton.gridBagConstraints.fill =      GridBagConstraints.HORIZONTAL;
+        graphButton.gridBagConstraints.anchor =    GridBagConstraints.SOUTHWEST;
+        graphButton.gridBagConstraints.weightx =   0.5;
+        graphButton.gridBagConstraints.weighty =   0.5;
         panel.add(graphButton, graphButton.gridBagConstraints);
         frame.setVisible(true);
     }
@@ -185,13 +181,12 @@ public class ParticleGraph { // Best scale for all functions = 0.02
 
             for (double i = negative_width; i < positive_width; i += .04) {
                 engine.put("x", i * scaleX);
-                try {setGraph(i, .95);
-                } catch (Exception e) {throwError(textFields[0]); break;}
+                try {setGraph(i, .95);} catch (Exception e) {throwError(textFields[0]); break;}
             }
         } catch (Exception e) { EException.append(e);}
     }
 
-    private static void setGraph(double x, double r) throws Exception {ParticlesArray.add(new Particle(x, (-(evaluateExpr(mathExpression) * scaleY) + 0), r));}
+    private static void setGraph(double x, double r) throws Exception {ParticlesArray.add(new Particle(x, (-(evaluateExpr(mathExpression) * scaleY)), r));}
 
     private static void evalInput(int mode, String express) {
         scaleY = guardDouble(textFields[1].getText(),textFields[1]);

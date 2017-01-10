@@ -17,13 +17,11 @@ import static com.engine.Utilities.ColorConverter.setAlpha;
 public class ParticleColor {
     private static ParticleColor thinkingParticlesUI = null;
     public static JFrame frame;
-    private static int WIDTH = 774, HEIGHT = 250, cHeight = 20, btHeight = 110;
     public static Font font = new Font("Arial", Font.PLAIN, 17);
     private static Color fgColor = Color.white;
     public static CLabel[] labels = new CLabel[5];
-    private static JButton cycleColor;
 
-    //public static void main(String[] args) {ParticleColor.getInstance();}
+    //public static void main(String[] args) {getInstance();}
 
     public static ParticleColor getInstance() {
         if (thinkingParticlesUI == null) {thinkingParticlesUI = new ParticleColor();}frame.toFront(); return thinkingParticlesUI;
@@ -33,20 +31,20 @@ public class ParticleColor {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e1){e1.printStackTrace();}
         frame = new JFrame("Thinking Particles Color Changer");
         frame.setIconImage(Settings.getIcon());
-        frame.setSize(WIDTH, HEIGHT);
+        frame.setSize(774, 250);
         frame.setResizable(false);
         frame.getContentPane().setBackground(new Color(220, 220, 220));
         frame.setLayout(null);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent)
-        {thinkingParticlesUI = null; frame.dispose();}});
+        frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {thinkingParticlesUI = null; frame.dispose();}});
         frame.setLocationRelativeTo(EFrame);
 
-        labels[0] = new CLabel(new Rectangle(10, cHeight, 128, 75), font, fgColor, setAlpha(Particle.thinkingColors[0],255));
-        labels[1] = new CLabel(new Rectangle(170, cHeight, 128, 75), font, fgColor, setAlpha(Particle.thinkingColors[1],255));
-        labels[2] = new CLabel(new Rectangle(327, cHeight, 128, 75), font, fgColor, setAlpha(Particle.thinkingColors[2],255));
-        labels[3] = new CLabel(new Rectangle(478, cHeight, 128, 75), font, fgColor, setAlpha(Particle.thinkingColors[3],255));
-        labels[4] = new CLabel(new Rectangle(632, cHeight, 128, 75), font, fgColor, setAlpha(Particle.thinkingColors[4],255));
+        int cHeight = 20, btHeight = 110, w = 128, h = 75, alpha = 255;
+        labels[0] = new CLabel(new Rectangle(10, cHeight,  w, h), font, fgColor, setAlpha(Particle.thinkingColors[0], alpha));
+        labels[1] = new CLabel(new Rectangle(170, cHeight, w, h), font, fgColor, setAlpha(Particle.thinkingColors[1], alpha));
+        labels[2] = new CLabel(new Rectangle(327, cHeight, w, h), font, fgColor, setAlpha(Particle.thinkingColors[2], alpha));
+        labels[3] = new CLabel(new Rectangle(478, cHeight, w, h), font, fgColor, setAlpha(Particle.thinkingColors[3], alpha));
+        labels[4] = new CLabel(new Rectangle(632, cHeight, w, h), font, fgColor, setAlpha(Particle.thinkingColors[4], alpha));
         addComps(frame, labels[0], labels[1], labels[2], labels[3], labels[4]);
 
         //Presets
@@ -73,7 +71,7 @@ public class ParticleColor {
         defaultColorsButton.addActionListener(e -> SCChoices.setPresetColors(SCChoices.defaultColor()));
         frame.getContentPane().add(defaultColorsButton);
 
-        cycleColor = new JButton("Cycle Colors: " + EngineMethods.getCycle());
+        JButton cycleColor = new JButton("Cycle Colors: " + EngineMethods.getCycle());
         cycleColor.setOpaque(false);
         cycleColor.setFont(new Font(Font.SERIF, Font.BOLD, 15));
         cycleColor.setBounds(360, (frame.getHeight() - (34*2)), 166, 34);
@@ -148,9 +146,11 @@ public class ParticleColor {
     }
 
     public static void setBackgroundColor(Color[] colors) {
-        labels[0].setBackground(setAlpha(colors[0],255)); labels[1].setBackground(setAlpha(colors[1],255));
-        labels[2].setBackground(setAlpha(colors[2],255)); labels[3].setBackground(setAlpha(colors[3],255));
-        labels[4].setBackground(setAlpha(colors[4],255));
+        labels[0].setBackground(setAlpha(colors[0], 255));
+        labels[1].setBackground(setAlpha(colors[1], 255));
+        labels[2].setBackground(setAlpha(colors[2], 255));
+        labels[3].setBackground(setAlpha(colors[3], 255));
+        labels[4].setBackground(setAlpha(colors[4], 255));
     }
 
     private static void addComps(JFrame root, JComponent... components) {for (JComponent comps : components) {root.add(comps);}}

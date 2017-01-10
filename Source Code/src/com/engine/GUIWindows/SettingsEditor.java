@@ -144,7 +144,7 @@ public class SettingsEditor {
         textFields[2] = new CTextField("" + ptGravitationInt, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 3});
         panel.add(textFields[2], textFields[2].gridBagConstraints);
 
-        RLabel lblFireworksamountSet = new RLabel("Fireworks Amount - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 4);
+        RLabel lblFireworksamountSet = new RLabel("Fireworks Amount - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 4);
         panel.add(lblFireworksamountSet, lblFireworksamountSet.gridBagConstraints);
 
         textFields[3] = new CTextField("" + fireworksAmount, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 4});
@@ -156,13 +156,13 @@ public class SettingsEditor {
         textFields[4] = new CTextField("" + particleMode, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 5});
         panel.add(textFields[4], textFields[4].gridBagConstraints);
 
-        RLabel lblDragamountSet = new RLabel("Drag Amount - set: 1 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 6);
+        RLabel lblDragamountSet = new RLabel("Drag Amount - set: 1 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 6);
         panel.add(lblDragamountSet, lblDragamountSet.gridBagConstraints);
 
         textFields[5] = new CTextField("" + dragAmount, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 6});
         panel.add(textFields[5], textFields[5].gridBagConstraints);
 
-        RLabel lblBaselifeSet = new RLabel("Base Life - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 7);
+        RLabel lblBaselifeSet = new RLabel("Base Life - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 7);
         panel.add(lblBaselifeSet, lblBaselifeSet.gridBagConstraints);
 
         textFields[6] = new CTextField("" + baseLife, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 7});
@@ -174,31 +174,31 @@ public class SettingsEditor {
         textFields[7] = new CTextField("" + rfParticleMode, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 8});
         panel.add(textFields[7], textFields[7].gridBagConstraints);
 
-        RLabel lblRflifeSet = new RLabel("Fireworks Life - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 9);
+        RLabel lblRflifeSet = new RLabel("Fireworks Life - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 9);
         panel.add(lblRflifeSet, lblRflifeSet.gridBagConstraints);
 
         textFields[8] = new CTextField("" + rfLife, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 9});
         panel.add(textFields[8], textFields[8].gridBagConstraints);
 
-        RLabel lblRfwindSet = new RLabel("Fireworks Wind - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 10);
+        RLabel lblRfwindSet = new RLabel("Fireworks Wind - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 10);
         panel.add(lblRfwindSet, lblRfwindSet.gridBagConstraints);
 
         textFields[9] = new CTextField("" + rfWind, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 10});
         panel.add(textFields[9], textFields[9].gridBagConstraints);
 
-        RLabel lblRfjitterSet = new RLabel("Fireworks Jitter - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 11);
+        RLabel lblRfjitterSet = new RLabel("Fireworks Jitter - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 11);
         panel.add(lblRfjitterSet, lblRfjitterSet.gridBagConstraints);
 
         textFields[10] = new CTextField("" + rfJitter, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 11});
         panel.add(textFields[10], textFields[10].gridBagConstraints);
 
-        RLabel lblSafetyamountSet = new RLabel("Safety Amount - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 12);
+        RLabel lblSafetyamountSet = new RLabel("Safety Amount - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 12);
         panel.add(lblSafetyamountSet, lblSafetyamountSet.gridBagConstraints);
 
         textFields[11] = new CTextField("" + safetyAmount, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 12});
         panel.add(textFields[11], textFields[11].gridBagConstraints);
 
-        RLabel lblCyclerateSet = new RLabel("Cycle Rate - set: 1 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 13);
+        RLabel lblCyclerateSet = new RLabel("Cycle Rate - set: 1 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 13);
         panel.add(lblCyclerateSet, lblCyclerateSet.gridBagConstraints);
 
         textFields[12] = new CTextField("" + cycleRate, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 13});
@@ -207,73 +207,73 @@ public class SettingsEditor {
         RLabel lblNewLabel_2 = new RLabel("-- Doubles --", new Font("Times", Font.BOLD, 18), 2, new Insets(0, 0, 5, 5), new int[]{0, 14});
         panel.add(lblNewLabel_2, lblNewLabel_2.gridBagConstraints);
 
-        RLabel lblIfinput = new RLabel("SingleClickSizeMaxVal - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 15);
+        RLabel lblIfinput = new RLabel("SingleClickSizeMaxVal - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 15);
         panel.add(lblIfinput, lblIfinput.gridBagConstraints);
 
         textFields[13] = new CTextField("" + singleClickSizeMaxVal, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 15});
         panel.add(textFields[13], textFields[13].gridBagConstraints);
 
-        RLabel lblSingleclicksizeminvalSet = new RLabel("SingleClickSizeMinVal - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 16);
+        RLabel lblSingleclicksizeminvalSet = new RLabel("SingleClickSizeMinVal - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 16);
         panel.add(lblSingleclicksizeminvalSet, lblSingleclicksizeminvalSet.gridBagConstraints);
 
         textFields[14] = new CTextField("" + singleClickSizeMinVal, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 16});
         panel.add(textFields[14], textFields[14].gridBagConstraints);
 
-        RLabel lblMulticlicksizemaxvalSet = new RLabel("MultiClickSizeMaxVal - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 17);
+        RLabel lblMulticlicksizemaxvalSet = new RLabel("MultiClickSizeMaxVal - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 17);
         panel.add(lblMulticlicksizemaxvalSet, lblMulticlicksizemaxvalSet.gridBagConstraints);
 
         textFields[15] = new CTextField("" + multiClickSizeMaxVal, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 17});
         panel.add(textFields[15], textFields[15].gridBagConstraints);
 
-        RLabel lblMulticlicksizeminvalSet = new RLabel("MultiClickSizeMinVal - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 18);
+        RLabel lblMulticlicksizeminvalSet = new RLabel("MultiClickSizeMinVal - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 18);
         panel.add(lblMulticlicksizeminvalSet, lblMulticlicksizeminvalSet.gridBagConstraints);
 
         textFields[16] = new CTextField("" + multiClickSizeMinVal, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 18});
         panel.add(textFields[16], textFields[16].gridBagConstraints);
 
-        RLabel lblFireworkssizemaxvalSet = new RLabel("FireworksSizeMaxVal - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 19);
+        RLabel lblFireworkssizemaxvalSet = new RLabel("FireworksSizeMaxVal - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 19);
         panel.add(lblFireworkssizemaxvalSet, lblFireworkssizemaxvalSet.gridBagConstraints);
 
         textFields[17] = new CTextField("" + fireworksSizeMaxVal, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 19});
         panel.add(textFields[17], textFields[17].gridBagConstraints);
 
-        RLabel lblFireworkssizeminvalSet = new RLabel("FireworksSizeMinVal - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 20);
+        RLabel lblFireworkssizeminvalSet = new RLabel("FireworksSizeMinVal - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 20);
         panel.add(lblFireworkssizeminvalSet, lblFireworkssizeminvalSet.gridBagConstraints);
 
         textFields[18] = new CTextField("" + fireworksSizeMinVal, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 20});
         panel.add(textFields[18], textFields[18].gridBagConstraints);
 
-        RLabel lblDragsizemaxvalSet = new RLabel("DragSizeMaxVal - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 21);
+        RLabel lblDragsizemaxvalSet = new RLabel("DragSizeMaxVal - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 21);
         panel.add(lblDragsizemaxvalSet, lblDragsizemaxvalSet.gridBagConstraints);
 
         textFields[19] = new CTextField("" + dragSizeMaxVal, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 21});
         panel.add(textFields[19], textFields[19].gridBagConstraints);
 
-        RLabel lblDragsizeminvalSet = new RLabel("DragSizeMinVal - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 0, 5), 0, 22);
+        RLabel lblDragsizeminvalSet = new RLabel("DragSizeMinVal - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 0, 5), 0, 22);
         panel.add(lblDragsizeminvalSet, lblDragsizeminvalSet.gridBagConstraints);
 
         textFields[20] = new CTextField("" + dragSizeMinVal, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 22});
         panel.add(textFields[20], textFields[20].gridBagConstraints);
 
-        RLabel lblsingleClickSpeedValSet = new RLabel("SingleClickSpeedVal - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 0, 5), 0, 23);
+        RLabel lblsingleClickSpeedValSet = new RLabel("SingleClickSpeedVal - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 0, 5), 0, 23);
         panel.add(lblsingleClickSpeedValSet, lblsingleClickSpeedValSet.gridBagConstraints);
 
         textFields[21] = new CTextField("" + singleClickSpeedVal, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 23});
         panel.add(textFields[21], textFields[21].gridBagConstraints);
 
-        RLabel lblmultiClickSpeedValSet = new RLabel("MultiClickSpeedVal - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 0, 5), 0, 24);
+        RLabel lblmultiClickSpeedValSet = new RLabel("MultiClickSpeedVal - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 0, 5), 0, 24);
         panel.add(lblmultiClickSpeedValSet, lblmultiClickSpeedValSet.gridBagConstraints);
 
         textFields[22] = new CTextField("" + multiClickSpeedVal, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 24});
         panel.add(textFields[22], textFields[22].gridBagConstraints);
 
-        RLabel lblfireworksSpeedValSet = new RLabel("FireworksSpeedVal - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 0, 5), 0, 25);
+        RLabel lblfireworksSpeedValSet = new RLabel("FireworksSpeedVal - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 0, 5), 0, 25);
         panel.add(lblfireworksSpeedValSet, lblfireworksSpeedValSet.gridBagConstraints);
 
         textFields[23] = new CTextField("" + fireworksSpeedVal, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 25});
         panel.add(textFields[23], textFields[23].gridBagConstraints);
 
-        RLabel lbldragSpeedValSet = new RLabel("DragSpeedVal - set: 0 - x", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 0, 5), 0, 26);
+        RLabel lbldragSpeedValSet = new RLabel("DragSpeedVal - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 0, 5), 0, 26);
         panel.add(lbldragSpeedValSet, lbldragSpeedValSet.gridBagConstraints);
 
         textFields[24] = new CTextField("" + dragSpeedVal, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 26});

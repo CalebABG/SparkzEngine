@@ -70,7 +70,6 @@ public class Engine implements Runnable {
             if(System.currentTimeMillis() - lastTimer >= 1000L) {
                 lastTimer += 1000L; tps = ticks; fps = frames; frames = 0; ticks = 0;
             }
-            Toolkit.getDefaultToolkit().sync();
         }
     }
 
@@ -101,6 +100,7 @@ public class Engine implements Runnable {
         try {safetyBooleanChecks(); draw();} catch (Exception e) {EException.append(e);}
         if (graphics2D != null) {graphics2D.dispose();}
         buff.show();
+        Toolkit.getDefaultToolkit().sync();
     }
 
     /**

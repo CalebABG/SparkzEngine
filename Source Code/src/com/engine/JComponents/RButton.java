@@ -21,4 +21,20 @@ public class RButton extends JButton{
         gridBagConstraints.gridx = gridXY[0];
         gridBagConstraints.gridy = gridXY[1];
     }
+
+    public RButton(String text, Font font, int gridWidth, int fill, int anchor, int gridX, int gridY, int ipadX, int ipadY, double weightX, double weightY) {
+        super(text);
+        this.text = super.getText();
+        this.font = font;
+        this.setFont(this.font);
+        gridBagConstraints.anchor = anchor;
+        gridBagConstraints.gridwidth = gridWidth;
+        gridBagConstraints.fill = fill;
+        gridBagConstraints.weightx = weightX;
+        gridBagConstraints.weighty = weightY;
+        gridBagConstraints.ipadx = ipadX;
+        gridBagConstraints.ipady = ipadY;
+        gridBagConstraints.gridx = gridX;
+        gridBagConstraints.gridy = gridY;
+    }
 }

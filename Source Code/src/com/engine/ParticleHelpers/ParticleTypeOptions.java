@@ -27,10 +27,9 @@ public class ParticleTypeOptions {
                 case 17: particleMode = 17; break;
                 case 18: particleMode = 18; break;
                 case 19: particleMode = 19; break;
-                default: particleMode = 1; break;
+                default: break;
             }
-        }catch (Exception l){
-            EException.append(l);}
+        }catch (Exception l){EException.append(l);}
     }
 
     public static void realFireworksOptions(int x) {
@@ -55,9 +54,8 @@ public class ParticleTypeOptions {
                 case 17: rfParticleMode = 17; break;
                 case 18: rfParticleMode = 18; break;
                 case 19: rfParticleMode = 19; break;
-                default: rfParticleMode = 1; break;
+                default: break;
             }
-        }catch (Exception ex){
-            EException.append(ex);}
+        }catch (Exception ex){EException.append(ex);}
     }
 }

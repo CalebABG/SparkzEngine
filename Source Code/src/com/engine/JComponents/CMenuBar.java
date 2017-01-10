@@ -11,12 +11,12 @@ import com.engine.Utilities.H5Wrapper;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class CMenuBar {
     private static JMenuBar menuBar;
-    private static JMenuItem exit = new JMenuItem("Exit"), settingsSave, settingsLoad, settingsUI, sliderUI,
-            thinkingParticlesUI,statsUI,particleGraphUI, helpInstructions, helpGraphInstructions, accessibility, optionsMenu,
-            enginepause;
+    private static JMenuItem exit, settingsSave, settingsLoad, settingsUI, sliderUI,
+            thinkingParticlesUI,statsUI,particleGraphUI, helpInstructions, helpGraphInstructions, optionsMenu, enginepause;
     private static Font font1 = new Font("Times", Font.PLAIN, 15);
     private static final int memThreshold = 75;
     public static ButtonGroup particleModesGroup, particleTypesGroup, particleGravitationGroup;
@@ -33,25 +33,28 @@ public class CMenuBar {
         menuBar.add(Box.createHorizontalStrut(11));
         //File End
 
+        exit = new JMenuItem("Exit");
+        exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
+        exit.addActionListener(e -> {if (e.getSource() == exit) QuitWindow.getInstance();});
+        mnFile.add(exit);
+
         //Edit Begin
         JMenu mnEdit = new JMenu("Edit");
         mnEdit.setFont(font1);
         menuBar.add(mnEdit);
 
         JMenuItem trimParticleArrays = new JMenuItem("Trim Particle Arrays");
+        trimParticleArrays.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, 0));
         trimParticleArrays.addActionListener(e -> EngineMethods.trimParticleArrays());
         mnEdit.add(trimParticleArrays);
 
         JMenuItem clearParticleArrays = new JMenuItem("Clear All Arrays");
+        clearParticleArrays.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0));
         clearParticleArrays.addActionListener(e -> EngineMethods.clearParticleArrays());
         mnEdit.add(clearParticleArrays);
         //Edit End
 
-        //Exit Begin
-        exit.addActionListener(e -> {if (e.getSource() == exit) QuitWindow.getInstance();});
-        mnFile.add(exit);
         menuBar.add(Box.createHorizontalStrut(11));
-        //Exit End
 
         //ShortCuts Begin
         JMenu mnUIWindows = new JMenu("Short-Cuts");
@@ -59,6 +62,7 @@ public class CMenuBar {
         menuBar.add(mnUIWindows);
 
         optionsMenu = new JMenuItem("Options Menu");
+        optionsMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_7, 0));
         optionsMenu.addActionListener(e -> {if (e.getSource() == optionsMenu) {OptionsMenu.getInstance();}});
         mnUIWindows.add(optionsMenu);
         statsUI = new JMenuItem("Stats Panel");
@@ -67,19 +71,23 @@ public class CMenuBar {
         mnUIWindows.add(statsUI);
 
         sliderUI = new JMenuItem("Slide Editor");
+        sliderUI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_9, 0));
         sliderUI.addActionListener(e -> {if (e.getSource() == sliderUI) {
             SlideEditor.getInstance();}});
         mnUIWindows.add(sliderUI);
 
         JMenuItem exceptionUI = new JMenuItem("Exception Log");
+        exceptionUI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.CTRL_DOWN_MASK + KeyEvent.SHIFT_DOWN_MASK));
         exceptionUI.addActionListener(e -> {if (e.getSource() == exceptionUI) {EException.getInstance();}});
         mnUIWindows.add(exceptionUI);
 
         thinkingParticlesUI = new JMenuItem("Particle Color Editor");
+        thinkingParticlesUI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0));
         thinkingParticlesUI.addActionListener(e -> {if (e.getSource() == thinkingParticlesUI) {
             ParticleColor.getInstance();}});
         mnUIWindows.add(thinkingParticlesUI);
         particleGraphUI = new JMenuItem("Particle Graph Editor");
+        particleGraphUI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.SHIFT_DOWN_MASK));
         particleGraphUI.addActionListener(e -> {if (e.getSource() == particleGraphUI) {ParticleGraph.getInstance();}});
         mnUIWindows.add(particleGraphUI);
 
@@ -104,9 +112,11 @@ public class CMenuBar {
         settingsSave.addActionListener(e -> {if (e.getSource() == settingsSave) {Settings.saveSettings();}});
         mnSettings.add(settingsSave);
         settingsLoad = new JMenuItem("Load Settings");
+        settingsLoad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.SHIFT_DOWN_MASK));
         settingsLoad.addActionListener(e -> {if (e.getSource() == settingsLoad) {Settings.loadSettings();}});
         mnSettings.add(settingsLoad);
         settingsUI = new JMenuItem("Settings Editor");
+        settingsUI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.SHIFT_DOWN_MASK));
         settingsUI.addActionListener(e -> {if (e.getSource() == settingsUI) {SettingsEditor.getInstance();}});
         mnSettings.add(settingsUI);
 
@@ -121,6 +131,7 @@ public class CMenuBar {
         mnHelp.setFont(font1);
 
         helpInstructions = new JMenuItem("Particle Engine Instructions");
+        helpInstructions.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, 0));
         helpInstructions.addActionListener(e -> {if (e.getSource() == helpInstructions) {EngineInstructions.getInstance();}});
         mnHelp.add(helpInstructions);
 
@@ -130,7 +141,7 @@ public class CMenuBar {
         menuBar.add(mnHelp);
 
         if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-            accessibility = new JMenuItem("On-Screen Keyboard");
+            JMenuItem accessibility = new JMenuItem("On-Screen Keyboard");
             accessibility.addActionListener(e -> {
                 try {Runtime.getRuntime().exec("cmd /c osk");} catch (Exception ez) {
                     EException.append(ez);}
@@ -260,12 +271,12 @@ public class CMenuBar {
         particleGravitationGroup.add(pGravModes[2]);
         gravitationModes.add(pGravModes[2]);
 
-        pGravModes[3] = new JRadioButtonMenuItem("H-Wave");
+        pGravModes[3] = new JRadioButtonMenuItem("Horizontal Wave");
         pGravModes[3].setActionCommand("3");
         particleGravitationGroup.add(pGravModes[3]);
         gravitationModes.add(pGravModes[3]);
 
-        pGravModes[4] = new JRadioButtonMenuItem("V-Wave");
+        pGravModes[4] = new JRadioButtonMenuItem("Vertical Wave");
         pGravModes[4].setActionCommand("4");
         particleGravitationGroup.add(pGravModes[4]);
         gravitationModes.add(pGravModes[4]);
