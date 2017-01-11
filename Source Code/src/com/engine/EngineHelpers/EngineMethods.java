@@ -5,6 +5,7 @@ import static com.engine.Utilities.H5Wrapper.H;
 import static com.engine.Utilities.InputWrapper.minValueGuard;
 import static com.engine.Verlet.Point.POINTS;
 import static com.engine.Verlet.Point.displayPointArraySize;
+import static com.engine.JComponents.CMenuBar.*;
 import com.engine.GUIWindows.*;
 import com.engine.JComponents.CMenuBar;
 import com.engine.ParticleHelpers.ParticleModes;
@@ -25,28 +26,30 @@ public class EngineMethods {
     public static void switchClickMode(MouseEvent e) {
         if (switchMode == 0)
         {
-            if (particleType == 0) {ParticleModes.singleParticle(e);}
-            if (particleType == 1) {ParticleModes.singleGravityPoint(e);}
-            if (particleType == 2) {ParticleModes.singleEmitter(e);}
-            if (particleType == 3) {ParticleModes.singleSemtex(e);}
-            if (particleType == 4) {ParticleModes.singleQED(e);}
-            if (particleType == 5) {ParticleModes.singleIon(e);}
-            if (particleType == 6) {ParticleModes.singleBlackHole(e);}
-            if (particleType == 7) {ParticleModes.singleDuplex(e);}
-            if (particleType == 8) {ParticleModes.singlePortal(e);}
+            if (particleType == 0) ParticleModes.singleParticle(e);
+            if (particleType == 1) ParticleModes.singleGravityPoint(e);
+            if (particleType == 2) ParticleModes.singleEmitter(e);
+            if (particleType == 3) ParticleModes.singleSemtex(e);
+            if (particleType == 4) ParticleModes.singleQED(e);
+            if (particleType == 5) ParticleModes.singleIon(e);
+            if (particleType == 6) ParticleModes.singleBlackHole(e);
+            if (particleType == 7) ParticleModes.singleDuplex(e);
+            if (particleType == 8) ParticleModes.singlePortal(e);
         }
+
         else if (switchMode == 1)
         {
-            if (particleType == 0) {ParticleModes.multiParticle(e);}
-            if (particleType == 1) {ParticleModes.multiGravityPoint(e, 4);}
-            if (particleType == 2) {ParticleModes.singleEmitter(e);}
-            if (particleType == 3) {ParticleModes.multiSemtex(e, 5);}
-            if (particleType == 4) {ParticleModes.multiQED(e, 4);}
-            if (particleType == 5) {ParticleModes.multiIon(e, 10);}
-            if (particleType == 6) {ParticleModes.singleBlackHole(e);}
-            if (particleType == 7) {ParticleModes.singleDuplex(e);}
-            if (particleType == 8) {ParticleModes.singlePortal(e);}
+            if (particleType == 0) ParticleModes.multiParticle(e);
+            if (particleType == 1) ParticleModes.multiGravityPoint(e, 4);
+            if (particleType == 2) ParticleModes.singleEmitter(e);
+            if (particleType == 3) ParticleModes.multiSemtex(e, 5);
+            if (particleType == 4) ParticleModes.multiQED(e, 4);
+            if (particleType == 5) ParticleModes.multiIon(e, 10);
+            if (particleType == 6) ParticleModes.singleBlackHole(e);
+            if (particleType == 7) ParticleModes.singleDuplex(e);
+            if (particleType == 8) ParticleModes.singlePortal(e);
         }
+
         else if (switchMode == 2) {mouseGravitation = false; ParticleModes.fireworksTarget(e);}
         else if (switchMode == 4) {VPHandler.handleRagdollMode(e);}
     }
@@ -243,7 +246,8 @@ public class EngineMethods {
      */
     private static void gravitationOptions(){
         int gravityMode = (int) minValueGuard(0, ptGravitationInt, WindowText.particleGravitationOptions());
-        switch (gravityMode){
+        switch (gravityMode)
+        {
             case 0: ptGravitationInt = 0; break;
             case 1: ptGravitationInt = 1; break;
             case 2: ptGravitationInt = 2; break;
@@ -254,6 +258,7 @@ public class EngineMethods {
             case 7: ptGravitationInt = 7; OrganicForces.getInstance(OptionsMenu.frame); break;
             default: ptGravitationInt = 0; break;
         }
+        updateGravitationModesRadios();
     }
 
     /**
@@ -262,7 +267,8 @@ public class EngineMethods {
     private static void realFireworks() {
         String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, WindowText.realFireworksOptions()), null, JOptionPane.PLAIN_MESSAGE);
         int rfoInt = (InputWrapper.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
-        switch (rfoInt){
+        switch (rfoInt)
+        {
             case 1: windAmount(); break;
             case 2: baseLifeAmount(); break;
             case 3: jitterAmount(); break;
@@ -278,7 +284,8 @@ public class EngineMethods {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception x){x.printStackTrace();}
         String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, WindowText.particleSizeSeedOptions()), null, JOptionPane.PLAIN_MESSAGE);
         int seedOpt = (InputWrapper.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
-        switch (seedOpt){
+        switch (seedOpt)
+        {
             case 1: ParticleSizeSeed.getInstance(0); break;
             case 2: ParticleSizeSeed.getInstance(1); break;
             case 3: ParticleSizeSeed.getInstance(2); break;
@@ -294,7 +301,8 @@ public class EngineMethods {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception x){x.printStackTrace();}
         String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, WindowText.particleSpeedSeedOptions()), null, JOptionPane.PLAIN_MESSAGE);
         int seedOpt = (InputWrapper.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
-        switch (seedOpt){
+        switch (seedOpt)
+        {
             case 1: ParticleSpeedSeed.getInstance(0); break;
             case 2: ParticleSpeedSeed.getInstance(1); break;
             case 3: ParticleSpeedSeed.getInstance(2); break;
@@ -364,7 +372,7 @@ public class EngineMethods {
      * @see com.engine.InputHandlers.KHandler
      */
     public static void pauseSimulation() {
-        isPaused = EngineMethods.toggle(isPaused); CMenuBar.updateState();
+        isPaused = toggle(isPaused); CMenuBar.updateState();
         if (isPaused) {SWindow.getInstance("Paused", 240, 85);} else {SWindow.getInstance("Resume", 240, 85);} setEngineTitleState();
     }
 
@@ -374,7 +382,8 @@ public class EngineMethods {
      */
     public static void getOptions(int s) {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());} catch (Exception x){x.printStackTrace();}
-        switch (s){
+        switch (s)
+        {
             case 1: particleSize(); break;
             case 2: particleDrag(); break;
             case 3: particleFireworks(); break;
@@ -392,6 +401,13 @@ public class EngineMethods {
         }
     }
 
+    public static void updateEngineMode() {
+        switchMode++;
+        if (switchMode > 4) {switchMode = 0;}
+        displayEngineMode();
+        updateParticleModesRadios();
+    }
+
     /**
      * Handles the action in response to a key listener for the left arrow key.
      * @see com.engine.InputHandlers.KHandler
@@ -400,12 +416,13 @@ public class EngineMethods {
         if (switchMode == 4) {
             VPHandler.MODE--;
             if (VPHandler.MODE < 0) {VPHandler.MODE = VPHandler.MAX_MODE;}
-            EngineMethods.displayParticleType();
+            displayParticleType();
         }
         else {
             particleType--;
             if (particleType < 0) {particleType = maxParticleType;}
-            EngineMethods.displayParticleType();
+            displayParticleType();
+            updateParticleTypesRadios();
         }
     }
 
@@ -417,15 +434,15 @@ public class EngineMethods {
         if (switchMode == 4) {
             VPHandler.MODE++;
             if (VPHandler.MODE > VPHandler.MAX_MODE) {VPHandler.MODE = 0;}
-            EngineMethods.displayParticleType();
+            displayParticleType();
         }
         else {
             particleType++;
             if (particleType > maxParticleType) {particleType = 0;}
-            EngineMethods.displayParticleType();
+            displayParticleType();
+            updateParticleTypesRadios();
         }
     }
-
 
     /**
      * Handles the action in response to a key listener for the up arrow key.
@@ -437,20 +454,27 @@ public class EngineMethods {
             else {SWindow.getInstance("Repel Mode", 350, 85);}} else {dragAmount+=1;}
     }
 
+    public static void downArrowFunction() {
+        dragAmount--;
+        if (dragAmount <= 1) dragAmount = 1;
+    }
+
     /**
      * Empties all of the Engines ArrayLists.
      * @see com.engine.InputHandlers.KHandler
      * @see CMenuBar
      */
     public static void clearParticleArrays(){
-        try {
+        try
+        {
             ParticlesArray.clear(); GravityPointsArray.clear();
             EmitterArray.clear(); FireworksArray.clear();
             FluxArray.clear(); EraserArray.clear();
             QEDArray.clear(); IonArray.clear();
             BlackHoleArray.clear(); DuplexArray.clear();
             PortalArray.clear(); POINTS.clear();
-        } catch (Exception e) {EException.append(e);}
+        }
+        catch (Exception e) {EException.append(e);}
     }
 
     /**
@@ -479,8 +503,9 @@ public class EngineMethods {
      * @see CMenuBar
      * @see com.engine.InputHandlers.KHandler
      */
-    public static void displayMode(){
-        switch (switchMode){
+    public static void displayEngineMode(){
+        switch (switchMode)
+        {
             case 0: SWindow.getInstance("Normal Mode", 380, 80); break;
             case 1: SWindow.getInstance("Multi Mode", 320, 80); break;
             case 2: SWindow.getInstance("Fireworks Mode", 470, 80); break;
@@ -495,7 +520,8 @@ public class EngineMethods {
      * @see CMenuBar
      */
     public static void displayParticleType(){
-        if (switchMode == 4) {
+        if (switchMode == 4)
+        {
             switch (VPHandler.MODE){
                 case 0: SWindow.getInstance("Point", 150, 80); break;
                 case 1: SWindow.getInstance("Stick", 140, 80); break;
@@ -507,7 +533,9 @@ public class EngineMethods {
                 default: break;
             }
         }
-        else{
+
+        else
+        {
             switch (particleType){
                 case 0: SWindow.getInstance("Particle", 200, 80); break;
                 case 1: SWindow.getInstance("Gravity Point", 375, 80); break;
@@ -528,10 +556,8 @@ public class EngineMethods {
      */
     public static void drawMid() {
         int neg_W = -canvas.getWidth() / 2, pos_W = canvas.getWidth() / 2;
-        graphics2D.setColor(Color.gray);
-        graphics2D.drawLine(neg_W, 0, pos_W, 0);
-        graphics2D.drawLine(0, 0, 0, -20);
-        graphics2D.drawLine(0, 0, 0, 20);
+        graphics2D.setColor(Color.gray); graphics2D.drawLine(neg_W, 0, pos_W, 0);
+        graphics2D.drawLine(0, 0, 0, -20); graphics2D.drawLine(0, 0, 0, 20);
     }
 
     /**

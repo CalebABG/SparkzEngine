@@ -59,7 +59,7 @@ public class ColorConverter {
     }
     public static void giveBackgroundColor() {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception x){x.getCause();}
-        Color f = JColorChooser.showDialog(EFrame, "Background Color", null); BGColor = (f != null) ? f : BGColor;
+        Color f = JColorChooser.showDialog(EFrame, "Background Color", null); backgroundColor = (f != null) ? f : backgroundColor;
     }
 
     public static Color randHSLColor(){
@@ -78,4 +78,15 @@ public class ColorConverter {
     }
 
     public static Color randRGBColor(){return new Color((int)(Math.random() * 0x1000000));}
+
+    private static int[] getRGBA(Color[] c, int index) {
+        return new int[]{c[index].getRed(), c[index].getGreen(),c[index].getBlue(), c[index].getAlpha()};
+    }
+
+    public static String[] getThinkingParticlesStrings(Color[] c) {
+        return new String[]{ColorConverter.RGBAtoHEXA(getRGBA(c, 0)), ColorConverter.RGBAtoHEXA(getRGBA(c, 1)),
+                ColorConverter.RGBAtoHEXA(getRGBA(c, 2)), ColorConverter.RGBAtoHEXA(getRGBA(c, 3)),
+                ColorConverter.RGBAtoHEXA(getRGBA(c, 4))
+        };
+    }
 }

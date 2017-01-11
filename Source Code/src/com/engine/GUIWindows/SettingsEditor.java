@@ -126,7 +126,7 @@ public class SettingsEditor {
         RLabel lblNewLabel = new RLabel("-- Ints --", new Font("Times", Font.BOLD, 18), 2, new Insets(3, 0, 5, 0), new int[]{0, 0});
         panel.add(lblNewLabel, lblNewLabel.gridBagConstraints);
 
-        RLabel lblNewLabel_1 = new RLabel("Switch Mode - set: 0 - 4", new Font("Times", Font.PLAIN, 17), new Insets(0, 3, 5, 5), GridBagConstraints.WEST, new int[]{0, 1}, new int[]{1, 4});
+        RLabel lblNewLabel_1 = new RLabel("Engine Mode - set: 0 - 4", new Font("Times", Font.PLAIN, 17), new Insets(0, 3, 5, 5), GridBagConstraints.WEST, new int[]{0, 1}, new int[]{1, 4});
         panel.add(lblNewLabel_1, lblNewLabel_1.gridBagConstraints);
 
         textFields[0] = new CTextField("" + switchMode, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 1});

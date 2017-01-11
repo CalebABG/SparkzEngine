@@ -99,15 +99,14 @@ public class Engine implements Runnable {
         handleGraphicsSmoothing();
         try {safetyBooleanChecks(); draw();} catch (Exception e) {EException.append(e);}
         if (graphics2D != null) {graphics2D.dispose();}
-        buff.show();
-        Toolkit.getDefaultToolkit().sync();
+        buff.show(); toolkit.sync();
     }
 
     /**
      * This method actively draws to the canvas of the program. It is used within the programs render method.
      */
     private void draw() {
-        graphics2D.setColor(BGColor);
+        graphics2D.setColor(backgroundColor);
         graphics2D.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         if (switchMode == 3) graphics2D.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
         else graphics2D.translate(0, 0);

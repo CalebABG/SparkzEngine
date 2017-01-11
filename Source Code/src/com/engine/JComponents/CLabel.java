@@ -28,6 +28,16 @@ public class CLabel extends JLabel {
         setUp();
     }
 
+    public CLabel(Font font, Color foreground, Color background) {
+        this.text = super.getText();
+        this.font = font;
+        setBackground(background);
+        setForeground(foreground);
+        setOpaque(true);
+        setFont(font);
+        setHorizontalAlignment(SwingConstants.CENTER);
+    }
+
     public void setUp() {
         setOpaque(true);
         setFont(font);

@@ -4,7 +4,7 @@ import com.engine.EngineHelpers.EngineMethods;
 import com.engine.GUIWindows.*;
 import com.engine.MGrapher.ParticleGraph;
 import static com.engine.EngineHelpers.EConstants.*;
-import static com.engine.EngineHelpers.EngineMethods.displayMode;
+import static com.engine.EngineHelpers.EngineMethods.displayEngineMode;
 import static com.engine.EngineHelpers.EngineMethods.displayParticleType;
 
 import com.engine.Utilities.H5Wrapper;
@@ -19,6 +19,7 @@ public class CMenuBar {
             thinkingParticlesUI,statsUI,particleGraphUI, helpInstructions, helpGraphInstructions, optionsMenu, enginepause;
     private static Font font1 = new Font("Times", Font.PLAIN, 15);
     private static final int memThreshold = 75;
+    public static JRadioButtonMenuItem[] pModes,pTypes, pGravModes;
     public static ButtonGroup particleModesGroup, particleTypesGroup, particleGravitationGroup;
 
     public static void setUpMenuBar(JFrame root) {
@@ -158,7 +159,7 @@ public class CMenuBar {
         JMenu particleModes = new JMenu("Particle Modes");
         particleModesGroup = new ButtonGroup();
 
-        JRadioButtonMenuItem[] pModes = new JRadioButtonMenuItem[5];
+        pModes = new JRadioButtonMenuItem[5];
 
         pModes[0] = new JRadioButtonMenuItem("Normal Mode");
         pModes[0].setActionCommand("0");
@@ -186,16 +187,15 @@ public class CMenuBar {
         particleModes.add(pModes[4]);
 
         for (JRadioButtonMenuItem b : pModes) {if (Integer.parseInt(b.getActionCommand()) == switchMode) {b.setSelected(true); break;}}
-        for (JRadioButtonMenuItem b : pModes) {b.addActionListener(e -> {switchMode = Integer.parseInt(particleModesGroup.getSelection().getActionCommand()); displayMode();});}
+        for (JRadioButtonMenuItem b : pModes) {b.addActionListener(e -> {switchMode = Integer.parseInt(particleModesGroup.getSelection().getActionCommand()); displayEngineMode();});}
 
         modes.add(particleModes);
 
         ////
-
         JMenu particleTypes = new JMenu("Particle Types");
         particleTypesGroup = new ButtonGroup();
 
-        JRadioButtonMenuItem[] pTypes = new JRadioButtonMenuItem[9];
+        pTypes = new JRadioButtonMenuItem[9];
 
         pTypes[0] = new JRadioButtonMenuItem("Particle");
         pTypes[0].setActionCommand("0");
@@ -250,11 +250,10 @@ public class CMenuBar {
         modes.add(particleTypes);
 
         ///
-
         JMenu gravitationModes = new JMenu("Gravitation Modes");
         particleGravitationGroup = new ButtonGroup();
 
-        JRadioButtonMenuItem[] pGravModes = new JRadioButtonMenuItem[8];
+        pGravModes = new JRadioButtonMenuItem[8];
 
         pGravModes[0] = new JRadioButtonMenuItem("Default Force");
         pGravModes[0].setActionCommand("0");
@@ -303,9 +302,15 @@ public class CMenuBar {
         menuBar.add(modes);
     }
 
-    private static String isPaused() {
-        if (isPaused) return "Resume Engine"; else return "Pause Engine";
-    }
+    public static void updateParticleModesRadios() {
+        for (JRadioButtonMenuItem b : pModes) {if (Integer.parseInt(b.getActionCommand()) == switchMode) {b.setSelected(true); break;}}}
+    public static void updateParticleTypesRadios() {
+        for (JRadioButtonMenuItem b : pTypes) {if (Integer.parseInt(b.getActionCommand()) == particleType) {b.setSelected(true); break;}}}
+    public static void updateGravitationModesRadios() {
+        for (JRadioButtonMenuItem b : pGravModes) {if (Integer.parseInt(b.getActionCommand()) == ptGravitationInt) {b.setSelected(true); break;}}}
+    public static void updateAllRadios() {
+        updateParticleModesRadios(); updateParticleTypesRadios(); updateGravitationModesRadios();}
+
+    private static String isPaused() {if (isPaused) return "Resume Engine"; else return "Pause Engine";}
     public static void updateState() {enginepause.setText(isPaused());}
-    private static String getState(boolean b) {if (b) return "On"; else return "Off";}
 }

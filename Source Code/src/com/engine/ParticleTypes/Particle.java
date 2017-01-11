@@ -145,7 +145,7 @@ public class Particle extends Molecule {
     public void render() {
         if (thinkingParticles) {color = getSelfColor();} else {color = ColorConverter.getColor();}
         if (connectParticles && ParticlesArray.size() <= 100) {if (PTMODEBOOL) {connectModeSequential();} else {connectModeAll();}}
-        giveStyle(x, y, radius, color, particleMode, customParticleText);
+        giveStyle(x, y, radius, color, particleMode, baseParticleText);
     }
 
     public void update() {

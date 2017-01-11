@@ -35,7 +35,7 @@ public class Fireworks extends Molecule {
 
     public void render() {
         if (thinkingParticles) {color = getSelfColor();} else {color = ColorConverter.getColor();}
-        giveStyle(x, y, radius, color, rfParticleMode, rfCustomParticleText);
+        giveStyle(x, y, radius, color, rfParticleMode, fireworksParticleText);
     }
 
     public void update () {

@@ -18,6 +18,7 @@ public class ParticleColor {
     private static ParticleColor thinkingParticlesUI = null;
     public static JFrame frame;
     public static Font font = new Font("Arial", Font.PLAIN, 17);
+    public static Font uiFont = new Font("Tahoma", Font.BOLD, 15);
     private static Color fgColor = Color.white;
     public static CLabel[] labels = new CLabel[5];
 
@@ -31,117 +32,178 @@ public class ParticleColor {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e1){e1.printStackTrace();}
         frame = new JFrame("Thinking Particles Color Changer");
         frame.setIconImage(Settings.getIcon());
-        frame.setSize(774, 250);
-        frame.setResizable(false);
-        frame.getContentPane().setBackground(new Color(220, 220, 220));
-        frame.setLayout(null);
+        frame.setSize(973, 246);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {thinkingParticlesUI = null; frame.dispose();}});
         frame.setLocationRelativeTo(EFrame);
 
-        int cHeight = 20, btHeight = 110, w = 128, h = 75, alpha = 255;
-        labels[0] = new CLabel(new Rectangle(10, cHeight,  w, h), font, fgColor, setAlpha(Particle.thinkingColors[0], alpha));
-        labels[1] = new CLabel(new Rectangle(170, cHeight, w, h), font, fgColor, setAlpha(Particle.thinkingColors[1], alpha));
-        labels[2] = new CLabel(new Rectangle(327, cHeight, w, h), font, fgColor, setAlpha(Particle.thinkingColors[2], alpha));
-        labels[3] = new CLabel(new Rectangle(478, cHeight, w, h), font, fgColor, setAlpha(Particle.thinkingColors[3], alpha));
-        labels[4] = new CLabel(new Rectangle(632, cHeight, w, h), font, fgColor, setAlpha(Particle.thinkingColors[4], alpha));
-        addComps(frame, labels[0], labels[1], labels[2], labels[3], labels[4]);
+        JScrollPane scrollPane = new JScrollPane();
+        frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
-        //Presets
-        JButton presetsButton = new JButton("Presets");
-        presetsButton.setOpaque(false);
-        presetsButton.setFont(new Font(Font.SERIF, Font.BOLD, 15));
-        presetsButton.setBounds(0, (frame.getHeight() - (34*2)), 94, 34);
-        presetsButton.addActionListener(e -> ParticlePresets.getInstance());
-        frame.getContentPane().add(presetsButton);
+        JPanel container = new JPanel();
+        scrollPane.setViewportView(container);
+        container.setLayout(new BorderLayout(0, 0));
 
-        //Random Colors
-        JButton randomColors = new JButton("Random Colors");
-        randomColors.setOpaque(false);
-        randomColors.setFont(new Font(Font.SERIF, Font.BOLD, 15));
-        randomColors.setBounds(92, (frame.getHeight() - (34*2)), 141, 34);
-        randomColors.addActionListener(e -> SCChoices.setPresetColors(SCChoices.randomColor()));
-        frame.getContentPane().add(randomColors);
+        JPanel buttons_panel = new JPanel();
+        container.add(buttons_panel, BorderLayout.SOUTH);
 
-        //Default Colors
-        JButton defaultColorsButton = new JButton("Default Colors");
-        defaultColorsButton.setOpaque(false);
-        defaultColorsButton.setFont(new Font(Font.SERIF, Font.BOLD, 15));
-        defaultColorsButton.setBounds(230, (frame.getHeight() - (34*2)), 132, 34);
-        defaultColorsButton.addActionListener(e -> SCChoices.setPresetColors(SCChoices.defaultColor()));
-        frame.getContentPane().add(defaultColorsButton);
+        JButton presets = new JButton("Presets");
+        presets.setFont(uiFont);
+        presets.addActionListener(e -> ParticlePresets.getInstance());
+        buttons_panel.add(presets);
 
-        JButton cycleColor = new JButton("Cycle Colors: " + EngineMethods.getCycle());
-        cycleColor.setOpaque(false);
-        cycleColor.setFont(new Font(Font.SERIF, Font.BOLD, 15));
-        cycleColor.setBounds(360, (frame.getHeight() - (34*2)), 166, 34);
-        cycleColor.addActionListener(e -> {
-            cycleColors = EngineMethods.toggle(cycleColors);
-            if (cycleColors) {SCCycle.startCycle(); cycleColor.setText("Cycle Colors: On");}
-            else {SCCycle.stopCycle(); cycleColor.setText("Cycle Colors: Off");}
+        JButton random_colors = new JButton("Random Colors");
+        random_colors.setFont(uiFont);
+        random_colors.addActionListener(e -> {
+            Color[] colors = SCChoices.randomColor();
+            SCChoices.setPresetColors(colors);
+            ColorTimeMachine.addColor(colors);
         });
-        frame.getContentPane().add(cycleColor);
+        buttons_panel.add(random_colors);
 
-        //Save
-        JButton saveColors = new JButton("Save Colors");
-        saveColors.setOpaque(false);
-        saveColors.setFont(new Font(Font.SERIF, Font.BOLD, 15));
-        saveColors.setBounds(524, (frame.getHeight() - (34*2)), 128, 34);
-        saveColors.addActionListener(e -> Settings.saveColors());
-        frame.getContentPane().add(saveColors);
+        JButton default_colors = new JButton("Default Colors");
+        default_colors.setFont(uiFont);
+        default_colors.addActionListener(e -> SCChoices.setPresetColors(SCChoices.defaultColor()));
+        buttons_panel.add(default_colors);
 
-        //Load
-        JButton loadColors = new JButton("Load Colors");
-        loadColors.setOpaque(false);
-        loadColors.setFont(new Font(Font.SERIF, Font.BOLD, 15));
-        loadColors.setBounds(650, (frame.getHeight() - (34*2)), 119, 34);
-        loadColors.addActionListener(e -> {
-            if (Settings.doesFileExist()) {LoadPresets.getInstance();}else{SWindow.getInstance("Save First", 280, 85);}});
-        frame.getContentPane().add(loadColors);
+        JButton cycle_colors = new JButton("Cycle Colors: " + EngineMethods.getCycle());
+        cycle_colors.setFont(uiFont);
+        cycle_colors.addActionListener(e -> {
+            if (e.getSource() == cycle_colors){
+                cycleColors = EngineMethods.toggle(cycleColors);
+                if (cycleColors) {SCCycle.startCycle(); cycle_colors.setText("Cycle Colors: On");}
+                else {SCCycle.stopCycle(); cycle_colors.setText("Cycle Colors: Off");}
+            }
+        });
+        buttons_panel.add(cycle_colors);
 
-        ////////////////////////////////////////////
+        JButton save_colors = new JButton("Save Colors");
+        save_colors.setFont(uiFont);
+        save_colors.addActionListener(e -> Settings.saveColors(0, null));
+        buttons_panel.add(save_colors);
 
-        //Change Color
-        String changeColor = "Change Color";
-        JButton btn2NewButton = new JButton(changeColor);
-        btn2NewButton.setOpaque(false);
-        btn2NewButton.setFont(new Font(Font.SERIF, Font.BOLD, 15));
-        btn2NewButton.setBounds(10, btHeight, 128, 37);
-        btn2NewButton.addActionListener(e -> SCPicker.particleColor(0));
-        frame.getContentPane().add(btn2NewButton);
+        JButton load_colors = new JButton("Load Colors");
+        load_colors.setFont(uiFont);
+        load_colors.addActionListener(e -> {if (Settings.doesFileExist()) {LoadPresets.getInstance();} else{SWindow.getInstance(frame, "Save First", 280, 85);}});
+        buttons_panel.add(load_colors);
 
+        JButton time_machine = new JButton("Time Machine");
+        time_machine.addActionListener(e -> ColorTimeMachine.getInstance());
+        time_machine.setFont(uiFont);
+        buttons_panel.add(time_machine);
 
-        JButton btn3NewButton = new JButton(changeColor);
-        btn3NewButton.setOpaque(false);
-        btn3NewButton.setFont(new Font(Font.SERIF, Font.BOLD, 15));
-        btn3NewButton.setBounds(170, btHeight, 128, 37);
-        btn3NewButton.addActionListener(e -> SCPicker.particleColor(1));
-        frame.getContentPane().add(btn3NewButton);
+        JPanel colors_panel = new JPanel();
+        container.add(colors_panel, BorderLayout.CENTER);
 
+        JPanel color_1_panel = new JPanel();
+        color_1_panel.setLayout(new BorderLayout(0, 0));
 
-        JButton btn4NewButton = new JButton(changeColor);
-        btn4NewButton.setOpaque(false);
-        btn4NewButton.setFont(new Font(Font.SERIF, Font.BOLD, 15));
-        btn4NewButton.setBounds(327, btHeight, 128, 37);
-        btn4NewButton.addActionListener(e -> SCPicker.particleColor(2));
-        frame.getContentPane().add(btn4NewButton);
+        JPanel color_2_panel = new JPanel();
+        color_2_panel.setLayout(new BorderLayout(0, 0));
 
+        JPanel color_3_panel = new JPanel();
+        color_3_panel.setLayout(new BorderLayout(0, 0));
 
-        JButton btn5NewButton = new JButton(changeColor);
-        btn5NewButton.setOpaque(false);
-        btn5NewButton.setFont(new Font(Font.SERIF, Font.BOLD, 15));
-        btn5NewButton.setBounds(478, btHeight, 128, 37);
-        btn5NewButton.addActionListener(e -> SCPicker.particleColor(3));
-        frame.getContentPane().add(btn5NewButton);
+        JPanel color_4_panel = new JPanel();
+        color_4_panel.setLayout(new BorderLayout(0, 0));
 
+        JPanel color_5_panel = new JPanel();
+        color_5_panel.setLayout(new BorderLayout(0, 0));
+        GroupLayout gl_colors_panel = new GroupLayout(colors_panel);
+        gl_colors_panel.setHorizontalGroup(
+                gl_colors_panel.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(gl_colors_panel.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(color_1_panel, GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                                .addGap(18)
+                                .addComponent(color_2_panel, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                                .addGap(18)
+                                .addComponent(color_3_panel, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                                .addGap(18)
+                                .addComponent(color_4_panel, GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(color_5_panel, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                                .addContainerGap())
+        );
+        gl_colors_panel.setVerticalGroup(
+                gl_colors_panel.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(gl_colors_panel.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(gl_colors_panel.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(color_5_panel, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(color_4_panel, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(color_3_panel, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(color_2_panel, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(color_1_panel, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
+                                .addContainerGap())
+        );
 
-        JButton btn6NewButton = new JButton(changeColor);
-        btn6NewButton.setForeground(Color.black);
-        btn6NewButton.setOpaque(false);
-        btn6NewButton.setFont(new Font(Font.SERIF, Font.BOLD, 15));
-        btn6NewButton.setBounds(632, btHeight, 128, 37);
-        btn6NewButton.addActionListener(e -> SCPicker.particleColor(4));
-        frame.getContentPane().add(btn6NewButton);
+        int alpha = 255;
+        JButton color_5_button = new JButton("Change Color");
+        color_5_button.setFont(uiFont);
+        color_5_button.addActionListener(e -> SCPicker.particleColor(4));
+        color_5_panel.add(color_5_button, BorderLayout.SOUTH);
+
+        JPanel color_5_inner_panel = new JPanel();
+        color_5_panel.add(color_5_inner_panel, BorderLayout.CENTER);
+        color_5_inner_panel.setLayout(new BorderLayout(0, 0));
+
+        labels[4] = new CLabel(font, fgColor, setAlpha(Particle.thinkingColors[4], alpha));
+        labels[4].setHorizontalAlignment(SwingConstants.CENTER);
+        color_5_inner_panel.add(labels[4], BorderLayout.CENTER);
+
+        JButton color_4_button = new JButton("Change Color");
+        color_4_button.setFont(uiFont);
+        color_4_button.addActionListener(e -> SCPicker.particleColor(3));
+        color_4_panel.add(color_4_button, BorderLayout.SOUTH);
+
+        JPanel color_4_inner_panel = new JPanel();
+        color_4_panel.add(color_4_inner_panel, BorderLayout.CENTER);
+        color_4_inner_panel.setLayout(new BorderLayout(0, 0));
+
+        labels[3] = new CLabel(font, fgColor, setAlpha(Particle.thinkingColors[3], alpha));
+        labels[3].setHorizontalAlignment(SwingConstants.CENTER);
+        color_4_inner_panel.add(labels[3], BorderLayout.CENTER);
+
+        JButton color_3_button = new JButton("Change Color");
+        color_3_button.setFont(uiFont);
+        color_3_button.addActionListener(e -> SCPicker.particleColor(2));
+        color_3_panel.add(color_3_button, BorderLayout.SOUTH);
+
+        JPanel color_3_inner_panel = new JPanel();
+        color_3_panel.add(color_3_inner_panel, BorderLayout.CENTER);
+        color_3_inner_panel.setLayout(new BorderLayout(0, 0));
+
+        labels[2] = new CLabel(font, fgColor, setAlpha(Particle.thinkingColors[2], alpha));
+        labels[2].setHorizontalAlignment(SwingConstants.CENTER);
+        color_3_inner_panel.add(labels[2], BorderLayout.CENTER);
+
+        JButton color_2_button = new JButton("Change Color");
+        color_2_button.setFont(uiFont);
+        color_2_button.addActionListener(e -> SCPicker.particleColor(1));
+        color_2_panel.add(color_2_button, BorderLayout.SOUTH);
+
+        JPanel color_2_inner_panel = new JPanel();
+        color_2_panel.add(color_2_inner_panel, BorderLayout.CENTER);
+        color_2_inner_panel.setLayout(new BorderLayout(0, 0));
+
+        labels[1] = new CLabel(font, fgColor, setAlpha(Particle.thinkingColors[1], alpha));
+        labels[1].setHorizontalAlignment(SwingConstants.CENTER);
+        color_2_inner_panel.add(labels[1], BorderLayout.CENTER);
+
+        JButton color_1_button = new JButton("Change Color");
+        color_1_button.setFont(uiFont);
+        color_1_button.addActionListener(e -> SCPicker.particleColor(0));
+        color_1_panel.add(color_1_button, BorderLayout.SOUTH);
+
+        JPanel color_1_inner_panel = new JPanel();
+        color_1_panel.add(color_1_inner_panel, BorderLayout.CENTER);
+        color_1_inner_panel.setLayout(new BorderLayout(0, 0));
+
+        labels[0] = new CLabel(font, fgColor, setAlpha(Particle.thinkingColors[0], alpha));
+        labels[0].setHorizontalAlignment(SwingConstants.CENTER);
+        color_1_inner_panel.add(labels[0], BorderLayout.CENTER);
+        colors_panel.setLayout(gl_colors_panel);
         frame.setVisible(true);
     }
 

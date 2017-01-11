@@ -27,8 +27,7 @@ public class KHandler extends KeyAdapter{
 
         //Keyboard button: DOWN
         if (pressed == KeyEvent.VK_DOWN) {
-            dragAmount--;
-            if (dragAmount <= 1) dragAmount = 1;
+            EngineMethods.downArrowFunction();
         }
 
         //Keyboard button: 1
@@ -81,9 +80,7 @@ public class KHandler extends KeyAdapter{
 
         //Keyboard button: 4
         if (pressed == KeyEvent.VK_4) {
-            switchMode++;
-            if (switchMode > 4) {switchMode = 0;}
-            EngineMethods.displayMode();
+            EngineMethods.updateEngineMode();
         }
 
         //Keyboard button: 5

@@ -7,6 +7,7 @@ import com.engine.ParticleTypes.Particle;
 
 import javax.swing.*;
 
+import static com.engine.JComponents.CMenuBar.updateAllRadios;
 import static com.engine.Utilities.ColorConverter.HEXAtoRGBA;
 import java.awt.*;
 import java.io.*;
@@ -64,14 +65,14 @@ public class Settings {
      * This method gets the 5 thinking colors for the particles, converts them to RGBA format
      * and then appends them into a text document.
      */
-    public static void saveColors() {
+    public static void saveColors(int mode, String[] strings) {
         try {
             String[] getStrings;
             ArrayList<String> splitStrings = new ArrayList<>();
             new File("./" + folderName).mkdir();
             FileOutputStream out = new FileOutputStream(filePath, true);
             Writer writer = new OutputStreamWriter(out, "UTF-8");
-            getStrings = Particle.getThinkingParticlesStrings();
+            getStrings = (mode == 0) ? Particle.getThinkingParticlesStrings() : strings;
             Collections.addAll(splitStrings, getStrings);
             for (int i = 0; i < splitStrings.size(); i++) {writer.write((splitStrings.get(i) + spliceChar));}
             writer.write("\n");
@@ -206,7 +207,7 @@ public class Settings {
         }catch (Exception e){EException.append(e);}
     }
 
-    private static void handleSettings(ArrayList<String> s) {
+    private static void setEngineVariables(ArrayList<String> s) {
         //Set Variables
         switchMode = Integer.parseInt(s.get(0)); particleType = Integer.parseInt(s.get(1));
         ptGravitationInt = Integer.parseInt(s.get(2)); fireworksAmount = Integer.parseInt(s.get(3));
@@ -244,7 +245,8 @@ public class Settings {
                 br.close(); fin.close();
                 for (int i = 0; i < textKeys.size(); i++) {textValues.add(textKeys.get(i).substring(textKeys.get(i).indexOf(':') + 1));}
                 for (String s : textValues) {trimValues.add(s.trim());}
-                handleSettings(trimValues);
+                setEngineVariables(trimValues);
+                updateAllRadios();
             } catch (Exception e) {EException.append(e);}
         }
         else {saveSettings();}

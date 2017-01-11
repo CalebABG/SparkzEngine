@@ -23,7 +23,7 @@ abstract public class EConstants {
     public static int safetyAmount = 120;
     public static int cycleRate = 5;
     public static int maxParticleType = 8; // Limit @ 8
-    public static int tps = 0, fps = 0; //Used for proper sim-loop
+    public static int tps = 0, fps = 0;
 
     //Doubles + Seed Variables
     public static double singleClickSizeMaxVal = 1.5, singleClickSizeMinVal = .8;
@@ -31,16 +31,16 @@ abstract public class EConstants {
     public static double fireworksSizeMaxVal = 1.02, fireworksSizeMinVal = 0.82;
     public static double dragSizeMaxVal = 1.0, dragSizeMinVal = 0.90;
     public static double singleClickSpeedVal = 5.93, multiClickSpeedVal = 5.85,
-            fireworksSpeedVal = 5.19, dragSpeedVal = 1.2354;
+                         fireworksSpeedVal = 5.19, dragSpeedVal = 1.2354;
 
     //Engine Title
     public static String title = "Sparkz Engine :D";
 
     //Particles Custom Text String
-    public static String customParticleText = "*", rfCustomParticleText = "*";
+    public static String baseParticleText = "*", fireworksParticleText = "*";
 
     //Background Color
-    public static Color BGColor = Color.BLACK;
+    public static Color backgroundColor = Color.BLACK;
 
     //Canvas
     public static Canvas canvas = new Canvas();
@@ -89,6 +89,7 @@ abstract public class EConstants {
     public static BufferStrategy buff;
     public static Graphics2D graphics2D;
     public static Thread thread;
+    public static Toolkit toolkit = Toolkit.getDefaultToolkit();
     private static GraphicsDevice GD = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     public static int width = GD.getDisplayMode().getWidth(), height = GD.getDisplayMode().getHeight();
 }
