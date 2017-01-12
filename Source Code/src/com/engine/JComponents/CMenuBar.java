@@ -11,46 +11,49 @@ import com.engine.Utilities.H5Wrapper;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
-public class CMenuBar {
-    private static JMenuBar menuBar;
+public class CMenuBar extends JMenuBar {
+    public static Color bgColor = new Color(20, 23, 25).brighter();
+    private static CMenuBar menuBar;
     private static JMenuItem exit, settingsSave, settingsLoad, settingsUI, sliderUI,
-            thinkingParticlesUI,statsUI,particleGraphUI, helpInstructions, helpGraphInstructions, optionsMenu, enginepause;
-    private static Font font1 = new Font("Times", Font.PLAIN, 15);
+            thinkingParticlesUI,particleGraphUI, helpInstructions, helpGraphInstructions, optionsMenu, enginepause;
+    private static Font font1 = new Font(Font.SERIF, Font.PLAIN, 23);
     private static final int memThreshold = 75;
     public static JRadioButtonMenuItem[] pModes,pTypes, pGravModes;
     public static ButtonGroup particleModesGroup, particleTypesGroup, particleGravitationGroup;
 
-    public static void setUpMenuBar(JFrame root) {
-        menuBar = new JMenuBar();
-        root.setJMenuBar(menuBar);
-        root.getContentPane().setLayout(new BorderLayout(0, 0));
-
+    public static CMenuBar getMenuBar() {
+        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());} catch (Exception e1){e1.printStackTrace();}
+        menuBar = new CMenuBar();
+        menuBar.add(Box.createHorizontalStrut(11));
         //File Begin
         JMenu mnFile = new JMenu("File");
         mnFile.setFont(font1);
+        mnFile.setForeground(Color.white);
         menuBar.add(mnFile);
         menuBar.add(Box.createHorizontalStrut(11));
         //File End
 
         exit = new JMenuItem("Exit");
-        exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
-        exit.addActionListener(e -> {if (e.getSource() == exit) QuitWindow.getInstance();});
+        exit.addActionListener(e -> {
+            if (e.getSource() == exit) QuitWindow.getInstance();
+        });
+
         mnFile.add(exit);
 
         //Edit Begin
         JMenu mnEdit = new JMenu("Edit");
         mnEdit.setFont(font1);
+        mnEdit.setForeground(Color.white);
         menuBar.add(mnEdit);
 
         JMenuItem trimParticleArrays = new JMenuItem("Trim Particle Arrays");
-        trimParticleArrays.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, 0));
+
         trimParticleArrays.addActionListener(e -> EngineMethods.trimParticleArrays());
         mnEdit.add(trimParticleArrays);
 
         JMenuItem clearParticleArrays = new JMenuItem("Clear All Arrays");
-        clearParticleArrays.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0));
+
         clearParticleArrays.addActionListener(e -> EngineMethods.clearParticleArrays());
         mnEdit.add(clearParticleArrays);
         //Edit End
@@ -59,37 +62,48 @@ public class CMenuBar {
 
         //ShortCuts Begin
         JMenu mnUIWindows = new JMenu("Short-Cuts");
+        mnUIWindows.setForeground(Color.white);
         mnUIWindows.setFont(font1);
         menuBar.add(mnUIWindows);
 
         optionsMenu = new JMenuItem("Options Menu");
-        optionsMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_7, 0));
-        optionsMenu.addActionListener(e -> {if (e.getSource() == optionsMenu) {OptionsMenu.getInstance();}});
-        mnUIWindows.add(optionsMenu);
-        statsUI = new JMenuItem("Stats Panel");
-        statsUI.addActionListener(e -> {if (e.getSource() == statsUI) {
-            StatsPanel.getInstance();}});
-        mnUIWindows.add(statsUI);
+        optionsMenu.addActionListener(e -> {
+            if (e.getSource() == optionsMenu) {
+                OptionsMenu.getInstance();
+            }
+        });
 
         sliderUI = new JMenuItem("Slide Editor");
-        sliderUI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_9, 0));
-        sliderUI.addActionListener(e -> {if (e.getSource() == sliderUI) {
-            SlideEditor.getInstance();}});
+        sliderUI.addActionListener(e -> {
+            if (e.getSource() == sliderUI) {
+                SlideEditor.getInstance();
+            }
+        });
         mnUIWindows.add(sliderUI);
 
         JMenuItem exceptionUI = new JMenuItem("Exception Log");
-        exceptionUI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.CTRL_DOWN_MASK + KeyEvent.SHIFT_DOWN_MASK));
-        exceptionUI.addActionListener(e -> {if (e.getSource() == exceptionUI) {EException.getInstance();}});
+
+        exceptionUI.addActionListener(e -> {
+            if (e.getSource() == exceptionUI) {
+                EException.getInstance();
+            }
+        });
         mnUIWindows.add(exceptionUI);
 
         thinkingParticlesUI = new JMenuItem("Particle Color Editor");
-        thinkingParticlesUI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0));
-        thinkingParticlesUI.addActionListener(e -> {if (e.getSource() == thinkingParticlesUI) {
-            ParticleColor.getInstance();}});
+        thinkingParticlesUI.addActionListener(e -> {
+            if (e.getSource() == thinkingParticlesUI) {
+                ParticleColor.getInstance();
+            }
+        });
         mnUIWindows.add(thinkingParticlesUI);
         particleGraphUI = new JMenuItem("Particle Graph Editor");
-        particleGraphUI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.SHIFT_DOWN_MASK));
-        particleGraphUI.addActionListener(e -> {if (e.getSource() == particleGraphUI) {ParticleGraph.getInstance();}});
+
+        particleGraphUI.addActionListener(e -> {
+            if (e.getSource() == particleGraphUI) {
+                ParticleGraph.getInstance();
+            }
+        });
         mnUIWindows.add(particleGraphUI);
 
         menuBar.add(Box.createHorizontalStrut(11));
@@ -102,59 +116,96 @@ public class CMenuBar {
 
         menuBar.add(Box.createHorizontalStrut(11));
         JMenu mnSettings = new JMenu("Settings");
+        mnSettings.setForeground(Color.white);
         mnSettings.setFont(font1);
         menuBar.add(mnSettings);
 
         enginepause = new JMenuItem(isPaused());
-        enginepause.addActionListener(e -> {isPaused = EngineMethods.toggle(isPaused); enginepause.setText(isPaused()); EngineMethods.setEngineTitleState();});
+        enginepause.addActionListener(e -> {
+            isPaused = EngineMethods.toggle(isPaused);
+            enginepause.setText(isPaused());
+            EngineMethods.setEngineTitleState();
+        });
         mnSettings.add(enginepause);
 
         settingsSave = new JMenuItem("Save Settings");
-        settingsSave.addActionListener(e -> {if (e.getSource() == settingsSave) {Settings.saveSettings();}});
+        settingsSave.addActionListener(e -> {
+            if (e.getSource() == settingsSave) {
+                Settings.saveSettings();
+            }
+        });
         mnSettings.add(settingsSave);
         settingsLoad = new JMenuItem("Load Settings");
-        settingsLoad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.SHIFT_DOWN_MASK));
-        settingsLoad.addActionListener(e -> {if (e.getSource() == settingsLoad) {Settings.loadSettings();}});
+
+        settingsLoad.addActionListener(e -> {
+            if (e.getSource() == settingsLoad) {
+                Settings.loadSettings();
+                updateAllRadios();
+            }
+        });
         mnSettings.add(settingsLoad);
         settingsUI = new JMenuItem("Settings Editor");
-        settingsUI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.SHIFT_DOWN_MASK));
-        settingsUI.addActionListener(e -> {if (e.getSource() == settingsUI) {SettingsEditor.getInstance();}});
+
+        settingsUI.addActionListener(e -> {
+            if (e.getSource() == settingsUI) {
+                SettingsEditor.getInstance();
+            }
+        });
         mnSettings.add(settingsUI);
 
         JMenuItem memclean = new JMenuItem("Clean Memory");
         memclean.setToolTipText(H5Wrapper.H(3, "Cleans memory if free memory is less than " + memThreshold + " MB"));
         memclean.addActionListener(e -> {
-            if (e.getSource() == memclean) {if ((Runtime.getRuntime().freeMemory() / (Math.pow(1024,2))) <= memThreshold) {System.gc();}}});
+            if (e.getSource() == memclean) {
+                if ((Runtime.getRuntime().freeMemory() / (Math.pow(1024, 2))) <= memThreshold) {
+                    System.gc();
+                }
+            }
+        });
         mnSettings.add(memclean);
 
         menuBar.add(Box.createHorizontalStrut(11));
         JMenu mnHelp = new JMenu("Help");
         mnHelp.setFont(font1);
+        mnHelp.setForeground(Color.white);
 
         helpInstructions = new JMenuItem("Particle Engine Instructions");
-        helpInstructions.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, 0));
-        helpInstructions.addActionListener(e -> {if (e.getSource() == helpInstructions) {EngineInstructions.getInstance();}});
+        helpInstructions.addActionListener(e -> {
+            if (e.getSource() == helpInstructions) {
+                EngineInstructions.getInstance();
+            }
+        });
         mnHelp.add(helpInstructions);
 
         helpGraphInstructions = new JMenuItem("Particle Graph Instructions");
-        helpGraphInstructions.addActionListener(e -> {if (e.getSource() == helpGraphInstructions) {GraphInstructions.getInstance(EFrame);}});
+        helpGraphInstructions.addActionListener(e -> {
+            if (e.getSource() == helpGraphInstructions) {
+                GraphInstructions.getInstance(EFrame);
+            }
+        });
         mnHelp.add(helpGraphInstructions);
         menuBar.add(mnHelp);
 
         if (System.getProperty("os.name").toLowerCase().contains("windows")) {
             JMenuItem accessibility = new JMenuItem("On-Screen Keyboard");
             accessibility.addActionListener(e -> {
-                try {Runtime.getRuntime().exec("cmd /c osk");} catch (Exception ez) {
-                    EException.append(ez);}
+                try {
+                    Runtime.getRuntime().exec("cmd /c osk");
+                } catch (Exception ez) {
+                    EException.append(ez);
+                }
             });
             mnHelp.add(accessibility);
         }
         updateState();
+
+        return menuBar;
     }
 
     private static void setUpModes() {
         JMenu modes = new JMenu("Modes");
         modes.setFont(font1);
+        modes.setForeground(Color.white);
 
         JMenu particleModes = new JMenu("Particle Modes");
         particleModesGroup = new ButtonGroup();
@@ -313,4 +364,12 @@ public class CMenuBar {
 
     private static String isPaused() {if (isPaused) return "Resume Engine"; else return "Pause Engine";}
     public static void updateState() {enginepause.setText(isPaused());}
+
+    public void setColor(Color color) {bgColor = color;}
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(bgColor);
+        g2d.fillRect(0, 0, getWidth() + 1, getHeight() + 1);
+    }
 }

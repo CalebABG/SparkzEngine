@@ -7,7 +7,6 @@ import com.engine.ParticleTypes.Particle;
 
 import javax.swing.*;
 
-import static com.engine.JComponents.CMenuBar.updateAllRadios;
 import static com.engine.Utilities.ColorConverter.HEXAtoRGBA;
 import java.awt.*;
 import java.io.*;
@@ -32,6 +31,7 @@ public class Settings {
     public static ArrayList<String[]> presetColors;
 
     //public static void main(String[] args) { //saveSettings(); //loadSettings();}
+
     public static boolean doesFileExist() {return Files.exists(fileDir);}
     public static boolean doesSettingsExist(){return Files.exists(Paths.get("." + (Paths.get("/" + "Settings")) + "/" + "settings.txt"));}
     public static boolean StoBool(String s, boolean def_val){if (s.equalsIgnoreCase("TRUE")) {return true;}
@@ -39,15 +39,19 @@ public class Settings {
     public static Image getIcon(){return iconImage;}
     public static Image getSplashImage(){return splashImage;}
 
-    public static String fileChooser(String _null) {
-        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception x){x.printStackTrace();}
-        JFileChooser chooser = new JFileChooser(System.getProperty("user.home"));
-        JFrame window = new JFrame();
-        window.setIconImage(getIcon());
-        chooser.setDialogTitle("Choose a file");
-        int returnVal = chooser.showOpenDialog(window);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {return chooser.getSelectedFile().getAbsolutePath();
-        } else return _null;
+    public static String getOS() {
+        String OS = "";
+        String osNameMatch = System.getProperty("os.name").toLowerCase();
+        if (osNameMatch.contains("linux")) {
+            OS = "linux";
+        } else if (osNameMatch.contains("windows") || osNameMatch.contains("win")) {
+            OS = "windows";
+        } else if (osNameMatch.contains("solaris") || osNameMatch.contains("sunos")) {
+            OS = "solaris";
+        } else if (osNameMatch.contains("mac os") || osNameMatch.contains("macos") || osNameMatch.contains("darwin")) {
+            OS = "mac";
+        }
+        return OS;
     }
 
     /**
@@ -246,7 +250,6 @@ public class Settings {
                 for (int i = 0; i < textKeys.size(); i++) {textValues.add(textKeys.get(i).substring(textKeys.get(i).indexOf(':') + 1));}
                 for (String s : textValues) {trimValues.add(s.trim());}
                 setEngineVariables(trimValues);
-                updateAllRadios();
             } catch (Exception e) {EException.append(e);}
         }
         else {saveSettings();}

@@ -3,7 +3,6 @@ package com.engine.ThinkingParticles;
 import static com.engine.EngineHelpers.EConstants.*;
 
 import com.engine.GUIWindows.ColorTimeMachine;
-import com.engine.GUIWindows.ParticleColor;
 import com.engine.ParticleTypes.Particle;
 import com.engine.Utilities.Settings;
 
@@ -14,7 +13,7 @@ import java.util.TimerTask;
 public class SCCycle {
     public static Timer time;
     public synchronized static void startCycle() {
-        //if (Settings.presetColors == null) {Settings.loadColors();} // Needs Exception handling
+        if (Settings.doesFileExist()) {if (Settings.presetColors == null) {Settings.loadColors();}} // Needs Exception handling
         time = new Timer();
         time.scheduleAtFixedRate(new TimerTask() {
             public void run() {

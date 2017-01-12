@@ -1,6 +1,5 @@
 package com.engine.ThinkingParticles;
 
-import com.engine.GUIWindows.ColorTimeMachine;
 import com.engine.GUIWindows.ParticleColor;
 import com.engine.ParticleTypes.Particle;
 import com.engine.Utilities.ColorConverter;

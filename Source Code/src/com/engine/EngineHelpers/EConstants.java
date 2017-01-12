@@ -7,6 +7,7 @@ import java.awt.image.BufferStrategy;
 import java.util.List;
 import java.awt.*;
 import java.util.*;
+import java.util.Timer;
 
 abstract public class EConstants {
     //Ints
@@ -43,7 +44,7 @@ abstract public class EConstants {
     public static Color backgroundColor = Color.BLACK;
 
     //Canvas
-    public static Canvas canvas = new Canvas();
+    public static Canvas canvas;
 
     //Mouse Point
     public static Point Mouse = new Point();
@@ -88,8 +89,8 @@ abstract public class EConstants {
     public static JFrame EFrame;
     public static BufferStrategy buff;
     public static Graphics2D graphics2D;
-    public static Thread thread;
-    public static Toolkit toolkit = Toolkit.getDefaultToolkit();
+    public static Timer renderer = new Timer();
+    public static TimerTask task;
     private static GraphicsDevice GD = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     public static int width = GD.getDisplayMode().getWidth(), height = GD.getDisplayMode().getHeight();
 }

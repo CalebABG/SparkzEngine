@@ -9,11 +9,12 @@ public class WindowText {
                 "<span style='font-size:12px;color:red'>(Press Shift+Ctrl+Q to force close)</span></li>" +
                 "<li style='font-size:13px'>Press <span style='font-size:15px;color:orange'>Q</span> to bring this window up again.</li> " +
                 "<li style='font-size:13px'>Press <span style='font-size:15px;color:orange'>Shift+Z</span> to restore default or saved settings.</li> " +
-                "<li style='font-size:13px'>Press <span style='font-size:15px;color:orange'>Shift+S</span> to open settings editor. " +
+                "<li style='font-size:13px'>Press <span style='font-size:15px;color:orange'>Shift+S</span> to open Settings Editor. " +
                 "<span style='font-size:13px;color:red'>(Advanced Users)</span></li> " +
-                "<li style='font-size:13px'>Press <span style='font-size:15px;color:orange'>Shift+Ctrl+V</span> to open exception logger. " +
+                "<li style='font-size:13px'>Press <span style='font-size:15px;color:orange'>Shift+Ctrl+V</span> to open Exception Logger. " +
                 "<span style='font-size:13px;color:red'>(Ctrl+C to clear log)</span></li> " +
-                "<li style='font-size:13px'>Press <span style='font-size:15px;color:orange'>Shift+X</span> to open particle graph editor.</li> " +
+                "<li style='font-size:13px'>Press <span style='font-size:15px;color:orange'>Ctrl+I</span> to open Stats Panel.</li> " +
+                "<li style='font-size:13px'>Press <span style='font-size:15px;color:orange'>Shift+X</span> to open Particle Graph Editor.</li> " +
                 "<li style='font-size:13px'><span style='font-size:15px;color:orange'>Ragdoll Mode</span> only supports up to 285 collisions; beyond 285, collisions will turn off.</li> " +
                 "</ul></p> <br>" +
 

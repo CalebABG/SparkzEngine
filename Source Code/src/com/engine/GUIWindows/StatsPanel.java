@@ -2,13 +2,14 @@ package com.engine.GUIWindows;
 
 import com.engine.EngineHelpers.EngineMethods;
 import static com.engine.EngineHelpers.EConstants.*;
+import static com.engine.JComponents.CMenuBar.getMenuBar;
+import static com.engine.Utilities.Settings.getOS;
+
 import com.engine.JComponents.CLabel;
-import com.engine.Utilities.H5Wrapper;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.RoundRectangle2D;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.Timer;
@@ -18,11 +19,10 @@ public class StatsPanel {
     private static JFrame frame;
     private static Timer timer;
     public JPanel panel;
-    private static CLabel exit, particleAmount, dragamount, freemem,
+    private static CLabel particleAmount, dragamount, freemem,
             safetyamount, ptMode, smartPt, connect, atm, ptFriction, screenSize;
     private static DecimalFormat decimalFormat = new DecimalFormat("#,###");
     private Point mpt = new Point();
-    public int width = 638, height = 360;
 
     //public static void main(String[] args) {getInstance();}
 
@@ -30,14 +30,17 @@ public class StatsPanel {
 
     private StatsPanel() {
         frame = new JFrame("Stats Panel");
+        if (getOS().equals("mac")) {
+            frame.setSize(638, 385);
+        } else frame.setSize(638, 425);
+
         frame.setIconImage(Settings.getIcon());
-        frame.setUndecorated(true);
         frame.setResizable(false);
-        frame.setBounds(0, 0, width, height);
-        frame.setShape(new RoundRectangle2D.Double(0, 0, width, height, 30, 30));
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {close();}});
         frame.setLocationRelativeTo(EFrame);
+
+        frame.setJMenuBar(getMenuBar());
 
         frame.addMouseListener(new MouseAdapter() {public void mousePressed(MouseEvent e) {
             mpt.x = e.getX(); mpt.y = e.getY();}});
@@ -49,16 +52,7 @@ public class StatsPanel {
         panel.setBackground(new Color(20, 23, 25));
         panel.setLayout(null);
 
-        exit = new CLabel(new Rectangle((int) (frame.getWidth() - 40 * 1.5), -12, 60, 35), "-", new
-                Font(Font.SERIF, Font.PLAIN, 43), Color.white, new Color(66, 66, 68));
-        exit.setToolTipText(H5Wrapper.H(3,"Click to Minimize"));
-        exit.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {frame.setExtendedState(Frame.ICONIFIED);}
-            public void mouseEntered(MouseEvent e) {exit.setBackground(new Color(66, 66, 68).darker().darker());}
-            public void mouseExited(MouseEvent e) {exit.setBackground(new Color(66, 66, 68));}
-        });
-
-        CLabel shortCts = new CLabel(new Rectangle(330 - 18, 5, 250, 40), "Short-Cuts", new
+        CLabel shortCts = new CLabel(new Rectangle(330 - 18, 5, 320, 40), "Stats Panel", new
                 Font(Font.SERIF, Font.PLAIN, 35), new Color(98, 138, 137), new Color(29, 32, 34));
 
         int offset = -6;
@@ -105,10 +99,10 @@ public class StatsPanel {
         CLabel d = new CLabel(new Rectangle(330 - 18, 190 + offset, 320, 40), "R = Change Background Color", new
                 Font(Font.SERIF, Font.PLAIN, 25), Color.white, new Color(20, 23, 25).brighter());
 
-        freemem = new CLabel(new Rectangle(330 - 18, 280 + offset, 320, 40), "Free Memory: ", new
+        freemem = new CLabel(new Rectangle(330 - 18, 280 + offset, 320, 40), "JRE Free Memory: ", new
                 Font(Font.SERIF, Font.PLAIN, 24), Color.white, new Color(20, 23, 25).brighter());
 
-        addComps(frame, panel, particleAmount, exit, dragamount, safetyamount,
+        addComps(frame, panel, particleAmount, dragamount, safetyamount,
                 ptMode, smartPt, connect, atm, ptFriction, screenSize, shortCts,
                 a, b, c, d, e, freemem);
         startTimer();
@@ -121,6 +115,10 @@ public class StatsPanel {
 
     private static void startTimer() {
         timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                if (freemem != null) {freemem.setText("JRE Free Memory: " + decimalFormat.format((Runtime.getRuntime().freeMemory() / (Math.pow(1024, 2)))) + " MB");}}
+        }, 0, 1200);
         timer.scheduleAtFixedRate(new TimerTask() {public void run() {update();}}, 0, timerFPS);
     }
 
@@ -141,10 +139,9 @@ public class StatsPanel {
             if(connect != null) {connect.setText(EngineMethods.getConnectText());}
             if(atm != null) {atm.setText(EngineMethods.getMouseAttraction());}
             if(ptFriction != null) {ptFriction.setText(EngineMethods.getFrictionText());}
-            if (freemem != null){freemem.setText("Free Memory: "+decimalFormat.format((Runtime.getRuntime().freeMemory() / (Math.pow(1024, 2)))) + " MB");}
             if(screenSize != null) {screenSize.setText(String.format("Window Size: %d x %d", canvas.getWidth(), canvas.getHeight()));}
         } catch (Exception ex) {EException.append(ex);}
     }
 
-    private static void close(){statsUI = null; stopTimer(); frame.dispose();}
+    private void close(){statsUI = null; stopTimer(); frame.dispose();}
 }

@@ -335,10 +335,9 @@ public class EngineMethods {
      * Dialog window to set the radius of all particles in the ParticlesArray.
      */
     private static void particleSize(){
-        String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, "Change Particle Size To (Integer or Decimal)"), null, JOptionPane.PLAIN_MESSAGE);
-        if (InputWrapper.canParseStringInt(input) && Double.parseDouble(input) >= 0) {
-            if (ParticlesArray.size() > 0) {for (int i = 0; i < ParticlesArray.size(); i++)
-            {ParticlesArray.get(i).radius = Double.parseDouble(input);}}
+        double r = minValueGuard(0, .9, H(3, "Change Particle Size To (Integer or Double)"), OptionsMenu.frame);
+        if (ParticlesArray.size() > 0) {
+            for (int i = 0; i < ParticlesArray.size(); i++) {ParticlesArray.get(i).radius = r;}
         }
     }
 
@@ -380,10 +379,9 @@ public class EngineMethods {
      * Different options for the Engines Options Menu.
      * @see OptionsMenu
      */
-    public static void getOptions(int s) {
+    public static void getOptions(int option) {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());} catch (Exception x){x.printStackTrace();}
-        switch (s)
-        {
+        switch (option) {
             case 1: particleSize(); break;
             case 2: particleDrag(); break;
             case 3: particleFireworks(); break;

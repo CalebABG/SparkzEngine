@@ -181,9 +181,12 @@ public class KHandler extends KeyAdapter{
         //Keyboard button: Escape
         if (pressed == KeyEvent.VK_ESCAPE) {QuitWindow.getInstance();}
 
+        //Opens StatsPanel: precaution since the menubar is now on this panel
+        //If the panel is closed, can always get the panel back
+        if (pressed == KeyEvent.VK_I && e.isControlDown()) StatsPanel.getInstance();
+
         //Open Exception Logger
-        if (e.isShiftDown() && e.isControlDown() && (pressed == KeyEvent.VK_V)) {EException.getInstance();
-        }
+        if (e.isShiftDown() && e.isControlDown() && (pressed == KeyEvent.VK_V)) {EException.getInstance();}
 
         //Open Settings Editor
         if (e.isShiftDown() && (pressed == KeyEvent.VK_S)) {

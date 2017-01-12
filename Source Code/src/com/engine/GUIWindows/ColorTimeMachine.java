@@ -3,8 +3,8 @@ package com.engine.GUIWindows;
 import com.engine.JComponents.CLabel;
 import com.engine.ParticleTypes.Particle;
 import com.engine.ThinkingParticles.PresetHolder;
+import com.engine.ThinkingParticles.SCChoices;
 import com.engine.Utilities.ColorConverter;
-import com.engine.Utilities.H5Wrapper;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
@@ -14,13 +14,11 @@ import java.util.*;
 import java.util.List;
 import static com.engine.Utilities.ColorConverter.setAlpha;
 import static com.engine.Utilities.H5Wrapper.HCenter;
-import static com.engine.Utilities.H5Wrapper.HStyle;
-import static java.awt.SystemColor.text;
 
 public class ColorTimeMachine {
     private static ColorTimeMachine timeMachine = null;
     public static JFrame frame;
-    public static int index = 0, counter = 0;
+    public static int index = 0;
     public static String title = "Color Time Machine";
     public static Font font = new Font("Tahoma", Font.BOLD, 13);
     public static CLabel[] labels = new CLabel[5];
@@ -61,31 +59,21 @@ public class ColorTimeMachine {
         presets.setFont(new Font("Tahoma", Font.BOLD, 13));
         buttons_panel.add(presets);
 
-        //Uncomment if desire to get information about colors
-        /*JButton time_machine = new JButton("Colors Info");
-        time_machine.setFont(new Font("Tahoma", Font.BOLD, 13));
-        buttons_panel.add(time_machine);*/
+        JButton set_colors = new JButton("Set Colors");
+        set_colors.setFont(new Font("Tahoma", Font.BOLD, 13));
+        set_colors.addActionListener(e -> {
+            if (colorList.size() > 0) SCChoices.setPresetColors(colorList.get(index).colors);
+        });
+        buttons_panel.add(set_colors);
 
         JButton last = new JButton("Last Color");
-        last.addActionListener(e -> {
-            if (colorList.size() > 0) {
-                index--;
-                if (index <= 0) index = 0;
-                setBackgroundColor(colorList.get(index).colors);
-            }
-        });
+        last.addActionListener(e -> handleButtons(0));
         last.setFont(new Font("Tahoma", Font.BOLD, 13));
         buttons_panel.add(last);
 
         JButton next = new JButton("Next Color");
         next.setFont(new Font("Tahoma", Font.BOLD, 13));
-        next.addActionListener(e -> {
-            if (colorList.size() > 0) {
-                index++;
-                if (index >= colorList.size()) index = colorList.size() - 1;
-                setBackgroundColor(colorList.get(index).colors);
-            }
-        });
+        next.addActionListener(e -> handleButtons(1));
         buttons_panel.add(next);
 
         JButton clear = new JButton("Clear Colors");
@@ -170,29 +158,43 @@ public class ColorTimeMachine {
         frame.setVisible(true);
     }
 
-    public static void addColor(Color[] colors) {
-        colorList.add(new PresetHolder(colors));
-        index = colorList.size() - 1;
-        if (timeMachine != null && labels != null) {
-            setColors();
-            frame.setTitle(title + " - Colors Seen: " + colorList.size());
+    public static void handleButtons(int mode) {
+        //Last color
+        if (mode == 0) {
+            if (colorList.size() > 0) {
+                index--;
+                if (index <= 0) index = 0;
+                frame.setTitle(title + " - Colors Seen: " + colorList.size() + " - Index: " + index);
+                setBackgroundColor(colorList.get(index).colors);
+            }
+        }
+        //Next color
+        else {
+            if (colorList.size() > 0) {
+                index++;
+                if (index >= colorList.size()) index = colorList.size() - 1;
+                frame.setTitle(title + " - Colors Seen: " + colorList.size() + " - Index: " + index);
+                setBackgroundColor(colorList.get(index).colors);
+            }
         }
     }
 
-    private void close(){timeMachine = null; frame.dispose();}
+    public static void addColor(Color[] colors) {
+        colorList.add(new PresetHolder(colors));
+        index = colorList.size() - 1;
+        if (timeMachine != null && labels != null) {setColors(); frame.setTitle(title + " - Colors Seen: " + colorList.size());}
+    }
 
     public static void setBackgroundColor(Color[] colors) {
-        labels[0].setBackground(setAlpha(colors[0], 255));
-        labels[1].setBackground(setAlpha(colors[1], 255));
-        labels[2].setBackground(setAlpha(colors[2], 255));
-        labels[3].setBackground(setAlpha(colors[3], 255));
+        labels[0].setBackground(setAlpha(colors[0], 255)); labels[1].setBackground(setAlpha(colors[1], 255));
+        labels[2].setBackground(setAlpha(colors[2], 255)); labels[3].setBackground(setAlpha(colors[3], 255));
         labels[4].setBackground(setAlpha(colors[4], 255));
     }
 
     private static void setColors() {
-        if (colorList.size() > 0) {
-            setBackgroundColor(colorList.get(index).colors);
-        }
+        if (colorList.size() > 0) setBackgroundColor(colorList.get(index).colors);
         else setBackgroundColor(Particle.thinkingColors);
     }
+
+    private void close(){timeMachine = null; frame.dispose();}
 }

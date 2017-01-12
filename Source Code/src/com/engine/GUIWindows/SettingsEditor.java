@@ -3,6 +3,8 @@ package com.engine.GUIWindows;
 import com.engine.JComponents.CTextField;
 import com.engine.JComponents.RLabel;
 import static com.engine.EngineHelpers.EConstants.*;
+import static com.engine.JComponents.CMenuBar.updateAllRadios;
+
 import com.engine.Utilities.*;
 import javax.swing.*;
 import java.awt.*;
@@ -347,8 +349,8 @@ public class SettingsEditor {
     }
 
     private static void loadButton() {
-        if (intelliEdit.isSelected()){Settings.loadSettings(); refreshUI(); intelliSense();}
-        else{Settings.loadSettings(); refreshUI();}
+        if (intelliEdit.isSelected()){Settings.loadSettings(); refreshUI(); updateAllRadios(); intelliSense();}
+        else{Settings.loadSettings(); refreshUI(); updateAllRadios();}
     }
 
     private void intelliEditorMode() {
