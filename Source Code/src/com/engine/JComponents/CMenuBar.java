@@ -72,6 +72,7 @@ public class CMenuBar extends JMenuBar {
                 OptionsMenu.getInstance();
             }
         });
+        mnUIWindows.add(optionsMenu);
 
         sliderUI = new JMenuItem("Slide Editor");
         sliderUI.addActionListener(e -> {
