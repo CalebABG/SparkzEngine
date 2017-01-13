@@ -26,7 +26,7 @@ public class GraphInstructions {
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {close();}});
         frame.setLocationRelativeTo(parent);
-        frame.addKeyListener(new KeyAdapter() {public void keyReleased(KeyEvent e) {if (e.getKeyCode() == 27) {frame.dispose();}}});
+        frame.addKeyListener(new KeyAdapter() {public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {close();}}});
 
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());

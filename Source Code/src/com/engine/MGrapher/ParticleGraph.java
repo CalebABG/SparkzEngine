@@ -42,7 +42,7 @@ public class ParticleGraph { // Best scale for all functions = 0.02
             "var map = function(value, sMin, sMax, dMin, dMax) {return dMin + (dMax - dMin) * ((value - sMin) / (sMax - sMin));}"
     };
 
-    private static String[] suggestions = {
+    public static String[] suggestions = {
             "sin(x)", "cos(x)", "tan(x)",
             "asin(x)", "acos(x)", "atan(x)",
             "log(x)", "sqrt(x)", "abs(x)",

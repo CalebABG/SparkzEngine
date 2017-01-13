@@ -1,5 +1,6 @@
 package com.engine.GUIWindows;
 
+import com.engine.JComponents.AutoComplete;
 import com.engine.ParticleTypes.Particle;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
@@ -8,8 +9,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Arrays;
 
+import static com.engine.JComponents.AutoComplete.makeUndoable;
 import static com.engine.MGrapher.ParticleGraph.mathFunctions;
+import static com.engine.MGrapher.ParticleGraph.suggestions;
 import static com.engine.ParticleTypes.Particle.particleScriptEngine;
 
 public class OrganicForces {
@@ -78,6 +82,14 @@ public class OrganicForces {
                 }
             }
         });
+
+        String COMMIT_ACTION = "commit";
+        AutoComplete autoComplete = new AutoComplete(forceXTextField, Arrays.asList(suggestions));
+        forceXTextField.getDocument().addDocumentListener(autoComplete);
+        forceXTextField.getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
+        forceXTextField.getActionMap().put(COMMIT_ACTION, autoComplete.new CommitAction());
+        makeUndoable(forceXTextField);
+
         GridBagConstraints gbc_textField = new GridBagConstraints();
         gbc_textField.gridwidth = 2;
         gbc_textField.insets = new Insets(0, 0, 5, 0);
@@ -112,6 +124,13 @@ public class OrganicForces {
                 }
             }
         });
+
+        AutoComplete autoComplete2 = new AutoComplete(forceYTextField, Arrays.asList(suggestions));
+        forceYTextField.getDocument().addDocumentListener(autoComplete2);
+        forceYTextField.getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
+        forceYTextField.getActionMap().put(COMMIT_ACTION, autoComplete2.new CommitAction());
+        makeUndoable(forceYTextField);
+
         GridBagConstraints gbc_textField_1 = new GridBagConstraints();
         gbc_textField_1.gridwidth = 2;
         gbc_textField_1.insets = new Insets(0, 0, 5, 0);
@@ -138,6 +157,13 @@ public class OrganicForces {
         angleIncrementTextField.setHorizontalAlignment(SwingConstants.CENTER);
         angleIncrementTextField.setFont(new Font("Tahoma", Font.PLAIN, 16));
         angleIncrementTextField.setColumns(10);
+
+        AutoComplete autoComplete3 = new AutoComplete(angleIncrementTextField, Arrays.asList(suggestions));
+        angleIncrementTextField.getDocument().addDocumentListener(autoComplete3);
+        angleIncrementTextField.getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
+        angleIncrementTextField.getActionMap().put(COMMIT_ACTION, autoComplete3.new CommitAction());
+        makeUndoable(angleIncrementTextField);
+
         GridBagConstraints gbc_textField_2 = new GridBagConstraints();
         gbc_textField_2.gridwidth = 2;
         gbc_textField_2.insets = new Insets(0, 0, 5, 0);
@@ -171,13 +197,6 @@ public class OrganicForces {
 
         JMenuBar menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
-
-        JMenu file = new JMenu("File");
-        menuBar.add(file);
-
-        JMenuItem help = new JMenuItem("Help");
-        help.addActionListener(e -> GraphInstructions.getInstance(frame));
-        file.add(help);
         frame.setVisible(true);
     }
 
