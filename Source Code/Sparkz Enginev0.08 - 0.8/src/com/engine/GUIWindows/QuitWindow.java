@@ -68,5 +68,6 @@ public class QuitWindow {
         });
         panel.add(label3);
         frame.setVisible(true);
+        frame.toFront();
     }
 }

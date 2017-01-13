@@ -71,10 +71,10 @@ public class Engine {
     private void setupTimerTask() {
         task = new TimerTask() {
             public void run() {
-                final double GAME_HERTZ = FPS, TIME_BETWEEN_UPDATES = 1.0E9D / GAME_HERTZ;
+                final double SIM_HERTZ = FPS, TIME_BETWEEN_UPDATES = 1.0E9D / SIM_HERTZ;
                 final int MAX_UPDATES_BEFORE_RENDER = 1;
                 double lastUpdateTime = System.nanoTime(), lastRenderTime = System.nanoTime();
-                final double TARGET_TIME_BETWEEN_RENDERS = 1.0E9D / GAME_HERTZ;
+                final double TARGET_TIME_BETWEEN_RENDERS = 1.0E9D / SIM_HERTZ;
                 int lastSecondTime = (int) (lastUpdateTime / 1.0E9D);
 
                 while (running) {
