@@ -16,10 +16,9 @@ import java.util.TimerTask;
 // Project started on: 11/22/2015 :D -- REQUIRES Java version 1.8 (lambda functions used) or higher to edit
 
 public class Engine {
-    public static void main(String[] args) {
-        new EngineSplash(2720).display(); SwingUtilities.invokeLater(() -> new Engine().start());
-    }
+    public static void main(String[] args) {new EngineSplash(2720).display(); SwingUtilities.invokeLater(() -> new Engine().start());}
 
+    //Adding slight performance boost + UI properties
     static {
         //Uncomment for slight performance kick: will cause gui tearing
         //System.setProperty("sun.java2d.opengl", "True");
