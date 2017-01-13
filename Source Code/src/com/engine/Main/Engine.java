@@ -37,7 +37,7 @@ public class Engine {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e1){e1.printStackTrace();}
     	EFrame = new JFrame(title);
         EFrame.setIconImage(Settings.getIcon());
-        EFrame.setSize((int) (width / 2.4), (int) (height / 1.5));
+        EFrame.setSize((int) (width / 1.8), (int) (height / 1.3));
         EFrame.setLocationRelativeTo(null);
         EFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         EFrame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {QuitWindow.getInstance();}});
