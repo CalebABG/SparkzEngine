@@ -1,6 +1,8 @@
 package com.engine.Main;
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EngineMethods.*;
+import static com.engine.JComponents.CMenuBar.getMenuBar;
+
 import com.engine.EngineHelpers.EngineSplash;
 import com.engine.GUIWindows.StatsPanel;
 import com.engine.GUIWindows.QuitWindow;
@@ -19,7 +21,8 @@ public class Engine {
     }
 
     static {
-        System.setProperty("sun.java2d.opengl", "True");
+        //Uncomment for slight performance kick: will cause gui tearing
+        //System.setProperty("sun.java2d.opengl", "True");
         System.setProperty("sun.java2d.transaccel", "True");
         System.setProperty("sun.java2d.ddforcevram", "True");
         System.setProperty("apple.laf.useScreenMenuBar", "true");
@@ -34,16 +37,16 @@ public class Engine {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e1){e1.printStackTrace();}
     	EFrame = new JFrame(title);
         EFrame.setIconImage(Settings.getIcon());
-        EFrame.setSize((int) (width / 1.8), (int) (height / 1.3));
+        EFrame.setSize((int) (width / 2.4), (int) (height / 1.5));
         EFrame.setLocationRelativeTo(null);
         EFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         EFrame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {QuitWindow.getInstance();}});
         EFrame.getContentPane().setLayout(new BorderLayout(0, 0));
 
         Settings.loadSettings();
+        EFrame.setJMenuBar(getMenuBar());
 
         canvas = new Canvas();
-        canvas.setIgnoreRepaint(true);
         canvas.requestFocusInWindow();
         //Mouse Click Listener
         canvas.addMouseListener(mListener);

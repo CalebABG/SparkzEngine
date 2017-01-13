@@ -30,18 +30,14 @@ public class StatsPanel {
 
     private StatsPanel() {
         frame = new JFrame("Stats Panel");
-        if (getOS().equals("mac")) {
-            frame.setSize(638, 385);
-        } else frame.setSize(638, 425);
+        if (getOS().equals("mac")) {frame.setSize(638, 385);} else frame.setSize(638, 390);
 
         frame.setIconImage(Settings.getIcon());
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {close();}});
         frame.setLocationRelativeTo(EFrame);
-
-        frame.setJMenuBar(getMenuBar());
-
+        frame.setLayout(new BorderLayout(0, 0));
         frame.addMouseListener(new MouseAdapter() {public void mousePressed(MouseEvent e) {
             mpt.x = e.getX(); mpt.y = e.getY();}});
         frame.addMouseMotionListener(new MouseMotionAdapter() {
@@ -110,7 +106,7 @@ public class StatsPanel {
     }
 
     private void addComps(JFrame root, JPanel panel, JComponent... components) {
-        for (JComponent comps : components) {panel.add(comps);} root.add(panel);
+        for (JComponent comps : components) {panel.add(comps);} root.add(panel, BorderLayout.CENTER);
     }
 
     private static void startTimer() {

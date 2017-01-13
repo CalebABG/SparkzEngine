@@ -17,7 +17,7 @@ public class CMenuBar extends JMenuBar {
     private static CMenuBar menuBar;
     private static JMenuItem exit, settingsSave, settingsLoad, settingsUI, sliderUI,
             thinkingParticlesUI,particleGraphUI, helpInstructions, helpGraphInstructions, optionsMenu, enginepause;
-    private static Font font1 = new Font(Font.SERIF, Font.PLAIN, 23);
+    private static Font font1 = new Font(Font.SERIF, Font.PLAIN, 21);
     private static final int memThreshold = 75;
     public static JRadioButtonMenuItem[] pModes,pTypes, pGravModes;
     public static ButtonGroup particleModesGroup, particleTypesGroup, particleGravitationGroup;
@@ -366,7 +366,6 @@ public class CMenuBar extends JMenuBar {
     private static String isPaused() {if (isPaused) return "Resume Engine"; else return "Pause Engine";}
     public static void updateState() {enginepause.setText(isPaused());}
 
-    public void setColor(Color color) {bgColor = color;}
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
