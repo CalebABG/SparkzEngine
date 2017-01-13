@@ -1,6 +1,6 @@
 package com.engine.GUIWindows;
 
-import com.engine.EngineHelpers.WindowText;
+import com.engine.EngineHelpers.GUIText;
 import com.engine.ParticleHelpers.ParticleTypeOptions;
 import com.engine.Utilities.InputWrapper;
 import com.engine.Utilities.Settings;
@@ -51,7 +51,7 @@ public class ParticleTypeUI {
         frame.add(jPanel1, BorderLayout.PAGE_END);
 
         JLabel jLabel2 = new JLabel();
-        jLabel2.setText(WindowText.particleDrawOptions());
+        jLabel2.setText(GUIText.particleDrawOptions());
         jScrollPane1.setViewportView(jLabel2);
 
         frame.add(jScrollPane1, BorderLayout.CENTER);

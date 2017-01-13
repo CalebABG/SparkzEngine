@@ -1,6 +1,6 @@
 package com.engine.GUIWindows;
 
-import com.engine.EngineHelpers.WindowText;
+import com.engine.EngineHelpers.GUIText;
 import com.engine.EngineHelpers.EngineMethods;
 
 import static com.engine.EngineHelpers.EConstants.*;
@@ -69,7 +69,7 @@ public class OptionsMenu {
         frame.add(jPanel1, BorderLayout.PAGE_END);
 
         JLabel jLabel2 = new JLabel();
-        jLabel2.setText(WindowText.generalOptions());
+        jLabel2.setText(GUIText.generalOptions());
         jScrollPane1.setViewportView(jLabel2);
 
         frame.add(jScrollPane1, BorderLayout.CENTER);

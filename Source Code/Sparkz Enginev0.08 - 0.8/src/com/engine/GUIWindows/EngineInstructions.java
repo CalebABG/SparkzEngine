@@ -1,6 +1,6 @@
 package com.engine.GUIWindows;
 
-import com.engine.EngineHelpers.WindowText;
+import com.engine.EngineHelpers.GUIText;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +33,7 @@ public class EngineInstructions {
         panel.setLayout(new BorderLayout());
         frame.getContentPane().add(panel);
 
-        JLabel label = new JLabel(WindowText.instructions());
+        JLabel label = new JLabel(GUIText.instructions());
         label.setHorizontalAlignment(SwingConstants.CENTER);
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.getViewport().add(label);

@@ -1,7 +1,7 @@
 package com.engine.GUIWindows;
 
 import static com.engine.EngineHelpers.EConstants.*;
-import com.engine.EngineHelpers.WindowText;
+import com.engine.EngineHelpers.GUIText;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +32,7 @@ public class GraphInstructions {
         panel.setLayout(new BorderLayout());
         frame.getContentPane().add(panel);
 
-        JLabel label = new JLabel(WindowText.particleGraphInstructions());
+        JLabel label = new JLabel(GUIText.particleGraphInstructions());
         label.setHorizontalAlignment(SwingConstants.CENTER);
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.getViewport().add(label);

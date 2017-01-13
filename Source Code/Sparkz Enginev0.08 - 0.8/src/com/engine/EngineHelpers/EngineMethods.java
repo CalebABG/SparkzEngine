@@ -245,7 +245,7 @@ public class EngineMethods {
      * Determines which gravitation mode to use for particles in the ParticlesArray ArrayList.
      */
     private static void gravitationOptions(){
-        int gravityMode = (int) minValueGuard(0, ptGravitationInt, WindowText.particleGravitationOptions());
+        int gravityMode = (int) minValueGuard(0, ptGravitationInt, GUIText.particleGravitationOptions());
         switch (gravityMode)
         {
             case 0: ptGravitationInt = 0; break;
@@ -265,7 +265,7 @@ public class EngineMethods {
      * Dialog window for adjusting the fireworks options (Wind, Life, Jitter)
      */
     private static void realFireworks() {
-        String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, WindowText.realFireworksOptions()), null, JOptionPane.PLAIN_MESSAGE);
+        String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, GUIText.realFireworksOptions()), null, JOptionPane.PLAIN_MESSAGE);
         int rfoInt = (InputWrapper.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
         switch (rfoInt)
         {
@@ -282,7 +282,7 @@ public class EngineMethods {
      */
     private static void particleSizeSeedOptions(){
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception x){x.printStackTrace();}
-        String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, WindowText.particleSizeSeedOptions()), null, JOptionPane.PLAIN_MESSAGE);
+        String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, GUIText.particleSizeSeedOptions()), null, JOptionPane.PLAIN_MESSAGE);
         int seedOpt = (InputWrapper.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
         switch (seedOpt)
         {
@@ -299,7 +299,7 @@ public class EngineMethods {
      */
     private static void particleSpeedSeedOptions(){
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception x){x.printStackTrace();}
-        String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, WindowText.particleSpeedSeedOptions()), null, JOptionPane.PLAIN_MESSAGE);
+        String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, GUIText.particleSpeedSeedOptions()), null, JOptionPane.PLAIN_MESSAGE);
         int seedOpt = (InputWrapper.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
         switch (seedOpt)
         {

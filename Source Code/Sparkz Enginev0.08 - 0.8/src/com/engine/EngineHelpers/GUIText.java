@@ -1,6 +1,6 @@
 package com.engine.EngineHelpers;
 
-public class WindowText {
+public class GUIText {
     public static String instructions() {
         return "<html><body>" +
                 "<p style='font-size:16px;color:red'> Important Keys + Notes: " +
@@ -25,14 +25,14 @@ public class WindowText {
                 "<li style='font-size:13px'> Press <span style='font-size:15px;color:purple'>1</span> to increase particle size.</li> " +
                 "<li style='font-size:13px'> Press <span style='font-size:15px;color:purple'>2</span> to decrease particle size.</li> " +
                 "<li style='font-size:13px'> Press <span style='font-size:15px;color:purple'>3</span> to decrease amount of particles.</li> " +
-                "<li style='font-size:13px'> Press <span style='font-size:15px;color:purple'>4</span> to toggle Particle Mode (Normal, Multi, Fireworks, Graph, Ragdoll) <br></li>"+
+                "<li style='font-size:13px'> Press <span style='font-size:15px;color:purple'>4</span> to toggle Particle Mode (Normal, Multi, Fireworks, Graph, Ragdoll) <br></li>" +
                 "<li style='font-size:13px'> Press <span style='font-size:15px;color:purple'>5</span> to toggle Thinking Particles (plain color or color change based on" +
-                " speed).</li>"+
+                " speed).</li>" +
                 "<li style='font-size:13px'> Press <span style='font-size:15px;color:purple'>6</span> to toggle Link Mode " +
-                "(connects each particle: <span style='font-size:13px;color:red'> 100 particles max</span>)</li>"+
-                "<li style='font-size:13px'> Press <span style='font-size:15px;color:purple'>7</span> to bring up Options Menu.</li>"+
-                "<li style='font-size:13px'> Press <span style='font-size:15px;color:purple'>8</span> to pause simulation, press again to resume.</li>"+
-                "<li style='font-size:13px'> Press <span style='font-size:15px;color:purple'>9</span> to bring up Slide Editor.</span></li>"+
+                "(connects each particle: <span style='font-size:13px;color:red'> 100 particles max</span>)</li>" +
+                "<li style='font-size:13px'> Press <span style='font-size:15px;color:purple'>7</span> to bring up Options Menu.</li>" +
+                "<li style='font-size:13px'> Press <span style='font-size:15px;color:purple'>8</span> to pause simulation, press again to resume.</li>" +
+                "<li style='font-size:13px'> Press <span style='font-size:15px;color:purple'>9</span> to bring up Slide Editor.</span></li>" +
                 "<li style='font-size:13px'> Press <span style='font-size:15px;color:purple'>B</span> to toggle connection type for Link Mode.</li> " +
                 "<li style='font-size:13px'> Press <span style='font-size:15px;color:purple'>F</span> to slow particles.</li> " +
                 "<li style='font-size:13px'> Press <span style='font-size:15px;color:purple'>G</span> to scatter particles.</li> " +
