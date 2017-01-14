@@ -10,6 +10,8 @@ import static com.engine.EngineHelpers.EngineMethods.displayParticleType;
 import com.engine.Utilities.H5Wrapper;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.basic.BasicMenuBarUI;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
@@ -26,6 +28,7 @@ public class CMenuBar extends JMenuBar {
     public static CMenuBar getMenuBar() {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());} catch (Exception e1){e1.printStackTrace();}
         menuBar = new CMenuBar();
+        menuBar.setBorder(BorderFactory.createLineBorder(bgColor, 2, false));
         menuBar.add(Box.createHorizontalStrut(11));
 
         //File Begin

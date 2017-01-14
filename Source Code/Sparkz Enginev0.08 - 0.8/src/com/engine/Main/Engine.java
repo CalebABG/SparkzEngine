@@ -40,7 +40,6 @@ public class Engine {
         EFrame.setLocationRelativeTo(null);
         EFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         EFrame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {QuitWindow.getInstance();}});
-        EFrame.getContentPane().setLayout(new BorderLayout(0, 0));
 
         Settings.loadSettings();
         EFrame.setJMenuBar(getMenuBar());
@@ -56,10 +55,9 @@ public class Engine {
         //Keyboard Listener
         canvas.addKeyListener(kHandler);
         EFrame.addKeyListener(kHandler);
-        EFrame.getContentPane().add(canvas, BorderLayout.CENTER);
+        EFrame.add(canvas);
 
         setupTimerTask();
-
         EFrame.setVisible(true);
     }
 
@@ -70,10 +68,9 @@ public class Engine {
     private void setupTimerTask() {
         task = new TimerTask() {
             public void run() {
-                final double SIM_HERTZ = FPS, TIME_BETWEEN_UPDATES = 1.0E9D / SIM_HERTZ;
+                final double SIM_HERTZ = FPS, TIME_BETWEEN_UPDATES = 1.0E9D / SIM_HERTZ, TARGET_TIME_BETWEEN_RENDERS = 1.0E9D / SIM_HERTZ;
                 final int MAX_UPDATES_BEFORE_RENDER = 1;
-                double lastUpdateTime = System.nanoTime(), lastRenderTime = System.nanoTime();
-                final double TARGET_TIME_BETWEEN_RENDERS = 1.0E9D / SIM_HERTZ;
+                double lastUpdateTime = System.nanoTime(), lastRenderTime;
                 int lastSecondTime = (int) (lastUpdateTime / 1.0E9D);
 
                 while (running) {
@@ -82,27 +79,20 @@ public class Engine {
 
                     if (!isPaused) {
                         while (now - lastUpdateTime > TIME_BETWEEN_UPDATES && updateCount < MAX_UPDATES_BEFORE_RENDER) {
-                            update();
-                            lastUpdateTime += TIME_BETWEEN_UPDATES;
-                            updateCount++;
+                            update(); lastUpdateTime += TIME_BETWEEN_UPDATES; updateCount++;
                         }
                     }
 
-                    if (now - lastUpdateTime > TIME_BETWEEN_UPDATES) {
-                        lastUpdateTime = now - TIME_BETWEEN_UPDATES;
-                    }
+                    if (now - lastUpdateTime > TIME_BETWEEN_UPDATES) {lastUpdateTime = now - TIME_BETWEEN_UPDATES;}
 
                     render();
                     lastRenderTime = now;
 
                     int thisSecond = (int) (lastUpdateTime / 1.0E9D);
-                    if (thisSecond > lastSecondTime) {
-                        lastSecondTime = thisSecond;
-                    }
+                    if (thisSecond > lastSecondTime) {lastSecondTime = thisSecond;}
 
                     while (now - lastRenderTime < TARGET_TIME_BETWEEN_RENDERS && now - lastUpdateTime < TIME_BETWEEN_UPDATES) {
-                        Thread.yield();
-                        now = System.nanoTime();
+                        Thread.yield(); now = System.nanoTime();
                     }
                 }
             }

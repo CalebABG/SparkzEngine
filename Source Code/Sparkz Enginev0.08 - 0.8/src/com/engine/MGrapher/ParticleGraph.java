@@ -19,11 +19,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Arrays;
 
-public class ParticleGraph { // Best scale for all functions = 0.02
+public class ParticleGraph {
+    // Best x-scale for all functions = 0.02
     private static ParticleGraph particleGraph = null;
     public static JFrame frame;
-    private static JButton mnHelp;
-    private static JButton sampleFunctions;
     public static CTextField[] textFields = new CTextField[5];
     public static String[] mathFunctions = {
             "var sin = Math.sin", "var cos = Math.cos", "var tan = Math.tan",
@@ -90,12 +89,12 @@ public class ParticleGraph { // Best scale for all functions = 0.02
         //Add Helper Math functions to JavaScript Engine at window creation
         try {for (int i = 0; i < mathFunctions.length; i++) {engine.eval(mathFunctions[i]);}} catch (Exception e){EException.append(e);}
 
-        mnHelp = new JButton("Help");
+        JButton mnHelp = new JButton("Help");
         mnHelp.setFont(new Font("Times", Font.PLAIN, 18));
         mnHelp.addActionListener(e -> {if (e.getSource() == mnHelp) {GraphInstructions.getInstance(frame);}});
         menuBar.add(mnHelp);
 
-        sampleFunctions = new JButton("Samples");
+        JButton sampleFunctions = new JButton("Samples");
         sampleFunctions.setFont(new Font("Times", Font.PLAIN, 18));
         sampleFunctions.addActionListener(e -> SampleFunctions.getInstance(frame));
         menuBar.add(sampleFunctions);
@@ -174,16 +173,13 @@ public class ParticleGraph { // Best scale for all functions = 0.02
     }
 
     private static void graph() throws Exception {
+        ParticlesArray.clear();
+        double res = 0.04, positive_width = canvas.getWidth() / 2, negative_width = -positive_width;
         try {
-            ParticlesArray.clear();
-            double positive_width = canvas.getWidth() / 2;
-            double negative_width = -positive_width;
-
-            for (double i = negative_width; i < positive_width; i += .04) {
-                engine.put("x", i * scaleX);
-                try {setGraph(i, .95);} catch (Exception e) {throwError(textFields[0]); break;}
+            for (double i = negative_width; i < positive_width; i += res) {
+                engine.put("x", i * scaleX); try {setGraph(i, .95);} catch (Exception e) {throwError(textFields[0]); break;}
             }
-        } catch (Exception e) { EException.append(e);}
+        } catch (Exception e){EException.append(e);}
     }
 
     private static void setGraph(double x, double r) throws Exception {ParticlesArray.add(new Particle(x, (-(evaluateExpr(mathExpression) * scaleY)), r));}
