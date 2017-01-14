@@ -24,7 +24,6 @@ abstract public class EConstants {
     public static int safetyAmount = 120;
     public static int cycleRate = 5;
     public static int maxParticleType = 8; // Limit @ 8
-    public static int tps = 0, fps = 0;
 
     //Doubles + Seed Variables
     public static double singleClickSizeMaxVal = 1.5, singleClickSizeMinVal = .8;
