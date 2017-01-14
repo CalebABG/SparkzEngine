@@ -4,6 +4,9 @@ import com.engine.EngineHelpers.EngineMethods;
 import com.engine.JComponents.CLabel;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicSplitPaneDivider;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
@@ -29,31 +32,54 @@ public class StatsPanel {
     private StatsPanel() {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e1){e1.printStackTrace();}
         frame = new JFrame("Stats Panel");
-        if (getOS().equals("mac")) {frame.setSize(638, 385);} else frame.setSize(727, 445);
+        frame.setSize(727, 453);
 
         frame.setIconImage(Settings.getIcon());
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {close();}});
         frame.setLocationRelativeTo(EFrame);
 
-        JMenuBar menuBar = new JMenuBar();
+        JMenuBar menuBar = new JMenuBar(){
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setColor(bgColor);
+                g2d.fillRect(0, 0, getWidth() + 1, getHeight() + 1);
+            }
+        };
+        menuBar.setBorder(BorderFactory.createLineBorder(bgColor, 2, false));
         frame.setJMenuBar(menuBar);
 
         JMenu mnStyleOptions = new JMenu("Style Options");
-        mnStyleOptions.setFont(new Font(Font.SERIF, Font.BOLD, 15));
+        mnStyleOptions.setForeground(Color.white);
+        mnStyleOptions.setFont(new Font(Font.SERIF, Font.PLAIN, 17));
         menuBar.add(mnStyleOptions);
 
-        JMenuItem mntmShowhideLeft = new JMenuItem("Show/Hide Left");
+        JMenuItem mntmShowhideLeft = new JMenuItem("Show/Hide Right");
         mnStyleOptions.add(mntmShowhideLeft);
 
-        JMenuItem mntmShowhideRight = new JMenuItem("Show/Hide Right");
+        JMenuItem mntmShowhideRight = new JMenuItem("Show/Hide Left");
         mnStyleOptions.add(mntmShowhideRight);
 
         JSplitPane split_pane = new JSplitPane();
         split_pane.setContinuousLayout(true);
-        split_pane.setBackground(Color.GRAY);
         split_pane.setDividerSize(2);
         split_pane.setResizeWeight(0.5);
+
+        split_pane.setUI(new BasicSplitPaneUI() {
+            public BasicSplitPaneDivider createDefaultDivider() {
+                return new BasicSplitPaneDivider(this) {
+                    public void setBorder(Border border) {}
+                    public void paint(Graphics g) {
+                        super.paint(g);
+                        g.setColor(Color.black);
+                        g.fillRect(0, 0, getWidth(), getHeight());
+                    }
+                };
+            }
+        });
+        split_pane.setBorder(null);
+
         frame.getContentPane().add(split_pane, BorderLayout.CENTER);
 
         ActionListener actl = new ActionListener() {
