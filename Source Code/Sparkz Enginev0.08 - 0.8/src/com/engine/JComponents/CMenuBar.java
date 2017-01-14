@@ -85,12 +85,17 @@ public class CMenuBar extends JMenuBar {
         thinkingParticlesUI = new JMenuItem("Particle Color Editor");
         thinkingParticlesUI.addActionListener(e -> {if (e.getSource() == thinkingParticlesUI) {ParticleColor.getInstance();}});
         mnUIWindows.add(thinkingParticlesUI);
-        particleGraphUI = new JMenuItem("Particle Graph Editor");
 
+        JMenuItem timemachine = new JMenuItem("Color Time Machine");
+        timemachine.addActionListener(e -> {if (e.getSource() == timemachine) {ColorTimeMachine.getInstance();}});
+        mnUIWindows.add(timemachine);
+
+        particleGraphUI = new JMenuItem("Particle Graph Editor");
         particleGraphUI.addActionListener(e -> {if (e.getSource() == particleGraphUI) {ParticleGraph.getInstance();}});
         mnUIWindows.add(particleGraphUI);
 
         menuBar.add(Box.createHorizontalStrut(11));
+
         JMenuItem customForces = new JMenuItem("Organic Forces Editor");
         customForces.addActionListener(e -> OrganicForces.getInstance(EFrame));
         mnUIWindows.add(customForces);
