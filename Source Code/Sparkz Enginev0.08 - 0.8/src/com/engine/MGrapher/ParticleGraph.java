@@ -8,7 +8,6 @@ import com.engine.JComponents.RButton;
 import com.engine.JComponents.RLabel;
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.JComponents.AutoComplete.makeUndoable;
-
 import com.engine.ParticleTypes.Particle;
 import com.engine.GUIWindows.EException;
 import com.engine.Utilities.Settings;
@@ -52,9 +51,10 @@ public class ParticleGraph {
     };
 
     public static ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
-    private static String mathExpression = "2*sin(x)";
+    private static String mathExpression = "sin(x)";
     private static double scaleY = 40; //Best at 40
     private static double scaleX = 0.02;
+    private static Thread graphThread1;
 
 //    public static void main(String[] args){}
 
@@ -111,7 +111,7 @@ public class ParticleGraph {
         textFields[0].setFocusTraversalKeysEnabled(false);
         textFields[0].addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {if (e.getKeyCode() != KeyEvent.VK_ENTER) {textFields[0].setForeground(Color.black);}}
-            public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER) graphFunction();}
+            public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER){threadGraph(0, "");}}
         });
 
         //Textfield AutoSuggest Functions
@@ -145,7 +145,7 @@ public class ParticleGraph {
         textFields[1] = new CTextField("" + scaleY, new Font("Times", Font.PLAIN, 19), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 11});
         textFields[1].addKeyListener(new KeyAdapter() {public void keyPressed(KeyEvent e) {textFields[1].setForeground(Color.black);}});
         textFields[1].addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER) graphFunction();}
+            public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER) threadGraph(0, "");}
         });
         panel.add(textFields[1], textFields[1].gridBagConstraints);
 
@@ -156,13 +156,13 @@ public class ParticleGraph {
         textFields[2] = new CTextField("" + scaleX, new Font("Times", Font.PLAIN, 19), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 12});
         textFields[2].addKeyListener(new KeyAdapter() {public void keyPressed(KeyEvent e) {textFields[2].setForeground(Color.black);}});
         textFields[2].addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER) graphFunction();}
+            public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER) threadGraph(0, "");}
         });
         panel.add(textFields[2], textFields[2].gridBagConstraints);
 
         RButton graphButton = new RButton("<html><span style='color:#008DCB'>Graph Function</span></html>",
                 new Font("Times New Roman", Font.PLAIN, 23), 2, GridBagConstraints.HORIZONTAL, new int[]{0, 13}, new int[]{20, 15});
-        graphButton.addActionListener(e -> {if (e.getSource() == graphButton) {graphFunction();}});
+        graphButton.addActionListener(e -> {if (e.getSource() == graphButton) {threadGraph(0, "");}});
         graphButton.gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
         graphButton.gridBagConstraints.fill =      GridBagConstraints.HORIZONTAL;
         graphButton.gridBagConstraints.anchor =    GridBagConstraints.SOUTHWEST;
@@ -194,6 +194,18 @@ public class ParticleGraph {
         if (engine.eval(express) instanceof Integer) return  ((Integer) engine.eval(express)).doubleValue();
         else if (engine.eval(express) instanceof Double) {return (double) engine.eval(express);}
         else return 0;
+    }
+
+    public static void threadGraph(int mode, String express) {
+        if (graphThread1 != null && graphThread1.isAlive()) {
+            try {graphThread1.interrupt(); graphThread1.join();} catch (InterruptedException e1) {EException.append(e1);}
+            graphThread1 = new Thread(){public void run() {if (mode == 0) {graphFunction();} else graphFunction(express);}};
+            graphThread1.start();
+        }
+        else{
+            graphThread1 = new Thread(){public void run() {if (mode == 0) {graphFunction();} else graphFunction(express);}};
+            graphThread1.start();
+        }
     }
 
     private static void graphFunction() {try {evalInput(0, ""); graph();} catch (Exception e1) {EException.append(e1);}}

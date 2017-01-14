@@ -51,10 +51,11 @@ public class SampleFunctions {
         } catch (Exception e){e.printStackTrace();}
 
         list = new JList<>(listModel);
-        list.setVisibleRowCount(-1);
-        list.setLayoutOrientation(JList.VERTICAL);
         list.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        list.setLayoutOrientation(JList.VERTICAL);
+        list.setVisibleRowCount(-1);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectedIndex(0);
         panel.add(list, BorderLayout.CENTER);
 
         JScrollPane listScroller = new JScrollPane(list);
@@ -66,7 +67,7 @@ public class SampleFunctions {
         graph.addActionListener(e -> {
             String selectedSampleFunction = list.getSelectedValue();
             ParticleGraph.textFields[0].setText(selectedSampleFunction);
-            ParticleGraph.graphFunction(selectedSampleFunction);
+            ParticleGraph.threadGraph(1, selectedSampleFunction);
         });
         panel.add(graph, BorderLayout.SOUTH);
         frame.setVisible(true);
