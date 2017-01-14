@@ -29,8 +29,8 @@
       <file leaf-file-name="Engine.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/engine/Main/Engine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="32" column="31" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
+            <state relative-caret-position="211">
+              <caret line="77" column="40" selection-start-line="77" selection-start-column="40" selection-end-line="77" selection-end-column="40" />
               <folding>
                 <element signature="e#1856#1956#0" expanded="true" />
                 <element signature="e#1955#1956#0" expanded="true" />
@@ -42,8 +42,8 @@
       <file leaf-file-name="EngineMethods.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/engine/EngineHelpers/EngineMethods.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-42">
-              <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+            <state relative-caret-position="-553">
+              <caret line="603" column="23" selection-start-line="603" selection-start-column="23" selection-end-line="603" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -109,8 +109,8 @@
         <option value="$PROJECT_DIR$/src/com/engine/MGrapher/ParticleGraph.java" />
         <option value="$PROJECT_DIR$/src/com/engine/Main/SmoothResize.java" />
         <option value="$PROJECT_DIR$/src/com/engine/EngineHelpers/EConstants.java" />
-        <option value="$PROJECT_DIR$/src/com/engine/Main/Engine.java" />
         <option value="$PROJECT_DIR$/src/com/engine/GUIWindows/StatsPanel.java" />
+        <option value="$PROJECT_DIR$/src/com/engine/Main/Engine.java" />
       </list>
     </option>
   </component>
@@ -432,7 +432,7 @@
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.1732342" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Sparkz Engine Jar" />
+    <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/Particle Project - (Started-11-22-15)/Particlesv2.4 - 3.4(updated)" />
   </component>
   <component name="RunManager" selected="Application.Engine">
     <configuration default="false" name="Engine" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -1086,14 +1086,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/EngineHelpers/EngineMethods.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-42">
-          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/engine/EngineHelpers/EConstants.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="127">
@@ -1123,10 +1115,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/engine/EngineHelpers/EngineMethods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-553">
+          <caret line="603" column="23" selection-start-line="603" selection-start-column="23" selection-end-line="603" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/engine/Main/Engine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="32" column="31" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
+        <state relative-caret-position="211">
+          <caret line="77" column="40" selection-start-line="77" selection-start-column="40" selection-end-line="77" selection-end-column="40" />
           <folding>
             <element signature="e#1856#1956#0" expanded="true" />
             <element signature="e#1955#1956#0" expanded="true" />

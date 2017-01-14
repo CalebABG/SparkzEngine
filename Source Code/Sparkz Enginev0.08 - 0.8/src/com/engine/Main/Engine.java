@@ -77,16 +77,16 @@ public class Engine {
                     double now = System.nanoTime();
                     int updateCount = 0;
 
+                    render();
+                    lastRenderTime = now;
+
                     if (!isPaused) {
                         while (now - lastUpdateTime > TIME_BETWEEN_UPDATES && updateCount < MAX_UPDATES_BEFORE_RENDER) {
-                            update(); lastUpdateTime += TIME_BETWEEN_UPDATES; updateCount++;
+                            handleUpdates(); lastUpdateTime += TIME_BETWEEN_UPDATES; updateCount++;
                         }
                     }
 
                     if (now - lastUpdateTime > TIME_BETWEEN_UPDATES) {lastUpdateTime = now - TIME_BETWEEN_UPDATES;}
-
-                    render();
-                    lastRenderTime = now;
 
                     int thisSecond = (int) (lastUpdateTime / 1.0E9D);
                     if (thisSecond > lastSecondTime) {lastSecondTime = thisSecond;}
@@ -113,10 +113,6 @@ public class Engine {
      */
     public static synchronized void stop(){running = false; EFrame.setVisible(false); stopRenderer(); System.exit(0);}
     public static void stopRenderer(){renderer.cancel(); renderer.purge();}
-    /**
-     * Method actively updates the programs Particle Arrays. It is used within the programs main Thread.
-     */
-    private void update() {handleUpdates();}
 
     /**
      * This method actively renders the canvas for the program; it creates and disposes of the Engines graphics Object each frame.
