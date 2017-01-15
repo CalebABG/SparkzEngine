@@ -5,8 +5,6 @@ import com.engine.GUIWindows.EException;
 import static com.engine.EngineHelpers.EConstants.*;
 import com.engine.ParticleTypes.Particle;
 
-import javax.swing.*;
-
 import static com.engine.Utilities.ColorConverter.HEXAtoRGBA;
 import java.awt.*;
 import java.io.*;

@@ -12,8 +12,6 @@ import java.awt.event.*;
 import java.text.DecimalFormat;
 import java.util.*;
 import static com.engine.EngineHelpers.EConstants.*;
-import static com.engine.EngineHelpers.EConstants.canvas;
-import static com.engine.Utilities.Settings.getOS;
 
 public class StatsPanel {
     private static StatsPanel statsUI = null;

@@ -3,8 +3,8 @@ package com.engine.ParticleTypes;
 import static com.engine.EngineHelpers.EConstants.*;
 import java.awt.*;
 
-public abstract class Molecule {
-    public Color color = Color.WHITE;
+public abstract class Molecule implements Renderable{
+    public Color color = DEFAULT_COLOR;
     public double x, y, vx, vy, radius = 1;
 
     public Molecule() {
@@ -87,7 +87,4 @@ public abstract class Molecule {
         double forceX = (((p.x - x) / 5) / dist); vx += forceX;
         double forceY = (((p.y - y) / 5) / dist); vy += forceY;
     }
-
-    public abstract void render();
-    public abstract void update();
 }
