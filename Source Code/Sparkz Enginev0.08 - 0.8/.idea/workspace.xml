@@ -29,8 +29,8 @@
       <file leaf-file-name="Engine.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/engine/Main/Engine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="42">
-              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+            <state relative-caret-position="280">
+              <caret line="118" column="42" selection-start-line="118" selection-start-column="42" selection-end-line="118" selection-end-column="42" />
               <folding>
                 <element signature="e#1856#1956#0" expanded="true" />
                 <element signature="e#1955#1956#0" expanded="true" />
@@ -42,8 +42,8 @@
       <file leaf-file-name="EngineMethods.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/engine/EngineHelpers/EngineMethods.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="635" column="103" selection-start-line="635" selection-start-column="103" selection-end-line="635" selection-end-column="103" />
+            <state relative-caret-position="393">
+              <caret line="555" column="34" selection-start-line="555" selection-start-column="34" selection-end-line="555" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -52,18 +52,8 @@
       <file leaf-file-name="EConstants.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/engine/EngineHelpers/EConstants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1196">
-              <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Molecule.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/engine/ParticleTypes/Molecule.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="63">
-              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+            <state relative-caret-position="175">
+              <caret line="69" column="37" selection-start-line="69" selection-start-column="37" selection-end-line="69" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -79,16 +69,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ParticleGraph.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ParticleGraph.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/engine/MGrapher/ParticleGraph.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="47" column="64" selection-start-line="47" selection-start-column="64" selection-end-line="47" selection-end-column="64" />
+            <state relative-caret-position="85">
+              <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
               <folding>
-                <element signature="e#11456#11552#0" expanded="true" />
-                <element signature="e#11551#11552#0" expanded="true" />
-                <element signature="e#11639#11735#0" expanded="true" />
-                <element signature="e#11734#11735#0" expanded="true" />
+                <element signature="e#11519#11615#0" expanded="true" />
+                <element signature="e#11614#11615#0" expanded="true" />
+                <element signature="e#11702#11798#0" expanded="true" />
+                <element signature="e#11797#11798#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -124,12 +114,15 @@
         <option value="$PROJECT_DIR$/src/com/engine/JComponents/CMenuBar.java" />
         <option value="$PROJECT_DIR$/src/com/engine/Main/SmoothResize.java" />
         <option value="$PROJECT_DIR$/src/com/engine/GUIWindows/StatsPanel.java" />
-        <option value="$PROJECT_DIR$/src/com/engine/GUIWindows/SampleFunctions.java" />
-        <option value="$PROJECT_DIR$/src/com/engine/MGrapher/ParticleGraph.java" />
-        <option value="$PROJECT_DIR$/src/com/engine/Main/Engine.java" />
         <option value="$PROJECT_DIR$/src/com/engine/EngineHelpers/EConstants.java" />
         <option value="$PROJECT_DIR$/src/com/engine/ParticleTypes/Renderable.java" />
         <option value="$PROJECT_DIR$/src/com/engine/ParticleTypes/Molecule.java" />
+        <option value="$PROJECT_DIR$/src/com/engine/EngineHelpers/EngineMethods.java" />
+        <option value="$PROJECT_DIR$/src/com/engine/Main/Engine.java" />
+        <option value="$PROJECT_DIR$/src/com/engine/MGrapher/ParticleGraph.java" />
+        <option value="$PROJECT_DIR$/src/com/engine/Utilities/Settings.java" />
+        <option value="$PROJECT_DIR$/src/com/engine/GUIWindows/SampleFunctions.java" />
+        <option value="$PROJECT_DIR$/src/Samples.ev" />
       </list>
     </option>
   </component>
@@ -514,14 +507,14 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="t" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="SmoothResize" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value="com.engine.JComponents.*" />
+          <option name="PATTERN" value="com.engine.Main.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="MAIN_CLASS_NAME" value="com.engine.JComponents.t" />
+      <option name="MAIN_CLASS_NAME" value="com.engine.Main.SmoothResize" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -534,14 +527,14 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="SmoothResize" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="SampleFunctions" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value="com.engine.Main.*" />
+          <option name="PATTERN" value="com.engine.GUIWindows.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="MAIN_CLASS_NAME" value="com.engine.Main.SmoothResize" />
+      <option name="MAIN_CLASS_NAME" value="com.engine.GUIWindows.SampleFunctions" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -889,16 +882,16 @@
       <item index="0" class="java.lang.String" itemvalue="Application.Engine" />
       <item index="1" class="java.lang.String" itemvalue="Application.StatsPanel" />
       <item index="2" class="java.lang.String" itemvalue="Application.StatsPanel" />
-      <item index="3" class="java.lang.String" itemvalue="Application.t" />
-      <item index="4" class="java.lang.String" itemvalue="Application.SmoothResize" />
+      <item index="3" class="java.lang.String" itemvalue="Application.SmoothResize" />
+      <item index="4" class="java.lang.String" itemvalue="Application.SampleFunctions" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Application.Engine" />
-        <item index="1" class="java.lang.String" itemvalue="Application.StatsPanel" />
-        <item index="2" class="java.lang.String" itemvalue="Application.SmoothResize" />
-        <item index="3" class="java.lang.String" itemvalue="Application.StatsPanel" />
-        <item index="4" class="java.lang.String" itemvalue="Application.t" />
+        <item index="1" class="java.lang.String" itemvalue="Application.SampleFunctions" />
+        <item index="2" class="java.lang.String" itemvalue="Application.StatsPanel" />
+        <item index="3" class="java.lang.String" itemvalue="Application.SmoothResize" />
+        <item index="4" class="java.lang.String" itemvalue="Application.StatsPanel" />
       </list>
     </recent_temporary>
   </component>
@@ -922,7 +915,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -932,7 +925,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14301191" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24160346" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -1120,38 +1113,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/GUIWindows/SampleFunctions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="57" column="31" selection-start-line="57" selection-start-column="31" selection-end-line="57" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/MGrapher/ParticleGraph.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="47" column="64" selection-start-line="47" selection-start-column="64" selection-end-line="47" selection-end-column="64" />
-          <folding>
-            <element signature="e#11456#11552#0" expanded="true" />
-            <element signature="e#11551#11552#0" expanded="true" />
-            <element signature="e#11639#11735#0" expanded="true" />
-            <element signature="e#11734#11735#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/Main/Engine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding>
-            <element signature="e#1856#1956#0" expanded="true" />
-            <element signature="e#1955#1956#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/engine/InputHandlers/KHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
@@ -1172,14 +1133,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/EngineHelpers/EngineMethods.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="635" column="103" selection-start-line="635" selection-start-column="103" selection-end-line="635" selection-end-column="103" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/engine/ParticleTypes/Renderable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -1188,19 +1141,78 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/EngineHelpers/EConstants.java">
+    <entry file="file://$PROJECT_DIR$/src/com/engine/ParticleTypes/Molecule.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1196">
-          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+        <state relative-caret-position="-63">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/ParticleTypes/Molecule.java">
+    <entry file="file://$PROJECT_DIR$/src/com/engine/EngineHelpers/EConstants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        <state relative-caret-position="175">
+          <caret line="69" column="37" selection-start-line="69" selection-start-column="37" selection-end-line="69" selection-end-column="37" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/engine/EngineHelpers/EngineMethods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="555" column="34" selection-start-line="555" selection-start-column="34" selection-end-line="555" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/engine/Main/Engine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="118" column="42" selection-start-line="118" selection-start-column="42" selection-end-line="118" selection-end-column="42" />
+          <folding>
+            <element signature="e#1856#1956#0" expanded="true" />
+            <element signature="e#1955#1956#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/engine/Utilities/Settings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="229" column="5" selection-start-line="229" selection-start-column="5" selection-end-line="229" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Samples.ev">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="549">
+          <caret line="41" column="39" selection-start-line="41" selection-start-column="39" selection-end-line="41" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/engine/GUIWindows/SampleFunctions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding>
+            <element signature="e#1207#1290#0" expanded="true" />
+            <element signature="e#1289#1290#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/engine/MGrapher/ParticleGraph.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding>
+            <element signature="e#11519#11615#0" expanded="true" />
+            <element signature="e#11614#11615#0" expanded="true" />
+            <element signature="e#11702#11798#0" expanded="true" />
+            <element signature="e#11797#11798#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -172,17 +172,17 @@ public class ParticleGraph {
         frame.setVisible(true);
     }
 
-    private static void graph() throws Exception {
+    private static void graph() {
         ParticlesArray.clear();
         double res = 0.04, positive_width = canvas.getWidth() / 2, negative_width = -positive_width;
-        try {
-            for (double i = negative_width; i < positive_width; i += res) {
-                engine.put("x", i * scaleX); try {setGraph(i, .95);} catch (Exception e) {throwError(textFields[0]); break;}
-            }
-        } catch (Exception e){EException.append(e);}
+        for (double i = negative_width; i < positive_width; i += res) {
+            engine.put("x", i * scaleX);
+            try {setGraph(i, .98);} catch (Exception e) {throwError(textFields[0]); EException.append(e); break;}
+        }
     }
 
     private static void setGraph(double x, double r) throws Exception {ParticlesArray.add(new Particle(x, (-(evaluateExpr(mathExpression) * scaleY)), r));}
+    private static void setGraph(double x, double y, double r) throws Exception {ParticlesArray.add(new Particle(x, y, r));}
 
     private static void evalInput(int mode, String express) {
         scaleY = guardDouble(textFields[1].getText(),textFields[1]);
@@ -208,8 +208,8 @@ public class ParticleGraph {
         }
     }
 
-    private static void graphFunction() {try {evalInput(0, ""); graph();} catch (Exception e1) {EException.append(e1);}}
-    public static void graphFunction(String express) {try {evalInput(1, express); graph();} catch (Exception e1) {EException.append(e1);}}
+    private static void graphFunction() {evalInput(0, ""); graph();}
+    public static void graphFunction(String express) {evalInput(1, express); graph();}
 
     private static double guardDouble(String expr, CTextField textField){
         double result = 0;

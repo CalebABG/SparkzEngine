@@ -40,15 +40,10 @@ public class Settings {
     public static String getOS() {
         String OS = "";
         String osNameMatch = System.getProperty("os.name").toLowerCase();
-        if (osNameMatch.contains("linux")) {
-            OS = "linux";
-        } else if (osNameMatch.contains("windows") || osNameMatch.contains("win")) {
-            OS = "windows";
-        } else if (osNameMatch.contains("solaris") || osNameMatch.contains("sunos")) {
-            OS = "solaris";
-        } else if (osNameMatch.contains("mac os") || osNameMatch.contains("macos") || osNameMatch.contains("darwin")) {
-            OS = "mac";
-        }
+        if (osNameMatch.contains("linux")) {OS = "linux";
+        } else if (osNameMatch.contains("windows") || osNameMatch.contains("win")) {OS = "windows";
+        } else if (osNameMatch.contains("solaris") || osNameMatch.contains("sunos")) {OS = "solaris";
+        } else if (osNameMatch.contains("mac os") || osNameMatch.contains("macos") || osNameMatch.contains("darwin")) {OS = "mac";}
         return OS;
     }
 
