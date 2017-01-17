@@ -1,5 +1,5 @@
 # switchMode -- set: 0 - 4 <- MAX 
-switchMode: 3
+switchMode: 0
 # particleType -- set: 0 - 8 <- MAX 
 particleType: 0
 # ptGravitationInt -- set: 0 - 6 <- MAX 

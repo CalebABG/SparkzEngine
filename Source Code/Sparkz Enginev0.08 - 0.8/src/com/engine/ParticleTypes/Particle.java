@@ -112,6 +112,7 @@ public class Particle extends Molecule {
     }
     private void connectModeSequential() {
         for (int i = 0; i < ParticlesArray.size() - 1; i++) {
+            graphics2D.setColor(ParticlesArray.get(i).getSelfColor());
             graphics2D.drawLine(ParticlesArray.get(i).getCenter().x, ParticlesArray.get(i).getCenter().y,
                     ParticlesArray.get(i + 1).getCenter().x, ParticlesArray.get(i + 1).getCenter().y);
         }

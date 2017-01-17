@@ -335,7 +335,7 @@ public class StatsPanel {
             if(safetyamount != null) {safetyamount.setText("Safety Amount: " + decimalFormat.format(safetyAmount));}
             if(ptMode != null) {ptMode.setText(EngineMethods.getModeText());}
             if(smartPt != null) {smartPt.setText(EngineMethods.getThinkingText());}
-            if(connect != null) {connect.setText(EngineMethods.getConnectText());}
+            if(connect != null) {connect.setText("Link Mode: " + EngineMethods.getConnectText());}
             if(atm != null) {atm.setText(EngineMethods.getMouseAttraction());}
             if(ptFriction != null) {ptFriction.setText(EngineMethods.getFrictionText());}
             if(screenSize != null) {screenSize.setText(String.format("Window Size: %d x %d", canvas.getWidth(), canvas.getHeight()));}

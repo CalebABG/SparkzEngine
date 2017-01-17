@@ -562,32 +562,32 @@ public class EngineMethods {
      * Returns whether the Engines cycle colors boolean is true or false.
      * @see ParticleColor
      */
-    public static String getCycle() {if (cycleColors) {return "On";} else return "Off";}
+    public static String getCycle() {return (cycleColors) ? "On" : "Off";}
 
     /**
      * Returns whether the Engines thinking particles boolean is true or false.
      * @see StatsPanel
      */
-    public static String getThinkingText(){if (thinkingParticles) return "Thinking Particles: On"; else return "Thinking Particles: Off";}
+    public static String getThinkingText(){return (thinkingParticles) ? "Thinking Particles: On" : "Thinking Particles: Off";}
 
     /**
      * Returns whether the Engines mouse gravitation boolean is true or false.
      * @see StatsPanel
      */
-    public static String getMouseAttraction(){if (mouseGravitation) return  "Mouse Attraction: On"; else return "Mouse Attraction: Off";}
+    public static String getMouseAttraction(){return (mouseGravitation) ? "Mouse Attraction: On" : "Mouse Attraction: Off";}
 
     /**
      * Returns whether the Engines particle friction boolean is true or false.
      * @see StatsPanel
      */
-    public static String getFrictionText(){if (particleFriction) return  "Particle Friction: On"; else return "Particle Friction: Off";}
+    public static String getFrictionText(){ return (particleFriction) ? "Particle Friction: On" : "Particle Friction: Off";}
 
     /**
      * Returns whether the Engines connect particles boolean is true or false and whether the ParticlesArray ArrayList.size() is
      * less than or equal to 100.
      * @see StatsPanel
      */
-    public static String getConnectText(){if (connectParticles && ParticlesArray.size() <= 100) return "Link Mode: On"; else return "Link Mode: Off";}
+    public static String getConnectText(){return (connectParticles && ParticlesArray.size() <= 100) ? "On" : "Off";}
 
     /**
      * Returns the current particle mode in string representation as follows: 'Particle Mode: _____'.

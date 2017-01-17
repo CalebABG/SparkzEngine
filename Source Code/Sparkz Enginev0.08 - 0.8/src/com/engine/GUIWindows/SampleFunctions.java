@@ -8,7 +8,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
 
@@ -39,7 +38,7 @@ public class SampleFunctions {
 
         DefaultListModel<String> listModel = new DefaultListModel<>();
         try {
-            FileInputStream fin = new FileInputStream(("." + Paths.get("/" + "src") + "/" + "Samples.ev"));
+            FileInputStream fin = new FileInputStream(("." + Paths.get("/" + "src") + "/" + "Samples.txt"));
             BufferedReader br = new BufferedReader(new InputStreamReader(fin));
             String line;
             while ((line = br.readLine()) != null) {listModel.addElement(line.trim());}
