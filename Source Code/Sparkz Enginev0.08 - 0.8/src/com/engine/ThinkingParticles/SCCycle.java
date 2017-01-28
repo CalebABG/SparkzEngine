@@ -13,11 +13,11 @@ import java.util.TimerTask;
 public class SCCycle {
     public static Timer time;
     public synchronized static void startCycle() {
-        if (Settings.doesFileExist()) {if (Settings.presetColors == null) {Settings.loadColors();}} // Needs Exception handling
+        if (Settings.doesColorsFileExist()) {if (Settings.presetColors == null) {Settings.loadColors();}} // Needs Exception handling
         time = new Timer();
         time.scheduleAtFixedRate(new TimerTask() {
             public void run() {
-                if (!Settings.doesFileExist()) {
+                if (!Settings.doesSettingsFileExist()) {
                     Color[] randColors = SCChoices.randomColor();
                     SCChoices.setPresetColors(randColors);
                     ColorTimeMachine.addColor(randColors);

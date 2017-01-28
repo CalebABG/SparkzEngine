@@ -1,0 +1,64 @@
+# switchMode -- set: 0 - 4 <- MAX 
+switchMode: 3
+# particleType -- set: 0 - 8 <- MAX 
+particleType: 0
+# ptGravitationInt -- set: 0 - 6 <- MAX 
+ptGravitationInt: 0
+# fireworksAmount -- set: 0 - specify number 
+fireworksAmount: 30
+# particleMode -- set: 1 - 19 <- MAX 
+particleMode: 1
+# dragAmount -- set: 1 - specify number 
+dragAmount: 1
+# baseLife -- set: 0 - specify number 
+baseLife: 65
+# rfParticleMode -- set: 1 - 19 <- MAX 
+rfParticleMode: 1
+# rfLife -- set: 0 - specify number 
+rfLife: 90
+# rfWind -- set: 0 - specify number 
+rfWind: 2
+# rfJitter -- set: 0 - specify number 
+rfJitter: 5
+# safetyAmount -- set: 0 - specify number 
+safetyAmount: 120
+# cycleRate -- set: 1 - specify number 
+cycleRate: 5
+# singleClickSizeMaxVal -- set: 0 - specify number 
+singleClickSizeMaxVal: 1.5
+# singleClickSizeMinVal -- set: 0 - specify number 
+singleClickSizeMinVal: 0.8
+# multiClickSizeMaxVal -- set: 0 - specify number 
+multiClickSizeMaxVal: 0.9
+# multiClickSizeMinVal -- set: 0 - specify number 
+multiClickSizeMinVal: 0.8
+# fireworksSizeMaxVal -- set: 0 - specify number 
+fireworksSizeMaxVal: 1.02
+# fireworksSizeMinVal -- set: 0 - specify number 
+fireworksSizeMinVal: 0.82
+# dragSizeMaxVal -- set: 0 - specify number 
+dragSizeMaxVal: 1.0
+# dragSizeMinVal -- set: 0 - specify number 
+dragSizeMinVal: 0.9
+# singleClickSpeedVal -- set: 0 - specify number 
+singleClickSpeedVal: 5.93
+# multiClickSpeedVal -- set: 0 - specify number 
+multiClickSpeedVal: 5.85
+# fireworksSpeedVal -- set: 0 - specify number 
+fireworksSpeedVal: 5.19
+# dragSpeedVal -- set: 0 - specify number 
+dragSpeedVal: 1.2354
+# thinkingParticles -- set: true - false 
+thinkingParticles: true
+# connectParticles -- set: true - false 
+connectParticles: false
+# particleFriction -- set: true - false 
+particleFriction: true
+# mouseGravitation -- set: true - false 
+mouseGravitation: true
+# isPaused -- set: true - false 
+isPaused: false
+# GDMODEBOOL -- set: true - false 
+GDMODEBOOL: true
+# DUPLEXMODE -- set: true - false 
+DUPLEXMODE: false

@@ -128,7 +128,7 @@ public class EngineMethods {
      * A useful method to change a booleans value by negation.
      * @see com.engine.JComponents.CMenuBar
      * @see com.engine.InputHandlers.KHandler
-     * @see com.engine.GUIWindows.ParticleColor
+     * @see ColorEditor
      * @see com.engine.Verlet.VSim
      */
     public static boolean toggle(boolean bool) {return !bool;}
@@ -349,12 +349,10 @@ public class EngineMethods {
         if (cycleColors) {SCCycle.stopCycle(); SCCycle.startCycle();}
     }
 
-    // TODO: 3/27/2016 Check inputWrapper minValueGuard does not cause rounding problems
     public static void windAmount() {rfWind = (int) minValueGuard(0, rfWind, "Enter Wind Amount (Integer Only)", SlideEditor.frame);}
     public static void baseLifeAmount() {baseLife = (int) minValueGuard(0, baseLife, "Enter Base Life Amount (Integer Only)", SlideEditor.frame);}
     public static void rfLifeAmount() {rfLife = (int) minValueGuard(0, rfLife, "Enter Real Fireworks Life Amount (Integer Only)", SlideEditor.frame);}
     public static void jitterAmount() {rfJitter = (int) minValueGuard(0, rfJitter, "Enter Jitter Amount (Integer Only)", SlideEditor.frame);}
-    //
     private static void particleDrag() {dragAmount = (int) minValueGuard(1, dragAmount, "Enter Drag Amount (Integer Only)");}
     private static void safetyAmountOptions() {safetyAmount = (int) minValueGuard(1, safetyAmount, "Enter Safety Amount (Integer Only)");}
     private static void particleFireworks() {fireworksAmount = (int) minValueGuard(1, fireworksAmount, "Enter Fireworks Amount (Integer Only)");}
@@ -392,7 +390,7 @@ public class EngineMethods {
             case 8: particleSpeedSeedOptions(); break;
             case 9: realFireworks(); break;
             case 10: ParticleTypeUI.getInstance(1); break;
-            case 11: ParticleColor.getInstance(); break;
+            case 11: ColorEditor.getInstance(); break;
             case 12: safetyAmountOptions(); break;
             case 13: cycleTimeOptions(); break;
             default: break;
@@ -560,7 +558,7 @@ public class EngineMethods {
 
     /**
      * Returns whether the Engines cycle colors boolean is true or false.
-     * @see ParticleColor
+     * @see ColorEditor
      */
     public static String getCycle() {return (cycleColors) ? "On" : "Off";}
 

@@ -11,8 +11,8 @@ import java.awt.event.WindowEvent;
 
 import static com.engine.Utilities.ColorConverter.setAlpha;
 
-public class LoadPresets {
-    private static LoadPresets loadPresetsUI = null;
+public class PresetsLoader {
+    private static PresetsLoader presetsLoaderUI = null;
     public static JFrame frame;
     private static JSlider colorSlider;
     private static JButton button;
@@ -23,11 +23,12 @@ public class LoadPresets {
 
     //public static void main(String[] args) {getInstance();}
 
-    public static LoadPresets getInstance() {
-        if (loadPresetsUI == null) {loadPresetsUI = new LoadPresets();} frame.toFront(); return loadPresetsUI;
+    public static PresetsLoader getInstance() {
+        if (presetsLoaderUI == null) {
+            presetsLoaderUI = new PresetsLoader();} frame.toFront(); return presetsLoaderUI;
     }
 
-    private LoadPresets() {
+    private PresetsLoader() {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());} catch (Exception e1){e1.printStackTrace();}
         frame = new JFrame();
         frame.setIconImage(Settings.getIcon());
@@ -35,9 +36,10 @@ public class LoadPresets {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent)
-        {loadPresetsUI = null; frame.dispose();}});
+        {
+            presetsLoaderUI = null; frame.dispose();}});
         frame.getContentPane().setLayout(null);
-        frame.setLocationRelativeTo(ParticleColor.frame);
+        frame.setLocationRelativeTo(ColorEditor.frame);
         Settings.loadColors();
         SCChoices.setPresetColors(Settings.convertColors(lastIndex));
         frame.setTitle("You have: " + Settings.presetColors.size() + " Presets :D");

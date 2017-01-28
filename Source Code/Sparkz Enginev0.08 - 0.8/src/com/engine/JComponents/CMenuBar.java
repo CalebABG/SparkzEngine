@@ -2,6 +2,7 @@ package com.engine.JComponents;
 
 import com.engine.EngineHelpers.EngineMethods;
 import com.engine.GUIWindows.*;
+import com.engine.MGrapher.JCalculator;
 import com.engine.MGrapher.ParticleGraph;
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EngineMethods.displayEngineMode;
@@ -83,16 +84,21 @@ public class CMenuBar extends JMenuBar {
         mnUIWindows.add(exceptionUI);
 
         thinkingParticlesUI = new JMenuItem("Particle Color Editor");
-        thinkingParticlesUI.addActionListener(e -> {if (e.getSource() == thinkingParticlesUI) {ParticleColor.getInstance();}});
+        thinkingParticlesUI.addActionListener(e -> {if (e.getSource() == thinkingParticlesUI) {
+            ColorEditor.getInstance();}});
         mnUIWindows.add(thinkingParticlesUI);
+
+        particleGraphUI = new JMenuItem("Particle Graph Editor");
+        particleGraphUI.addActionListener(e -> {if (e.getSource() == particleGraphUI) {ParticleGraph.getInstance();}});
+        mnUIWindows.add(particleGraphUI);
 
         JMenuItem timemachine = new JMenuItem("Color Time Machine");
         timemachine.addActionListener(e -> {if (e.getSource() == timemachine) {ColorTimeMachine.getInstance();}});
         mnUIWindows.add(timemachine);
 
-        particleGraphUI = new JMenuItem("Particle Graph Editor");
-        particleGraphUI.addActionListener(e -> {if (e.getSource() == particleGraphUI) {ParticleGraph.getInstance();}});
-        mnUIWindows.add(particleGraphUI);
+        JMenuItem jcalculator = new JMenuItem("JavaScript Calculator");
+        jcalculator.addActionListener(e -> {if (e.getSource() == jcalculator) {JCalculator.getInstance(EFrame);}});
+        mnUIWindows.add(jcalculator);
 
         menuBar.add(Box.createHorizontalStrut(11));
 

@@ -55,6 +55,10 @@ public class CLabel extends JLabel {
         setHorizontalAlignment(SwingConstants.CENTER);
         setBounds((int) (bounds.getX()), (int) (bounds.getY()), (int) (bounds.getWidth()), (int) (bounds.getHeight()));
     }
+
+    public String getBGColor(){
+        return "<html><h2> R: " + getBackground().getRed() + "<br> G: " + getBackground().getGreen() + "<br> B: " + getBackground().getBlue() + "</h2></html>";
+    }
 }
 
 

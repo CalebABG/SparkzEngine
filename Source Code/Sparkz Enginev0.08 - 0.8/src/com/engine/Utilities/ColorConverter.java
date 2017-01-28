@@ -51,9 +51,7 @@ public class ColorConverter {
     //-------------------------- Helper Functions ------------------------------------//
     public static Color setAlpha(Color c, int alpha) {return new Color(c.getRed(), c.getGreen(), c.getBlue(), alpha);}
 
-    public static Color getColor() {
-        return c;
-    }
+    public static Color getColor() {return c;}
     public static void setColor() {
         Color l = JColorChooser.showDialog(EFrame, "Particle Color", null); c = (l != null) ? l : c;
     }
@@ -63,18 +61,14 @@ public class ColorConverter {
     }
 
     public static Color randHSLColor(){
-        Random random = new Random();
-        float hue = random.nextFloat();
         // Saturation between 0.1 and 0.3
-        float saturation = (random.nextInt(2000) + 1000) / 10000f, luminance = 0.9f;
-        return Color.getHSBColor(hue, saturation, luminance);
+        float saturation = (float) (((Math.random() * 2000) + 1000) / 10000f), luminance = 0.9f;
+        return Color.getHSBColor((float) Math.random(), saturation, luminance);
     }
 
     public static Color randHSLColor(int minSat, int maxSat, double luminance){
-        Random random = new Random();
-        float hue = random.nextFloat();
-        float saturation = (random.nextInt(maxSat) + minSat) / 10000f;
-        return Color.getHSBColor(hue, saturation, (float) luminance);
+        float saturation = (float) (((Math.random() * maxSat) + minSat) / 10000f);
+        return Color.getHSBColor((float) Math.random(), saturation, (float) luminance);
     }
 
     public static Color randRGBColor(){return new Color((int)(Math.random() * 0x1000000));}

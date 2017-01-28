@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.file.Paths;
 
 public class SettingsEditor {
     private static SettingsEditor settingsEditor = null;
@@ -414,8 +413,8 @@ public class SettingsEditor {
 
     private static void saveSettings() {
         try{
-            new File("./" + "Settings").mkdir();
-            FileOutputStream out = new FileOutputStream(("." + Paths.get("/" + "Settings") + "/" + "settings.txt"), false);
+            new File("./" + Settings.folder_name).mkdir();
+            FileOutputStream out = new FileOutputStream(Settings.settings_file_path, false);
             Writer writer = new OutputStreamWriter(out, "UTF-8");
             /*-------------------------------------------------------*/
             writer.write("# switchMode -- set: 0 - 4 <- MAX \n");
@@ -440,7 +439,7 @@ public class SettingsEditor {
             writer.write("baseLife: " + InputWrapper.intTextfieldGuardDefault(0, baseLife, textFields[6].getText()) + "\n");
             /*-------------------------------------------------------*/
             writer.write("# rfParticleMode -- set: 1 - 19 <- MAX \n");
-            writer.write("rfParticleMode: " + InputWrapper.intTextfieldGuard(1,19, rfParticleMode,textFields[7].getText()) + "\n");
+            writer.write("rfParticleMode: " + InputWrapper.intTextfieldGuard(1, 19, rfParticleMode,textFields[7].getText()) + "\n");
             /*-------------------------------------------------------*/
             writer.write("# rfLife -- set: 0 - specify number \n");
             writer.write("rfLife: " + InputWrapper.intTextfieldGuardDefault(0, rfLife,textFields[8].getText()) + "\n");

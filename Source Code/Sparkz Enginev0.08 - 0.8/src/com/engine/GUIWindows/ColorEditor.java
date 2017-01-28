@@ -14,21 +14,20 @@ import java.awt.event.WindowEvent;
 import javax.swing.*;
 import static com.engine.Utilities.ColorConverter.setAlpha;
 
-public class ParticleColor {
-    private static ParticleColor thinkingParticlesUI = null;
+public class ColorEditor {
+    private static ColorEditor thinkingParticlesUI = null;
     public static JFrame frame;
-    public static Font font = new Font("Arial", Font.PLAIN, 17);
-    public static Font uiFont = new Font("Tahoma", Font.BOLD, 15);
+    public static Font font = new Font("Arial", Font.PLAIN, 17), uiFont = new Font("Tahoma", Font.BOLD, 15);
     private static Color fgColor = Color.white;
     public static CLabel[] labels = new CLabel[5];
 
     //public static void main(String[] args) {getInstance();}
 
-    public static ParticleColor getInstance() {
-        if (thinkingParticlesUI == null) {thinkingParticlesUI = new ParticleColor();}frame.toFront(); return thinkingParticlesUI;
+    public static ColorEditor getInstance() {
+        if (thinkingParticlesUI == null) {thinkingParticlesUI = new ColorEditor();}frame.toFront(); return thinkingParticlesUI;
     }
 
-    private ParticleColor() {
+    private ColorEditor() {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e1){e1.printStackTrace();}
         frame = new JFrame("Thinking Particles Color Changer");
         frame.setIconImage(Settings.getIcon());
@@ -58,6 +57,7 @@ public class ParticleColor {
             Color[] colors = SCChoices.randomColor();
             SCChoices.setPresetColors(colors);
             ColorTimeMachine.addColor(colors);
+            if (!ColorTimeMachine.isNull() && ColorTimeMachine.colors_info.isSelected()) ColorTimeMachine.updateColorValues();
         });
         buttons_panel.add(random_colors);
 
@@ -84,7 +84,8 @@ public class ParticleColor {
 
         JButton load_colors = new JButton("Load Colors");
         load_colors.setFont(uiFont);
-        load_colors.addActionListener(e -> {if (Settings.doesFileExist()) {LoadPresets.getInstance();} else{SWindow.getInstance(frame, "Save First", 280, 85);}});
+        load_colors.addActionListener(e -> {if (Settings.doesColorsFileExist()) {
+            PresetsLoader.getInstance();} else{SWindow.getInstance(frame, "Save First", 280, 85);}});
         buttons_panel.add(load_colors);
 
         JButton time_machine = new JButton("Time Machine");
@@ -114,15 +115,11 @@ public class ParticleColor {
                 gl_colors_panel.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(gl_colors_panel.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(color_1_panel, GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                                .addGap(18)
-                                .addComponent(color_2_panel, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                                .addGap(18)
-                                .addComponent(color_3_panel, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                                .addGap(18)
-                                .addComponent(color_4_panel, GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(color_5_panel, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                                .addComponent(color_1_panel, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE) .addGap(18)
+                                .addComponent(color_2_panel, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE) .addGap(18)
+                                .addComponent(color_3_panel, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE) .addGap(18)
+                                .addComponent(color_4_panel, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE) .addGap(18)
+                                .addComponent(color_5_panel, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
                                 .addContainerGap())
         );
         gl_colors_panel.setVerticalGroup(

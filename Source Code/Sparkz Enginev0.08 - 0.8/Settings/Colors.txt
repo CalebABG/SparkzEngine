@@ -107,3 +107,6 @@
 #a3c8cdff;#f8f860ff;#aa8619ff;#b8857fff;#2b3b9eff;
 #8aeccfff;#45b086ff;#537e5aff;#aac926ff;#400e5eff;
 #ee0160ff;#821a5cff;#140e42ff;#560861ff;#d30c6aff;
+#6d259bff;#301ec5ff;#b0ab39ff;#4b0209ff;#47dd30ff;
+#74e7edff;#c4aa38ff;#78ab7fff;#8b4ab8ff;#9186e4ff;
+#d8d917ff;#d9e6bdff;#11c7dcff;#92d326ff;#b94c1cff;

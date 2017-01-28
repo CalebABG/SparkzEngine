@@ -22,6 +22,7 @@ public class ColorTimeMachine {
     public static String title = "Color Time Machine";
     public static Font font = new Font("Tahoma", Font.BOLD, 13);
     public static CLabel[] labels = new CLabel[5];
+    public static JToggleButton colors_info;
     public static List<PresetHolder> colorList = Collections.synchronizedList(new ArrayList<>());
 
     //public static void main(String[] args) {getInstance();}
@@ -30,14 +31,16 @@ public class ColorTimeMachine {
         if (timeMachine == null) {timeMachine = new ColorTimeMachine();} frame.toFront(); return timeMachine;
     }
 
+    public static boolean isNull(){return timeMachine == null;}
+
     private ColorTimeMachine() {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e1){e1.printStackTrace();}
         frame = new JFrame(title + " - Colors Seen: " + colorList.size());
         frame.setIconImage(Settings.getIcon());
-        frame.setSize(575, 206);
+        frame.setSize(688, 206);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {close();}});
-        frame.setLocationRelativeTo(ParticleColor.frame);
+        frame.setLocationRelativeTo(ColorEditor.frame);
 
         JScrollPane scrollPane = new JScrollPane();
         frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -66,24 +69,41 @@ public class ColorTimeMachine {
         });
         buttons_panel.add(set_colors);
 
+        colors_info = new JToggleButton("Show Values");
+        colors_info.setFont(new Font("Tahoma", Font.BOLD, 13));
+        colors_info.addItemListener(e -> {
+            if (colors_info.isSelected()) {
+                updateColorValues();
+            }
+            else{for (int i = 0; i < labels.length; i++) {labels[i].setText("");}}
+        });
+        buttons_panel.add(colors_info);
+
         JButton last = new JButton("Last Color");
-        last.addActionListener(e -> handleButtons(0));
+        last.addActionListener(e -> {
+            handleButtons(0);
+            if (colors_info.isSelected()) updateColorValues();
+        });
         last.setFont(new Font("Tahoma", Font.BOLD, 13));
         buttons_panel.add(last);
 
         JButton next = new JButton("Next Color");
         next.setFont(new Font("Tahoma", Font.BOLD, 13));
-        next.addActionListener(e -> handleButtons(1));
+        next.addActionListener(e -> {
+            handleButtons(1);
+            if (colors_info.isSelected()) updateColorValues();
+        });
         buttons_panel.add(next);
 
         JButton clear = new JButton("Clear Colors");
         clear.setFont(new Font("Tahoma", Font.BOLD, 13));
         clear.addActionListener(e -> {
-            String msg = HCenter("h4", "Confirm Clear?");
+            String msg = HCenter("h4", "Clear All Seen Colors?");
             Object[] options = {"Yes, please", "No, cancel!"};
             int n = JOptionPane.showOptionDialog(frame, msg, "Clear Colors", 0, 3, null, options, options[1]);
             if (n == JOptionPane.YES_OPTION) {
                 colorList.clear(); index = 0; setColors();
+                if (colors_info.isSelected()) updateColorValues();
                 frame.setTitle(title + " - Colors Seen: " + colorList.size());
             }
         });
@@ -111,7 +131,7 @@ public class ColorTimeMachine {
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(panel_4, GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panel_5, GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                                .addComponent(panel_5, GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
                                 .addContainerGap())
         );
         gl_panel.setVerticalGroup(
@@ -156,6 +176,23 @@ public class ColorTimeMachine {
         setColors();
 
         frame.setVisible(true);
+    }
+
+    public static void updateColorValues() {
+        for (int i = 0; i < labels.length; i++) {
+            if (labels[i].getBackground().equals(Color.black)){
+                labels[i].setText(labels[i].getBGColor());
+                labels[i].setForeground(Color.white);
+            }
+            else if (labels[i].getBackground().equals(Color.white)){
+                labels[i].setText(labels[i].getBGColor());
+                labels[i].setForeground(Color.black);
+            }
+            else{
+                labels[i].setText(labels[i].getBGColor());
+                labels[i].setForeground(Color.black);
+            }
+        }
     }
 
     public static void handleButtons(int mode) {

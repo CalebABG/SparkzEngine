@@ -14,6 +14,7 @@ import java.awt.event.*;
 import java.util.TimerTask;
 
 // Project started on: 11/22/2015 :D -- REQUIRES Java version 1.8 (lambda functions used) or higher to edit
+// TODO: 1/22/2017 Add Developer Console :D
 
 public class Engine {
     public static void main(String[] args) {new EngineSplash(2720).display(); SwingUtilities.invokeLater(() -> new Engine().start());}
@@ -56,7 +57,6 @@ public class Engine {
         canvas.addKeyListener(kHandler);
         EFrame.addKeyListener(kHandler);
         EFrame.add(canvas);
-
         setupTimerTask();
         EFrame.setVisible(true);
     }

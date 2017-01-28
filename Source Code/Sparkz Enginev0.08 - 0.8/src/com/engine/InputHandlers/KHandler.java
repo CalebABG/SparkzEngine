@@ -75,7 +75,8 @@ public class KHandler extends KeyAdapter{
 
         //Keyboard button: W
         if (pressed == KeyEvent.VK_W) {
-            try {ParticleColor.getInstance();}catch (Exception ex){EException.append(ex);}
+            try {
+                ColorEditor.getInstance();}catch (Exception ex){EException.append(ex);}
         }
 
         //Keyboard button: 4

@@ -1,6 +1,6 @@
 package com.engine.ThinkingParticles;
 
-import com.engine.GUIWindows.ParticleColor;
+import com.engine.GUIWindows.ColorEditor;
 import com.engine.ParticleTypes.Particle;
 import com.engine.Utilities.ColorConverter;
 import java.awt.*;
@@ -8,12 +8,12 @@ import java.awt.*;
 public class SCChoices {
     public static void setPresetColors(Color[] colors) {
         Particle.setThinkingParticlesColor(colors);
-        ParticleColor.setBackgroundColor(colors);
+        ColorEditor.setBackgroundColor(colors);
     }
 
     public static void setPresetColors(Color[] array1, Color[] array2) {
         Particle.setThinkingParticlesColor(array1);
-        ParticleColor.setBackgroundColor(array2);
+        ColorEditor.setBackgroundColor(array2);
     }
 
     public static Color[] randomColor() {

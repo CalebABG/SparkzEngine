@@ -4,10 +4,13 @@ import com.engine.MGrapher.ParticleGraph;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
 
@@ -38,12 +41,14 @@ public class SampleFunctions {
 
         DefaultListModel<String> listModel = new DefaultListModel<>();
         try {
-            FileInputStream fin = new FileInputStream(("." + Paths.get("/" + "src") + "/" + "Samples.txt"));
+            InputStream fin = getClass().getResourceAsStream("/com/engine/MGrapher/Samples.txt");
+//            InputStream fin = getClass().getResourceAsStream("/Samples.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(fin));
             String line;
             while ((line = br.readLine()) != null) {listModel.addElement(line.trim());}
-            br.close(); fin.close();
-        } catch (Exception e){e.printStackTrace();}
+            br.close();
+            fin.close();
+        } catch (Exception e){EException.append(e);}
 
         frame.setTitle("Sample Functions - " + listModel.size());
 
@@ -52,6 +57,7 @@ public class SampleFunctions {
         list.setLayoutOrientation(JList.VERTICAL);
         list.setVisibleRowCount(-1);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.addKeyListener(new KeyAdapter() {public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER) graphSelectedSample(list);}});
         if (listModel.size() > 0) {list.setSelectedIndex((int) (Math.random() * listModel.size()));}
         panel.add(list, BorderLayout.CENTER);
 
@@ -61,14 +67,15 @@ public class SampleFunctions {
 
         JButton graph = new JButton("Graph Function :D");
         graph.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        graph.addActionListener(e -> {
-            String selectedSampleFunction = list.getSelectedValue();
-            ParticleGraph.textFields[0].setText(selectedSampleFunction);
-            ParticleGraph.threadGraph(1, selectedSampleFunction);
-        });
+        graph.addActionListener(e -> graphSelectedSample(list));
         panel.add(graph, BorderLayout.SOUTH);
         frame.setVisible(true);
     }
 
+    private void graphSelectedSample(JList<String> list) {
+        String selectedSampleFunction = list.getSelectedValue();
+        ParticleGraph.textFields[0].setText(selectedSampleFunction);
+        ParticleGraph.threadGraph(1, selectedSampleFunction);
+    }
     private void close(){sampleFunctions = null; frame.dispose();}
 }

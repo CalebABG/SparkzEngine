@@ -9,7 +9,6 @@ import static com.engine.Utilities.ColorConverter.HEXAtoRGBA;
 import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -23,28 +22,27 @@ public class Settings {
     private static Image iconImage = Toolkit.getDefaultToolkit().getImage(Settings.class.getResource("/enginelogo.png"));
     private static Image splashImage = Toolkit.getDefaultToolkit().getImage(Settings.class.getResource("/enginesplash.png"));
     public static int PRESET_INDEXES = 1;
-    private static String folderName = "User-Presets", fileName = "saved-presets.txt", spliceChar = ";";
-    private static Path dir = Paths.get("/" + folderName), fileDir = Paths.get("." + dir + "/" + fileName);
-    private static String filePath = ("." + dir + "/" + fileName);
+    public static String folder_name = "Settings", settings_file_name = "EngineSettings.txt", colors_file_name = "SavedColors.txt", spliceChar = ";";
+    public static String settings_file_path = ("." + Paths.get("/" + folder_name) + "/" + settings_file_name),
+                         colors_file_path = ("." + Paths.get("/" + folder_name) + "/" + colors_file_name);
     public static ArrayList<String[]> presetColors;
 
     //public static void main(String[] args) { //saveSettings(); //loadSettings();}
 
-    public static boolean doesFileExist() {return Files.exists(fileDir);}
-    public static boolean doesSettingsExist(){return Files.exists(Paths.get("." + (Paths.get("/" + "Settings")) + "/" + "settings.txt"));}
+    public static boolean doesSettingsFileExist(){return Files.exists(Paths.get(settings_file_path));}
+    public static boolean doesColorsFileExist(){return Files.exists(Paths.get(colors_file_path));}
     public static boolean StoBool(String s, boolean def_val){if (s.equalsIgnoreCase("TRUE")) {return true;}
     else if (s.equalsIgnoreCase("FALSE")) {return false;} else {return def_val;}}
     public static Image getIcon(){return iconImage;}
     public static Image getSplashImage(){return splashImage;}
 
     public static String getOS() {
-        String OS = "";
-        String osNameMatch = System.getProperty("os.name").toLowerCase();
-        if (osNameMatch.contains("linux")) {OS = "linux";
-        } else if (osNameMatch.contains("windows") || osNameMatch.contains("win")) {OS = "windows";
-        } else if (osNameMatch.contains("solaris") || osNameMatch.contains("sunos")) {OS = "solaris";
-        } else if (osNameMatch.contains("mac os") || osNameMatch.contains("macos") || osNameMatch.contains("darwin")) {OS = "mac";}
-        return OS;
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("linux")) {return "linux";} 
+        else if (os.contains("windows") || os.contains("win")) {return "windows";} 
+        else if (os.contains("solaris") || os.contains("sunos")) {return "solaris";} 
+        else if (os.contains("mac os") || os.contains("macos") || os.contains("darwin")) {return "mac";}
+        else return "Cannot determine Operating System";
     }
 
     /**
@@ -64,10 +62,10 @@ public class Settings {
      */
     public static void saveColors(int mode, String[] strings) {
         try {
+            new File("./" + folder_name).mkdir();
             String[] getStrings;
             ArrayList<String> splitStrings = new ArrayList<>();
-            new File("./" + folderName).mkdir();
-            FileOutputStream out = new FileOutputStream(filePath, true);
+            FileOutputStream out = new FileOutputStream(colors_file_path, true);
             Writer writer = new OutputStreamWriter(out, "UTF-8");
             getStrings = (mode == 0) ? Particle.getThinkingParticlesStrings() : strings;
             Collections.addAll(splitStrings, getStrings);
@@ -84,7 +82,7 @@ public class Settings {
      */
     public static void loadColors() {
         try {
-            FileInputStream fin = new FileInputStream(filePath);
+            FileInputStream fin = new FileInputStream(colors_file_path);
             BufferedReader br = new BufferedReader(new InputStreamReader(fin));
             ArrayList<String[]> splitArray = new ArrayList<>();
             ArrayList<String> text = new ArrayList<>();
@@ -100,8 +98,8 @@ public class Settings {
 
     public static void saveSettings() {
         try{
-            new File("./" + "Settings").mkdir();
-            FileOutputStream out = new FileOutputStream(("." + Paths.get("/" + "Settings") + "/" + "settings.txt"), false);
+            new File("./" + folder_name).mkdir();
+            FileOutputStream out = new FileOutputStream(settings_file_path, false);
             Writer writer = new OutputStreamWriter(out, "UTF-8");
             /*-------------------------------------------------------*/
             writer.write("# switchMode -- set: 0 - 4 <- MAX \n");
@@ -230,13 +228,12 @@ public class Settings {
     }
 
     public static void loadSettings() {
-        if (doesSettingsExist()) {
+        if (doesSettingsFileExist()) {
             try {
-                FileInputStream fin = new FileInputStream(("." + Paths.get("/" + "Settings") + "/" + "settings.txt"));
-                BufferedReader br = new BufferedReader(new InputStreamReader(fin));
-                ArrayList<String> text = new ArrayList<>(), textKeys = new ArrayList<>(),
-                        textValues = new ArrayList<>(), trimValues = new ArrayList<>();
                 String line;
+                FileInputStream fin = new FileInputStream(settings_file_path);
+                BufferedReader br = new BufferedReader(new InputStreamReader(fin));
+                ArrayList<String> text = new ArrayList<>(), textKeys = new ArrayList<>(), textValues = new ArrayList<>(), trimValues = new ArrayList<>();
                 while ((line = br.readLine()) != null) {text.add(line);}
                 for (int i = 0; i < text.size() - 1; i++) {if (i % 2 == 0) {textKeys.add(text.get(i + 1));}}
                 br.close(); fin.close();

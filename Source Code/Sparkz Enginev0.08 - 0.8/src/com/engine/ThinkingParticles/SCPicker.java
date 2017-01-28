@@ -1,6 +1,6 @@
 package com.engine.ThinkingParticles;
 
-import com.engine.GUIWindows.ParticleColor;
+import com.engine.GUIWindows.ColorEditor;
 import com.engine.ParticleTypes.Particle;
 
 import javax.swing.*;
@@ -13,8 +13,8 @@ public class SCPicker {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception x){x.printStackTrace();}
         Color color = JColorChooser.showDialog(parent, text, null);
         Particle.thinkingColors[scParticleIndex] = (color != null) ? color : Particle.thinkingColors[scParticleIndex];
-        ParticleColor.labels[scParticleIndex].setBackground(setAlpha(Particle.thinkingColors[scParticleIndex], 255));
+        ColorEditor.labels[scParticleIndex].setBackground(setAlpha(Particle.thinkingColors[scParticleIndex], 255));
     }
 
-    public static void particleColor(int index) {pickColor(ParticleColor.frame, index, "Color " + (index + 1));}
+    public static void particleColor(int index) {pickColor(ColorEditor.frame, index, "Color " + (index + 1));}
 }
