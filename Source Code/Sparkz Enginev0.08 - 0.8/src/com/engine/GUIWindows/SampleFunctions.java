@@ -8,10 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Paths;
 
 import static java.awt.Component.LEFT_ALIGNMENT;
@@ -20,7 +17,7 @@ public class SampleFunctions {
     private static SampleFunctions sampleFunctions = null;
     public static JFrame frame;
 
-//    public static void main(String[] args) { getInstance(null);}
+    public static void main(String[] args) { getInstance(null);}
 
     public static SampleFunctions getInstance(JFrame parent){
         if (sampleFunctions == null) {sampleFunctions = new SampleFunctions(parent);} frame.toFront(); return sampleFunctions;
@@ -42,7 +39,6 @@ public class SampleFunctions {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         try {
             InputStream fin = getClass().getResourceAsStream("/com/engine/MGrapher/Samples.txt");
-//            InputStream fin = getClass().getResourceAsStream("/Samples.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(fin));
             String line;
             while ((line = br.readLine()) != null) {listModel.addElement(line.trim());}
