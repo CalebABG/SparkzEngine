@@ -1,7 +1,7 @@
 package com.engine.Main;
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EngineMethods.*;
-import static com.engine.JComponents.CMenuBar.getMenuBar;
+import static com.engine.JComponents.CMenuBar.createMenuBar;
 
 import com.engine.EngineHelpers.EngineSplash;
 import com.engine.GUIWindows.StatsPanel;
@@ -43,7 +43,7 @@ public class Engine {
         EFrame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {QuitWindow.getInstance();}});
 
         Settings.loadSettings();
-        EFrame.setJMenuBar(getMenuBar());
+        EFrame.setJMenuBar(createMenuBar());
 
         canvas = new Canvas();
         canvas.requestFocusInWindow();

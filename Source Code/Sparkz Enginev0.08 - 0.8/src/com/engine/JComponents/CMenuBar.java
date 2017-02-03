@@ -23,7 +23,7 @@ public class CMenuBar extends JMenuBar {
     public static JRadioButtonMenuItem[] pModes,pTypes, pGravModes;
     public static ButtonGroup particleModesGroup, particleTypesGroup, particleGravitationGroup;
 
-    public static CMenuBar getMenuBar() {
+    public static CMenuBar createMenuBar() {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());} catch (Exception e1){e1.printStackTrace();}
         menuBar = new CMenuBar();
         menuBar.setBorder(BorderFactory.createLineBorder(bgColor, 2, false));

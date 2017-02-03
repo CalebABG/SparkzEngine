@@ -17,7 +17,7 @@ public class SampleFunctions {
     private static SampleFunctions sampleFunctions = null;
     public static JFrame frame;
 
-    public static void main(String[] args) { getInstance(null);}
+    //public static void main(String[] args) { getInstance(null);}
 
     public static SampleFunctions getInstance(JFrame parent){
         if (sampleFunctions == null) {sampleFunctions = new SampleFunctions(parent);} frame.toFront(); return sampleFunctions;

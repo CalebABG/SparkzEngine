@@ -4,7 +4,6 @@ import com.engine.EngineHelpers.EngineMethods;
 import com.engine.GUIWindows.EException;
 import static com.engine.EngineHelpers.EConstants.*;
 import com.engine.ParticleTypes.Particle;
-
 import static com.engine.Utilities.ColorConverter.HEXAtoRGBA;
 import java.awt.*;
 import java.io.*;
@@ -22,7 +21,7 @@ public class Settings {
     private static Image iconImage = Toolkit.getDefaultToolkit().getImage(Settings.class.getResource("/enginelogo.png"));
     private static Image splashImage = Toolkit.getDefaultToolkit().getImage(Settings.class.getResource("/enginesplash.png"));
     public static int PRESET_INDEXES = 1;
-    public static String folder_name = "Settings", settings_file_name = "EngineSettings.txt", colors_file_name = "SavedColors.txt", spliceChar = ";";
+    public static String folder_name = "SparkzEngineSettings", settings_file_name = "EngineSettings.txt", colors_file_name = "SavedColors.txt", spliceChar = ";";
     public static String settings_file_path = ("." + Paths.get("/" + folder_name) + "/" + settings_file_name),
                          colors_file_path = ("." + Paths.get("/" + folder_name) + "/" + colors_file_name);
     public static ArrayList<String[]> presetColors;

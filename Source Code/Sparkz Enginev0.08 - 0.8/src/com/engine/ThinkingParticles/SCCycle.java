@@ -17,7 +17,7 @@ public class SCCycle {
         time = new Timer();
         time.scheduleAtFixedRate(new TimerTask() {
             public void run() {
-                if (!Settings.doesSettingsFileExist()) {
+                if (!Settings.doesColorsFileExist()) {
                     Color[] randColors = SCChoices.randomColor();
                     SCChoices.setPresetColors(randColors);
                     ColorTimeMachine.addColor(randColors);
