@@ -294,7 +294,7 @@ public class StatsPanel {
         gbc_label_14.gridy = 6;
         instructions_panel.add(screenSize, gbc_label_14);
 
-        freemem = new CLabel("JRE Free Memory: ", font, Color.white, bgColor);
+        freemem = new CLabel("JVM Free Memory: ", font, Color.white, bgColor);
         GridBagConstraints gbc_label_15 = new GridBagConstraints();
         gbc_label_15.weighty = 1.0;
         gbc_label_15.weightx = 1.0;
@@ -316,7 +316,7 @@ public class StatsPanel {
         timer = new java.util.Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
-                if (freemem != null) {freemem.setText("JRE Free Memory: " + decimalFormat.format((Runtime.getRuntime().freeMemory() / (Math.pow(1024, 2)))) + " MB");}}
+                if (freemem != null) {freemem.setText("JVM Free Memory: " + decimalFormat.format((Runtime.getRuntime().freeMemory() / (Math.pow(1024, 2)))) + " MB");}}
         }, 0, 1200);
         timer.scheduleAtFixedRate(new TimerTask() {public void run() {update();}}, 0, timerFPS);
     }

@@ -196,7 +196,7 @@ public class ParticleGraph {
 
     private static double evaluateExpr(String express) throws Exception {
         if (engine.eval(express) instanceof Integer) return  ((Integer) engine.eval(express)).doubleValue();
-        else if (engine.eval(express) instanceof Double) {return (double) engine.eval(express);}
+        else if (engine.eval(express) instanceof Double) return (double) engine.eval(express);
         else return 0;
     }
 
