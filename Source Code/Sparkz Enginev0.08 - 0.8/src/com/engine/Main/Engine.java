@@ -15,6 +15,8 @@ import java.util.TimerTask;
 
 // Project started on: 11/22/2015 :D -- REQUIRES Java version 1.8 (lambda functions used) or higher to edit
 // TODO: 1/22/2017 Add Developer Console :D
+// Notes:
+// "./" for File, FileChooser, or File operations refers to the current working directory the program started from.
 
 public class Engine {
     public static void main(String[] args) {new EngineSplash(2720).display(); SwingUtilities.invokeLater(() -> new Engine().start());}
@@ -124,7 +126,7 @@ public class Engine {
         graphics2D = (Graphics2D) buff.getDrawGraphics();
         handleGraphicsSmoothing();
         try {safetyBooleanChecks(); draw();} catch (Exception e) {EException.append(e);}
-        if (graphics2D != null) {graphics2D.dispose();}
+        if (graphics2D != null) graphics2D.dispose();
         buff.show(); Toolkit.getDefaultToolkit().sync();
     }
 
