@@ -3,7 +3,6 @@ package com.engine.Utilities;
 import static com.engine.EngineHelpers.EConstants.*;
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
 
 public class ColorConverter {
     private static Color c = new Color(63, 138, 242);

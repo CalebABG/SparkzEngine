@@ -16,11 +16,7 @@ import javax.script.ScriptEngineManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class ParticleGraph {
     // Best x-scale for all functions = 0.02

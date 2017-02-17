@@ -8,7 +8,6 @@ import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import static com.engine.EngineHelpers.EConstants.EFrame;
 import static com.engine.MGrapher.ParticleGraph.mathFunctions;
 
 public class JCalculator {

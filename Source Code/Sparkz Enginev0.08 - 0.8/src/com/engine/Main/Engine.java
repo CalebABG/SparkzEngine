@@ -2,7 +2,6 @@ package com.engine.Main;
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EngineMethods.*;
 import static com.engine.JComponents.CMenuBar.createMenuBar;
-
 import com.engine.EngineHelpers.EngineSplash;
 import com.engine.GUIWindows.StatsPanel;
 import com.engine.GUIWindows.QuitWindow;

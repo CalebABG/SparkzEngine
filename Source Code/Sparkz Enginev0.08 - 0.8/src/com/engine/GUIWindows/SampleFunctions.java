@@ -9,7 +9,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
-import java.nio.file.Paths;
 
 import static java.awt.Component.LEFT_ALIGNMENT;
 
