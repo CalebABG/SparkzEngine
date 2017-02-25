@@ -7,7 +7,6 @@ import com.engine.Utilities.Settings;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowEvent;
 
 import static com.engine.Utilities.ColorConverter.setAlpha;
 

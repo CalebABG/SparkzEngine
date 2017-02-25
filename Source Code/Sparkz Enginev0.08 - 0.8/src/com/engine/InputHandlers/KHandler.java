@@ -11,7 +11,7 @@ import com.engine.Verlet.VSim;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class KHandler extends KeyAdapter{
+public class KHandler extends KeyAdapter {
     public void keyPressed(KeyEvent e) {
         int pressed = e.getKeyCode();
 

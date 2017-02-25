@@ -1,7 +1,6 @@
 package com.engine.GUIWindows;
 
 import com.engine.Interfaces_Extensions.KAdapter;
-import com.engine.Interfaces_Extensions.KeyAdapterX;
 import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.JComponents.CTextField;
 import com.engine.JComponents.RLabel;

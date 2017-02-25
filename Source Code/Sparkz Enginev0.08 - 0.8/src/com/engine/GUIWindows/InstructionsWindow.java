@@ -1,13 +1,11 @@
 package com.engine.GUIWindows;
 
 import com.engine.Interfaces_Extensions.KeyAdapterX;
-import com.engine.Interfaces_Extensions.WindowAdapterX;
 import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
 
 public class InstructionsWindow implements KeyAdapterX {
     private static InstructionsWindow[] windows = new InstructionsWindow[2];

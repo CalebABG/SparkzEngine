@@ -8,10 +8,7 @@ import com.engine.Utilities.InputWrapper;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class ParticleTypeUI {
     public static ParticleTypeUI[] particleTypeUIs = new ParticleTypeUI[2];

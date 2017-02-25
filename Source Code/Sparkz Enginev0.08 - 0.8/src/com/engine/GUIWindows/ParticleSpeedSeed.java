@@ -7,8 +7,7 @@ import com.engine.JComponents.RLabel;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+
 import static com.engine.EngineHelpers.EConstants.*;
 
 public class ParticleSpeedSeed {

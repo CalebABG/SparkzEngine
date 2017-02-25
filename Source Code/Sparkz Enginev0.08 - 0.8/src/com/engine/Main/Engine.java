@@ -11,13 +11,10 @@ import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.TimerTask;
 
 // Project started on: 11/22/2015 :D -- REQUIRES Java version 1.8 (lambda functions used) or higher to edit
 // TODO: 2/23/2017 Create new SlideEditor
 // TODO: 2/23/2017 Add Physics Editor
-// TODO: 2/24/2017 Clean Packages: GUIWindows, JComponents, MGrapher, Main - Condense classes to 1-2 .class or $.class files
 // Notes:
 // "./" for File, FileChooser, or File operations refers to the current working directory the program started from.
 // Java 8 Project Log Calculation (Years): (ChronoUnit.DAYS.between(LocalDateTime.of(2015, 11, 22, 9, 59), LocalDateTime.now()) / 365.2425f)

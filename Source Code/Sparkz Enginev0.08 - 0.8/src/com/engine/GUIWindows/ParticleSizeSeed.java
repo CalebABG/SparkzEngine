@@ -9,8 +9,6 @@ import static com.engine.EngineHelpers.EConstants.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class ParticleSizeSeed {
     private static ParticleSizeSeed particleSizeSeed = null;

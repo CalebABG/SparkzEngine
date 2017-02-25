@@ -8,8 +8,6 @@ import com.engine.JComponents.CSlider;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class SlideEditor {
     private static SlideEditor sliderUI = null;

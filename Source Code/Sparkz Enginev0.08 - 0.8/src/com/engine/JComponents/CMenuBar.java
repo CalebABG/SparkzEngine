@@ -1,7 +1,6 @@
 package com.engine.JComponents;
 
 import com.engine.EngineHelpers.EngineMethods;
-import com.engine.EngineHelpers.GUIText;
 import com.engine.GUIWindows.*;
 import com.engine.MGrapher.JCalculator;
 import com.engine.MGrapher.ParticleGraph;

@@ -4,8 +4,6 @@ import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.Utilities.Settings;
 
 import javax.swing.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import static com.engine.ThinkingParticles.SCChoices.*;
 

@@ -3,6 +3,7 @@ package com.engine.MGrapher;
 import com.engine.EngineHelpers.EngineMethods;
 import com.engine.GUIWindows.SampleFunctions;
 import com.engine.Interfaces_Extensions.KAdapter;
+import com.engine.Interfaces_Extensions.MAdapter;
 import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.JComponents.TextSuggestor;
 import com.engine.JComponents.CTextField;
@@ -91,7 +92,7 @@ public class ParticleGraph {
         scrollPane.setColumnHeaderView(menuBar);
 
         //Add Helper Math functions to JavaScript Engine at window creation
-        try {for (int i = 0; i < mathFunctions.length; i++) {engine.eval(mathFunctions[i]);}} catch (Exception e){EException.append(e);}
+        try {for (String mathFunction : mathFunctions) {engine.eval(mathFunction);}} catch (Exception e){EException.append(e);}
 
         JButton mnHelp = new JButton("Help");
         mnHelp.setFont(new Font("Times", Font.PLAIN, 18));
@@ -221,13 +222,11 @@ public class ParticleGraph {
         return result;
     }
 
-    private static void addPopup(Component component, JPopupMenu popup) {
-        component.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {if (e.isPopupTrigger()) {showMenu(e);}}
-            public void mouseReleased(MouseEvent e) {if (e.isPopupTrigger()) {showMenu(e);}}
-            private void showMenu(MouseEvent e) {popup.show(e.getComponent(), e.getX(), e.getY());}});
+    private void addPopup(Component c, JPopupMenu p) {
+        c.addMouseListener(new MAdapter(e -> {if (e.isPopupTrigger()) {showMenu(e, p);}}, e -> {if (e.isPopupTrigger()) {showMenu(e, p);}}));
     }
 
+    private void showMenu(MouseEvent e, JPopupMenu p) {p.show(e.getComponent(), e.getX(), e.getY());}
     private static void throwError(CTextField textField) {textField.setForeground(Color.red);}
     public void close(){particleGraph = null; frame.dispose();}
 }

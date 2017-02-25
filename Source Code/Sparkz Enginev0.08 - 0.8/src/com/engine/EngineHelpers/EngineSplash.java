@@ -2,12 +2,10 @@ package com.engine.EngineHelpers;
 
 import com.engine.GUIWindows.EException;
 import com.engine.Interfaces_Extensions.MouseAdapterX;
-import com.engine.Utilities.Settings;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 
 public class EngineSplash extends JWindow implements MouseAdapterX {
     private int duration;

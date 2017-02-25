@@ -40,7 +40,7 @@ public class JCalculator implements KeyAdapterX {
         panel.setLayout(new BorderLayout(0, 0));
 
         //Add Helper Math functions to JavaScript Engine at window creation
-        try {for (int i = 0; i < mathFunctions.length; i++) {engine.eval(mathFunctions[i]);}} catch (Exception e) {e.printStackTrace();}
+        try {for (String mathFunction : mathFunctions) {engine.eval(mathFunction);}} catch (Exception e) {e.printStackTrace();}
 
         JPanel panel_1 = new JPanel();
         panel.add(panel_1, BorderLayout.SOUTH);

@@ -9,8 +9,6 @@ import com.engine.Utilities.ColorConverter;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.*;
 import java.util.List;
 import static com.engine.Utilities.ColorConverter.setAlpha;

@@ -11,8 +11,6 @@ import com.engine.ThinkingParticles.SCPicker;
 import com.engine.JComponents.CLabel;
 import com.engine.Utilities.Settings;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import javax.swing.*;
 import static com.engine.Utilities.ColorConverter.setAlpha;
 

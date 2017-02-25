@@ -13,6 +13,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 public class Settings {
     public static DecimalFormat dcFormat = new DecimalFormat("0.000");
@@ -30,19 +31,9 @@ public class Settings {
 
     public static boolean doesSettingsFileExist(){return Files.exists(Paths.get(settings_file_path));}
     public static boolean doesColorsFileExist(){return Files.exists(Paths.get(colors_file_path));}
-    public static boolean StoBool(String s, boolean def_val){if (s.equalsIgnoreCase("TRUE")) {return true;}
-    else if (s.equalsIgnoreCase("FALSE")) {return false;} else {return def_val;}}
+    public static boolean StoBool(String s, boolean def_val) {return s.equalsIgnoreCase("TRUE") || !s.equalsIgnoreCase("FALSE") && def_val;}
     public static Image getIcon(){return iconImage;}
     public static Image getSplashImage(){return splashImage;}
-
-    public static String getOS() {
-        String os = System.getProperty("os.name").toLowerCase();
-        if (os.contains("linux")) {return "linux";} 
-        else if (os.contains("windows") || os.contains("win")) {return "windows";} 
-        else if (os.contains("solaris") || os.contains("sunos")) {return "solaris";} 
-        else if (os.contains("mac os") || os.contains("macos") || os.contains("darwin")) {return "mac";}
-        else return "Cannot determine Operating System";
-    }
 
     /**
      * This method returns an array of 5 colors at a particular index of another color array
@@ -254,7 +245,7 @@ public class Settings {
                 for (int i = 0; i < text.size() - 1; i++) {if (i % 2 == 0) {textKeys.add(text.get(i + 1));}}
                 br.close(); fin.close();
                 for (int i = 0; i < textKeys.size(); i++) {textValues.add(textKeys.get(i).substring(textKeys.get(i).indexOf(':') + 1));}
-                for (String s : textValues) {trimValues.add(s.trim());}
+                trimValues.addAll(textValues.stream().map(String::trim).collect(Collectors.toList()));
                 setEngineVariables(trimValues);
             } catch (Exception e) {EException.append(e);}
         }
