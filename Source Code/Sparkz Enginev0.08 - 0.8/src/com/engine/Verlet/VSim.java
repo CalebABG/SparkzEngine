@@ -5,14 +5,14 @@ import static com.engine.Verlet.Point.POINTS;
 
 public class VSim {
     public static Point dragPoint;
-    public static double mouseTearSize = Math.pow(3, 2);
+    public static int mouseTearSize = (int) Math.pow(3, 2);
     public static double gravity;
     public static double kViscosity = 1.0;
     public static final int yStart = 25;
     public static final double stiffnesses = .8;
     public static double dragForce = 30; // The lower the stronger
     public static final double curtainTearSensitivity = 80;
-    public static int simulationAccuracy = 3;
+    public static int SIM_ACCURACY = 5;
     public static boolean ZERO_GRAVITY = false;
     public static boolean DEBUG_MODE = false;
     public static boolean COLLISION_DETECTION = true;

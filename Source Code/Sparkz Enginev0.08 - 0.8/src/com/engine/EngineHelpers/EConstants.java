@@ -50,40 +50,40 @@ abstract public class EConstants {
     public static Point Mouse = new Point();
 
     //Booleans
-    public static boolean running = false;
-    public static boolean isPaused = false;
-    public static boolean thinkingParticles = true;
-    public static boolean connectParticles = false;
-    public static boolean particleFriction = true;
-    public static boolean mouseGravitation = true;
-    public static boolean isSafeAmount = true;
-    public static boolean isCTRLDown = false;
-    public static boolean isLeftMouseDown = false;
-    public static boolean isRightMouseDown = false;
-    public static boolean cycleColors = false;
-    public static boolean GDMODEBOOL = false;
-    public static boolean PTMODEBOOL = false;
-    public static boolean DUPLEXMODE = false;
-    public static boolean SMOOTH = true;
+    public static boolean running               = false;
+    public static boolean isPaused              = false;
+    public static boolean thinkingParticles     = true;
+    public static boolean connectParticles      = false;
+    public static boolean particleFriction      = true;
+    public static boolean mouseGravitation      = true;
+    public static boolean isSafeAmount          = true;
+    public static boolean isCTRLDown            = false;
+    public static boolean isLeftMouseDown       = false;
+    public static boolean isRightMouseDown      = false;
+    public static boolean cycleColors           = false;
+    public static boolean GDMODEBOOL            = false;
+    public static boolean PTMODEBOOL            = false;
+    public static boolean DUPLEXMODE            = false;
+    public static boolean SMOOTH                = true;
 
     //Particle ArrayLists
-    public static List<Particle> ParticlesArray = Collections.synchronizedList(new ArrayList<>());
+    public static List<Particle> ParticlesArray         = Collections.synchronizedList(new ArrayList<>());
     public static List<GravityPoint> GravityPointsArray = Collections.synchronizedList(new ArrayList<>());
-    public static List<Fireworks> FireworksArray = Collections.synchronizedList(new ArrayList<>());
-    public static List<Emitter> EmitterArray = Collections.synchronizedList(new ArrayList<>());
-    public static List<Flux> FluxArray = Collections.synchronizedList(new ArrayList<>());
-    public static List<Eraser> EraserArray = Collections.synchronizedList(new ArrayList<>());
-    public static List<QED> QEDArray = Collections.synchronizedList(new ArrayList<>());
-    public static List<Ion> IonArray = Collections.synchronizedList(new ArrayList<>());
-    public static List<BlackHole> BlackHoleArray = Collections.synchronizedList(new ArrayList<>());
-    public static List<Duplex> DuplexArray = Collections.synchronizedList(new ArrayList<>());
-    public static List<Portal> PortalArray = Collections.synchronizedList(new ArrayList<>());
+    public static List<Fireworks> FireworksArray        = Collections.synchronizedList(new ArrayList<>());
+    public static List<Emitter> EmitterArray            = Collections.synchronizedList(new ArrayList<>());
+    public static List<Flux> FluxArray                  = Collections.synchronizedList(new ArrayList<>());
+    public static List<Eraser> EraserArray              = Collections.synchronizedList(new ArrayList<>());
+    public static List<QED> QEDArray                    = Collections.synchronizedList(new ArrayList<>());
+    public static List<Ion> IonArray                    = Collections.synchronizedList(new ArrayList<>());
+    public static List<BlackHole> BlackHoleArray        = Collections.synchronizedList(new ArrayList<>());
+    public static List<Duplex> DuplexArray              = Collections.synchronizedList(new ArrayList<>());
+    public static List<Portal> PortalArray              = Collections.synchronizedList(new ArrayList<>());
 
     //Input Handlers: Keyboard and Mouse
-    public static KHandler kHandler = new KHandler();
+    public static KHandler kHandler               = new KHandler();
     public static MMotionListener mMotionListener = new MMotionListener();
-    public static MListener mListener = new MListener();
-    public static MWheelListener mWheelListener = new MWheelListener();
+    public static MListener mListener             = new MListener();
+    public static MWheelListener mWheelListener   = new MWheelListener();
 
     //Frame and Graphics
     public static JFrame EFrame;

@@ -1,6 +1,8 @@
 package com.engine.GUIWindows;
 
 import com.engine.EngineHelpers.EngineMethods;
+import com.engine.Interfaces_Extensions.TimerTaskX;
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.JComponents.CLabel;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
@@ -10,7 +12,7 @@ import javax.swing.plaf.basic.BasicSplitPaneUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
-import java.util.*;
+
 import static com.engine.EngineHelpers.EConstants.*;
 
 public class StatsPanel {
@@ -34,7 +36,7 @@ public class StatsPanel {
 
         frame.setIconImage(Settings.getIcon());
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {close();}});
+        frame.addWindowListener(new WindowClosing(windowEvent -> close()));
         frame.setLocationRelativeTo(EFrame);
 
         JMenuBar menuBar = new JMenuBar(){
@@ -80,22 +82,20 @@ public class StatsPanel {
 
         frame.getContentPane().add(split_pane, BorderLayout.CENTER);
 
-        ActionListener actl = new ActionListener() {
-            private int loc = 0;
-            public void actionPerformed(ActionEvent e) {
-                JMenuItem source = (JMenuItem) e.getSource();
-                if(split_pane.getLeftComponent().isVisible() && split_pane.getRightComponent().isVisible()){
-                    loc = split_pane.getDividerLocation();
-                    split_pane.setDividerSize(0);
-                    split_pane.getLeftComponent().setVisible(source == mntmShowhideLeft);
-                    split_pane.getRightComponent().setVisible(source == mntmShowhideRight);
-                }
-                else{
-                    split_pane.getLeftComponent().setVisible(true);
-                    split_pane.getRightComponent().setVisible(true);
-                    split_pane.setDividerLocation(loc);
-                    split_pane.setDividerSize((Integer) UIManager.get("SplitPane.dividerSize"));
-                }
+        ActionListener actl = e -> {
+            int loc = 0;
+            JMenuItem source = (JMenuItem) e.getSource();
+            if(split_pane.getLeftComponent().isVisible() && split_pane.getRightComponent().isVisible()){
+                loc = split_pane.getDividerLocation();
+                split_pane.setDividerSize(0);
+                split_pane.getLeftComponent().setVisible(source == mntmShowhideLeft);
+                split_pane.getRightComponent().setVisible(source == mntmShowhideRight);
+            }
+            else{
+                split_pane.getLeftComponent().setVisible(true);
+                split_pane.getRightComponent().setVisible(true);
+                split_pane.setDividerLocation(loc);
+                split_pane.setDividerSize((Integer) UIManager.get("SplitPane.dividerSize"));
             }
         };
 
@@ -308,17 +308,12 @@ public class StatsPanel {
         frame.setVisible(true);
     }
 
-    private void addComps(JFrame root, JPanel panel, JComponent... components) {
-        for (JComponent comps : components) {panel.add(comps);} root.add(panel, BorderLayout.CENTER);
-    }
-
     private static void startTimer() {
         timer = new java.util.Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            public void run() {
-                if (freemem != null) {freemem.setText("JVM Free Memory: " + decimalFormat.format((Runtime.getRuntime().freeMemory() / (Math.pow(1024, 2)))) + " MB");}}
-        }, 0, 1200);
-        timer.scheduleAtFixedRate(new TimerTask() {public void run() {update();}}, 0, timerFPS);
+        timer.scheduleAtFixedRate(new TimerTaskX(() -> {
+            if (freemem != null) {freemem.setText("JVM Free Memory: " + decimalFormat.format((Runtime.getRuntime().freeMemory() / (Math.pow(1024, 2)))) + " MB");}
+        }), 0, 1200);
+        timer.scheduleAtFixedRate(new TimerTaskX(StatsPanel::update), 0, timerFPS);
     }
 
     private static void stopTimer() {timer.cancel(); timer.purge();}
@@ -342,9 +337,5 @@ public class StatsPanel {
         } catch (Exception ex) {EException.append(ex);}
     }
 
-    private void close() {
-        statsUI = null;
-        stopTimer();
-        frame.dispose();
-    }
+    private void close() {statsUI = null; stopTimer(); frame.dispose();}
 }

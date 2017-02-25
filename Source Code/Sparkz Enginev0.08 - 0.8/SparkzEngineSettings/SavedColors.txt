@@ -110,3 +110,5 @@
 #6d259bff;#301ec5ff;#b0ab39ff;#4b0209ff;#47dd30ff;
 #74e7edff;#c4aa38ff;#78ab7fff;#8b4ab8ff;#9186e4ff;
 #d8d917ff;#d9e6bdff;#11c7dcff;#92d326ff;#b94c1cff;
+#c75209ff;#3494cdff;#99bba3ff;#c65880ff;#210532ff;
+#754fe7ff;#4cd2faff;#e4f9dcff;#b412c6ff;#82ee0fff;

@@ -1,4 +1,5 @@
 package com.engine.GUIWindows;
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.ParticleTypes.Particle;
 import com.engine.ThinkingParticles.SCChoices;
 import com.engine.JComponents.CLabel;
@@ -6,7 +7,6 @@ import com.engine.Utilities.Settings;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import static com.engine.Utilities.ColorConverter.setAlpha;
@@ -24,8 +24,7 @@ public class PresetsLoader {
     //public static void main(String[] args) {getInstance();}
 
     public static PresetsLoader getInstance() {
-        if (presetsLoaderUI == null) {
-            presetsLoaderUI = new PresetsLoader();} frame.toFront(); return presetsLoaderUI;
+        if (presetsLoaderUI == null) {presetsLoaderUI = new PresetsLoader();} frame.toFront(); return presetsLoaderUI;
     }
 
     private PresetsLoader() {
@@ -35,9 +34,7 @@ public class PresetsLoader {
         frame.setSize(523, 150);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent)
-        {
-            presetsLoaderUI = null; frame.dispose();}});
+        frame.addWindowListener(new WindowClosing(windowEvent -> close()));
         frame.getContentPane().setLayout(null);
         frame.setLocationRelativeTo(ColorEditor.frame);
         Settings.loadColors();
@@ -45,17 +42,17 @@ public class PresetsLoader {
         frame.setTitle("You have: " + Settings.presetColors.size() + " Presets :D");
 
         int offsetX = (64) + 5;
-        labels[0] = new CLabel(new Rectangle(5, 10, 64, 45),               font, fgColor, setAlpha(Particle.thinkingColors[0],255));
-        labels[1] = new CLabel(new Rectangle(    offsetX + 5, 10, 64, 45), font, fgColor, setAlpha(Particle.thinkingColors[1],255));
-        labels[2] = new CLabel(new Rectangle(2 * offsetX + 5, 10, 64, 45), font, fgColor, setAlpha(Particle.thinkingColors[2],255));
-        labels[3] = new CLabel(new Rectangle(3 * offsetX + 5, 10, 64, 45), font, fgColor, setAlpha(Particle.thinkingColors[3],255));
-        labels[4] = new CLabel(new Rectangle(4 * offsetX + 5, 10, 64, 45), font, fgColor, setAlpha(Particle.thinkingColors[4],255));
+        labels[0] = new CLabel(new Rectangle(              5, 10, 64, 45), font, fgColor, setAlpha(Particle.thinkingColors[0], 255));
+        labels[1] = new CLabel(new Rectangle(    offsetX + 5, 10, 64, 45), font, fgColor, setAlpha(Particle.thinkingColors[1], 255));
+        labels[2] = new CLabel(new Rectangle(2 * offsetX + 5, 10, 64, 45), font, fgColor, setAlpha(Particle.thinkingColors[2], 255));
+        labels[3] = new CLabel(new Rectangle(3 * offsetX + 5, 10, 64, 45), font, fgColor, setAlpha(Particle.thinkingColors[3], 255));
+        labels[4] = new CLabel(new Rectangle(4 * offsetX + 5, 10, 64, 45), font, fgColor, setAlpha(Particle.thinkingColors[4], 255));
         addComps(frame, labels[0], labels[1], labels[2], labels[3], labels[4]);
 
         button = new JButton("<html><body style='color:blue; font-size: 12px'>Refresh Colors</body></html>");
         button.setBounds(350, 15, 160, 40);
         button.setVisible(true);
-        button.addActionListener(e -> {if (e.getSource() == button) {refreshButton();}});
+        button.addActionListener(e -> refreshButton());
         frame.add(button);
 
         colorSlider = new JSlider(0, ((Settings.PRESET_INDEXES - 1) == 0) ? 0 : (Settings.PRESET_INDEXES - 1), lastIndex);
@@ -90,21 +87,17 @@ public class PresetsLoader {
     }
 
     private int setMinorTicks(){
-        int ticks = 1;
-        if (Settings.presetColors == null || Settings.presetColors.size() < 25) return ticks;
-        else if (Settings.presetColors.size() % 15 == 0) {
-            return Settings.presetColors.size() / 15;
-        } else return Settings.presetColors.size() / 25;
+        if (Settings.presetColors == null || Settings.presetColors.size() < 25) return 1;
+        else if (Settings.presetColors.size() % 15 == 0) {return Settings.presetColors.size() / 15;}
+        else return Settings.presetColors.size() / 25;
     }
 
     private int setMajorTicks() {
-        int ticks = 1;
-        if (Settings.presetColors == null) return ticks;
-        else if (Settings.presetColors.size() >= 25) {
-            return Settings.presetColors.size() / 5;
-        }
-        return ticks;
+        if (Settings.presetColors == null) return 1;
+        else if (Settings.presetColors.size() >= 25) {return Settings.presetColors.size() / 5;}
+        return 1;
     }
 
     private void addComps(JFrame root, JComponent... components) {for (JComponent comps : components) {root.add(comps);}}
+    private void close() {presetsLoaderUI = null; frame.dispose();}
 }

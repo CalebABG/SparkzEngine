@@ -1,5 +1,8 @@
 package com.engine.GUIWindows;
 
+import com.engine.Interfaces_Extensions.KAdapter;
+import com.engine.Interfaces_Extensions.KeyAdapterX;
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.JComponents.CTextField;
 import com.engine.JComponents.RLabel;
 import static com.engine.EngineHelpers.EConstants.*;
@@ -35,8 +38,7 @@ public class SettingsEditor {
         frame.setIconImage(Settings.getIcon());
         frame.setSize(465, 442);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent)
-        {settingsEditor = null; frame.dispose();}});
+        frame.addWindowListener(new WindowClosing(windowEvent -> close()));
         frame.setLocationRelativeTo(EFrame);
 
         JScrollPane scrollPane = new JScrollPane();
@@ -53,31 +55,31 @@ public class SettingsEditor {
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         panel.setLayout(gbl_panel);
 
-        keyAdapters[0] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesInt(switchMode, textFields[0].getText(), textFields[0]);}};
-        keyAdapters[1] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesInt(particleType, textFields[1].getText(), textFields[1]);}};
-        keyAdapters[2] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesInt(ptGravitationInt, textFields[2].getText(), textFields[2]);}};
-        keyAdapters[3] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesInt(fireworksAmount, textFields[3].getText(), textFields[3]);}};
-        keyAdapters[4] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesInt(particleMode, textFields[4].getText(), textFields[4]);}};
-        keyAdapters[5] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesInt(dragAmount, textFields[5].getText(), textFields[5]);}};
-        keyAdapters[6] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesInt(baseLife, textFields[6].getText(), textFields[6]);}};
-        keyAdapters[7] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesInt(rfParticleMode, textFields[7].getText(), textFields[7]);}};
-        keyAdapters[8] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesInt(rfLife, textFields[8].getText(), textFields[8]);}};
-        keyAdapters[9] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesInt(rfWind, textFields[9].getText(), textFields[9]);}};
-        keyAdapters[10] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesInt(rfJitter, textFields[10].getText(), textFields[10]);}};
-        keyAdapters[11] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesInt(safetyAmount, textFields[11].getText(), textFields[11]);}};
-        keyAdapters[12] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesInt(cycleRate, textFields[12].getText(), textFields[12]);}};
-        keyAdapters[13] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesDouble(singleClickSizeMaxVal, textFields[13].getText(), textFields[13]);}};
-        keyAdapters[14] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesDouble(singleClickSizeMinVal, textFields[14].getText(), textFields[14]);}};
-        keyAdapters[15] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesDouble(multiClickSizeMaxVal, textFields[15].getText(), textFields[15]);}};
-        keyAdapters[16] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesDouble(multiClickSizeMinVal, textFields[16].getText(), textFields[16]);}};
-        keyAdapters[17] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesDouble(fireworksSizeMaxVal, textFields[17].getText(), textFields[17]);}};
-        keyAdapters[18] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesDouble(fireworksSizeMinVal, textFields[18].getText(), textFields[18]);}};
-        keyAdapters[19] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesDouble(dragSizeMaxVal, textFields[19].getText(), textFields[19]);}};
-        keyAdapters[20] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesDouble(dragSizeMinVal, textFields[20].getText(), textFields[20]);}};
-        keyAdapters[21] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesDouble(singleClickSpeedVal, textFields[21].getText(), textFields[21]);}};
-        keyAdapters[22] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesDouble(multiClickSpeedVal, textFields[22].getText(), textFields[22]);}};
-        keyAdapters[23] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesDouble(fireworksSpeedVal, textFields[23].getText(), textFields[23]);}};
-        keyAdapters[24] = new KeyAdapter(){public void keyReleased(KeyEvent e){guardValuesDouble(dragSpeedVal, textFields[24].getText(), textFields[24]);}};
+        keyAdapters[0]  = new KAdapter(e -> {}, e -> guardValuesInt(switchMode, textFields[0].getText(), textFields[0]));
+        keyAdapters[1]  = new KAdapter(e -> {}, e -> guardValuesInt(particleType, textFields[1].getText(), textFields[1]));
+        keyAdapters[2]  = new KAdapter(e -> {}, e -> guardValuesInt(ptGravitationInt, textFields[2].getText(), textFields[2]));
+        keyAdapters[3]  = new KAdapter(e -> {}, e -> guardValuesInt(fireworksAmount, textFields[3].getText(), textFields[3]));
+        keyAdapters[4]  = new KAdapter(e -> {}, e -> guardValuesInt(particleMode, textFields[4].getText(), textFields[4]));
+        keyAdapters[5]  = new KAdapter(e -> {}, e -> guardValuesInt(dragAmount, textFields[5].getText(), textFields[5]));
+        keyAdapters[6]  = new KAdapter(e -> {}, e -> guardValuesInt(baseLife, textFields[6].getText(), textFields[6]));
+        keyAdapters[7]  = new KAdapter(e -> {}, e -> guardValuesInt(rfParticleMode, textFields[7].getText(), textFields[7]));
+        keyAdapters[8]  = new KAdapter(e -> {}, e -> guardValuesInt(rfLife, textFields[8].getText(), textFields[8]));
+        keyAdapters[9]  = new KAdapter(e -> {}, e -> guardValuesInt(rfWind, textFields[9].getText(), textFields[9]));
+        keyAdapters[10] = new KAdapter(e -> {}, e -> guardValuesInt(rfJitter, textFields[10].getText(), textFields[10]));
+        keyAdapters[11] = new KAdapter(e -> {}, e -> guardValuesInt(safetyAmount, textFields[11].getText(), textFields[11]));
+        keyAdapters[12] = new KAdapter(e -> {}, e -> guardValuesInt(cycleRate, textFields[12].getText(), textFields[12]));
+        keyAdapters[13] = new KAdapter(e -> {}, e -> guardValuesDouble(singleClickSizeMaxVal, textFields[13].getText(), textFields[13]));
+        keyAdapters[14] = new KAdapter(e -> {}, e -> guardValuesDouble(singleClickSizeMinVal, textFields[14].getText(), textFields[14]));
+        keyAdapters[15] = new KAdapter(e -> {}, e -> guardValuesDouble(multiClickSizeMaxVal, textFields[15].getText(), textFields[15]));
+        keyAdapters[16] = new KAdapter(e -> {}, e -> guardValuesDouble(multiClickSizeMinVal, textFields[16].getText(), textFields[16]));
+        keyAdapters[17] = new KAdapter(e -> {}, e -> guardValuesDouble(fireworksSizeMaxVal, textFields[17].getText(), textFields[17]));
+        keyAdapters[18] = new KAdapter(e -> {}, e -> guardValuesDouble(fireworksSizeMinVal, textFields[18].getText(), textFields[18]));
+        keyAdapters[19] = new KAdapter(e -> {}, e -> guardValuesDouble(dragSizeMaxVal, textFields[19].getText(), textFields[19]));
+        keyAdapters[20] = new KAdapter(e -> {}, e -> guardValuesDouble(dragSizeMinVal, textFields[20].getText(), textFields[20]));
+        keyAdapters[21] = new KAdapter(e -> {}, e -> guardValuesDouble(singleClickSpeedVal, textFields[21].getText(), textFields[21]));
+        keyAdapters[22] = new KAdapter(e -> {}, e -> guardValuesDouble(multiClickSpeedVal, textFields[22].getText(), textFields[22]));
+        keyAdapters[23] = new KAdapter(e -> {}, e -> guardValuesDouble(fireworksSpeedVal, textFields[23].getText(), textFields[23]));
+        keyAdapters[24] = new KAdapter(e -> {}, e -> guardValuesDouble(dragSpeedVal, textFields[24].getText(), textFields[24]));
 
         JMenuBar menuBar = new JMenuBar();
         scrollPane.setColumnHeaderView(menuBar);
@@ -326,16 +328,14 @@ public class SettingsEditor {
         panel.add(textFields[31], textFields[31].gridBagConstraints);
 
         for (int i = 25; i < textFields.length; i++) {
-            final int _i = i;
-            if (textFields[_i].getText().equalsIgnoreCase("TRUE")) textFields[_i].setForeground(Color.GREEN.darker().darker());
-            else if (textFields[_i].getText().equalsIgnoreCase("FALSE")) textFields[_i].setForeground(Color.red.darker().darker());
-            textFields[i].addKeyListener(new KeyAdapter() {
-                public void keyReleased(KeyEvent e) {
-                    if (textFields[_i].getText().equalsIgnoreCase("TRUE")) {textFields[_i].setForeground(Color.GREEN.darker().darker());}
-                    else if (textFields[_i].getText().equalsIgnoreCase("FALSE")) {textFields[_i].setForeground(Color.red.darker().darker());}
-                    else{textFields[_i].setForeground(Color.black);}
-                }
-            });
+            final int j = i;
+            if (textFields[j].getText().equalsIgnoreCase("TRUE")) textFields[j].setForeground(Color.GREEN.darker().darker());
+            else if (textFields[j].getText().equalsIgnoreCase("FALSE")) textFields[j].setForeground(Color.red.darker().darker());
+            textFields[j].addKeyListener(new KAdapter(e -> {}, e -> {
+                if (textFields[j].getText().equalsIgnoreCase("TRUE")) {textFields[j].setForeground(Color.GREEN.darker().darker());}
+                else if (textFields[j].getText().equalsIgnoreCase("FALSE")) {textFields[j].setForeground(Color.red.darker().darker());}
+                else{textFields[j].setForeground(Color.black);}
+            }));
         }
 
         if (intelliEdit.isSelected())intelliEditorMode();
@@ -365,7 +365,7 @@ public class SettingsEditor {
             textFields[21].addKeyListener(keyAdapters[21]); textFields[22].addKeyListener(keyAdapters[22]); textFields[23].addKeyListener(keyAdapters[23]);
             textFields[24].addKeyListener(keyAdapters[24]);
         }
-        else {for (int i = 0; i < 25; i++) {textFields[i].removeKeyListener(keyAdapters[i]); textFields[i].setForeground(Color.BLACK);}}
+        else {for (int i = 0, t = 25; i < t; i++) {textFields[i].removeKeyListener(keyAdapters[i]); textFields[i].setForeground(Color.BLACK);}}
     }
 
     private static void intelliSense() {
@@ -518,17 +518,38 @@ public class SettingsEditor {
     }
 
     private static void refreshUI() {
-        textFields[0].setText(""+ switchMode); textFields[1].setText(""+ particleType); textFields[2].setText(""+ ptGravitationInt);
-        textFields[3].setText(""+ fireworksAmount); textFields[4].setText(""+ particleMode); textFields[5].setText(""+ dragAmount);
-        textFields[6].setText(""+ baseLife); textFields[7].setText(""+ rfParticleMode); textFields[8].setText(""+ rfLife);
-        textFields[9].setText(""+ rfWind); textFields[10].setText(""+ rfJitter); textFields[11].setText(""+ safetyAmount);
-        textFields[12].setText(""+ cycleRate); textFields[13].setText(""+ singleClickSizeMaxVal); textFields[14].setText(""+ singleClickSizeMinVal);
-        textFields[15].setText(""+ multiClickSizeMaxVal); textFields[16].setText(""+ multiClickSizeMinVal); textFields[17].setText(""+ fireworksSizeMaxVal);
-        textFields[18].setText(""+ fireworksSizeMinVal); textFields[19].setText(""+ dragSizeMaxVal); textFields[20].setText(""+ dragSizeMinVal);
-        textFields[21].setText(""+ singleClickSpeedVal); textFields[22].setText(""+ multiClickSpeedVal); textFields[23].setText(""+ fireworksSpeedVal);
-        textFields[24].setText(""+ dragSpeedVal); textFields[25].setText(""+ thinkingParticles); textFields[26].setText(""+ connectParticles);
-        textFields[27].setText(""+ particleFriction); textFields[28].setText(""+ mouseGravitation); textFields[29].setText(""+ isPaused);
-        textFields[30].setText(""+ GDMODEBOOL); textFields[31].setText(""+ DUPLEXMODE);
+        textFields[0].setText("" + switchMode);
+        textFields[1].setText("" + particleType);
+        textFields[2].setText("" + ptGravitationInt);
+        textFields[3].setText("" + fireworksAmount);
+        textFields[4].setText("" + particleMode);
+        textFields[5].setText("" + dragAmount);
+        textFields[6].setText("" + baseLife);
+        textFields[7].setText("" + rfParticleMode);
+        textFields[8].setText("" + rfLife);
+        textFields[9].setText("" + rfWind);
+        textFields[10].setText("" + rfJitter);
+        textFields[11].setText("" + safetyAmount);
+        textFields[12].setText("" + cycleRate);
+        textFields[13].setText("" + singleClickSizeMaxVal);
+        textFields[14].setText("" + singleClickSizeMinVal);
+        textFields[15].setText("" + multiClickSizeMaxVal);
+        textFields[16].setText("" + multiClickSizeMinVal);
+        textFields[17].setText("" + fireworksSizeMaxVal);
+        textFields[18].setText("" + fireworksSizeMinVal);
+        textFields[19].setText("" + dragSizeMaxVal);
+        textFields[20].setText("" + dragSizeMinVal);
+        textFields[21].setText("" + singleClickSpeedVal);
+        textFields[22].setText("" + multiClickSpeedVal);
+        textFields[23].setText("" + fireworksSpeedVal);
+        textFields[24].setText("" + dragSpeedVal);
+        textFields[25].setText("" + thinkingParticles);
+        textFields[26].setText("" + connectParticles);
+        textFields[27].setText("" + particleFriction);
+        textFields[28].setText("" + mouseGravitation);
+        textFields[29].setText("" + isPaused);
+        textFields[30].setText("" + GDMODEBOOL);
+        textFields[31].setText("" + DUPLEXMODE);
         for (int i = 25; i < textFields.length; i++) {
             if (textFields[i].getText().equalsIgnoreCase("TRUE")) textFields[i].setForeground(Color.GREEN.darker().darker());
             else if (textFields[i].getText().equalsIgnoreCase("FALSE")) textFields[i].setForeground(Color.red.darker().darker());
@@ -536,4 +557,5 @@ public class SettingsEditor {
     }
 
     private static void clearText() {for (int i = 0; i < textFields.length; i++) {textFields[i].setText("");}}
+    public void close(){settingsEditor = null; frame.dispose();}
 }

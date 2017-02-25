@@ -1,13 +1,15 @@
 package com.engine.MGrapher;
 
-import com.engine.GUIWindows.GraphInstructions;
+import com.engine.EngineHelpers.EngineMethods;
 import com.engine.GUIWindows.SampleFunctions;
-import com.engine.JComponents.AutoComplete;
+import com.engine.Interfaces_Extensions.KAdapter;
+import com.engine.Interfaces_Extensions.WindowClosing;
+import com.engine.JComponents.TextSuggestor;
 import com.engine.JComponents.CTextField;
 import com.engine.JComponents.RButton;
 import com.engine.JComponents.RLabel;
 import static com.engine.EngineHelpers.EConstants.*;
-import static com.engine.JComponents.AutoComplete.makeUndoable;
+import static com.engine.JComponents.TextSuggestor.makeUndoable;
 import com.engine.ParticleTypes.Particle;
 import com.engine.GUIWindows.EException;
 import com.engine.Utilities.Settings;
@@ -68,7 +70,7 @@ public class ParticleGraph {
         frame.setIconImage(Settings.getIcon());
         frame.setSize(465, 277);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {particleGraph = null; frame.dispose();}});
+        frame.addWindowListener(new WindowClosing(e -> close()));
         frame.setLocationRelativeTo(EFrame);
 
         JScrollPane scrollPane = new JScrollPane();
@@ -80,7 +82,9 @@ public class ParticleGraph {
         gbl_panel.columnWidths = new int[]{138, 64, 0};
         gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         gbl_panel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-        gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                                            0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                                            0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         panel.setLayout(gbl_panel);
 
         JMenuBar menuBar = new JMenuBar();
@@ -91,7 +95,7 @@ public class ParticleGraph {
 
         JButton mnHelp = new JButton("Help");
         mnHelp.setFont(new Font("Times", Font.PLAIN, 18));
-        mnHelp.addActionListener(e -> {if (e.getSource() == mnHelp) {GraphInstructions.getInstance(frame);}});
+        mnHelp.addActionListener(e -> EngineMethods.createGraphInstructionsWindow(frame));
         menuBar.add(mnHelp);
 
         JButton sampleFunctions = new JButton("Samples");
@@ -109,32 +113,32 @@ public class ParticleGraph {
         textFields[0] = new CTextField(mathExpression, new Font("Times", Font.PLAIN, 20), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{0, 1});
         textFields[0].gridBagConstraints.gridwidth = 2;
         textFields[0].setFocusTraversalKeysEnabled(false);
-        textFields[0].addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {if (e.getKeyCode() != KeyEvent.VK_ENTER) {textFields[0].setForeground(Color.black);}}
-            public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER){threadGraph(0, "");}}
-        });
+        textFields[0].addKeyListener(new KAdapter(
+                e -> {if (e.getKeyCode() != KeyEvent.VK_ENTER) {textFields[0].setForeground(Color.black);}},
+                e -> {if (e.getKeyCode() == KeyEvent.VK_ENTER){threadGraph(0, "");}}
+        ));
 
         //Textfield AutoSuggest Functions
         String COMMIT_ACTION = "commit";
-        AutoComplete autoComplete = new AutoComplete(textFields[0], Arrays.asList(suggestions));
-        textFields[0].getDocument().addDocumentListener(autoComplete);
+        TextSuggestor textSuggestor = new TextSuggestor(textFields[0], Arrays.asList(suggestions));
+        textFields[0].getDocument().addDocumentListener(textSuggestor);
         textFields[0].getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
-        textFields[0].getActionMap().put(COMMIT_ACTION, autoComplete.new CommitAction());
+        textFields[0].getActionMap().put(COMMIT_ACTION, textSuggestor.new CommitAction());
         makeUndoable(textFields[0]);
         panel.add(textFields[0], textFields[0].gridBagConstraints);
 
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem cut = new JMenuItem("Cut");
-        cut.addActionListener(e -> {if (e.getSource() == cut) {textFields[0].cut();}});
+        cut.addActionListener(e -> textFields[0].cut());
         popupMenu.add(cut);
         JMenuItem copy = new JMenuItem("Copy");
-        copy.addActionListener(e -> {if (e.getSource() == copy) {textFields[0].copy();}});
+        copy.addActionListener(e -> textFields[0].copy());
         popupMenu.add(copy);
         JMenuItem paste = new JMenuItem("Paste");
-        paste.addActionListener(e -> {if (e.getSource() == paste) {textFields[0].paste();}});
+        paste.addActionListener(e -> textFields[0].paste());
         popupMenu.add(paste);
         JMenuItem clear = new JMenuItem("Clear");
-        clear.addActionListener(e -> {if (e.getSource() == clear) {textFields[0].setText("");}});
+        clear.addActionListener(e -> textFields[0].setText(""));
         popupMenu.add(clear);
         addPopup(textFields[0], popupMenu);
 
@@ -143,10 +147,10 @@ public class ParticleGraph {
         panel.add(yscale, yscale.gridBagConstraints);
 
         textFields[1] = new CTextField("" + scaleY, new Font("Times", Font.PLAIN, 19), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 11});
-        textFields[1].addKeyListener(new KeyAdapter() {public void keyPressed(KeyEvent e) {textFields[1].setForeground(Color.black);}});
-        textFields[1].addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER) threadGraph(0, "");}
-        });
+        textFields[1].addKeyListener(new KAdapter(
+                e -> textFields[1].setForeground(Color.black),
+                e -> {if (e.getKeyCode() == KeyEvent.VK_ENTER) threadGraph(0, "");}
+        ));
         panel.add(textFields[1], textFields[1].gridBagConstraints);
 
         RLabel xscale = new RLabel("X Scale", new Font("Times", Font.BOLD, 18), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 12);
@@ -154,20 +158,20 @@ public class ParticleGraph {
         panel.add(xscale, xscale.gridBagConstraints);
 
         textFields[2] = new CTextField("" + scaleX, new Font("Times", Font.PLAIN, 19), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 12});
-        textFields[2].addKeyListener(new KeyAdapter() {public void keyPressed(KeyEvent e) {textFields[2].setForeground(Color.black);}});
-        textFields[2].addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER) threadGraph(0, "");}
-        });
+        textFields[2].addKeyListener(new KAdapter(
+                e -> textFields[2].setForeground(Color.black),
+                e -> {if (e.getKeyCode() == KeyEvent.VK_ENTER) threadGraph(0, "");}
+        ));
         panel.add(textFields[2], textFields[2].gridBagConstraints);
 
         RButton graphButton = new RButton("<html><span style='color:#008DCB'>Graph Function</span></html>",
                 new Font("Times New Roman", Font.PLAIN, 23), 2, GridBagConstraints.HORIZONTAL, new int[]{0, 13}, new int[]{20, 15});
-        graphButton.addActionListener(e -> {if (e.getSource() == graphButton) {threadGraph(0, "");}});
+        graphButton.addActionListener(e -> threadGraph(0, ""));
         graphButton.gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
-        graphButton.gridBagConstraints.fill =      GridBagConstraints.HORIZONTAL;
-        graphButton.gridBagConstraints.anchor =    GridBagConstraints.SOUTHWEST;
-        graphButton.gridBagConstraints.weightx =   0.5;
-        graphButton.gridBagConstraints.weighty =   0.5;
+        graphButton.gridBagConstraints.fill      = GridBagConstraints.HORIZONTAL;
+        graphButton.gridBagConstraints.anchor    = GridBagConstraints.SOUTHWEST;
+        graphButton.gridBagConstraints.weightx   = 0.5;
+        graphButton.gridBagConstraints.weighty   = 0.5;
         panel.add(graphButton, graphButton.gridBagConstraints);
         frame.setVisible(true);
     }
@@ -199,11 +203,11 @@ public class ParticleGraph {
     public static void threadGraph(int mode, String express) {
         if (graphThread1 != null && graphThread1.isAlive()) {
             try {graphThread1.interrupt(); graphThread1.join();} catch (InterruptedException e1) {EException.append(e1);}
-            graphThread1 = new Thread(){public void run() {if (mode == 0) {graphFunction();} else graphFunction(express);}};
+            graphThread1 = new Thread(() -> {if (mode == 0) {graphFunction();} else graphFunction(express);});
             graphThread1.start();
         }
         else{
-            graphThread1 = new Thread(){public void run() {if (mode == 0) {graphFunction();} else graphFunction(express);}};
+            graphThread1 = new Thread(() -> {if (mode == 0) {graphFunction();} else graphFunction(express);});
             graphThread1.start();
         }
     }
@@ -225,4 +229,5 @@ public class ParticleGraph {
     }
 
     private static void throwError(CTextField textField) {textField.setForeground(Color.red);}
+    public void close(){particleGraph = null; frame.dispose();}
 }

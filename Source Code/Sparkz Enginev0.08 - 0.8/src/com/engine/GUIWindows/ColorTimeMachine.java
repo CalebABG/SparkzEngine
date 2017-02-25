@@ -1,5 +1,6 @@
 package com.engine.GUIWindows;
 
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.JComponents.CLabel;
 import com.engine.ParticleTypes.Particle;
 import com.engine.ThinkingParticles.PresetHolder;
@@ -39,7 +40,7 @@ public class ColorTimeMachine {
         frame.setIconImage(Settings.getIcon());
         frame.setSize(688, 206);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {close();}});
+        frame.addWindowListener(new WindowClosing(windowEvent -> close()));
         frame.setLocationRelativeTo(ColorEditor.frame);
 
         JScrollPane scrollPane = new JScrollPane();

@@ -3,6 +3,7 @@ package com.engine.GUIWindows;
 import com.engine.EngineHelpers.EngineMethods;
 import static com.engine.EngineHelpers.EConstants.*;
 
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.JComponents.CSlider;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
@@ -13,7 +14,6 @@ import java.awt.event.WindowEvent;
 public class SlideEditor {
     private static SlideEditor sliderUI = null;
     public static JFrame frame;
-    private int MAX_TICKS = 49;
     private final int MAX_TICK_LINES = 500;
     public JPanel ptoptionspanel,rfoptionspanel, ptssopanel, ptspeedspanel;
 
@@ -43,7 +43,7 @@ public class SlideEditor {
         frame.setSize(489, 690);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {sliderUI = null; frame.dispose();}});
+        frame.addWindowListener(new WindowClosing(e -> close()));
         frame.getContentPane().setLayout(null);
         frame.setLocationRelativeTo(EFrame);
 
@@ -54,6 +54,7 @@ public class SlideEditor {
         ptoptionspanel = new JPanel(null);
         jTabbedPane.addTab("Particle Options", null, ptoptionspanel, null);
 
+        int MAX_TICKS = 49;
         ptsslider = new CSlider(0, 200, 1, new Rectangle(10, 60, 463, 43), 1, MAX_TICKS, true, true, true);
         ptsslider.addChangeListener(e -> {
             int particleSize = ptsslider.getValue(); ptsamount.setText(Double.toString(particleSize));
@@ -419,4 +420,5 @@ public class SlideEditor {
     private static void setPaintLabels(JSlider slider, int maxTickLines) {
         if (slider.getMaximum() > maxTickLines) {slider.setPaintLabels(false);}else {slider.setPaintLabels(true);}
     }
+    public void close(){sliderUI = null; frame.dispose();}
 }

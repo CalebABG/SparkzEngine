@@ -1,16 +1,17 @@
 package com.engine.MGrapher;
 
+import com.engine.Interfaces_Extensions.KeyAdapterX;
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.Utilities.Settings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.swing.*;
-import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.*;
 
 import static com.engine.MGrapher.ParticleGraph.mathFunctions;
 
-public class JCalculator {
+public class JCalculator implements KeyAdapterX {
     private static JCalculator calculator = null;
     private static JFrame frame;
     private static JTextPane resultfield;
@@ -31,7 +32,7 @@ public class JCalculator {
         frame.setIconImage(Settings.getIcon());
         frame.setSize(376, 366);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {calculator = null; frame.dispose();}});
+        frame.addWindowListener(new WindowClosing(windowEvent -> close()));
         frame.setLocationRelativeTo(parent);
 
         JPanel panel = new JPanel();
@@ -59,7 +60,8 @@ public class JCalculator {
         gbl_panel_2.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
         panel_2.setLayout(gbl_panel_2);
 
-        JLabel lblEnterAnExpression = new JLabel("<html><p style='text-align:center'>Enter an Expression! <br> <span style='text-align:center'>(Shift+Enter = Evaluate)</span></P></html>");
+        JLabel lblEnterAnExpression = new JLabel("<html><p style='text-align:center'>Enter an Expression! " +
+                "<br> <span style='text-align:center'>(Shift+Enter = Evaluate)</span></P></html>");
         lblEnterAnExpression.setFont(new Font("Tahoma", Font.BOLD, 14));
         lblEnterAnExpression.setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_lblEnterAnExpression = new GridBagConstraints();
@@ -84,66 +86,9 @@ public class JCalculator {
         gbl_panel_3.rowWeights = new double[]{1.0, Double.MIN_VALUE};
         panel_3.setLayout(gbl_panel_3);
 
-        final StyleContext cont = StyleContext.getDefaultStyleContext();
-        final AttributeSet keywordscolor = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.ORANGE.darker());
-        final AttributeSet regular = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLACK);
-        String reservedWords = "(\\W)*(break|case|catch|class|const|continue|debugger|default|delete|do|else|export|extends|finally|for|function|if|import|in|instanceof|new|return|super|switch|this|throw|try|typeof|var|void|while|with|yield)";
-
-        DefaultStyledDocument doc = new DefaultStyledDocument() {
-            public void insertString (int offset, String str, AttributeSet a) throws BadLocationException {
-                super.insertString(offset, str, a);
-
-                String text = getText(0, getLength());
-                int before = findLastNonWordChar(text, offset);
-                if (before < 0) before = 0;
-                int after = findFirstNonWordChar(text, offset + str.length());
-                int wordL = before;
-                int wordR = before;
-
-                while (wordR <= after) {
-                    if (wordR == after || String.valueOf(text.charAt(wordR)).matches("\\W")) {
-                        if (text.substring(wordL, wordR).matches(reservedWords))
-                            setCharacterAttributes(wordL, wordR - wordL, keywordscolor, false);
-                        else
-                            setCharacterAttributes(wordL, wordR - wordL, regular, false);
-                        wordL = wordR;
-                    }
-                    wordR++;
-                }
-            }
-
-            public void remove (int offs, int len) throws BadLocationException {
-                super.remove(offs, len);
-
-                String text = getText(0, getLength());
-                int before = findLastNonWordChar(text, offs);
-                if (before < 0) before = 0;
-                int after = findFirstNonWordChar(text, offs);
-
-                if (text.substring(before, after).matches(reservedWords)) {
-                    setCharacterAttributes(before, after - before, keywordscolor, false);
-                } else {
-                    setCharacterAttributes(before, after - before, regular, false);
-                }
-            }
-        };
-
-        expressionfield = new JTextPane(doc);
-        expressionfield.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {
-                if (e.isShiftDown() && e.getKeyCode() == KeyEvent.VK_ENTER) try {graph();
-                }catch (Exception x){resultfield.setText(x.getMessage());}
-            }
-        });
+        expressionfield = new JTextPane();
+        expressionfield.addKeyListener(this);
         expressionfield.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        expressionfield.getInputMap().put(KeyStroke.getKeyStroke("TAB"), "tab");
-        expressionfield.getActionMap().put("tab", new AbstractAction("tab"){
-            private static final long serialVersionUID = -2621537943352838927L;
-            public void actionPerformed(ActionEvent e){
-                try {expressionfield.getDocument().insertString(expressionfield.getCaretPosition(), " ", null);
-                } catch (BadLocationException e1) {e1.printStackTrace();}
-            }
-        });
 
         GridBagConstraints gbc_expressionfield = new GridBagConstraints();
         gbc_expressionfield.ipady = 75;
@@ -184,29 +129,22 @@ public class JCalculator {
         resultfield.setText(engine.eval(mathExpression).toString());
     }
 
-    public static void threadEvaluate() {
+    private static void threadEvaluate() {
         if (calcThread1 != null && calcThread1.isAlive()) {
             try {calcThread1.interrupt(); calcThread1.join();} catch (InterruptedException e1) {e1.printStackTrace();}
 
-            calcThread1 = new Thread() {public void run() {try {graph();}catch (Exception e) {resultfield.setText(e.getMessage());}}};
+            calcThread1 = new Thread(() -> {try {graph();}catch (Exception e) {resultfield.setText(e.getMessage());}});
             calcThread1.start();
         }
         else {
-            calcThread1 = new Thread() {public void run() {try {graph();} catch (Exception e) {resultfield.setText(e.getMessage());}}};
+            calcThread1 = new Thread(() -> {try {graph();} catch (Exception e) {resultfield.setText(e.getMessage());}});
             calcThread1.start();
         }
     }
 
-    private int findLastNonWordChar (String text, int index) {
-        while (--index >= 0) if (String.valueOf(text.charAt(index)).matches("\\W")) break;
-        return index;
-    }
-
-    private int findFirstNonWordChar (String text, int index) {
-        while (index < text.length()) {
-            if (String.valueOf(text.charAt(index)).matches("\\W")) break;
-            index++;
-        }
-        return index;
+    public void close(){calculator = null; frame.dispose();}
+    public void keyReleased(KeyEvent e) {
+        if (e.isShiftDown() && e.getKeyCode() == KeyEvent.VK_ENTER) try {graph();
+        }catch (Exception x){resultfield.setText(x.getMessage());}
     }
 }

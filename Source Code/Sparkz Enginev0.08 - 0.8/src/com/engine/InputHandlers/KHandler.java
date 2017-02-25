@@ -146,7 +146,7 @@ public class KHandler extends KeyAdapter{
 
         //Keyboard button: Q
         if (pressed == KeyEvent.VK_Q) {
-            try {EngineInstructions.getInstance();} catch (Exception ex){EException.append(ex);}
+            try {EngineMethods.createEngineInstructionsWindow(EFrame);} catch (Exception ex){EException.append(ex);}
         }
 
         //Keyboard button: R

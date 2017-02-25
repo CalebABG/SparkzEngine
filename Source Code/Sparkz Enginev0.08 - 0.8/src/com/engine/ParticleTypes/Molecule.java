@@ -1,9 +1,11 @@
 package com.engine.ParticleTypes;
 
+import com.engine.Interfaces_Extensions.MoleculeRender;
+
 import static com.engine.EngineHelpers.EConstants.*;
 import java.awt.*;
 
-public abstract class Molecule implements Renderable{
+public abstract class Molecule implements MoleculeRender {
     public Color color = DEFAULT_COLOR;
     public double x, y, vx, vy, radius = 1;
 

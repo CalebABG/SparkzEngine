@@ -138,10 +138,12 @@ public class Particle extends Molecule {
         }
     }
 
-    //Correct Implementation - but less cool
-    //public static void updateOrganicMotionForces(){
-        //if (angle >= 100 * (2 * PI)) {angle = 0.0;} angle += angleIncrement; particleScriptEngine.put("x", angle);
-    //}
+    public void friction() {
+        float minVel = 0.01f, scale = 0.9993f; // Default: 0.01f
+        if (abs(vx) <= minVel) {vx = 0.0;}
+        if (abs(vy) <= minVel) {vy = 0.0;}
+        vx *= scale; vy *= scale;
+    }
 
     public void render() {
         if (thinkingParticles) {color = getSelfColor();} else {color = ColorConverter.getColor();}

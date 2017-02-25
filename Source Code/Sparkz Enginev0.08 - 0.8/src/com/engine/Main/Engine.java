@@ -6,6 +6,8 @@ import com.engine.EngineHelpers.EngineSplash;
 import com.engine.GUIWindows.StatsPanel;
 import com.engine.GUIWindows.QuitWindow;
 import com.engine.GUIWindows.EException;
+import com.engine.Interfaces_Extensions.TimerTaskX;
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
@@ -13,12 +15,18 @@ import java.awt.event.*;
 import java.util.TimerTask;
 
 // Project started on: 11/22/2015 :D -- REQUIRES Java version 1.8 (lambda functions used) or higher to edit
-// TODO: 1/22/2017 Add Developer Console :D
+// TODO: 2/23/2017 Create new SlideEditor
+// TODO: 2/23/2017 Add Physics Editor
+// TODO: 2/24/2017 Clean Packages: GUIWindows, JComponents, MGrapher, Main - Condense classes to 1-2 .class or $.class files
 // Notes:
 // "./" for File, FileChooser, or File operations refers to the current working directory the program started from.
+// Java 8 Project Log Calculation (Years): (ChronoUnit.DAYS.between(LocalDateTime.of(2015, 11, 22, 9, 59), LocalDateTime.now()) / 365.2425f)
 
 public class Engine {
-    public static void main(String[] args) {new EngineSplash(2720).display(); SwingUtilities.invokeLater(() -> new Engine().start());}
+    public static void main(String[] args) {
+        new EngineSplash(2720).display();
+        SwingUtilities.invokeLater(() -> new Engine().start());
+    }
 
     //Adding slight performance boost + UI properties
     static {
@@ -41,7 +49,7 @@ public class Engine {
         EFrame.setSize((int) (width / 1.8), (int) (height / 1.3));
         EFrame.setLocationRelativeTo(null);
         EFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        EFrame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {QuitWindow.getInstance();}});
+        EFrame.addWindowListener(new WindowClosing(windowEvent -> QuitWindow.getInstance()));
 
         Settings.loadSettings();
         EFrame.setJMenuBar(createMenuBar());
@@ -67,37 +75,35 @@ public class Engine {
      * Tries to constrain the fps to around 60(capped). Credit for gameloop: http://www.java-gaming.org/index.php?topic=24220.0
      */
     private void setupTimerTask() {
-        task = new TimerTask() {
-            public void run() {
-                final double SIM_HERTZ = FPS, TIME_BETWEEN_UPDATES = 1.0E9D / SIM_HERTZ, TARGET_TIME_BETWEEN_RENDERS = 1.0E9D / SIM_HERTZ;
-                final int MAX_UPDATES_BEFORE_RENDER = 1;
-                double lastUpdateTime = System.nanoTime(), lastRenderTime;
-                int lastSecondTime = (int) (lastUpdateTime / 1.0E9D);
+        task = new TimerTaskX(() -> {
+            final double SIM_HERTZ = FPS, TIME_BETWEEN_UPDATES = 1.0E9D / SIM_HERTZ, TARGET_TIME_BETWEEN_RENDERS = 1.0E9D / SIM_HERTZ;
+            final int MAX_UPDATES_BEFORE_RENDER = 1;
+            double lastUpdateTime = System.nanoTime(), lastRenderTime;
+            int lastSecondTime = (int) (lastUpdateTime / 1.0E9D);
 
-                while (running) {
-                    double now = System.nanoTime();
-                    int updateCount = 0;
+            while (running) {
+                double now = System.nanoTime();
+                int updateCount = 0;
 
-                    render();
-                    lastRenderTime = now;
+                render();
+                lastRenderTime = now;
 
-                    if (!isPaused) {
-                        while (now - lastUpdateTime > TIME_BETWEEN_UPDATES && updateCount < MAX_UPDATES_BEFORE_RENDER) {
-                            handleUpdates(); lastUpdateTime += TIME_BETWEEN_UPDATES; updateCount++;
-                        }
-                    }
+                while (now - lastUpdateTime > TIME_BETWEEN_UPDATES && updateCount < MAX_UPDATES_BEFORE_RENDER) {
+                    if (!isPaused) {handleUpdates();}
+                    lastUpdateTime += TIME_BETWEEN_UPDATES;
+                    updateCount++;
+                }
 
-                    if (now - lastUpdateTime > TIME_BETWEEN_UPDATES) {lastUpdateTime = now - TIME_BETWEEN_UPDATES;}
+                if (now - lastUpdateTime > TIME_BETWEEN_UPDATES) {lastUpdateTime = now - TIME_BETWEEN_UPDATES;}
 
-                    int thisSecond = (int) (lastUpdateTime / 1.0E9D);
-                    if (thisSecond > lastSecondTime) {lastSecondTime = thisSecond;}
+                int thisSecond = (int) (lastUpdateTime / 1.0E9D);
+                if (thisSecond > lastSecondTime) {lastSecondTime = thisSecond;}
 
-                    while (now - lastRenderTime < TARGET_TIME_BETWEEN_RENDERS && now - lastUpdateTime < TIME_BETWEEN_UPDATES) {
-                        Thread.yield(); now = System.nanoTime();
-                    }
+                while (now - lastRenderTime < TARGET_TIME_BETWEEN_RENDERS && now - lastUpdateTime < TIME_BETWEEN_UPDATES) {
+                    Thread.yield(); now = System.nanoTime();
                 }
             }
-        };
+        });
     }
 
     /**
@@ -113,7 +119,7 @@ public class Engine {
      * Synchronized stop of the program; Stops the Engines Thread, set's the disposes of the programs window, and then shuts down the program.
      */
     public static synchronized void stop(){running = false; EFrame.setVisible(false); stopRenderer(); System.exit(0);}
-    public static void stopRenderer(){renderer.cancel(); renderer.purge();}
+    private static void stopRenderer(){renderer.cancel(); renderer.purge();}
 
     /**
      * This method actively renders the canvas for the program; it creates and disposes of the Engines graphics Object each frame.

@@ -1,5 +1,6 @@
 package com.engine.GUIWindows;
 
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.JComponents.CTextField;
 import com.engine.JComponents.RButton;
 import com.engine.JComponents.RLabel;
@@ -27,7 +28,7 @@ public class ParticleSpeedSeed {
         frame.setIconImage(Settings.getIcon());
         frame.setSize(402, 145);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {close();}});
+        frame.addWindowListener(new WindowClosing(e -> close()));
         frame.setLocationRelativeTo(OptionsMenu.frame);
 
         JScrollPane scrollPane = new JScrollPane();

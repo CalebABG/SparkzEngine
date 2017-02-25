@@ -1,5 +1,6 @@
 package com.engine.GUIWindows;
 
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.Utilities.Settings;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ public class ParticlePresets {
     private static JButton[] presetButtons = new JButton[15];
 
     public static ParticlePresets getInstance() {
-        if (scPresetsUI == null) {scPresetsUI = new ParticlePresets();}frame.toFront(); return scPresetsUI;
+        if (scPresetsUI == null) {scPresetsUI = new ParticlePresets();} frame.toFront(); return scPresetsUI;
     }
 
     private ParticlePresets() {
@@ -24,8 +25,7 @@ public class ParticlePresets {
         frame.setSize(323, 290);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent)
-        {scPresetsUI = null; frame.dispose();}});
+        frame.addWindowListener(new WindowClosing(windowEvent -> close()));
         frame.getContentPane().setLayout(null);
         frame.setLocationRelativeTo(ColorEditor.frame);
 
@@ -105,4 +105,6 @@ public class ParticlePresets {
         frame.add(presetButtons[14]);
         frame.setVisible(true);
     }
+
+    public void close(){scPresetsUI = null; frame.dispose();}
 }

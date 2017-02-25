@@ -1,6 +1,8 @@
 package com.engine.GUIWindows;
 
-import com.engine.JComponents.AutoComplete;
+import com.engine.Interfaces_Extensions.KAdapter;
+import com.engine.Interfaces_Extensions.WindowClosing;
+import com.engine.JComponents.TextSuggestor;
 import com.engine.ParticleTypes.Particle;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
@@ -11,7 +13,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Arrays;
 
-import static com.engine.JComponents.AutoComplete.makeUndoable;
+import static com.engine.JComponents.TextSuggestor.makeUndoable;
 import static com.engine.MGrapher.ParticleGraph.mathFunctions;
 import static com.engine.MGrapher.ParticleGraph.suggestions;
 import static com.engine.ParticleTypes.Particle.particleScriptEngine;
@@ -31,7 +33,7 @@ public class OrganicForces {
         frame.setIconImage(Settings.getIcon());
         frame.setSize(335, 354);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {close();}});
+        frame.addWindowListener(new WindowClosing(windowEvent -> close()));
         frame.setLocationRelativeTo(parent);
 
         JScrollPane scrollPane = new JScrollPane();
@@ -75,19 +77,13 @@ public class OrganicForces {
         forceXTextField = new JTextField("cos(x)");
         forceXTextField.setFont(new Font("Tahoma", Font.PLAIN, 16));
         forceXTextField.setHorizontalAlignment(SwingConstants.CENTER);
-        forceXTextField.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() != KeyEvent.VK_ENTER) {
-                    forceXTextField.setForeground(Color.black);
-                }
-            }
-        });
+        forceXTextField.addKeyListener(new KAdapter(e -> {if (e.getKeyCode() != KeyEvent.VK_ENTER) {forceXTextField.setForeground(Color.black);}}, e -> {}));
 
         String COMMIT_ACTION = "commit";
-        AutoComplete autoComplete = new AutoComplete(forceXTextField, Arrays.asList(suggestions));
-        forceXTextField.getDocument().addDocumentListener(autoComplete);
+        TextSuggestor textSuggestor = new TextSuggestor(forceXTextField, Arrays.asList(suggestions));
+        forceXTextField.getDocument().addDocumentListener(textSuggestor);
         forceXTextField.getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
-        forceXTextField.getActionMap().put(COMMIT_ACTION, autoComplete.new CommitAction());
+        forceXTextField.getActionMap().put(COMMIT_ACTION, textSuggestor.new CommitAction());
         makeUndoable(forceXTextField);
 
         GridBagConstraints gbc_textField = new GridBagConstraints();
@@ -117,18 +113,12 @@ public class OrganicForces {
         forceYTextField.setHorizontalAlignment(SwingConstants.CENTER);
         forceYTextField.setFont(new Font("Tahoma", Font.PLAIN, 16));
         forceYTextField.setColumns(10);
-        forceYTextField.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() != KeyEvent.VK_ENTER) {
-                    forceYTextField.setForeground(Color.black);
-                }
-            }
-        });
+        forceYTextField.addKeyListener(new KAdapter(e -> {if (e.getKeyCode() != KeyEvent.VK_ENTER) {forceYTextField.setForeground(Color.black);}}, e -> {}));
 
-        AutoComplete autoComplete2 = new AutoComplete(forceYTextField, Arrays.asList(suggestions));
-        forceYTextField.getDocument().addDocumentListener(autoComplete2);
+        TextSuggestor textSuggestor2 = new TextSuggestor(forceYTextField, Arrays.asList(suggestions));
+        forceYTextField.getDocument().addDocumentListener(textSuggestor2);
         forceYTextField.getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
-        forceYTextField.getActionMap().put(COMMIT_ACTION, autoComplete2.new CommitAction());
+        forceYTextField.getActionMap().put(COMMIT_ACTION, textSuggestor2.new CommitAction());
         makeUndoable(forceYTextField);
 
         GridBagConstraints gbc_textField_1 = new GridBagConstraints();
@@ -158,10 +148,10 @@ public class OrganicForces {
         angleIncrementTextField.setFont(new Font("Tahoma", Font.PLAIN, 16));
         angleIncrementTextField.setColumns(10);
 
-        AutoComplete autoComplete3 = new AutoComplete(angleIncrementTextField, Arrays.asList(suggestions));
-        angleIncrementTextField.getDocument().addDocumentListener(autoComplete3);
+        TextSuggestor textSuggestor3 = new TextSuggestor(angleIncrementTextField, Arrays.asList(suggestions));
+        angleIncrementTextField.getDocument().addDocumentListener(textSuggestor3);
         angleIncrementTextField.getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
-        angleIncrementTextField.getActionMap().put(COMMIT_ACTION, autoComplete3.new CommitAction());
+        angleIncrementTextField.getActionMap().put(COMMIT_ACTION, textSuggestor3.new CommitAction());
         makeUndoable(angleIncrementTextField);
 
         GridBagConstraints gbc_textField_2 = new GridBagConstraints();

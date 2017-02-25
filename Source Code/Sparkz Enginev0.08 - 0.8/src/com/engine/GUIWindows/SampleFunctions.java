@@ -1,5 +1,7 @@
 package com.engine.GUIWindows;
 
+import com.engine.Interfaces_Extensions.KAdapter;
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.MGrapher.ParticleGraph;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
@@ -28,7 +30,7 @@ public class SampleFunctions {
         frame.setIconImage(Settings.getIcon());
         frame.setSize(444, 322);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {close();}});
+        frame.addWindowListener(new WindowClosing(windowEvent -> close()));
         frame.setLocationRelativeTo(parent);
 
         JPanel panel = new JPanel();
@@ -52,7 +54,7 @@ public class SampleFunctions {
         list.setLayoutOrientation(JList.VERTICAL);
         list.setVisibleRowCount(-1);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        list.addKeyListener(new KeyAdapter() {public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER) graphSelectedSample(list);}});
+        list.addKeyListener(new KAdapter(e -> {}, e -> {{if (e.getKeyCode() == KeyEvent.VK_ENTER) graphSelectedSample(list);}}));
         if (listModel.size() > 0) {list.setSelectedIndex((int) (Math.random() * listModel.size()));}
         panel.add(list, BorderLayout.CENTER);
 

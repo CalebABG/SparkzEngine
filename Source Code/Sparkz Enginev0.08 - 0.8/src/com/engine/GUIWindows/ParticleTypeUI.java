@@ -1,6 +1,8 @@
 package com.engine.GUIWindows;
 
 import com.engine.EngineHelpers.GUIText;
+import com.engine.Interfaces_Extensions.KAdapter;
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.ParticleHelpers.ParticleTypeOptions;
 import com.engine.Utilities.InputWrapper;
 import com.engine.Utilities.Settings;
@@ -12,23 +14,22 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class ParticleTypeUI {
-    private static ParticleTypeUI[] particleTypeUIs = new ParticleTypeUI[2];
-    public static JFrame frame;
-    public static JTextField textField;
+    public static ParticleTypeUI[] particleTypeUIs = new ParticleTypeUI[2];
+    public JFrame frame;
+    public JTextField textField;
 
-    public static ParticleTypeUI getInstance(int type) {
-        if (type == 0) {if (particleTypeUIs[0] == null) {particleTypeUIs[0] = new ParticleTypeUI(0);}frame.toFront(); return particleTypeUIs[0];}
-        else {if (particleTypeUIs[1] == null) {particleTypeUIs[1] = new ParticleTypeUI(1);}frame.toFront(); return particleTypeUIs[1];}
+    //Make sure type and int given when getInstance is called are the same! If values differ will cause indexOutOfBounds Error
+    public static ParticleTypeUI getInstance(int type, String title) {
+        if (particleTypeUIs[type] == null) {particleTypeUIs[type] = new ParticleTypeUI(type, title);} particleTypeUIs[type].frame.toFront(); return particleTypeUIs[type];
     }
 
-    private ParticleTypeUI(int type) {
+    private ParticleTypeUI(int type, String title) {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception x){x.printStackTrace();}
-        frame = new JFrame();
+        frame = new JFrame(title);
         frame.setIconImage(Settings.getIcon());
         frame.setSize(320, 520);
-        if (type == 0) {frame.setTitle("Particle Type Options");}else {frame.setTitle("Fireworks Type Options");}
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {close(type);}});
+        frame.addWindowListener(new WindowClosing(e -> close(type)));
         frame.setLocationRelativeTo(OptionsMenu.frame);
 
         JScrollPane jScrollPane1 = new JScrollPane();
@@ -45,7 +46,7 @@ public class ParticleTypeUI {
         textField = new JTextField();
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setFont(new Font("Times", Font.PLAIN, 17));
-        textField.addKeyListener(new KeyAdapter() {public void keyReleased(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER) getOption(type);}});
+        textField.addKeyListener(new KAdapter(e -> {}, e -> {{if (e.getKeyCode() == KeyEvent.VK_ENTER) getOption(type);}}));
         jPanel1.add(textField, BorderLayout.CENTER);
 
         frame.add(jPanel1, BorderLayout.PAGE_END);
@@ -58,7 +59,7 @@ public class ParticleTypeUI {
         frame.setVisible(true);
     }
 
-    private static void getOption(int type){
+    private void getOption(int type){
         if (textField.getText() != null) {
             try {
                 if (type == 0) {

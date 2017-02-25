@@ -1,6 +1,8 @@
 package com.engine.ParticleHelpers;
 
 import static com.engine.EngineHelpers.EConstants.*;
+import static com.engine.GUIWindows.ParticleTypeUI.particleTypeUIs;
+
 import com.engine.GUIWindows.EException;
 import com.engine.Utilities.InputWrapper;
 
@@ -12,7 +14,7 @@ public class ParticleTypeOptions {
                 case 2: particleMode = 2; break;
                 case 3: particleMode = 3; break;
                 case 4: particleMode = 4; break;
-                case 5: particleMode = 5; baseParticleText = InputWrapper.valueGuardString(1, "*", "Enter Custom Text"); break;
+                case 5: particleMode = 5; baseParticleText = InputWrapper.valueGuardString(1, particleTypeUIs[0], "*", "Enter Custom Text"); break;
                 case 6: particleMode = 6; break;
                 case 7: particleMode = 7; break;
                 case 8: particleMode = 8; break;
@@ -39,7 +41,7 @@ public class ParticleTypeOptions {
                 case 2: rfParticleMode = 2; break;
                 case 3: rfParticleMode = 3; break;
                 case 4: rfParticleMode = 4; break;
-                case 5: rfParticleMode = 5; fireworksParticleText = InputWrapper.valueGuardString(1, "*", "Enter Custom Text"); break;
+                case 5: rfParticleMode = 5; fireworksParticleText = InputWrapper.valueGuardString(1, particleTypeUIs[1], "*", "Enter Custom Text"); break;
                 case 6: rfParticleMode = 6; break;
                 case 7: rfParticleMode = 7; break;
                 case 8: rfParticleMode = 8; break;

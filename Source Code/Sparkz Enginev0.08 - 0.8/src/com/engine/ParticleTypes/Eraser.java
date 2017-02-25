@@ -17,8 +17,8 @@ public class Eraser extends Molecule {
     private void destroy() {
         for (int i = 0; i < ParticlesArray.size(); i++) {
             Particle p = ParticlesArray.get(i);
-            double dx = p.x - x, dy = p.y - y, distance = Math.sqrt(dx * dx + dy * dy);
-            if (distance < (1.2 * radius)) {color = Color.red; ParticlesArray.remove(p);}
+            double dx = p.x - x, dy = p.y - y, distance = dx * dx + dy * dy;
+            if (distance < (1.2 * radius*radius)) {color = Color.red; ParticlesArray.remove(p);}
         }
     }
 

@@ -1,13 +1,14 @@
 package com.engine.GUIWindows;
 
 import static com.engine.EngineHelpers.EConstants.*;
+
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.JComponents.CLabel;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
 
@@ -22,7 +23,7 @@ public class QuitWindow {
     //public static void main(String[] args) {new QuitWindow();}
 
     public static QuitWindow getInstance() {
-        if (exitScreen == null) {exitScreen = new QuitWindow();}frame.toFront(); return exitScreen;
+        if (exitScreen == null) {exitScreen = new QuitWindow();} frame.toFront(); return exitScreen;
     }
 
     private QuitWindow() {
@@ -33,8 +34,7 @@ public class QuitWindow {
         frame.setBounds(0, 0, width, height);
         frame.setShape(new RoundRectangle2D.Double(0, 0, width, height, 30, 30));
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent)
-        {exitScreen = null; frame.dispose();}});
+        frame.addWindowListener(new WindowClosing(windowEvent -> close()));
         frame.setLocationRelativeTo(EFrame);
 
         JPanel panel = new JPanel();
@@ -50,7 +50,8 @@ public class QuitWindow {
                 Font("Times", Font.PLAIN, 45), Color.white, option_yes);
         label2.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {System.exit(0);}
-            public void mousePressed(MouseEvent e) {} public void mouseReleased(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {}
             public void mouseEntered(MouseEvent e) {label2.setBackground(option_yes.brighter());}
             public void mouseExited(MouseEvent e) {
                 label2.setBackground(option_yes.darker());
@@ -62,12 +63,15 @@ public class QuitWindow {
                 Font("Times", Font.PLAIN, 45), Color.white, option_no);
         label3.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {exitScreen = null; frame.dispose();}
-            public void mousePressed(MouseEvent e) {} public void mouseReleased(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {}
             public void mouseEntered(MouseEvent e) {label3.setBackground(option_no.brighter());}
             public void mouseExited(MouseEvent e) {label3.setBackground(option_no.darker());}
         });
+
         panel.add(label3);
         frame.setVisible(true);
-        frame.toFront();
     }
+
+    public void close(){exitScreen = null; frame.dispose();}
 }

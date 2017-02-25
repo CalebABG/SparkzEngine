@@ -193,8 +193,9 @@ public class Point {
     public double distanceTo(Point p1){
         double dx = p1.currPos.x - currPos.x, dy = p1.currPos.y - currPos.y; return Math.sqrt(dx * dx + dy * dy);
     }
-    public double getDistance(java.awt.Point p) {
-        return p.distance(currPos.x, currPos.y);
+    public double getDistance(java.awt.Point p) {return p.distance(currPos.x, currPos.y);}
+    public double getDistanceSq(java.awt.Point p) {
+        return p.distanceSq(currPos.x, currPos.y);
     }
 
     public void attachTo(Point P, double restingDist, double stiff) {

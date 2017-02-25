@@ -82,7 +82,7 @@ public class Settings {
     public static void loadColors() {
         try {
             FileInputStream fin = new FileInputStream(colors_file_path);
-            BufferedReader br = new BufferedReader(new InputStreamReader(fin));
+            BufferedReader br   = new BufferedReader(new InputStreamReader(fin));
             ArrayList<String[]> splitArray = new ArrayList<>();
             ArrayList<String> text = new ArrayList<>();
             String line;
@@ -203,27 +203,44 @@ public class Settings {
 
     private static void setEngineVariables(ArrayList<String> s) {
         //Set Variables
-        switchMode = Integer.parseInt(s.get(0)); particleType = Integer.parseInt(s.get(1));
-        ptGravitationInt = Integer.parseInt(s.get(2)); fireworksAmount = Integer.parseInt(s.get(3));
-        particleMode = Integer.parseInt(s.get(4)); dragAmount = Integer.parseInt(s.get(5));
-        baseLife = Integer.parseInt(s.get(6)); rfParticleMode = Integer.parseInt(s.get(7));
-        rfLife = Integer.parseInt(s.get(8)); rfWind = Integer.parseInt(s.get(9));
-        rfJitter = Integer.parseInt(s.get(10)); safetyAmount = Integer.parseInt(s.get(11));
+        /*--------------------------------------------------------*/
+        switchMode = Integer.parseInt(s.get(0));
+        particleType = Integer.parseInt(s.get(1));
+        ptGravitationInt = Integer.parseInt(s.get(2));
+        fireworksAmount = Integer.parseInt(s.get(3));
+        particleMode = Integer.parseInt(s.get(4));
+        dragAmount = Integer.parseInt(s.get(5));
+        baseLife = Integer.parseInt(s.get(6));
+        rfParticleMode = Integer.parseInt(s.get(7));
+        rfLife = Integer.parseInt(s.get(8));
+        rfWind = Integer.parseInt(s.get(9));
+        rfJitter = Integer.parseInt(s.get(10));
+        safetyAmount = Integer.parseInt(s.get(11));
         cycleRate = Integer.parseInt(s.get(12));
-        /*---------------------------------------------------------------------------------------------------------------------*/
-        singleClickSizeMaxVal = Double.parseDouble(s.get(13)); singleClickSizeMinVal = Double.parseDouble(s.get(14));
-        multiClickSizeMaxVal = Double.parseDouble(s.get(15)); multiClickSizeMinVal = Double.parseDouble(s.get(16));
-        fireworksSizeMaxVal = Double.parseDouble(s.get(17)); fireworksSizeMinVal = Double.parseDouble(s.get(18));
-        dragSizeMaxVal = Double.parseDouble(s.get(19)); dragSizeMinVal = Double.parseDouble(s.get(20));
-        singleClickSpeedVal = Double.parseDouble(s.get(21)); multiClickSpeedVal = Double.parseDouble(s.get(22));
-        fireworksSpeedVal = Double.parseDouble(s.get(23)); dragSpeedVal = Double.parseDouble(s.get(24));
-        /*---------------------------------------------------------------------------------------------------------------------*/
-        thinkingParticles = StoBool(s.get(25), thinkingParticles); connectParticles = StoBool(s.get(26), connectParticles);
-        particleFriction = StoBool(s.get(27), particleFriction); mouseGravitation = StoBool(s.get(28), mouseGravitation);
-        isPaused = StoBool(s.get(29), isPaused); GDMODEBOOL = StoBool(s.get(30), GDMODEBOOL);
+        /*--------------------------------------------------------*/
+        singleClickSizeMaxVal = Double.parseDouble(s.get(13));
+        singleClickSizeMinVal = Double.parseDouble(s.get(14));
+        multiClickSizeMaxVal = Double.parseDouble(s.get(15));
+        multiClickSizeMinVal = Double.parseDouble(s.get(16));
+        fireworksSizeMaxVal = Double.parseDouble(s.get(17));
+        fireworksSizeMinVal = Double.parseDouble(s.get(18));
+        dragSizeMaxVal = Double.parseDouble(s.get(19));
+        dragSizeMinVal = Double.parseDouble(s.get(20));
+        singleClickSpeedVal = Double.parseDouble(s.get(21));
+        multiClickSpeedVal = Double.parseDouble(s.get(22));
+        fireworksSpeedVal = Double.parseDouble(s.get(23));
+        dragSpeedVal = Double.parseDouble(s.get(24));
+        /*--------------------------------------------------------*/
+        thinkingParticles = StoBool(s.get(25), thinkingParticles);
+        connectParticles = StoBool(s.get(26), connectParticles);
+        particleFriction = StoBool(s.get(27), particleFriction);
+        mouseGravitation = StoBool(s.get(28), mouseGravitation);
+        isPaused = StoBool(s.get(29), isPaused);
+        GDMODEBOOL = StoBool(s.get(30), GDMODEBOOL);
         DUPLEXMODE = StoBool(s.get(31), DUPLEXMODE);
         //Check Engine State: Paused or Running
         EngineMethods.setEngineTitleState();
+        /*--------------------------------------------------------*/
     }
 
     public static void loadSettings() {

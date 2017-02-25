@@ -1,6 +1,7 @@
 package com.engine.EngineHelpers;
 
 import static com.engine.EngineHelpers.EConstants.*;
+import static com.engine.EngineHelpers.EConstants.ParticlesArray;
 import static com.engine.Utilities.H5Wrapper.H;
 import static com.engine.Utilities.InputWrapper.minValueGuard;
 import static com.engine.Verlet.Point.POINTS;
@@ -9,12 +10,14 @@ import static com.engine.JComponents.CMenuBar.*;
 import com.engine.GUIWindows.*;
 import com.engine.JComponents.CMenuBar;
 import com.engine.ParticleHelpers.ParticleModes;
+import com.engine.ParticleTypes.*;
 import com.engine.Verlet.*;
 import com.engine.ThinkingParticles.SCCycle;
 import com.engine.Utilities.ColorConverter;
 import com.engine.Utilities.InputWrapper;
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import java.awt.event.MouseEvent;
 
 public class EngineMethods {
@@ -373,6 +376,15 @@ public class EngineMethods {
      */
     public static void setEngineTitleState(){if (isPaused) {EFrame.setTitle(title + " - PAUSED");} else {EFrame.setTitle(title);}}
 
+
+    public static void createEngineInstructionsWindow(JFrame parent) {
+        InstructionsWindow.getInstance(0, parent, (int) (width * .41), (int) (height * .55), "Particle Engine Instructions", GUIText.instructions());
+    }
+
+    public static void createGraphInstructionsWindow(JFrame parent) {
+        InstructionsWindow.getInstance(1, parent, (int) (width * .41), (int) (height * .55), "Particle Graph Instructions", GUIText.particleGraphInstructions());
+    }
+
     /**
      * Toggles the state of the Engine (paused or running).
      * @see com.engine.InputHandlers.KHandler
@@ -392,13 +404,13 @@ public class EngineMethods {
             case 1: particleSize(); break;
             case 2: particleDrag(); break;
             case 3: particleFireworks(); break;
-            case 4: ParticleTypeUI.getInstance(0); break;
+            case 4: ParticleTypeUI.getInstance(0, "Particle Type Options"); break; //Regular Particle Type
             case 5: ColorConverter.setColor(); break;
             case 6: gravitationOptions(); break;
             case 7: particleSizeSeedOptions(); break;
             case 8: particleSpeedSeedOptions(); break;
             case 9: realFireworks(); break;
-            case 10: ParticleTypeUI.getInstance(1); break;
+            case 10: ParticleTypeUI.getInstance(1, "Firework Type Options"); break; //Fireworks Particle Type
             case 11: ColorEditor.getInstance(); break;
             case 12: safetyAmountOptions(); break;
             case 13: cycleTimeOptions(); break;
@@ -470,8 +482,7 @@ public class EngineMethods {
      * @see CMenuBar
      */
     public static void clearParticleArrays(){
-        try
-        {
+        try {
             ParticlesArray.clear(); GravityPointsArray.clear();
             EmitterArray.clear(); FireworksArray.clear();
             FluxArray.clear(); EraserArray.clear();
@@ -654,7 +665,7 @@ public class EngineMethods {
                 updateQEDArray(); updateIonsArray(); updateBlackHoleArray();
                 updateDuplexArray(); updatePortalArray();
             }
-        }catch (IndexOutOfBoundsException e){EException.append(e);}
+        } catch (IndexOutOfBoundsException e){EException.append(e);}
     }
     //---------------------------------------------------------------------------------------------------------------------------------------//
     /**

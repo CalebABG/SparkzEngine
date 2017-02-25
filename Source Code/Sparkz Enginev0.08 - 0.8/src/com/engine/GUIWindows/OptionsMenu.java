@@ -5,6 +5,8 @@ import com.engine.EngineHelpers.EngineMethods;
 
 import static com.engine.EngineHelpers.EConstants.*;
 
+import com.engine.Interfaces_Extensions.KAdapter;
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.Utilities.InputWrapper;
 import com.engine.Utilities.Settings;
 
@@ -22,28 +24,18 @@ public class OptionsMenu {
     //public static void main(String[] args) {getInstance();}
 
     public static OptionsMenu getInstance() {
-        if (optionsMenu == null) {
-            optionsMenu = new OptionsMenu();
-        }
+        if (optionsMenu == null) {optionsMenu = new OptionsMenu();}
         frame.toFront();
         return optionsMenu;
     }
 
     private OptionsMenu() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception x) {
-            x.printStackTrace();
-        }
+        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());} catch (Exception x) {x.printStackTrace();}
         frame = new JFrame("Options Menu");
         frame.setIconImage(Settings.getIcon());
         frame.setSize(478, 479);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent) {
-                close();
-            }
-        });
+        frame.addWindowListener(new WindowClosing(windowEvent -> close()));
         frame.setLocationRelativeTo(EFrame);
 
         JScrollPane jScrollPane1 = new JScrollPane();
@@ -54,10 +46,8 @@ public class OptionsMenu {
         textField = new JTextField();
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setFont(new Font("Times", Font.PLAIN, 17));
-        textField.addKeyListener(new KeyAdapter() {
-            //Needs to be keyPressed() handler - keyReleased() will cause windows to display twice
-            public void keyPressed(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ENTER) {getOption();}}
-        });
+        //Needs to be keyPressed() handler - keyReleased() will cause windows to display twice
+        textField.addKeyListener(new KAdapter(e -> {{if (e.getKeyCode() == KeyEvent.VK_ENTER) {getOption();}}}, e -> {}));
         jPanel1.add(textField, BorderLayout.CENTER);
 
         JButton jButton1 = new JButton();

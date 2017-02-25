@@ -2,6 +2,8 @@ package com.engine.GUIWindows;
 
 import com.engine.EngineHelpers.EngineMethods;
 import static com.engine.EngineHelpers.EConstants.*;
+
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.ParticleTypes.Particle;
 import com.engine.ThinkingParticles.SCChoices;
 import com.engine.ThinkingParticles.SCCycle;
@@ -33,7 +35,7 @@ public class ColorEditor {
         frame.setIconImage(Settings.getIcon());
         frame.setSize(973, 246);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {public void windowClosing(WindowEvent windowEvent) {thinkingParticlesUI = null; frame.dispose();}});
+        frame.addWindowListener(new WindowClosing(windowEvent -> close()));
         frame.setLocationRelativeTo(EFrame);
 
         JScrollPane scrollPane = new JScrollPane();
@@ -212,5 +214,5 @@ public class ColorEditor {
         labels[4].setBackground(setAlpha(colors[4], 255));
     }
 
-    private static void addComps(JFrame root, JComponent... components) {for (JComponent comps : components) {root.add(comps);}}
+    public void close(){thinkingParticlesUI = null; frame.dispose();}
 }

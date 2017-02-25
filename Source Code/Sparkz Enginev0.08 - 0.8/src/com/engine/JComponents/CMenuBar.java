@@ -1,12 +1,12 @@
 package com.engine.JComponents;
 
 import com.engine.EngineHelpers.EngineMethods;
+import com.engine.EngineHelpers.GUIText;
 import com.engine.GUIWindows.*;
 import com.engine.MGrapher.JCalculator;
 import com.engine.MGrapher.ParticleGraph;
 import static com.engine.EngineHelpers.EConstants.*;
-import static com.engine.EngineHelpers.EngineMethods.displayEngineMode;
-import static com.engine.EngineHelpers.EngineMethods.displayParticleType;
+import static com.engine.EngineHelpers.EngineMethods.*;
 
 import com.engine.Utilities.H5Wrapper;
 import com.engine.Utilities.Settings;
@@ -38,7 +38,7 @@ public class CMenuBar extends JMenuBar {
         //File End
 
         exit = new JMenuItem("Exit");
-        exit.addActionListener(e -> {if (e.getSource() == exit) QuitWindow.getInstance();});
+        exit.addActionListener(e -> QuitWindow.getInstance());
         mnFile.add(exit);
 
         //Edit Begin
@@ -67,37 +67,36 @@ public class CMenuBar extends JMenuBar {
         menuBar.add(mnUIWindows);
 
         optionsMenu = new JMenuItem("Options Menu");
-        optionsMenu.addActionListener(e -> {if (e.getSource() == optionsMenu) {OptionsMenu.getInstance();}});
+        optionsMenu.addActionListener(e -> OptionsMenu.getInstance());
         mnUIWindows.add(optionsMenu);
 
         JMenuItem stats_panel = new JMenuItem("Stats Panel");
-        stats_panel.addActionListener(e -> {if (e.getSource() == stats_panel) {StatsPanel.getInstance();}});
+        stats_panel.addActionListener(e -> StatsPanel.getInstance());
         mnUIWindows.add(stats_panel);
 
         sliderUI = new JMenuItem("Slide Editor");
-        sliderUI.addActionListener(e -> {if (e.getSource() == sliderUI) {SlideEditor.getInstance();}});
+        sliderUI.addActionListener(e -> SlideEditor.getInstance());
         mnUIWindows.add(sliderUI);
 
         JMenuItem exceptionUI = new JMenuItem("Exception Log");
 
-        exceptionUI.addActionListener(e -> {if (e.getSource() == exceptionUI) {EException.getInstance();}});
+        exceptionUI.addActionListener(e -> EException.getInstance());
         mnUIWindows.add(exceptionUI);
 
         thinkingParticlesUI = new JMenuItem("Particle Color Editor");
-        thinkingParticlesUI.addActionListener(e -> {if (e.getSource() == thinkingParticlesUI) {
-            ColorEditor.getInstance();}});
+        thinkingParticlesUI.addActionListener(e -> ColorEditor.getInstance());
         mnUIWindows.add(thinkingParticlesUI);
 
         particleGraphUI = new JMenuItem("Particle Graph Editor");
-        particleGraphUI.addActionListener(e -> {if (e.getSource() == particleGraphUI) {ParticleGraph.getInstance();}});
+        particleGraphUI.addActionListener(e -> ParticleGraph.getInstance());
         mnUIWindows.add(particleGraphUI);
 
         JMenuItem timemachine = new JMenuItem("Color Time Machine");
-        timemachine.addActionListener(e -> {if (e.getSource() == timemachine) {ColorTimeMachine.getInstance();}});
+        timemachine.addActionListener(e -> ColorTimeMachine.getInstance());
         mnUIWindows.add(timemachine);
 
         JMenuItem jcalculator = new JMenuItem("JavaScript Calculator");
-        jcalculator.addActionListener(e -> {if (e.getSource() == jcalculator) {JCalculator.getInstance(EFrame);}});
+        jcalculator.addActionListener(e -> JCalculator.getInstance(EFrame));
         mnUIWindows.add(jcalculator);
 
         menuBar.add(Box.createHorizontalStrut(11));
@@ -120,21 +119,20 @@ public class CMenuBar extends JMenuBar {
         mnSettings.add(enginepause);
 
         settingsSave = new JMenuItem("Save Settings");
-        settingsSave.addActionListener(e -> {if (e.getSource() == settingsSave) {Settings.saveSettings();}});
+        settingsSave.addActionListener(e -> Settings.saveSettings());
         mnSettings.add(settingsSave);
         settingsLoad = new JMenuItem("Load Settings");
 
-        settingsLoad.addActionListener(e -> {if (e.getSource() == settingsLoad) {Settings.loadSettings(); updateAllRadios();}});
+        settingsLoad.addActionListener(e -> {Settings.loadSettings(); updateAllRadios();});
         mnSettings.add(settingsLoad);
         settingsUI = new JMenuItem("Settings Editor");
 
-        settingsUI.addActionListener(e -> {if (e.getSource() == settingsUI) {SettingsEditor.getInstance();}});
+        settingsUI.addActionListener(e -> SettingsEditor.getInstance());
         mnSettings.add(settingsUI);
 
         JMenuItem memclean = new JMenuItem("Clean Memory");
         memclean.setToolTipText(H5Wrapper.H(3, "Cleans memory if free memory is less than " + memThreshold + " MB"));
-        memclean.addActionListener(e -> {
-            if (e.getSource() == memclean) {if ((Runtime.getRuntime().freeMemory() / (Math.pow(1024, 2))) <= memThreshold) {System.gc();}}});
+        memclean.addActionListener(e -> {{if ((Runtime.getRuntime().freeMemory() / (Math.pow(1024, 2))) <= memThreshold) {System.gc();}}});
         mnSettings.add(memclean);
 
         menuBar.add(Box.createHorizontalStrut(11));
@@ -143,17 +141,17 @@ public class CMenuBar extends JMenuBar {
         mnHelp.setForeground(Color.white);
 
         helpInstructions = new JMenuItem("Particle Engine Instructions");
-        helpInstructions.addActionListener(e -> {if (e.getSource() == helpInstructions) {EngineInstructions.getInstance();}});
+        helpInstructions.addActionListener(e -> createEngineInstructionsWindow(EFrame));
         mnHelp.add(helpInstructions);
 
         helpGraphInstructions = new JMenuItem("Particle Graph Instructions");
-        helpGraphInstructions.addActionListener(e -> {if (e.getSource() == helpGraphInstructions) {GraphInstructions.getInstance(EFrame);}});
+        helpGraphInstructions.addActionListener(e -> createGraphInstructionsWindow(EFrame));
         mnHelp.add(helpGraphInstructions);
         menuBar.add(mnHelp);
 
         if (System.getProperty("os.name").toLowerCase().contains("windows")) {
             JMenuItem accessibility = new JMenuItem("On-Screen Keyboard");
-            accessibility.addActionListener(e -> {try {Runtime.getRuntime().exec("cmd /c osk");} catch (Exception ez) {EException.append(ez);}});
+            accessibility.addActionListener(e -> {try {Runtime.getRuntime().exec("cmd /c osk");} catch (Exception f) {EException.append(f);}});
             mnHelp.add(accessibility);
         }
 

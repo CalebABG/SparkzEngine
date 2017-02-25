@@ -31,9 +31,9 @@ public class InputWrapper {
         return newAmount;
     }
 
-    public static String valueGuardString(int mode, String default_val, String promptText) {
+    public static String valueGuardString(int mode, ParticleTypeUI ui, String default_val, String promptText) {
         if (mode == 0) {return default_val;}
-        else {String amount = JOptionPane.showInputDialog(ParticleTypeUI.frame, H(3, promptText),null,JOptionPane.PLAIN_MESSAGE);
+        else {String amount = JOptionPane.showInputDialog(ui.frame, H(3, promptText),null,JOptionPane.PLAIN_MESSAGE);
             return (amount != null && amount.length() > 0) ? amount : default_val;}
     }
 
