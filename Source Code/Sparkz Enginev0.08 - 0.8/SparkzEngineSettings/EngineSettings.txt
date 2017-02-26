@@ -2,24 +2,24 @@
 switchMode: 0
 # particleType -- set: 0 - 8 <- MAX 
 particleType: 0
-# ptGravitationInt -- set: 0 - 6 <- MAX 
-ptGravitationInt: 0
+# particleGravitationMode -- set: 0 - 6 <- MAX 
+particleGravitationMode: 0
 # fireworksAmount -- set: 0 - specify number 
 fireworksAmount: 30
-# particleMode -- set: 1 - 19 <- MAX 
-particleMode: 1
+# particleRenderType -- set: 1 - 19 <- MAX 
+particleRenderType: 1
 # dragAmount -- set: 1 - specify number 
 dragAmount: 1
 # baseLife -- set: 0 - specify number 
 baseLife: 65
-# rfParticleMode -- set: 1 - 19 <- MAX 
-rfParticleMode: 1
-# rfLife -- set: 0 - specify number 
-rfLife: 90
-# rfWind -- set: 0 - specify number 
-rfWind: 2
-# rfJitter -- set: 0 - specify number 
-rfJitter: 5
+# fireworksRenderType -- set: 1 - 19 <- MAX 
+fireworksRenderType: 1
+# fireworksLife -- set: 0 - specify number 
+fireworksLife: 90
+# fireworksWind -- set: 0 - specify number 
+fireworksWind: 2
+# fireworksJitter -- set: 0 - specify number 
+fireworksJitter: 5
 # safetyAmount -- set: 0 - specify number 
 safetyAmount: 120
 # cycleRate -- set: 1 - specify number 
@@ -55,7 +55,7 @@ connectParticles: false
 # particleFriction -- set: true - false 
 particleFriction: true
 # mouseGravitation -- set: true - false 
-mouseGravitation: false
+mouseGravitation: true
 # isPaused -- set: true - false 
 isPaused: false
 # GDMODEBOOL -- set: true - false 
