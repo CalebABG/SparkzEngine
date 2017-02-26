@@ -6,7 +6,7 @@ import java.awt.*;
 import static com.engine.ParticleHelpers.DrawModes.giveStyle;
 
 public class Fireworks extends Molecule {
-    private int life = (int) (Math.random() * rfLife + 3), wind = rfWind, jitter = rfJitter;
+    private int life = (int) (Math.random() * fireworksLife + 3), wind = fireworksWind, jitter = fireworksJitter;
 
     public Fireworks(){super();}
     public Fireworks(double _x, double _y, double _radius, double speed, int dc) {
@@ -35,7 +35,7 @@ public class Fireworks extends Molecule {
 
     public void render() {
         if (thinkingParticles) {color = getSelfColor();} else {color = ColorConverter.getColor();}
-        giveStyle(x, y, radius, color, rfParticleMode, fireworksParticleText);
+        giveStyle(x, y, radius, color, fireworksRenderType, fireworksParticleText);
     }
 
     public void update () {

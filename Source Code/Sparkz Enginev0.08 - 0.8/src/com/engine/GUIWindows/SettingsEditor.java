@@ -56,15 +56,15 @@ public class SettingsEditor {
 
         keyAdapters[0]  = new KAdapter(e -> {}, e -> guardValuesInt(switchMode, textFields[0].getText(), textFields[0]));
         keyAdapters[1]  = new KAdapter(e -> {}, e -> guardValuesInt(particleType, textFields[1].getText(), textFields[1]));
-        keyAdapters[2]  = new KAdapter(e -> {}, e -> guardValuesInt(ptGravitationInt, textFields[2].getText(), textFields[2]));
+        keyAdapters[2]  = new KAdapter(e -> {}, e -> guardValuesInt(particleGravitationMode, textFields[2].getText(), textFields[2]));
         keyAdapters[3]  = new KAdapter(e -> {}, e -> guardValuesInt(fireworksAmount, textFields[3].getText(), textFields[3]));
-        keyAdapters[4]  = new KAdapter(e -> {}, e -> guardValuesInt(particleMode, textFields[4].getText(), textFields[4]));
+        keyAdapters[4]  = new KAdapter(e -> {}, e -> guardValuesInt(particleRenderType, textFields[4].getText(), textFields[4]));
         keyAdapters[5]  = new KAdapter(e -> {}, e -> guardValuesInt(dragAmount, textFields[5].getText(), textFields[5]));
         keyAdapters[6]  = new KAdapter(e -> {}, e -> guardValuesInt(baseLife, textFields[6].getText(), textFields[6]));
-        keyAdapters[7]  = new KAdapter(e -> {}, e -> guardValuesInt(rfParticleMode, textFields[7].getText(), textFields[7]));
-        keyAdapters[8]  = new KAdapter(e -> {}, e -> guardValuesInt(rfLife, textFields[8].getText(), textFields[8]));
-        keyAdapters[9]  = new KAdapter(e -> {}, e -> guardValuesInt(rfWind, textFields[9].getText(), textFields[9]));
-        keyAdapters[10] = new KAdapter(e -> {}, e -> guardValuesInt(rfJitter, textFields[10].getText(), textFields[10]));
+        keyAdapters[7]  = new KAdapter(e -> {}, e -> guardValuesInt(fireworksRenderType, textFields[7].getText(), textFields[7]));
+        keyAdapters[8]  = new KAdapter(e -> {}, e -> guardValuesInt(fireworksLife, textFields[8].getText(), textFields[8]));
+        keyAdapters[9]  = new KAdapter(e -> {}, e -> guardValuesInt(fireworksWind, textFields[9].getText(), textFields[9]));
+        keyAdapters[10] = new KAdapter(e -> {}, e -> guardValuesInt(fireworksJitter, textFields[10].getText(), textFields[10]));
         keyAdapters[11] = new KAdapter(e -> {}, e -> guardValuesInt(safetyAmount, textFields[11].getText(), textFields[11]));
         keyAdapters[12] = new KAdapter(e -> {}, e -> guardValuesInt(cycleRate, textFields[12].getText(), textFields[12]));
         keyAdapters[13] = new KAdapter(e -> {}, e -> guardValuesDouble(singleClickSizeMaxVal, textFields[13].getText(), textFields[13]));
@@ -143,7 +143,7 @@ public class SettingsEditor {
         RLabel lblPtgravitationintSet = new RLabel("Particle Gravitation - set: 0 - 6", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 3);
         panel.add(lblPtgravitationintSet, lblPtgravitationintSet.gridBagConstraints);
 
-        textFields[2] = new CTextField("" + ptGravitationInt, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 3});
+        textFields[2] = new CTextField("" + particleGravitationMode, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 3});
         panel.add(textFields[2], textFields[2].gridBagConstraints);
 
         RLabel lblFireworksamountSet = new RLabel("Fireworks Amount - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 4);
@@ -155,7 +155,7 @@ public class SettingsEditor {
         RLabel lblParticlemodeSet = new RLabel("Regular Particle Mode - set: 1 - 19", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 5);
         panel.add(lblParticlemodeSet, lblParticlemodeSet.gridBagConstraints);
 
-        textFields[4] = new CTextField("" + particleMode, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 5});
+        textFields[4] = new CTextField("" + particleRenderType, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 5});
         panel.add(textFields[4], textFields[4].gridBagConstraints);
 
         RLabel lblDragamountSet = new RLabel("Drag Amount - set: 1 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 6);
@@ -173,25 +173,25 @@ public class SettingsEditor {
         RLabel lblRfparticlemodeSet = new RLabel("Fireworks Particle Mode - set: 1 - 19", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 8);
         panel.add(lblRfparticlemodeSet, lblRfparticlemodeSet.gridBagConstraints);
 
-        textFields[7] = new CTextField("" + rfParticleMode, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 8});
+        textFields[7] = new CTextField("" + fireworksRenderType, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 8});
         panel.add(textFields[7], textFields[7].gridBagConstraints);
 
         RLabel lblRflifeSet = new RLabel("Fireworks Life - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 9);
         panel.add(lblRflifeSet, lblRflifeSet.gridBagConstraints);
 
-        textFields[8] = new CTextField("" + rfLife, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 9});
+        textFields[8] = new CTextField("" + fireworksLife, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 9});
         panel.add(textFields[8], textFields[8].gridBagConstraints);
 
         RLabel lblRfwindSet = new RLabel("Fireworks Wind - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 10);
         panel.add(lblRfwindSet, lblRfwindSet.gridBagConstraints);
 
-        textFields[9] = new CTextField("" + rfWind, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 10});
+        textFields[9] = new CTextField("" + fireworksWind, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 10});
         panel.add(textFields[9], textFields[9].gridBagConstraints);
 
         RLabel lblRfjitterSet = new RLabel("Fireworks Jitter - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 11);
         panel.add(lblRfjitterSet, lblRfjitterSet.gridBagConstraints);
 
-        textFields[10] = new CTextField("" + rfJitter, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 11});
+        textFields[10] = new CTextField("" + fireworksJitter, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 11});
         panel.add(textFields[10], textFields[10].gridBagConstraints);
 
         RLabel lblSafetyamountSet = new RLabel("Safety Amount - set: 0 - ∞", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 12);
@@ -370,15 +370,15 @@ public class SettingsEditor {
     private static void intelliSense() {
         checkValuesInt(switchMode, Integer.parseInt(textFields[0].getText()), textFields[0]);
         checkValuesInt(particleType, Integer.parseInt(textFields[1].getText()), textFields[1]);
-        checkValuesInt(ptGravitationInt, Integer.parseInt(textFields[2].getText()), textFields[2]);
+        checkValuesInt(particleGravitationMode, Integer.parseInt(textFields[2].getText()), textFields[2]);
         checkValuesInt(fireworksAmount, Integer.parseInt(textFields[3].getText()), textFields[3]);
-        checkValuesInt(particleMode, Integer.parseInt(textFields[4].getText()), textFields[4]);
+        checkValuesInt(particleRenderType, Integer.parseInt(textFields[4].getText()), textFields[4]);
         checkValuesInt(dragAmount, Integer.parseInt(textFields[5].getText()), textFields[5]);
         checkValuesInt(baseLife, Integer.parseInt(textFields[6].getText()), textFields[6]);
-        checkValuesInt(rfParticleMode, Integer.parseInt(textFields[7].getText()), textFields[7]);
-        checkValuesInt(rfLife, Integer.parseInt(textFields[8].getText()), textFields[8]);
-        checkValuesInt(rfWind, Integer.parseInt(textFields[9].getText()), textFields[9]);
-        checkValuesInt(rfJitter, Integer.parseInt(textFields[10].getText()), textFields[10]);
+        checkValuesInt(fireworksRenderType, Integer.parseInt(textFields[7].getText()), textFields[7]);
+        checkValuesInt(fireworksLife, Integer.parseInt(textFields[8].getText()), textFields[8]);
+        checkValuesInt(fireworksWind, Integer.parseInt(textFields[9].getText()), textFields[9]);
+        checkValuesInt(fireworksJitter, Integer.parseInt(textFields[10].getText()), textFields[10]);
         checkValuesInt(safetyAmount, Integer.parseInt(textFields[11].getText()), textFields[11]);
         checkValuesInt(cycleRate, Integer.parseInt(textFields[12].getText()), textFields[12]);
         checkValuesDouble(singleClickSizeMaxVal, Double.parseDouble(textFields[13].getText()), textFields[13]);
@@ -422,14 +422,14 @@ public class SettingsEditor {
             writer.write("# particleType -- set: 0 - 8 <- MAX \n");
             writer.write("particleType: " + InputWrapper.intTextfieldGuard(0, 8, particleType,textFields[1].getText()) + "\n");
             /*-------------------------------------------------------*/
-            writer.write("# ptGravitationInt -- set: 0 - 6 <- MAX \n");
-            writer.write("ptGravitationInt: " + InputWrapper.intTextfieldGuard(0, 6, ptGravitationInt,textFields[2].getText()) + "\n");
+            writer.write("# particleGravitationMode -- set: 0 - 6 <- MAX \n");
+            writer.write("particleGravitationMode: " + InputWrapper.intTextfieldGuard(0, 7, particleGravitationMode,textFields[2].getText()) + "\n");
             /*-------------------------------------------------------*/
             writer.write("# fireworksAmount -- set: 0 - specify number \n");
             writer.write("fireworksAmount: " + InputWrapper.intTextfieldGuardDefault(0, fireworksAmount,textFields[3].getText()) + "\n");
             /*-------------------------------------------------------*/
-            writer.write("# particleMode -- set: 1 - 19 <- MAX \n");
-            writer.write("particleMode: " + InputWrapper.intTextfieldGuard(1,19, particleMode,textFields[4].getText()) + "\n");
+            writer.write("# particleRenderType -- set: 1 - 19 <- MAX \n");
+            writer.write("particleRenderType: " + InputWrapper.intTextfieldGuard(1,19, particleRenderType,textFields[4].getText()) + "\n");
             /*-------------------------------------------------------*/
             writer.write("# dragAmount -- set: 1 - specify number \n");
             writer.write("dragAmount: " + InputWrapper.intTextfieldGuardDefault(1, dragAmount,textFields[5].getText()) + "\n");
@@ -437,17 +437,17 @@ public class SettingsEditor {
             writer.write("# baseLife -- set: 0 - specify number \n");
             writer.write("baseLife: " + InputWrapper.intTextfieldGuardDefault(0, baseLife, textFields[6].getText()) + "\n");
             /*-------------------------------------------------------*/
-            writer.write("# rfParticleMode -- set: 1 - 19 <- MAX \n");
-            writer.write("rfParticleMode: " + InputWrapper.intTextfieldGuard(1, 19, rfParticleMode,textFields[7].getText()) + "\n");
+            writer.write("# fireworksRenderType -- set: 1 - 19 <- MAX \n");
+            writer.write("fireworksRenderType: " + InputWrapper.intTextfieldGuard(1, 19, fireworksRenderType,textFields[7].getText()) + "\n");
             /*-------------------------------------------------------*/
-            writer.write("# rfLife -- set: 0 - specify number \n");
-            writer.write("rfLife: " + InputWrapper.intTextfieldGuardDefault(0, rfLife,textFields[8].getText()) + "\n");
+            writer.write("# fireworksLife -- set: 0 - specify number \n");
+            writer.write("fireworksLife: " + InputWrapper.intTextfieldGuardDefault(0, fireworksLife,textFields[8].getText()) + "\n");
             /*-------------------------------------------------------*/
-            writer.write("# rfWind -- set: 0 - specify number \n");
-            writer.write("rfWind: " + InputWrapper.intTextfieldGuardDefault(0, rfWind,textFields[9].getText()) + "\n");
+            writer.write("# fireworksWind -- set: 0 - specify number \n");
+            writer.write("fireworksWind: " + InputWrapper.intTextfieldGuardDefault(0, fireworksWind,textFields[9].getText()) + "\n");
             /*-------------------------------------------------------*/
-            writer.write("# rfJitter -- set: 0 - specify number \n");
-            writer.write("rfJitter: " + InputWrapper.intTextfieldGuardDefault(0, rfJitter,textFields[10].getText()) + "\n");
+            writer.write("# fireworksJitter -- set: 0 - specify number \n");
+            writer.write("fireworksJitter: " + InputWrapper.intTextfieldGuardDefault(0, fireworksJitter,textFields[10].getText()) + "\n");
             /*-------------------------------------------------------*/
             writer.write("# safetyAmount -- set: 0 - specify number \n");
             writer.write("safetyAmount: " + InputWrapper.intTextfieldGuardDefault(0, safetyAmount,textFields[11].getText()) + "\n");
@@ -519,15 +519,15 @@ public class SettingsEditor {
     private static void refreshUI() {
         textFields[0].setText("" + switchMode);
         textFields[1].setText("" + particleType);
-        textFields[2].setText("" + ptGravitationInt);
+        textFields[2].setText("" + particleGravitationMode);
         textFields[3].setText("" + fireworksAmount);
-        textFields[4].setText("" + particleMode);
+        textFields[4].setText("" + particleRenderType);
         textFields[5].setText("" + dragAmount);
         textFields[6].setText("" + baseLife);
-        textFields[7].setText("" + rfParticleMode);
-        textFields[8].setText("" + rfLife);
-        textFields[9].setText("" + rfWind);
-        textFields[10].setText("" + rfJitter);
+        textFields[7].setText("" + fireworksRenderType);
+        textFields[8].setText("" + fireworksLife);
+        textFields[9].setText("" + fireworksWind);
+        textFields[10].setText("" + fireworksJitter);
         textFields[11].setText("" + safetyAmount);
         textFields[12].setText("" + cycleRate);
         textFields[13].setText("" + singleClickSizeMaxVal);

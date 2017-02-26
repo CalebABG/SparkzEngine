@@ -7,7 +7,6 @@ import com.engine.MGrapher.ParticleGraph;
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EngineMethods.*;
 
-import com.engine.Utilities.H5Wrapper;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
@@ -128,11 +127,6 @@ public class CMenuBar extends JMenuBar {
 
         settingsUI.addActionListener(e -> SettingsEditor.getInstance());
         mnSettings.add(settingsUI);
-
-        JMenuItem memclean = new JMenuItem("Clean Memory");
-        memclean.setToolTipText(H5Wrapper.H(3, "Cleans memory if free memory is less than " + memThreshold + " MB"));
-        memclean.addActionListener(e -> {{if ((Runtime.getRuntime().freeMemory() / (Math.pow(1024, 2))) <= memThreshold) {System.gc();}}});
-        mnSettings.add(memclean);
 
         menuBar.add(Box.createHorizontalStrut(11));
         JMenu mnHelp = new JMenu("Help");
@@ -302,8 +296,8 @@ public class CMenuBar extends JMenuBar {
         particleGravitationGroup.add(pGravModes[7]);
         gravitationModes.add(pGravModes[7]);
 
-        for (JRadioButtonMenuItem b : pGravModes) {if (Integer.parseInt(b.getActionCommand()) == ptGravitationInt) {b.setSelected(true); break;}}
-        for (JRadioButtonMenuItem b : pGravModes) {b.addActionListener(e -> ptGravitationInt = Integer.parseInt(particleGravitationGroup.getSelection().getActionCommand()));}
+        for (JRadioButtonMenuItem b : pGravModes) {if (Integer.parseInt(b.getActionCommand()) == particleGravitationMode) {b.setSelected(true); break;}}
+        for (JRadioButtonMenuItem b : pGravModes) {b.addActionListener(e -> particleGravitationMode = Integer.parseInt(particleGravitationGroup.getSelection().getActionCommand()));}
 
         modes.add(gravitationModes);
         menuBar.add(modes);
@@ -314,7 +308,7 @@ public class CMenuBar extends JMenuBar {
     public static void updateParticleTypesRadios() {
         for (JRadioButtonMenuItem b : pTypes) {if (Integer.parseInt(b.getActionCommand()) == particleType) {b.setSelected(true); break;}}}
     public static void updateGravitationModesRadios() {
-        for (JRadioButtonMenuItem b : pGravModes) {if (Integer.parseInt(b.getActionCommand()) == ptGravitationInt) {b.setSelected(true); break;}}}
+        for (JRadioButtonMenuItem b : pGravModes) {if (Integer.parseInt(b.getActionCommand()) == particleGravitationMode) {b.setSelected(true); break;}}}
     public static void updateAllRadios() {
         updateParticleModesRadios(); updateParticleTypesRadios(); updateGravitationModesRadios();}
 

@@ -86,7 +86,6 @@ public class StatsPanel {
             int loc = 0;
             JMenuItem source = (JMenuItem) e.getSource();
             if(split_pane.getLeftComponent().isVisible() && split_pane.getRightComponent().isVisible()){
-                loc = split_pane.getDividerLocation();
                 split_pane.setDividerSize(0);
                 split_pane.getLeftComponent().setVisible(source == mntmShowhideLeft);
                 split_pane.getRightComponent().setVisible(source == mntmShowhideRight);

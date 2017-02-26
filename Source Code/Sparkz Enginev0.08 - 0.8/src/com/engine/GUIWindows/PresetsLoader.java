@@ -54,7 +54,7 @@ public class PresetsLoader {
         button.addActionListener(e -> refreshButton());
         frame.add(button);
 
-        colorSlider = new JSlider(0, ((Settings.PRESET_INDEXES - 1) == 0) ? 0 : (Settings.PRESET_INDEXES - 1), lastIndex);
+        colorSlider = new JSlider(0, (Settings.PRESET_INDEXES - 1), lastIndex);
         colorSlider.setPaintTicks(true);
         colorSlider.setPaintLabels(true);
         colorSlider.setMinorTickSpacing(setMinorTicks());

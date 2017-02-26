@@ -98,14 +98,14 @@ public class Settings {
             writer.write("# particleType -- set: 0 - 8 <- MAX \n");
             writer.write("particleType: " + particleType + "\n");
             /*-------------------------------------------------------*/
-            writer.write("# ptGravitationInt -- set: 0 - 6 <- MAX \n");
-            writer.write("ptGravitationInt: " + ptGravitationInt + "\n");
+            writer.write("# particleGravitationMode -- set: 0 - 6 <- MAX \n");
+            writer.write("particleGravitationMode: " + particleGravitationMode + "\n");
             /*-------------------------------------------------------*/
             writer.write("# fireworksAmount -- set: 0 - specify number \n");
             writer.write("fireworksAmount: " + fireworksAmount + "\n");
             /*-------------------------------------------------------*/
-            writer.write("# particleMode -- set: 1 - 19 <- MAX \n");
-            writer.write("particleMode: " + particleMode + "\n");
+            writer.write("# particleRenderType -- set: 1 - 19 <- MAX \n");
+            writer.write("particleRenderType: " + particleRenderType + "\n");
             /*-------------------------------------------------------*/
             writer.write("# dragAmount -- set: 1 - specify number \n");
             writer.write("dragAmount: " + dragAmount + "\n");
@@ -113,17 +113,17 @@ public class Settings {
             writer.write("# baseLife -- set: 0 - specify number \n");
             writer.write("baseLife: " + baseLife + "\n");
             /*-------------------------------------------------------*/
-            writer.write("# rfParticleMode -- set: 1 - 19 <- MAX \n");
-            writer.write("rfParticleMode: " + rfParticleMode + "\n");
+            writer.write("# fireworksRenderType -- set: 1 - 19 <- MAX \n");
+            writer.write("fireworksRenderType: " + fireworksRenderType + "\n");
             /*-------------------------------------------------------*/
-            writer.write("# rfLife -- set: 0 - specify number \n");
-            writer.write("rfLife: " + rfLife + "\n");
+            writer.write("# fireworksLife -- set: 0 - specify number \n");
+            writer.write("fireworksLife: " + fireworksLife + "\n");
             /*-------------------------------------------------------*/
-            writer.write("# rfWind -- set: 0 - specify number \n");
-            writer.write("rfWind: " + rfWind + "\n");
+            writer.write("# fireworksWind -- set: 0 - specify number \n");
+            writer.write("fireworksWind: " + fireworksWind + "\n");
             /*-------------------------------------------------------*/
-            writer.write("# rfJitter -- set: 0 - specify number \n");
-            writer.write("rfJitter: " + rfJitter + "\n");
+            writer.write("# fireworksJitter -- set: 0 - specify number \n");
+            writer.write("fireworksJitter: " + fireworksJitter + "\n");
             /*-------------------------------------------------------*/
             writer.write("# safetyAmount -- set: 0 - specify number \n");
             writer.write("safetyAmount: " + safetyAmount + "\n");
@@ -197,15 +197,15 @@ public class Settings {
         /*--------------------------------------------------------*/
         switchMode = Integer.parseInt(s.get(0));
         particleType = Integer.parseInt(s.get(1));
-        ptGravitationInt = Integer.parseInt(s.get(2));
+        particleGravitationMode = Integer.parseInt(s.get(2));
         fireworksAmount = Integer.parseInt(s.get(3));
-        particleMode = Integer.parseInt(s.get(4));
+        particleRenderType = Integer.parseInt(s.get(4));
         dragAmount = Integer.parseInt(s.get(5));
         baseLife = Integer.parseInt(s.get(6));
-        rfParticleMode = Integer.parseInt(s.get(7));
-        rfLife = Integer.parseInt(s.get(8));
-        rfWind = Integer.parseInt(s.get(9));
-        rfJitter = Integer.parseInt(s.get(10));
+        fireworksRenderType = Integer.parseInt(s.get(7));
+        fireworksLife = Integer.parseInt(s.get(8));
+        fireworksWind = Integer.parseInt(s.get(9));
+        fireworksJitter = Integer.parseInt(s.get(10));
         safetyAmount = Integer.parseInt(s.get(11));
         cycleRate = Integer.parseInt(s.get(12));
         /*--------------------------------------------------------*/

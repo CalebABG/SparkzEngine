@@ -85,7 +85,8 @@ public class ColorEditor {
         JButton load_colors = new JButton("Load Colors");
         load_colors.setFont(uiFont);
         load_colors.addActionListener(e -> {if (Settings.doesColorsFileExist()) {
-            PresetsLoader.getInstance();} else{SWindow.getInstance(frame, "Save First", 280, 85);}});
+            PresetsLoader.getInstance();} else{
+            Notifier.getInstance(frame, "Save First", 280, 85);}});
         buttons_panel.add(load_colors);
 
         JButton time_machine = new JButton("Time Machine");

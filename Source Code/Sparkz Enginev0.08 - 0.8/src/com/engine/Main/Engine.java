@@ -1,6 +1,7 @@
 package com.engine.Main;
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EngineMethods.*;
+import static com.engine.Interfaces_Extensions.EModes.GRAPH_MODE;
 import static com.engine.JComponents.CMenuBar.createMenuBar;
 import com.engine.EngineHelpers.EngineSplash;
 import com.engine.GUIWindows.StatsPanel;
@@ -15,13 +16,15 @@ import java.awt.*;
 // Project started on: 11/22/2015 :D -- REQUIRES Java version 1.8 (lambda functions used) or higher to edit
 // TODO: 2/23/2017 Create new SlideEditor
 // TODO: 2/23/2017 Add Physics Editor
+// TODO: 2/26/2017 Add Preset Editor
+// TODO: 2/26/2017 Refactor Variables with "Good" naming schemes
 // Notes:
 // "./" for File, FileChooser, or File operations refers to the current working directory the program started from.
-// Java 8 Project Log Calculation (Years): (ChronoUnit.DAYS.between(LocalDateTime.of(2015, 11, 22, 9, 59), LocalDateTime.now()) / 365.2425f)
+// Research into JVM Garbage Collection Optimization
 
 public class Engine {
     public static void main(String[] args) {
-        new EngineSplash(2720).display();
+        new EngineSplash(2700).display();
         SwingUtilities.invokeLater(() -> new Engine().start());
     }
 
@@ -51,7 +54,6 @@ public class Engine {
         Settings.loadSettings();
         EFrame.setJMenuBar(createMenuBar());
 
-        canvas = new Canvas();
         canvas.requestFocusInWindow();
         //Mouse Click Listener
         canvas.addMouseListener(mListener);
@@ -71,36 +73,36 @@ public class Engine {
      * Engines Thread.run() method. Used as the main 'game-loop' to control the updates and renders of the program.
      * Tries to constrain the fps to around 60(capped). Credit for gameloop: http://www.java-gaming.org/index.php?topic=24220.0
      */
-    private void setupTimerTask() {
-        task = new TimerTaskX(() -> {
-            final double SIM_HERTZ = FPS, TIME_BETWEEN_UPDATES = 1.0E9D / SIM_HERTZ, TARGET_TIME_BETWEEN_RENDERS = 1.0E9D / SIM_HERTZ;
-            final int MAX_UPDATES_BEFORE_RENDER = 1;
-            double lastUpdateTime = System.nanoTime(), lastRenderTime;
-            int lastSecondTime = (int) (lastUpdateTime / 1.0E9D);
+    private void setupTimerTask() {task = new TimerTaskX(this::simulationLoop);}
 
-            while (running) {
-                double now = System.nanoTime();
-                int updateCount = 0;
+    private void simulationLoop(){
+        final double SIM_HERTZ = fps, TIME_BETWEEN_UPDATES = 1.0E9D / SIM_HERTZ, TARGET_TIME_BETWEEN_RENDERS = 1.0E9D / SIM_HERTZ;
+        final int MAX_UPDATES_BEFORE_RENDER = 1;
+        double lastUpdateTime = System.nanoTime(), lastRenderTime;
+        int lastSecondTime = (int) (lastUpdateTime / 1.0E9D);
 
-                render();
-                lastRenderTime = now;
+        while (running) {
+            double now = System.nanoTime();
+            int updateCount = 0;
 
-                while (now - lastUpdateTime > TIME_BETWEEN_UPDATES && updateCount < MAX_UPDATES_BEFORE_RENDER) {
-                    if (!isPaused) {handleUpdates();}
-                    lastUpdateTime += TIME_BETWEEN_UPDATES;
-                    updateCount++;
-                }
+            render();
+            lastRenderTime = now;
 
-                if (now - lastUpdateTime > TIME_BETWEEN_UPDATES) {lastUpdateTime = now - TIME_BETWEEN_UPDATES;}
-
-                int thisSecond = (int) (lastUpdateTime / 1.0E9D);
-                if (thisSecond > lastSecondTime) {lastSecondTime = thisSecond;}
-
-                while (now - lastRenderTime < TARGET_TIME_BETWEEN_RENDERS && now - lastUpdateTime < TIME_BETWEEN_UPDATES) {
-                    Thread.yield(); now = System.nanoTime();
-                }
+            while (now - lastUpdateTime > TIME_BETWEEN_UPDATES && updateCount < MAX_UPDATES_BEFORE_RENDER) {
+                if (!isPaused) {handleUpdates();}
+                lastUpdateTime += TIME_BETWEEN_UPDATES;
+                updateCount++;
             }
-        });
+
+            if (now - lastUpdateTime > TIME_BETWEEN_UPDATES) {lastUpdateTime = now - TIME_BETWEEN_UPDATES;}
+
+            int thisSecond = (int) (lastUpdateTime / 1.0E9D);
+            if (thisSecond > lastSecondTime) {lastSecondTime = thisSecond;}
+
+            while (now - lastRenderTime < TARGET_TIME_BETWEEN_RENDERS && now - lastUpdateTime < TIME_BETWEEN_UPDATES) {
+                Thread.yield(); now = System.nanoTime();
+            }
+        }
     }
 
     /**
@@ -115,8 +117,7 @@ public class Engine {
     /**
      * Synchronized stop of the program; Stops the Engines Thread, set's the disposes of the programs window, and then shuts down the program.
      */
-    public static synchronized void stop(){running = false; EFrame.setVisible(false); stopRenderer(); System.exit(0);}
-    private static void stopRenderer(){renderer.cancel(); renderer.purge();}
+    public static synchronized void stop(){running = false; EFrame.setVisible(false); renderer.cancel(); renderer.purge(); System.exit(0);}
 
     /**
      * This method actively renders the canvas for the program; it creates and disposes of the Engines graphics Object each frame.
@@ -138,7 +139,7 @@ public class Engine {
     private void draw() {
         graphics2D.setColor(backgroundColor);
         graphics2D.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        if (switchMode == 3) graphics2D.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
+        if (switchMode == GRAPH_MODE) graphics2D.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
         else graphics2D.translate(0, 0);
         handleRenders();
     }

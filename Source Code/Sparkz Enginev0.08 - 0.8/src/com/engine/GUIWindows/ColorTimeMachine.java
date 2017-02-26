@@ -99,7 +99,7 @@ public class ColorTimeMachine {
         clear.addActionListener(e -> {
             String msg = HCenter("h4", "Clear All Seen Colors?");
             Object[] options = {"Yes, please", "No, cancel!"};
-            int n = JOptionPane.showOptionDialog(frame, msg, "Clear Colors", 0, 3, null, options, options[1]);
+            int n = JOptionPane.showOptionDialog(frame, msg, "Clear Colors", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
             if (n == JOptionPane.YES_OPTION) {
                 colorList.clear(); index = 0; setColors();
                 if (colors_info.isSelected()) updateColorValues();

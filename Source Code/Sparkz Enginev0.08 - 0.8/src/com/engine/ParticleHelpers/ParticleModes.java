@@ -2,6 +2,8 @@ package com.engine.ParticleHelpers;
 
 import com.engine.ParticleTypes.*;
 import static com.engine.EngineHelpers.EConstants.*;
+import static com.engine.Interfaces_Extensions.EModes.RAGDOLL_MODE;
+
 import com.engine.Verlet.*;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -263,7 +265,7 @@ public class ParticleModes {
      * Creates multiple particle objects while dragging mpt (from Engine drag amount) at the coords of the event x and y.
      */
     public static void dragMode(MouseEvent e) {
-        if (switchMode == 4){
+        if (switchMode == RAGDOLL_MODE){
             if (SwingUtilities.isLeftMouseButton(e) && isCTRLDown) {
                 VPHandler.dragMode(e);
             }

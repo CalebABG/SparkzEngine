@@ -10,17 +10,20 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
 
-public class SWindow implements WindowAdapterX {
-    private static SWindow sWindow = null;
+public class Notifier implements WindowAdapterX {
+    private static Notifier notifier = null;
     public static JFrame frame;
     private int timeout = 860;
     private static String s3 = "text-align: center; font-size: 42px; font-family: Times; font-weight: light; color: white";
 
-    public static SWindow getInstance(String t, int w, int h) {if (sWindow == null) {sWindow = new SWindow(t, w, h);} return sWindow;}
-    public static SWindow getInstance(String t, int timeout, int w, int h) {if (sWindow == null) {sWindow = new SWindow(t, timeout, w, h);} return sWindow;}
-    public static SWindow getInstance(JFrame parent, String t, int w, int h) {if (sWindow == null) {sWindow = new SWindow(parent, t, w, h);} return sWindow;}
+    public static Notifier getInstance(String t, int w, int h) {if (notifier == null) {
+        notifier = new Notifier(t, w, h);} return notifier;}
+    public static Notifier getInstance(String t, int timeout, int w, int h) {if (notifier == null) {
+        notifier = new Notifier(t, timeout, w, h);} return notifier;}
+    public static Notifier getInstance(JFrame parent, String t, int w, int h) {if (notifier == null) {
+        notifier = new Notifier(parent, t, w, h);} return notifier;}
 
-    private SWindow(JFrame parent, String text, int width, int height) {
+    private Notifier(JFrame parent, String text, int width, int height) {
         frame = new JFrame();
         frame.setIconImage(Settings.getIcon());
         frame.setUndecorated(true);
@@ -43,7 +46,7 @@ public class SWindow implements WindowAdapterX {
         new Thread(() -> {try {Thread.sleep(timeout); close();}catch (Exception e){EException.append(e);}}).start();
     }
 
-    private SWindow(String text, int width, int height) {
+    private Notifier(String text, int width, int height) {
         frame = new JFrame();
         frame.setIconImage(Settings.getIcon());
         frame.setUndecorated(true);
@@ -63,12 +66,10 @@ public class SWindow implements WindowAdapterX {
         panel.add(label);
 
         frame.setVisible(true);
-        new Thread(() -> {try {Thread.sleep(timeout); close();}catch (Exception e){EException.append(e);}}).start();
-//        new Thread(){public void run() {try {Thread.sleep(timeout); close();}catch (Exception e){
-//            EException.append(e);}}}.start();
+        new Thread(() -> {try {Thread.sleep(timeout); close();} catch (Exception e){EException.append(e);}}).start();
     }
 
-    private SWindow(String text, final int timeout, int width, int height) {
+    private Notifier(String text, final int timeout, int width, int height) {
         frame = new JFrame();
         frame.setIconImage(Settings.getIcon());
         frame.setUndecorated(true);
@@ -88,11 +89,9 @@ public class SWindow implements WindowAdapterX {
         panel.add(label);
 
         frame.setVisible(true);
-        new Thread(() -> {try {Thread.sleep(timeout); close();}catch (Exception e){EException.append(e);}}).start();
-//        new Thread(){public void run() {try {Thread.sleep(timeout); close();}catch (Exception e){
-//            EException.append(e);}}}.start();
+        new Thread(() -> {try {Thread.sleep(timeout); close();} catch (Exception e){EException.append(e);}}).start();
     }
 
-    private void close() {sWindow = null; frame.dispose();}
+    private void close() {notifier = null; frame.dispose();}
     public void windowClosing(WindowEvent e) {close();}
 }

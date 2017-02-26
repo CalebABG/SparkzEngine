@@ -10,7 +10,7 @@ public class Emitter extends Molecule {
     public Emitter() {super();}
     public Emitter(double _x, double _y, double _radius, double speed, int direction) {super(_x, _y, Math.cos(direction) * speed, Math.sin(direction) * speed, _radius);}
 
-    private void emitAtPoint() {ParticleModes.fireworksMode(x, y, rfWind, (int) (fireworksSpeedVal), fireworksAmount);}
+    private void emitAtPoint() {ParticleModes.fireworksMode(x, y, fireworksWind, (int) (fireworksSpeedVal), fireworksAmount);}
     public void giveStyle() {graphics2D.setColor(color);}
     public void render() {giveStyle();}
 

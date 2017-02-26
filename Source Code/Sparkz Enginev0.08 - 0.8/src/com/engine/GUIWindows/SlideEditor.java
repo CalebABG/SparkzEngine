@@ -150,14 +150,14 @@ public class SlideEditor {
         });
         rfoptionspanel.add(ptlifeslider);
 
-        ptwindslider = new CSlider(0, 200, rfWind, new Rectangle(10, 257, 463, 43), 1, MAX_TICKS, true, true, true);
+        ptwindslider = new CSlider(0, 200, fireworksWind, new Rectangle(10, 257, 463, 43), 1, MAX_TICKS, true, true, true);
         ptwindslider.addChangeListener(e -> {
             int windAmount = ptwindslider.getValue(); ptwindamount.setText(Integer.toString(windAmount));
             EngineMethods.setWindAmount(windAmount); setPaintLabels(ptwindslider, MAX_TICK_LINES);
         });
         rfoptionspanel.add(ptwindslider);
 
-        ptwindamount = new Label(Double.toString(rfWind));
+        ptwindamount = new Label(Double.toString(fireworksWind));
         ptwindamount.setFont(new Font("Dialog", Font.PLAIN, 17));
         ptwindamount.setAlignment(Label.CENTER);
         ptwindamount.setBounds(149, 229, 187, 22);
@@ -169,14 +169,14 @@ public class SlideEditor {
         ptwindlabel.setBounds(10, 229, 106, 22);
         rfoptionspanel.add(ptwindlabel);
 
-        ptjitterslider = new CSlider(0, 200, rfJitter, new Rectangle(10, 468, 463, 43), 1, MAX_TICKS, true, true, true);
+        ptjitterslider = new CSlider(0, 200, fireworksJitter, new Rectangle(10, 468, 463, 43), 1, MAX_TICKS, true, true, true);
         ptjitterslider.addChangeListener(e -> {
             int jitterAmount = ptjitterslider.getValue(); ptjitteramount.setText(Integer.toString(jitterAmount));
             EngineMethods.setJitterAmount(jitterAmount); setPaintLabels(ptjitterslider, MAX_TICK_LINES);
         });
         rfoptionspanel.add(ptjitterslider);
 
-        ptjitteramount = new Label(Double.toString(rfJitter));
+        ptjitteramount = new Label(Double.toString(fireworksJitter));
         ptjitteramount.setFont(new Font("Dialog", Font.PLAIN, 17));
         ptjitteramount.setAlignment(Label.CENTER);
         ptjitteramount.setBounds(149, 440, 187, 22);
