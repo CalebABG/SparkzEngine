@@ -10,6 +10,7 @@ import static com.engine.JComponents.CMenuBar.*;
 import com.engine.GUIWindows.*;
 import com.engine.JComponents.CMenuBar;
 import com.engine.ParticleHelpers.ParticleModes;
+import com.engine.ParticleTypes.Particle;
 import com.engine.Verlet.*;
 import com.engine.ThinkingParticles.SCCycle;
 import com.engine.Utilities.ColorConverter;
@@ -25,28 +26,28 @@ public class EngineMethods {
      * @see com.engine.InputHandlers.MMotionListener
      */
     public static void switchClickMode(MouseEvent e) {
-        if (switchMode == NORMAL_MODE) {
-            if (particleType == PARTICLE) ParticleModes.singleParticle(e);
-            if (particleType == GRAVITY_POINT) ParticleModes.singleGravityPoint(e);
-            if (particleType == EMITTER) ParticleModes.singleEmitter(e);
-            if (particleType == FLUX) ParticleModes.singleSemtex(e);
-            if (particleType == QED) ParticleModes.singleQED(e);
-            if (particleType == ION) ParticleModes.singleIon(e);
-            if (particleType == BLACK_HOLE) ParticleModes.singleBlackHole(e);
-            if (particleType == DUPLEX) ParticleModes.singleDuplex(e);
-            if (particleType == PORTAL) ParticleModes.singlePortal(e);
+        if (switchMode == NORMAL_MODE){
+            if (particleType == PARTICLE)       ParticleModes.singleParticle(e);
+            if (particleType == GRAVITY_POINT)  ParticleModes.singleGravityPoint(e);
+            if (particleType == EMITTER)        ParticleModes.singleEmitter(e);
+            if (particleType == FLUX)           ParticleModes.singleSemtex(e);
+            if (particleType == QED)            ParticleModes.singleQED(e);
+            if (particleType == ION)            ParticleModes.singleIon(e);
+            if (particleType == BLACK_HOLE)     ParticleModes.singleBlackHole(e);
+            if (particleType == DUPLEX)         ParticleModes.singleDuplex(e);
+            if (particleType == PORTAL)         ParticleModes.singlePortal(e);
         }
 
-        else if (switchMode == MULTI_MODE) {
-            if (particleType == PARTICLE) ParticleModes.multiParticle(e);
-            if (particleType == GRAVITY_POINT) ParticleModes.multiGravityPoint(e, 4);
-            if (particleType == EMITTER) ParticleModes.singleEmitter(e);
-            if (particleType == FLUX) ParticleModes.multiSemtex(e, 5);
-            if (particleType == QED) ParticleModes.multiQED(e, 4);
-            if (particleType == ION) ParticleModes.multiIon(e, 10);
-            if (particleType == BLACK_HOLE) ParticleModes.singleBlackHole(e);
-            if (particleType == DUPLEX) ParticleModes.singleDuplex(e);
-            if (particleType == PORTAL) ParticleModes.singlePortal(e);
+        else if (switchMode == MULTI_MODE){
+            if (particleType == PARTICLE)       ParticleModes.multiParticle(e);
+            if (particleType == GRAVITY_POINT)  ParticleModes.multiGravityPoint(e, 4);
+            if (particleType == EMITTER)        ParticleModes.singleEmitter(e);
+            if (particleType == FLUX)           ParticleModes.multiSemtex(e, 5);
+            if (particleType == QED)            ParticleModes.multiQED(e, 4);
+            if (particleType == ION)            ParticleModes.multiIon(e, 10);
+            if (particleType == BLACK_HOLE)     ParticleModes.singleBlackHole(e);
+            if (particleType == DUPLEX)         ParticleModes.singleDuplex(e);
+            if (particleType == PORTAL)         ParticleModes.singlePortal(e);
         }
 
         else if (switchMode == FIREWORKS_MODE) {mouseGravitation = false; ParticleModes.fireworksTarget(e);}
@@ -64,28 +65,29 @@ public class EngineMethods {
      * Increases each particles radius by .5
      * @see com.engine.InputHandlers.KHandler
      */
-    public static void increaseParticleSize() {for (int i = 0; i < ParticlesArray.size(); i++) {ParticlesArray.get(i).radius += 0.5;}}
+    public static void increaseParticleSize() {for (int i = 0; i < ParticlesArray.size(); i++) ParticlesArray.get(i).radius += 0.5;}
 
     /**
      * Decreases each particles velocity x and velocity y by 60%
      * @see com.engine.InputHandlers.KHandler
      */
-    public static void slowParticles() {for (int i = 0; i < ParticlesArray.size(); i++) {ParticlesArray.get(i).normalize(0.6);}}
+    public static void slowParticles() {for (int i = 0; i < ParticlesArray.size(); i++) ParticlesArray.get(i).normalize(0.6);}
 
     /**
      * Multiplies each particles velocity x and velocity by 150%
      * @see com.engine.InputHandlers.KHandler
      */
-    public static void scatterParticles() {for (int i = 0; i < ParticlesArray.size(); i++) {ParticlesArray.get(i).normalize(1.5);}}
+    public static void scatterParticles() {for (int i = 0; i < ParticlesArray.size(); i++) ParticlesArray.get(i).normalize(1.5);}
 
     /**
-     * Decreases each particles radius by .5 and limits the particles minimum radius to .99.
+     * Decreases each particles radius by .5 and limits the particles minimum radius to .95
      * @see com.engine.InputHandlers.KHandler
      */
     public static void decreaseParticleSize(){
         for (int i = 0; i < ParticlesArray.size(); i++) {
-            ParticlesArray.get(i).radius -= 0.5;
-            if (ParticlesArray.get(i).radius < 1) {ParticlesArray.get(i).radius = 0.99;}
+            Particle p = ParticlesArray.get(i);
+            p.radius -= 0.5;
+            if (p.radius < 1) p.radius = 0.95;
         }
     }
 
@@ -139,87 +141,85 @@ public class EngineMethods {
      * @param amount Sets the Engines drag amount to the specified amount.
      * @see SlideEditor
      */
-    public static void setDragAmount(int amount) {if (amount >= 0) {dragAmount = amount;}}
+    public static void setDragAmount(int amount) {if (amount >= 0) dragAmount = amount;}
 
     /**
      * @param amount Sets the Engines fireworks amount to the specified amount
      * @see SlideEditor
      */
-    public static void setFireworksAmount(int amount) {if (amount >= 0) {fireworksAmount = amount;}}
+    public static void setFireworksAmount(int amount) {if (amount >= 0) fireworksAmount = amount;}
 
     /**
      * @param amount Sets the Engines life amount to the specified amount
      * @see SlideEditor
      */
-    public static void setLifeAmount(int amount) {if (amount >= 0) {baseLife = amount;}}
+    public static void setLifeAmount(int amount) {if (amount >= 0) baseLife = amount;}
 
     /**
      * @param amount Sets the Engines wind amount to the specified amount
      * @see SlideEditor
      */
-    public static void setWindAmount(int amount) {if (amount >= 0) {
-        fireworksWind = amount;}}
+    public static void setWindAmount(int amount) {if (amount >= 0) fireworksWind = amount;}
 
     /**
      * @param amount Sets the Engines jitter amount to the specified amount
      * @see SlideEditor
      */
-    public static void setJitterAmount(int amount) {if (amount >= 0) {
-        fireworksJitter = amount;}}
+    public static void setJitterAmount(int amount) {if (amount >= 0) fireworksJitter = amount;}
 
     /**
      * @param amount Sets the Engines single click minimum particle size amount to the specified amount
      * @see SlideEditor
      */
-    public static void setSingleClickSizeMin(int amount) {if (amount >= 0) {singleClickSizeMinVal = amount;}}
+    public static void setSingleClickSizeMin(int amount) {if (amount >= 0) singleClickSizeMinVal = amount;}
 
     /**
      * @param amount Sets the Engines single click maximum particle size amount to the specified amount
      * @see SlideEditor
      */
-    public static void setSingleClickSizeMax(int amount) {if (amount >= 0) {singleClickSizeMaxVal = amount;}}
+    public static void setSingleClickSizeMax(int amount) {if (amount >= 0) singleClickSizeMaxVal = amount;}
 
     /**
      * @param amount Sets the Engines fireworks minimum size amount to the specified amount
      * @see SlideEditor
      */
-    public static void setFireworksSizeMin(int amount) {if (amount >= 0) {fireworksSizeMinVal = amount;}}
+    public static void setFireworksSizeMin(int amount) {if (amount >= 0) fireworksSizeMinVal = amount;}
 
     /**
      * @param amount Sets the Engines fireworks maximum size amount to the specified amount
      * @see SlideEditor
      */
-    public static void setFireworksSizeMax(int amount) {if (amount >= 0) {fireworksSizeMaxVal = amount;}}
+    public static void setFireworksSizeMax(int amount) {if (amount >= 0) fireworksSizeMaxVal = amount;}
 
     /**
      * @param amount Sets the Engines drag minimum size amount to the specified amount
      * @see SlideEditor
      */
-    public static void setDragSizeMin(int amount) {if (amount >= 0) {dragSizeMinVal = amount;}}
+    public static void setDragSizeMin(int amount) {if (amount >= 0) dragSizeMinVal = amount;}
 
     /**
      * @param amount Sets the Engines drag maximum size amount to the specified amount
      * @see SlideEditor
      */
-    public static void setDragSizeMax(int amount) {if (amount >= 0) {dragSizeMaxVal = amount;}}
+    public static void setDragSizeMax(int amount) {if (amount >= 0) dragSizeMaxVal = amount;}
 
     /**
      * @param amount Sets the Engines single click speed amount to the specified amount
      * @see SlideEditor
      */
-    public static void setSingleClickSpeed(int amount) {if (amount >= 0) {singleClickSpeedVal = amount;}}
+    public static void setSingleClickSpeed(int amount) {if (amount >= 0) singleClickSpeedVal = amount;}
 
     /**
      * @param amount Sets the Engines fireworks speed amount to the specified amount
      * @see SlideEditor
      */
-    public static void setFireworksSpeed(int amount) {if (amount >= 0) {fireworksSpeedVal = amount;}}
+    public static void setFireworksSpeed(int amount) {if (amount >= 0) fireworksSpeedVal = amount;}
 
     /**
      * @param amount Sets the Engines drag speed amount to the specified amount
      * @see SlideEditor
      */
-    public static void setDragSpeed(int amount) {if (amount >= 0) {dragSpeedVal = amount;}}
+    public static void setDragSpeed(int amount) {if (amount >= 0) dragSpeedVal = amount;}
 
     /**
      * Sets the Engines particle friction boolean.
@@ -251,13 +251,13 @@ public class EngineMethods {
     private static void gravitationOptions(){
         int gravityMode = (int) minValueGuard(0, particleGravitationMode, GUIText.particleGravitationOptions());
         switch (gravityMode) {
-            case 0: particleGravitationMode = DEFAULT; break;
-            case 1: particleGravitationMode = COSINE_SINE; break;
-            case 2: particleGravitationMode = ARC_TANGENT; break;
-            case 3: particleGravitationMode = H_WAVE; break;
-            case 4: particleGravitationMode = V_WAVE; break;
-            case 5: particleGravitationMode = SPIRALS; break;
-            case 6: particleGravitationMode = PARTICLE_REPELLENT; break;
+            case 0: particleGravitationMode = DEFAULT;              break;
+            case 1: particleGravitationMode = COSINE_SINE;          break;
+            case 2: particleGravitationMode = ARC_TANGENT;          break;
+            case 3: particleGravitationMode = H_WAVE;               break;
+            case 4: particleGravitationMode = V_WAVE;               break;
+            case 5: particleGravitationMode = SPIRALS;              break;
+            case 6: particleGravitationMode = PARTICLE_REPELLENT;   break;
             case 7: particleGravitationMode = ORGANIC; OrganicForces.getInstance(OptionsMenu.frame); break;
             default: break;
         }
@@ -271,9 +271,9 @@ public class EngineMethods {
         String input = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, GUIText.realFireworksOptions()), null, JOptionPane.PLAIN_MESSAGE);
         int rfoInt = (InputWrapper.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
         switch (rfoInt) {
-            case 1: windAmount(); break;
+            case 1: windAmount();     break;
             case 2: baseLifeAmount(); break;
-            case 3: jitterAmount(); break;
+            case 3: jitterAmount();   break;
             default: break;
         }
     }
@@ -335,9 +335,9 @@ public class EngineMethods {
      * Dialog window to set the radius of all particles in the ParticlesArray.
      */
     private static void particleSize(){
-        double r = minValueGuard(0, .9, H(3, "Change Particle Size To (Integer or Double)"), OptionsMenu.frame);
+        double r = minValueGuard(0, .95, H(3, "Change Particle Size To (Integer or Double)"), OptionsMenu.frame);
         if (ParticlesArray.size() > 0) {
-            for (int i = 0; i < ParticlesArray.size(); i++) {ParticlesArray.get(i).radius = r;}
+            for (int i = 0; i < ParticlesArray.size(); i++) ParticlesArray.get(i).radius = r;
         }
     }
 
@@ -383,9 +383,9 @@ public class EngineMethods {
      */
     public static void pauseSimulation() {
         isPaused = toggle(isPaused); CMenuBar.updateState();
-        if (isPaused) {
-            Notifier.getInstance("Paused", 240, 85);} else {
-            Notifier.getInstance("Resume", 240, 85);} setEngineTitleState();
+        if (isPaused) Notifier.getInstance("Paused", 240, 85);
+        else Notifier.getInstance("Resume", 240, 85);
+        setEngineTitleState();
     }
 
     /**
@@ -395,19 +395,19 @@ public class EngineMethods {
     public static void getOptions(int option) {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());} catch (Exception x){x.printStackTrace();}
         switch (option) {
-            case 1: particleSize(); break;
-            case 2: particleDrag(); break;
-            case 3: particleFireworks(); break;
+            case 1: particleSize();             break;
+            case 2: particleDrag();             break;
+            case 3: particleFireworks();        break;
             case 4: ParticleTypeUI.getInstance(0, "Particle Type Options"); break; //Regular Particle Type
-            case 5: ColorConverter.setColor(); break;
-            case 6: gravitationOptions(); break;
-            case 7: particleSizeSeedOptions(); break;
+            case 5: ColorConverter.setColor();  break;
+            case 6: gravitationOptions();       break;
+            case 7: particleSizeSeedOptions();  break;
             case 8: particleSpeedSeedOptions(); break;
-            case 9: realFireworks(); break;
+            case 9: realFireworks();            break;
             case 10: ParticleTypeUI.getInstance(1, "Firework Type Options"); break; //Fireworks Particle Type
             case 11: ColorEditor.getInstance(); break;
-            case 12: safetyAmountOptions(); break;
-            case 13: cycleTimeOptions(); break;
+            case 12: safetyAmountOptions();     break;
+            case 13: cycleTimeOptions();        break;
             default: break;
         }
     }
@@ -460,9 +460,12 @@ public class EngineMethods {
      * @see com.engine.InputHandlers.KHandler
      */
     public static void upArrowFunction(){
-        if (particleType == DUPLEX){DUPLEXMODE = toggle(DUPLEXMODE);
+        if (particleType == DUPLEX){
+            DUPLEXMODE = toggle(DUPLEXMODE);
             if (DUPLEXMODE) Notifier.getInstance("Contain Mode", 380, 85);
-            else {Notifier.getInstance("Repel Mode", 350, 85);}} else {dragAmount+=1;}
+            else Notifier.getInstance("Repel Mode", 350, 85);
+        }
+        else dragAmount += 1;
     }
 
     public static void downArrowFunction() {
@@ -500,18 +503,19 @@ public class EngineMethods {
      */
     public static void trimParticleArrays(){
         try {
-            for (int i = 0; i < ParticlesArray.size(); i++) {ParticlesArray.remove(i);}
-            for (int i = 0; i < GravityPointsArray.size(); i++) {GravityPointsArray.remove(i);}
-            for (int i = 0; i < FireworksArray.size(); i++) {FireworksArray.remove(i);}
-            for (int i = 0; i < EmitterArray.size(); i++) {EmitterArray.remove(i);}
-            for (int i = 0; i < FluxArray.size(); i++) {FluxArray.remove(i);}
-            for (int i = 0; i < EraserArray.size(); i++) {EraserArray.remove(i);}
-            for (int i = 0; i < QEDArray.size(); i++) {QEDArray.remove(i);}
-            for (int i = 0; i < IonArray.size(); i++) {IonArray.remove(i);}
-            for (int i = 0; i < BlackHoleArray.size(); i++) {BlackHoleArray.remove(i);}
-            for (int i = 0; i < DuplexArray.size(); i++) {DuplexArray.remove(i);}
-            for (int i = 0; i < PortalArray.size(); i++) {PortalArray.remove(i);}
-        } catch (Exception ex) {EException.append(ex);}
+            for (int i = 0; i < ParticlesArray.size(); i++)     ParticlesArray.remove(i);
+            for (int i = 0; i < GravityPointsArray.size(); i++) GravityPointsArray.remove(i);
+            for (int i = 0; i < FireworksArray.size(); i++)     FireworksArray.remove(i);
+            for (int i = 0; i < EmitterArray.size(); i++)       EmitterArray.remove(i);
+            for (int i = 0; i < FluxArray.size(); i++)          FluxArray.remove(i);
+            for (int i = 0; i < EraserArray.size(); i++)        EraserArray.remove(i);
+            for (int i = 0; i < QEDArray.size(); i++)           QEDArray.remove(i);
+            for (int i = 0; i < IonArray.size(); i++)           IonArray.remove(i);
+            for (int i = 0; i < BlackHoleArray.size(); i++)     BlackHoleArray.remove(i);
+            for (int i = 0; i < DuplexArray.size(); i++)        DuplexArray.remove(i);
+            for (int i = 0; i < PortalArray.size(); i++)        PortalArray.remove(i);
+        }
+        catch (Exception ex) {EException.append(ex);}
     }
 
     /**

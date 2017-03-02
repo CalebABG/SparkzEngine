@@ -46,9 +46,7 @@ public class KHandler extends KeyAdapter {
         }
 
         //Keyboard button: CTRL
-        if (pressed == KeyEvent.VK_CONTROL) {
-            isCTRLDown = true;
-        }
+        if (pressed == KeyEvent.VK_CONTROL) isCTRLDown = true;
 
         //Keyboard button: F
         if (pressed == KeyEvent.VK_F) {
@@ -66,7 +64,6 @@ public class KHandler extends KeyAdapter {
 
     public void keyReleased(KeyEvent e) {
         int pressed = e.getKeyCode();
-        //System.out.println(pressed);
 
         //Keyboard button: 0
         if (pressed == KeyEvent.VK_0) {
@@ -75,8 +72,7 @@ public class KHandler extends KeyAdapter {
 
         //Keyboard button: W
         if (pressed == KeyEvent.VK_W) {
-            try {
-                ColorEditor.getInstance();}catch (Exception ex){EException.append(ex);}
+            ColorEditor.getInstance();
         }
 
         //Keyboard button: 4
@@ -96,7 +92,7 @@ public class KHandler extends KeyAdapter {
 
         //Keyboard button: 7
         if (pressed == KeyEvent.VK_7) {
-            try {OptionsMenu.getInstance();}catch (Exception ex){EException.append(ex);}
+            OptionsMenu.getInstance();
         }
 
         //Keyboard button: 8
@@ -105,13 +101,11 @@ public class KHandler extends KeyAdapter {
         }
 
         //Keyboard button: CTRL
-        if (pressed == KeyEvent.VK_CONTROL) {
-            isCTRLDown = false;
-        }
+        if (pressed == KeyEvent.VK_CONTROL) isCTRLDown = false;
 
         //Keyboard button: 9
         if (pressed == KeyEvent.VK_9) {
-            try {SlideEditor.getInstance();} catch (Exception ex){EException.append(ex);}
+            SlideEditor.getInstance();
         }
 
         //Keyboard button: K
@@ -131,7 +125,7 @@ public class KHandler extends KeyAdapter {
 
         //Keyboard button: C
         if (pressed == KeyEvent.VK_C){
-            try {EngineMethods.clearParticleArrays();} catch (Exception x) {EException.append(x);}
+            EngineMethods.clearParticleArrays();
         }
 
         //Keyboard button: Left Arrow
@@ -146,7 +140,7 @@ public class KHandler extends KeyAdapter {
 
         //Keyboard button: Q
         if (pressed == KeyEvent.VK_Q) {
-            try {EngineMethods.createEngineInstructionsWindow(EFrame);} catch (Exception ex){EException.append(ex);}
+            EngineMethods.createEngineInstructionsWindow(EFrame);
         }
 
         //Keyboard button: R
@@ -180,23 +174,19 @@ public class KHandler extends KeyAdapter {
         }
 
         //Keyboard button: Escape
-        if (pressed == KeyEvent.VK_ESCAPE) {QuitWindow.getInstance();}
+        if (pressed == KeyEvent.VK_ESCAPE) QuitWindow.getInstance();
 
         //Opens StatsPanel: precaution since the menubar is now on this panel
         //If the panel is closed, can always get the panel back
         if (pressed == KeyEvent.VK_I && e.isControlDown()) StatsPanel.getInstance();
 
         //Open Exception Logger
-        if (e.isShiftDown() && e.isControlDown() && (pressed == KeyEvent.VK_V)) {EException.getInstance();}
+        if (e.isShiftDown() && e.isControlDown() && (pressed == KeyEvent.VK_V)) EException.getInstance();
 
         //Open Settings Editor
-        if (e.isShiftDown() && (pressed == KeyEvent.VK_S)) {
-            try{SettingsEditor.getInstance();} catch (Exception ex){EException.append(ex);}
-        }
+        if (e.isShiftDown() && (pressed == KeyEvent.VK_S)) SettingsEditor.getInstance();
 
         //Open Particle Graph Editor
-        if (e.isShiftDown() && (pressed == KeyEvent.VK_X)) {
-            try {ParticleGraph.getInstance();} catch (Exception ez) {EException.append(ez);}
-        }
+        if (e.isShiftDown() && (pressed == KeyEvent.VK_X)) ParticleGraph.getInstance();
     }
 }

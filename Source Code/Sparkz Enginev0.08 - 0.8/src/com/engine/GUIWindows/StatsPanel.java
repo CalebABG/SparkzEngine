@@ -22,7 +22,7 @@ public class StatsPanel {
     public JPanel panel;
     public Color bgColor = new Color(20, 23, 25).brighter();
     public Font font = new Font(Font.SERIF, Font.PLAIN, 25);
-    private static CLabel particleAmount, dragamount, freemem, safetyamount, ptMode, smartPt, connect, atm, ptFriction, screenSize;
+    private static CLabel particleAmount, dragamount, safetyamount, ptMode, smartPt, connect, atm, ptFriction, screenSize;
     private static DecimalFormat decimalFormat = new DecimalFormat("#,###");
 
     //public static void main(String[] args) {getInstance();}
@@ -286,22 +286,12 @@ public class StatsPanel {
         GridBagConstraints gbc_label_14 = new GridBagConstraints();
         gbc_label_14.weighty = 1.0;
         gbc_label_14.weightx = 1.0;
-        gbc_label_14.ipady = 10;
+        gbc_label_14.ipady = 15;
         gbc_label_14.fill = GridBagConstraints.BOTH;
         gbc_label_14.insets = new Insets(0, 0, 5, 0);
         gbc_label_14.gridx = 0;
         gbc_label_14.gridy = 6;
         instructions_panel.add(screenSize, gbc_label_14);
-
-        freemem = new CLabel("JVM Free Memory: ", font, Color.white, bgColor);
-        GridBagConstraints gbc_label_15 = new GridBagConstraints();
-        gbc_label_15.weighty = 1.0;
-        gbc_label_15.weightx = 1.0;
-        gbc_label_15.ipady = 10;
-        gbc_label_15.fill = GridBagConstraints.BOTH;
-        gbc_label_15.gridx = 0;
-        gbc_label_15.gridy = 7;
-        instructions_panel.add(freemem, gbc_label_15);
 
         startTimer();
         frame.setVisible(true);
@@ -309,9 +299,6 @@ public class StatsPanel {
 
     private static void startTimer() {
         timer = new java.util.Timer();
-        timer.scheduleAtFixedRate(new TimerTaskX(() -> {
-            if (freemem != null) {freemem.setText("JVM Free Memory: " + decimalFormat.format((Runtime.getRuntime().freeMemory() / (Math.pow(1024, 2)))) + " MB");}
-        }), 0, 1200);
         timer.scheduleAtFixedRate(new TimerTaskX(StatsPanel::update), 0, timerFPS);
     }
 

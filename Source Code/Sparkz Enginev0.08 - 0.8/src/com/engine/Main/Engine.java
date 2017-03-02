@@ -128,9 +128,11 @@ public class Engine {
         if(buff == null){canvas.createBufferStrategy(2); return;}
         graphics2D = (Graphics2D) buff.getDrawGraphics();
         handleGraphicsSmoothing();
-        try {safetyBooleanChecks(); draw();} catch (Exception e) {EException.append(e);}
+        safetyBooleanChecks();
+        draw();
         if (graphics2D != null) graphics2D.dispose();
-        buff.show(); Toolkit.getDefaultToolkit().sync();
+        buff.show();
+        toolkit.sync();
     }
 
     /**

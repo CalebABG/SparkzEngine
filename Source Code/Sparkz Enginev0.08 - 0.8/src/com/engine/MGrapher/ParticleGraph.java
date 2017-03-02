@@ -182,16 +182,15 @@ public class ParticleGraph {
         double res = 0.04, positive_width = canvas.getWidth() / 2, negative_width = -positive_width;
         for (double i = negative_width; i < positive_width; i += res) {
             engine.put("x", i * scaleX);
-            try {setGraph(i, .98);} catch (Exception e) {throwError(textFields[0]); EException.append(e); break;}
+            try {setGraph(i, .95);} catch (Exception e) {throwError(textFields[0]); EException.append(e); break;}
         }
     }
 
     private static void setGraph(double x, double r) throws Exception {ParticlesArray.add(new Particle(x, (-(evaluateExpr(mathExpression) * scaleY)), r));}
-    private static void setGraph(double x, double y, double r) throws Exception {ParticlesArray.add(new Particle(x, y, r));}
 
     private static void evalInput(int mode, String express) {
-        scaleY = guardDouble(textFields[1].getText(),textFields[1]);
-        scaleX = guardDouble(textFields[2].getText(),textFields[2]);
+        scaleY = guardDouble(textFields[1].getText(), textFields[1]);
+        scaleX = guardDouble(textFields[2].getText(), textFields[2]);
         mathExpression = (mode == 0) ? textFields[0].getText() : express;
     }
 
