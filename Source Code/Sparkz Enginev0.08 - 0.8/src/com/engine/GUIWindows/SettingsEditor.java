@@ -422,7 +422,7 @@ public class SettingsEditor {
             writer.write("# particleType -- set: 0 - 8 <- MAX \n");
             writer.write("particleType: " + InputWrapper.intTextfieldGuard(0, 8, particleType,textFields[1].getText()) + "\n");
             /*-------------------------------------------------------*/
-            writer.write("# particleGravitationMode -- set: 0 - 6 <- MAX \n");
+            writer.write("# particleGravitationMode -- set: 0 - 7 <- MAX \n");
             writer.write("particleGravitationMode: " + InputWrapper.intTextfieldGuard(0, 7, particleGravitationMode,textFields[2].getText()) + "\n");
             /*-------------------------------------------------------*/
             writer.write("# fireworksAmount -- set: 0 - specify number \n");

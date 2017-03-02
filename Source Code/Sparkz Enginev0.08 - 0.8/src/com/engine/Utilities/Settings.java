@@ -98,7 +98,7 @@ public class Settings {
             writer.write("# particleType -- set: 0 - 8 <- MAX \n");
             writer.write("particleType: " + particleType + "\n");
             /*-------------------------------------------------------*/
-            writer.write("# particleGravitationMode -- set: 0 - 6 <- MAX \n");
+            writer.write("# particleGravitationMode -- set: 0 - 7 <- MAX \n");
             writer.write("particleGravitationMode: " + particleGravitationMode + "\n");
             /*-------------------------------------------------------*/
             writer.write("# fireworksAmount -- set: 0 - specify number \n");

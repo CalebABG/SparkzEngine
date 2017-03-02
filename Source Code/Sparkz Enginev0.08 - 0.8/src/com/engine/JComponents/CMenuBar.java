@@ -38,7 +38,6 @@ public class CMenuBar extends JMenuBar {
         //File End
 
         exit = new JMenuItem("Exit");
-        exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
         exit.addActionListener(e -> QuitWindow.getInstance());
         mnFile.add(exit);
 
@@ -49,12 +48,10 @@ public class CMenuBar extends JMenuBar {
         menuBar.add(mnEdit);
 
         JMenuItem trimParticleArrays = new JMenuItem("Trim Particle Arrays");
-        trimParticleArrays.setAccelerator(KeyStroke.getKeyStroke("3"));
         trimParticleArrays.addActionListener(e -> EngineMethods.trimParticleArrays());
         mnEdit.add(trimParticleArrays);
 
         JMenuItem clearParticleArrays = new JMenuItem("Clear All Arrays");
-        clearParticleArrays.setAccelerator(KeyStroke.getKeyStroke("C"));
 
         clearParticleArrays.addActionListener(e -> EngineMethods.clearParticleArrays());
         mnEdit.add(clearParticleArrays);
@@ -69,33 +66,27 @@ public class CMenuBar extends JMenuBar {
         menuBar.add(mnUIWindows);
 
         optionsMenu = new JMenuItem("Options Menu");
-        optionsMenu.setAccelerator(KeyStroke.getKeyStroke("7"));
         optionsMenu.addActionListener(e -> OptionsMenu.getInstance());
         mnUIWindows.add(optionsMenu);
 
         JMenuItem stats_panel = new JMenuItem("Stats Panel");
-        stats_panel.setAccelerator(KeyStroke.getKeyStroke("control I"));
         stats_panel.addActionListener(e -> StatsPanel.getInstance());
         mnUIWindows.add(stats_panel);
 
         sliderUI = new JMenuItem("Slide Editor");
-        sliderUI.setAccelerator(KeyStroke.getKeyStroke("9"));
         sliderUI.addActionListener(e -> SlideEditor.getInstance());
         mnUIWindows.add(sliderUI);
 
         JMenuItem exceptionUI = new JMenuItem("Exception Log");
-        exceptionUI.setAccelerator(KeyStroke.getKeyStroke("control shift V"));
 
         exceptionUI.addActionListener(e -> EException.getInstance());
         mnUIWindows.add(exceptionUI);
 
         thinkingParticlesUI = new JMenuItem("Particle Color Editor");
-        thinkingParticlesUI.setAccelerator(KeyStroke.getKeyStroke("W"));
         thinkingParticlesUI.addActionListener(e -> ColorEditor.getInstance());
         mnUIWindows.add(thinkingParticlesUI);
 
         particleGraphUI = new JMenuItem("Particle Graph Editor");
-        particleGraphUI.setAccelerator(KeyStroke.getKeyStroke("shift X"));
         particleGraphUI.addActionListener(e -> ParticleGraph.getInstance());
         mnUIWindows.add(particleGraphUI);
 
@@ -123,7 +114,6 @@ public class CMenuBar extends JMenuBar {
         menuBar.add(mnSettings);
 
         enginepause = new JMenuItem(isPaused());
-        enginepause.setAccelerator(KeyStroke.getKeyStroke("8"));
         enginepause.addActionListener(e -> {isPaused = EngineMethods.toggle(isPaused); enginepause.setText(isPaused()); EngineMethods.setEngineTitleState();});
         mnSettings.add(enginepause);
 
@@ -135,7 +125,6 @@ public class CMenuBar extends JMenuBar {
         settingsLoad.addActionListener(e -> {Settings.loadSettings(); updateAllRadios();});
         mnSettings.add(settingsLoad);
         settingsUI = new JMenuItem("Settings Editor");
-        settingsUI.setAccelerator(KeyStroke.getKeyStroke("shift S"));
 
         settingsUI.addActionListener(e -> SettingsEditor.getInstance());
         mnSettings.add(settingsUI);
@@ -146,7 +135,6 @@ public class CMenuBar extends JMenuBar {
         mnHelp.setForeground(Color.white);
 
         helpInstructions = new JMenuItem("Particle Engine Instructions");
-        helpInstructions.setAccelerator(KeyStroke.getKeyStroke("Q"));
         helpInstructions.addActionListener(e -> createEngineInstructionsWindow(EFrame));
         mnHelp.add(helpInstructions);
 

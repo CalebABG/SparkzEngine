@@ -8,7 +8,7 @@ import java.util.List;
 import java.awt.*;
 import java.util.*;
 import java.util.Timer;
-import static java.lang.Math.floor;
+import static java.lang.Math.ceil;
 import static com.engine.Interfaces_Extensions.EModes.*;
 
 public abstract class EConstants {
@@ -30,7 +30,7 @@ public abstract class EConstants {
     public static int fireworksWind             = 2;
     public static int fireworksJitter           = 5;
     public static int fps                       = 60;
-    public static int timerFPS                  = (int) floor(1000.0 / fps);
+    public static int timerFPS                  = (int) ceil(1000.0 / fps);
     public static int oldMouseX                 = -1;
     public static int oldMouseY                 = -1;
     public static int pMouseX                   = 0;
@@ -108,6 +108,6 @@ public abstract class EConstants {
     public static Graphics2D graphics2D;
     public static Timer renderer = new Timer();
     public static TimerTask task;
-    private static GraphicsDevice GD = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-    public static int width = GD.getDisplayMode().getWidth(), height = GD.getDisplayMode().getHeight();
+    public static Toolkit toolkit = Toolkit.getDefaultToolkit();
+    public static int width = toolkit.getScreenSize().width, height = toolkit.getScreenSize().height;
 }
