@@ -10,7 +10,7 @@ public class Flux extends Molecule {
 
     public Flux(){super();}
     public Flux(double _x, double _y, double _radius, double speed, int direction) {
-        super(_x, _y, Math.cos(direction) * speed, Math.sin(direction) * speed, _radius);
+        super(_x, _y, _radius, speed, direction, (byte) 0);
     }
 
     public void giveStyle() {

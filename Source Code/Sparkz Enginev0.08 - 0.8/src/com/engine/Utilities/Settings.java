@@ -59,7 +59,9 @@ public class Settings {
             Writer writer = new OutputStreamWriter(out, "UTF-8");
             getStrings = (mode == 0) ? Particle.getThinkingParticlesStrings() : strings;
             Collections.addAll(splitStrings, getStrings);
-            for (int i = 0; i < splitStrings.size(); i++) {writer.write((splitStrings.get(i) + spliceChar));}
+            for (String splitString : splitStrings) {
+                writer.write((splitString + spliceChar));
+            }
             writer.write("\n");
             writer.close();
             out.close();
@@ -78,7 +80,9 @@ public class Settings {
             ArrayList<String> text = new ArrayList<>();
             String line;
             while ((line = br.readLine()) != null) {text.add(line);}
-            for (int i = 0; i < text.size(); i++) {splitArray.add(text.get(i).split(spliceChar));}
+            for (String aText : text) {
+                splitArray.add(aText.split(spliceChar));
+            }
             br.close();
             fin.close();
             PRESET_INDEXES = (splitArray.size());
@@ -244,7 +248,9 @@ public class Settings {
                 while ((line = br.readLine()) != null) {text.add(line);}
                 for (int i = 0; i < text.size() - 1; i++) {if (i % 2 == 0) {textKeys.add(text.get(i + 1));}}
                 br.close(); fin.close();
-                for (int i = 0; i < textKeys.size(); i++) {textValues.add(textKeys.get(i).substring(textKeys.get(i).indexOf(':') + 1));}
+                for (String textKey : textKeys) {
+                    textValues.add(textKey.substring(textKey.indexOf(':') + 1));
+                }
                 trimValues.addAll(textValues.stream().map(String::trim).collect(Collectors.toList()));
                 setEngineVariables(trimValues);
             } catch (Exception e) {EException.append(e);}

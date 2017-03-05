@@ -74,7 +74,11 @@ public class ColorTimeMachine {
             if (colors_info.isSelected()) {
                 updateColorValues();
             }
-            else{for (int i = 0; i < labels.length; i++) {labels[i].setText("");}}
+            else{
+                for (CLabel label : labels) {
+                    label.setText("");
+                }
+            }
         });
         buttons_panel.add(colors_info);
 
@@ -178,18 +182,16 @@ public class ColorTimeMachine {
     }
 
     public static void updateColorValues() {
-        for (int i = 0; i < labels.length; i++) {
-            if (labels[i].getBackground().equals(Color.black)){
-                labels[i].setText(labels[i].getBGColor());
-                labels[i].setForeground(Color.white);
-            }
-            else if (labels[i].getBackground().equals(Color.white)){
-                labels[i].setText(labels[i].getBGColor());
-                labels[i].setForeground(Color.black);
-            }
-            else{
-                labels[i].setText(labels[i].getBGColor());
-                labels[i].setForeground(Color.black);
+        for (CLabel label : labels) {
+            if (label.getBackground().equals(Color.black)) {
+                label.setText(label.getBGColor());
+                label.setForeground(Color.white);
+            } else if (label.getBackground().equals(Color.white)) {
+                label.setText(label.getBGColor());
+                label.setForeground(Color.black);
+            } else {
+                label.setText(label.getBGColor());
+                label.setForeground(Color.black);
             }
         }
     }

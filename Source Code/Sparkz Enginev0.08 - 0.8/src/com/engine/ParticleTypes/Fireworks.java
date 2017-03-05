@@ -4,23 +4,25 @@ import static com.engine.EngineHelpers.EConstants.*;
 import com.engine.Utilities.ColorConverter;
 import java.awt.*;
 import static com.engine.ParticleHelpers.DrawModes.giveStyle;
+import static java.lang.Math.*;
 
 public class Fireworks extends Molecule {
-    private int life = (int) (Math.random() * fireworksLife + 3), wind = fireworksWind, jitter = fireworksJitter;
+    private int life = (int) (random() * fireworksLife + 3), wind = fireworksWind, jitter = fireworksJitter;
 
     public Fireworks(){super();}
-    public Fireworks(double _x, double _y, double _radius, double speed, int dc) {
-        super(_x, _y, Math.cos(dc) * speed, Math.sin(dc) * speed, _radius);
+    public Fireworks(double _x, double _y, double _radius, double speed, int direction) {
+        super(_x, _y, _radius, speed, direction, (byte) 0);
     }
 
-    public Fireworks(double _x, double _y, double _radius, double speed, int dc, int windval) {
-        super(_x, _y, Math.cos(dc) * speed, Math.sin(dc) * speed, _radius); wind = windval;
+    public Fireworks(double _x, double _y, double _radius, double speed, int direction, int windval) {
+        super(_x, _y, _radius, speed, direction, (byte) 0);
+        wind = windval;
     }
 
     public void accelerateTo(double _vx, double _vy) {
         x += _vx; y += _vy;
-        vx += (Math.random() * wind - (wind / 2)) / jitter;
-        vy += (Math.random() * wind - (wind / 2)) / jitter;
+        vx += (random() * wind - (wind / 2)) / jitter;
+        vy += (random() * wind - (wind / 2)) / jitter;
     }
 
     private Color getSelfColor() {
@@ -39,7 +41,9 @@ public class Fireworks extends Molecule {
     }
 
     public void update () {
-        boundsCheck(); accelerateTo(vx, vy); friction(0.9793);
+        boundsCheck(); 
+        accelerateTo(vx, vy); 
+        friction(0.9793);
         if (life == 0) {FireworksArray.remove(this);} life -= 1;
     }
 }

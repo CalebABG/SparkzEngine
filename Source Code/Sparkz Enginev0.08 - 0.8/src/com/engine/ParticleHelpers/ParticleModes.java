@@ -13,7 +13,6 @@ public class ParticleModes {
      * Creates a particle object at the currposition of the passed in x and y.
      *
      * @param x X currposition.
-     *
      * @param y Y currposition.
      */
     public static void singleParticle(int x, int y) {

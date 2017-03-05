@@ -22,11 +22,11 @@ public class Particle extends Molecule {
 
     public Particle() {super();}
     public Particle(double _x, double _y, double _radius, double speed, int direction) {
-        super(_x, _y, cos(direction) * speed, sin(direction) * speed, _radius);
+        super(_x, _y, _radius, speed, direction, (byte) 0);
     }
 
     public Particle(double _x, double _y, double _radius, double speed, int pX, int pY, int tX, int tY) {
-        super(_x, _y, cos((atan2((tY - pY), (tX - pX)))) * speed, sin((atan2((tY - pY), (tX - pX)))) * speed, _radius);
+        super(_x, _y, cos((atan2(toRadians(tY - pY), toRadians(tX - pX)))) * speed, sin((atan2(toRadians(tY - pY), toRadians(tX - pX)))) * speed, _radius);
     }
 
     public Particle(double _x, double _y, double _radius) {
@@ -34,7 +34,8 @@ public class Particle extends Molecule {
     }
 
     private static int[] getRGBA(int index) {
-        return new int[]{thinkingColors[index].getRed(), thinkingColors[index].getGreen(),
+        return new int[]{
+                thinkingColors[index].getRed(), thinkingColors[index].getGreen(),
                 thinkingColors[index].getBlue(), thinkingColors[index].getAlpha()
         };
     }
@@ -52,35 +53,75 @@ public class Particle extends Molecule {
         };
     }
 
-    public void gravitateTo(Point mouse) {
-        double dx = mouse.x - x, dy = mouse.y - y, dist = sqrt(dx * dx + dy * dy),
-                forceX = (((mouse.x - x) / 5) / dist), forceY = (((mouse.y - y) / 5) / dist);
-
-        switch (particleGravitationMode) {
-            case 0: vx += forceX; vy += forceY; break;
-            case 1: vx += cos(forceX); vy += sin(forceY); break;
-            case 2: vx += atan2((forceY), (forceX)); vy += atan2((forceY), (forceX)); break;
-            case 3: forceX = (((mouse.x - x) / Double.POSITIVE_INFINITY) / dist); forceY = (((mouse.y - y) / 5) / dist); vx += forceX; vy += forceY; break;
-            case 4: forceX = (((mouse.x - x) / 5) / dist); forceY = (((mouse.y - y) / Double.POSITIVE_INFINITY) / dist); vx += forceX; vy += forceY; break;
-            case 5: forceX = (((mouse.x - x) / atan2(10000, atan((atan2(mouse.y, mouse.x))))) / dist); forceY = (((mouse.y - y) / 5 / dist)); vx += forceX; vy += forceY; break;
-            case 6: forceX = ((mouse.x - x) / 300 / dist); forceY = ((mouse.y - y) / 300 / dist); vx += -forceX; vy += -forceY; break;
-            default: vx += forceX; vy += forceY; break;
+    /**
+    * If The object of type Molecule is not null, gravitation will be based on the molecule. * Also means that the object for type Point must be null, 
+    * and vice versa.
+    */
+    public void gravitateTo(Molecule m, Point p) {
+        double dx, dy, dist, forceX, forceY;
+        //Mouse Grav
+        if (p != null){
+            dx = p.x - x;
+            dy = p.y - y;
+            dist = sqrt(dx * dx + dy * dy);
+            forceX = ((dx / 5) / dist);
+            forceY = ((dy / 5) / dist);
         }
-    }
 
-    public void gravitateTo(Molecule p) {
-        double dx = p.x - x, dy = p.y - y, dist = sqrt(dx * dx + dy * dy),
-                forceX = (((p.x - x) / 5) / dist), forceY = (((p.y - y) / 5) / dist);
-
+        //Molecule Grav
+        else {
+            dx = m.x - x;
+            dy = m.y - y;
+            dist = sqrt(dx * dx + dy * dy);
+            forceX = ((dx / 5) / dist);
+            forceY = ((dy / 5) / dist);
+        }
+        
         switch (particleGravitationMode) {
-            case 0: vx += forceX; vy += forceY; break;
-            case 1: vx += cos(forceX); vy += sin(forceY); break;
-            case 2: vx += atan2((forceY), (forceX)); vy += atan2((forceY), (forceX)); break;
-            case 3: forceX = (((p.x - x) / Double.POSITIVE_INFINITY / dist)); forceY = (((p.y - y) / 5) / dist); vx += forceX; vy += forceY; break;
-            case 4: forceX = (((p.x - x) / 5) / dist); forceY = (((p.y - y) / Double.POSITIVE_INFINITY) / dist); vx += forceX; vy += forceY; break;
-            case 5: forceX = (((p.x - x) / atan2(10000, atan(p.heading()))) / dist); forceY = (((p.y - y) / 5 / dist)); vx += forceX; vy += forceY; break;
-            case 6: forceX = ((p.x - x) / 300 / dist); forceY = ((p.y - y) / 300 / dist); vx += -forceX; vy += -forceY; break;
-            default: vx += forceX; vy += forceY; break;
+            case 0:
+                vx += forceX;
+                vy += forceY;
+                break;
+
+            case 1:
+                vx += cos(forceX);
+                vy += sin(forceY);
+                break;
+
+            case 2:
+                vx += atan2((forceY), (forceX));
+                vy += atan2((forceY), (forceX));
+                break;
+
+            case 3:
+                forceX = ((dx / Double.POSITIVE_INFINITY / dist));
+                vx += forceX;
+                vy += forceY;
+                break;
+
+            case 4:
+                forceY = ((dy / Double.POSITIVE_INFINITY) / dist);
+                vx += forceX;
+                vy += forceY;
+                break;
+
+            case 5:
+                forceX = ((dx / atan2(10000, (m != null) ? atan(m.heading()) : atan((atan2(p.y, p.x)))) / dist));
+                vx += forceX;
+                vy += forceY;
+                break;
+
+            case 6:
+                forceX = (dx / 300 / dist);
+                forceY = (dy / 300 / dist);
+                vx += -forceX;
+                vy += -forceY;
+                break;
+
+            default:
+                vx += forceX;
+                vy += forceY;
+                break;
         }
     }
 
@@ -96,11 +137,11 @@ public class Particle extends Molecule {
 
     private Color getSelfColor() {
         Color c = null;
-        if ((vx >= 1 || vx <= -1) || (vy >= 1 || vy <= -1)) {c = thinkingColors[0];}
-        if ((vx >= 2 || vx <= -2) || (vy >= 2 || vy <= -2)) {c = thinkingColors[1];}
-        if ((vx >= 3 || vx <= -3) || (vy >= 3 || vy <= -3)) {c = thinkingColors[2];}
-        if ((vx >= 4 || vx <= -4) || (vy >= 4 || vy <= -4)) {c = thinkingColors[3];}
-        if ((vx >= 5 || vx <= -5) || (vy >= 5 || vy <= -5)) {c = thinkingColors[4];}
+        if ((vx >= 1 || vx <= -1) || (vy >= 1 || vy <= -1)) c = thinkingColors[0];
+        if ((vx >= 2 || vx <= -2) || (vy >= 2 || vy <= -2)) c = thinkingColors[1];
+        if ((vx >= 3 || vx <= -3) || (vy >= 3 || vy <= -3)) c = thinkingColors[2];
+        if ((vx >= 4 || vx <= -4) || (vy >= 4 || vy <= -4)) c = thinkingColors[3];
+        if ((vx >= 5 || vx <= -5) || (vy >= 5 || vy <= -5)) c = thinkingColors[4];
         if (c == null) c = thinkingColors[0]; return c;
     }
 
@@ -130,22 +171,24 @@ public class Particle extends Molecule {
     }
 
     public void friction() {
-        float minVel = 0.01f, scale = 0.9993f; // Default: 0.01f
-        if (abs(vx) <= minVel) {vx = 0.0;}
-        if (abs(vy) <= minVel) {vy = 0.0;}
-        vx *= scale; vy *= scale;
+        float minVel = 0.01f, scale = 0.9993f;
+        if (abs(vx) <= minVel) vx = 0.0;
+        if (abs(vy) <= minVel) vy = 0.0;
+        vx *= scale;
+        vy *= scale;
     }
 
     public void render() {
-        if (thinkingParticles) {color = getSelfColor();} else {color = ColorConverter.getColor();}
+        if (thinkingParticles) color = getSelfColor();
+        else color = ColorConverter.getColor();
         if (connectParticles && ParticlesArray.size() <= 100) {if (PTMODEBOOL) {connectModeSequential();} else {connectModeAll();}}
         giveStyle(x, y, radius, color, particleRenderType, baseParticleText);
     }
 
     public void update() {
         boundsCheck();
-        if (mouseGravitation) gravitateTo(Mouse);
-        if ((switchMode == NORMAL_MODE || switchMode == MULTI_MODE) && particleGravitationMode == ORGANIC && ParticlesArray.size() <= 265){
+        if (mouseGravitation) gravitateTo(null, Mouse);
+        if ((switchMode == NORMAL_MODE || switchMode == MULTI_MODE) && (particleGravitationMode == ORGANIC) && ParticlesArray.size() <= 265){
             accelerateTo(evaluateExpr(expressionForceX), evaluateExpr(expressionForceY));
             if (angle >= 100 * (2 * PI)) {angle = 0.0;} angle += angleIncrement; particleScriptEngine.put("x", angle);
         }

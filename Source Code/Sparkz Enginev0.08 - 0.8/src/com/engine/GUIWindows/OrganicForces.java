@@ -188,7 +188,11 @@ public class OrganicForces {
     }
 
     private static void setForces() {
-        try {for (int i = 0; i < mathFunctions.length; i++) {particleScriptEngine.eval(mathFunctions[i]);}}catch (Exception e){EException.append(e);}
+        try {
+            for (String mathFunction : mathFunctions) {
+                particleScriptEngine.eval(mathFunction);
+            }
+        }catch (Exception e){EException.append(e);}
         Particle.expressionForceX = forceXTextField.getText();
         Particle.expressionForceY = forceYTextField.getText();
         Particle.angleIncrement = Particle.evaluateExpr(angleIncrementTextField.getText());

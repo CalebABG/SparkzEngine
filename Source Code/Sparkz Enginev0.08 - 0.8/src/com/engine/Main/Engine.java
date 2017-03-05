@@ -6,7 +6,6 @@ import static com.engine.JComponents.CMenuBar.createMenuBar;
 import com.engine.EngineHelpers.EngineSplash;
 import com.engine.GUIWindows.StatsPanel;
 import com.engine.GUIWindows.QuitWindow;
-import com.engine.GUIWindows.EException;
 import com.engine.Interfaces_Extensions.TimerTaskX;
 import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.Utilities.Settings;

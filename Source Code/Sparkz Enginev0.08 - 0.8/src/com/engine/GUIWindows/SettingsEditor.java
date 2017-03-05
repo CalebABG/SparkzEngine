@@ -555,6 +555,10 @@ public class SettingsEditor {
         }
     }
 
-    private static void clearText() {for (int i = 0; i < textFields.length; i++) {textFields[i].setText("");}}
+    private static void clearText() {
+        for (CTextField textField : textFields) {
+            textField.setText("");
+        }
+    }
     public void close(){settingsEditor = null; frame.dispose();}
 }

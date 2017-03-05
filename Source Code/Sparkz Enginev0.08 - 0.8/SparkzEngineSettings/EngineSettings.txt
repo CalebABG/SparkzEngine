@@ -1,8 +1,8 @@
 # switchMode -- set: 0 - 4 <- MAX 
-switchMode: 0
+switchMode: 2
 # particleType -- set: 0 - 8 <- MAX 
 particleType: 0
-# particleGravitationMode -- set: 0 - 6 <- MAX 
+# particleGravitationMode -- set: 0 - 7 <- MAX 
 particleGravitationMode: 0
 # fireworksAmount -- set: 0 - specify number 
 fireworksAmount: 30
@@ -55,7 +55,7 @@ connectParticles: false
 # particleFriction -- set: true - false 
 particleFriction: true
 # mouseGravitation -- set: true - false 
-mouseGravitation: true
+mouseGravitation: false
 # isPaused -- set: true - false 
 isPaused: false
 # GDMODEBOOL -- set: true - false 

@@ -5,11 +5,12 @@ import static com.engine.EngineHelpers.EConstants.*;
 import java.awt.*;
 
 public class QED extends Molecule {
-    public int life = (int) (Math.random() * 400 + 150), particletype = 0;
+    public int life, particletype;
 
     public QED() {super();}
     public QED(double _x, double _y, double _radius, double speed, int direction) {
-        super(_x, _y, Math.cos(direction) * speed, Math.sin(direction) * speed, _radius);
+        super(_x, _y, _radius, speed, direction, (byte) 0);
+        life = (int) (Math.random() * 400 + 150);
         particletype = (int) (Math.random() * 11);
     }
 

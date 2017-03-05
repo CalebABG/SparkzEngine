@@ -10,7 +10,7 @@ public class Eraser extends Molecule {
 
     public Eraser(){super();}
     public Eraser(double _x, double _y, double _radius, double speed, int direction) {
-        super(_x, _y, Math.cos(direction) * speed, Math.sin(direction) * speed, _radius);
+        super(_x, _y, _radius, speed, direction, (byte) 0);
         color = Color.orange;
     }
 
@@ -22,16 +22,13 @@ public class Eraser extends Molecule {
         }
     }
 
-    public void giveStyle() {
+    public void render(){
         graphics2D.setColor(color);
         graphics2D.draw(new Ellipse2D.Double(x, y, radius, radius));
     }
-
-    public void render() {
-        giveStyle();
-    }
     public void update () {
         boundsCheck(); accelerateTo(vx, vy); destroy();
-        if (life == 0) {EraserArray.remove(this); ParticleModes.fireworksMode(x, y, 2, 5, 30);} life -= 1;
+        if (life == 0) {EraserArray.remove(this); ParticleModes.fireworksMode(x, y, 2, 5, 30);}
+        life -= 1;
     }
 }

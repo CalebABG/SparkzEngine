@@ -1,6 +1,7 @@
 package com.engine.ParticleTypes;
 
 import static com.engine.EngineHelpers.EConstants.*;
+import static java.lang.Math.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
@@ -10,15 +11,14 @@ public class Duplex extends Molecule {
 
     public Duplex() {super();}
     public Duplex(double _x, double _y, double _radius, double speed, int direction) {
-        super(_x, _y, Math.cos(direction) * speed, Math.sin(direction) * speed, _radius);
+        super(_x, _y, _radius, speed, direction, (byte) 0);
         duplexMode = DUPLEXMODE;
     }
 
     private void deter() {
         for (int i = 0; i < ParticlesArray.size(); i++) {
-            Particle p = ParticlesArray.get(i); double dx = (p.x - x), dy = (p.y - y),
-                    R = 2.6245 * (2 * radius), dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < R) {activeForces(p, duplexMode, dist);}
+            Particle p = ParticlesArray.get(i); double dx = (p.x - x), dy = (p.y - y), dist = sqrt(dx * dx + dy * dy);
+            if (dist < 4.6245 * radius) {activeForces(p, duplexMode, dist);}
         }
     }
 
@@ -37,7 +37,5 @@ public class Duplex extends Molecule {
     public void render() {
         giveStyle();
     }
-    public void update() {
-        boundsCheck(); deter(); if (radius < 0) {DuplexArray.remove(this);} radius -= 0.002;
-    }
+    public void update() {boundsCheck(); deter(); if (radius < 0) {DuplexArray.remove(this);} radius -= 0.002;}
 }

@@ -1,7 +1,7 @@
 package com.engine.ParticleTypes;
 
 import com.engine.Interfaces_Extensions.MoleculeRender;
-
+import static java.lang.Math.*;
 import static com.engine.EngineHelpers.EConstants.*;
 import java.awt.*;
 
@@ -21,6 +21,14 @@ public abstract class Molecule implements MoleculeRender {
 
     public Molecule(double x, double y, double vx, double vy, double radius) {
         this.x = x; this.y = y; this.vx = vx; this.vy = vy; this.radius = radius;
+    }
+
+    public Molecule(double x, double y, double radius, double speed, double direction, byte dummy) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.vx = cos(toRadians(direction)) * speed;
+        this.vy = sin(toRadians(direction)) * speed;
     }
 
     public void accelerateTo (double _vx, double _vy) {x += _vx; y += _vy;}
@@ -73,20 +81,29 @@ public abstract class Molecule implements MoleculeRender {
     }
 
     public void gravitateTo(Molecule p) {
-        double dx = p.x - x,  dy = p.y - y, dist = Math.sqrt(dx * dx + dy * dy);
-        double forceX = (((p.x - x) / 5) / dist); vx += forceX;
-        double forceY = (((p.y - y) / 5) / dist); vy += forceY;
+        double  dx = p.x - x,
+                dy = p.y - y,
+                dist = Math.sqrt(dx * dx + dy * dy);
+
+        double forceX = ((dx / 5) / dist); vx += forceX;
+        double forceY = ((dy / 5) / dist); vy += forceY;
     }
 
     public void gravitateTo(Molecule p, double z) {
-        double dx = p.x - x, dy = p.y - y, dist = Math.sqrt(dx * dx + dy * dy);
-        double forceX = (((p.x - x) / z) / dist); vx += forceX;
-        double forceY = (((p.y - y) / z) / dist); vy += forceY;
+        double  dx = p.x - x,
+                dy = p.y - y,
+                dist = Math.sqrt(dx * dx + dy * dy);
+
+        double forceX = ((dx / z) / dist); vx += forceX;
+        double forceY = ((dy / z) / dist); vy += forceY;
     }
 
     public void gravitateTo(Point p) {
-        double dx = p.x - x, dy = p.y - y, dist = Math.sqrt(dx * dx + dy * dy);
-        double forceX = (((p.x - x) / 5) / dist); vx += forceX;
-        double forceY = (((p.y - y) / 5) / dist); vy += forceY;
+        double  dx = p.x - x,
+                dy = p.y - y,
+                dist = Math.sqrt(dx * dx + dy * dy);
+
+        double forceX = ((dx / 5) / dist); vx += forceX;
+        double forceY = ((dy / 5) / dist); vy += forceY;
     }
 }

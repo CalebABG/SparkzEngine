@@ -10,8 +10,6 @@ import static com.engine.EngineHelpers.EngineMethods.*;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 
 public class CMenuBar extends JMenuBar {
     public static Color bgColor = new Color(20, 23, 25).brighter();

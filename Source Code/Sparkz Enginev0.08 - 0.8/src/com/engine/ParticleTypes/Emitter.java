@@ -8,11 +8,14 @@ public class Emitter extends Molecule {
     public int life = 800;
 
     public Emitter() {super();}
-    public Emitter(double _x, double _y, double _radius, double speed, int direction) {super(_x, _y, Math.cos(direction) * speed, Math.sin(direction) * speed, _radius);}
+    public Emitter(double _x, double _y, double _radius, double speed, int direction) {
+        super(_x, _y, _radius, speed, direction, (byte) 0);
+    }
 
     private void emitAtPoint() {ParticleModes.fireworksMode(x, y, fireworksWind, (int) (fireworksSpeedVal), fireworksAmount);}
-    public void giveStyle() {graphics2D.setColor(color);}
-    public void render() {giveStyle();}
+    public void render() {
+        graphics2D.setColor(color);
+    }
 
     public void update() {
         boundsCheck();
