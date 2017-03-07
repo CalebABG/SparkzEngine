@@ -1,7 +1,7 @@
 package com.engine.GUIWindows;
 
-import com.engine.J8Helpers.Interfaces.KeyAdapterX;
-import com.engine.J8Helpers.Extensions.WindowClosing;
+import com.engine.Interfaces_Extensions.KeyAdapterX;
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;

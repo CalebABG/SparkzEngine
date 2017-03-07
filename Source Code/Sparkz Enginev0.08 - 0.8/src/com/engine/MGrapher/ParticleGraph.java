@@ -2,9 +2,9 @@ package com.engine.MGrapher;
 
 import com.engine.EngineHelpers.EngineMethods;
 import com.engine.GUIWindows.SampleFunctions;
-import com.engine.J8Helpers.Extensions.KAdapter;
-import com.engine.J8Helpers.Extensions.MAdapter;
-import com.engine.J8Helpers.Extensions.WindowClosing;
+import com.engine.Interfaces_Extensions.KAdapter;
+import com.engine.Interfaces_Extensions.MAdapter;
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.JComponents.TextSuggestor;
 import com.engine.JComponents.CTextField;
 import com.engine.JComponents.RButton;

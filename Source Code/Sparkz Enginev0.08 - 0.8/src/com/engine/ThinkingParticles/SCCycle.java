@@ -3,7 +3,7 @@ package com.engine.ThinkingParticles;
 import static com.engine.EngineHelpers.EConstants.*;
 
 import com.engine.GUIWindows.ColorTimeMachine;
-import com.engine.J8Helpers.Extensions.TimerTaskX;
+import com.engine.Interfaces_Extensions.TimerTaskX;
 import com.engine.ParticleTypes.Particle;
 import com.engine.Utilities.Settings;
 

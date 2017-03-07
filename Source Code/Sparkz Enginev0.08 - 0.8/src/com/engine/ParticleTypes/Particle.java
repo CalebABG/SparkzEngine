@@ -1,6 +1,6 @@
 package com.engine.ParticleTypes;
 
-import static com.engine.J8Helpers.Interfaces.EModes.*;
+import static com.engine.Interfaces_Extensions.EModes.*;
 import static com.engine.ParticleHelpers.ParticleModes.fireworksMode;
 import static java.lang.Math.*;
 import com.engine.GUIWindows.EException;
@@ -161,7 +161,7 @@ public class Particle extends Molecule {
     }
 
     public void boundsCheck() {
-        if (engineMode != GRAPH_MODE) super.boundsCheck();
+        if (switchMode != GRAPH_MODE) super.boundsCheck();
         else {
             if (this.x > canvas.getWidth()  /  2) this.x = -canvas.getWidth() / 2;
             if (this.x < -canvas.getWidth() /  2) this.x = canvas.getWidth()  / 2;
@@ -188,7 +188,7 @@ public class Particle extends Molecule {
     public void update() {
         boundsCheck();
         if (mouseGravitation) gravitateTo(null, Mouse);
-        if ((engineMode == NORMAL_MODE || engineMode == MULTI_MODE) && (particleGravitationMode == ORGANIC) && ParticlesArray.size() <= 265){
+        if ((switchMode == NORMAL_MODE || switchMode == MULTI_MODE) && (particleGravitationMode == ORGANIC) && ParticlesArray.size() <= 265){
             accelerateTo(evaluateExpr(expressionForceX), evaluateExpr(expressionForceY));
             if (angle >= 100 * (2 * PI)) {angle = 0.0;} angle += angleIncrement; particleScriptEngine.put("x", angle);
         }
@@ -197,7 +197,7 @@ public class Particle extends Molecule {
             if (particleFriction) friction();
         }
 
-        if (engineMode == FIREWORKS_MODE) {
+        if (switchMode == FIREWORKS_MODE) {
             if (life == 0) {
                 ParticlesArray.remove(this);
                 if (isSafeAmount) fireworksMode(getCenter().getX(), getCenter().getY());

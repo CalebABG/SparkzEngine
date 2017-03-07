@@ -1,6 +1,4 @@
-package com.engine.J8Helpers.Extensions;
-
-import com.engine.J8Helpers.Interfaces.Function;
+package com.engine.Interfaces_Extensions;
 
 import java.util.TimerTask;
 

@@ -119,20 +119,10 @@ public class TextSuggestor implements DocumentListener {
 
         // Add undo/redo actions
         pTextComponent.getActionMap().put("undoKeystroke", new AbstractAction("undoKeystroke") {
-            public void actionPerformed(ActionEvent evt) {
-                try {
-                    if (undoMgr.canUndo()) undoMgr.undo();
-                } catch (Exception e) {EException.append(e);}
-            }
-        });
+            public void actionPerformed(ActionEvent evt) {try {if (undoMgr.canUndo()) {undoMgr.undo();}} catch (Exception e) {EException.append(e);}}});
 
         pTextComponent.getActionMap().put("redoKeystroke", new AbstractAction("redoKeystroke") {
-            public void actionPerformed(ActionEvent evt) {
-                try {
-                    if (undoMgr.canRedo()) undoMgr.redo();
-                } catch (Exception e) {EException.append(e);}
-            }
-        });
+            public void actionPerformed(ActionEvent evt) {try {if (undoMgr.canRedo()) {undoMgr.redo();}} catch (Exception e) {EException.append(e);}}});
 
         // Create keyboard accelerators for undo/redo actions (Ctrl+Z/Ctrl+Y)
         pTextComponent.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK), "undoKeystroke");

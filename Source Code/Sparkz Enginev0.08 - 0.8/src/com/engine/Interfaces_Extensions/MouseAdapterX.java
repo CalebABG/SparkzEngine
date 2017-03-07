@@ -1,4 +1,4 @@
-package com.engine.J8Helpers.Interfaces;
+package com.engine.Interfaces_Extensions;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

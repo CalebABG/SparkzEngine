@@ -2,9 +2,9 @@ package com.engine.GUIWindows;
 
 import static com.engine.EngineHelpers.EConstants.*;
 
-import com.engine.J8Helpers.Extensions.KAdapter;
-import com.engine.J8Helpers.Extensions.TimerTaskX;
-import com.engine.J8Helpers.Extensions.WindowClosing;
+import com.engine.Interfaces_Extensions.KAdapter;
+import com.engine.Interfaces_Extensions.TimerTaskX;
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;

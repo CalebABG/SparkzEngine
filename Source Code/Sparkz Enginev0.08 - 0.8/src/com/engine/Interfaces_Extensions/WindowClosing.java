@@ -1,4 +1,4 @@
-package com.engine.J8Helpers.Extensions;
+package com.engine.Interfaces_Extensions;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

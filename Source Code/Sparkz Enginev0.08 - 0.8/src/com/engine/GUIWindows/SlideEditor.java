@@ -3,7 +3,7 @@ package com.engine.GUIWindows;
 import com.engine.EngineHelpers.EngineMethods;
 import static com.engine.EngineHelpers.EConstants.*;
 
-import com.engine.J8Helpers.Extensions.WindowClosing;
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.JComponents.CSlider;
 import com.engine.Utilities.Settings;
 import javax.swing.*;

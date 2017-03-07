@@ -34,17 +34,16 @@ public class Constraint {
         // calculate the distance between the two Points
         double diffX = p1.currPos.x - p2.currPos.x;
         double diffY = p1.currPos.y - p2.currPos.y;
-        double d = (diffX * diffX + diffY * diffY);
+        double d = Math.sqrt(diffX * diffX + diffY * diffY);
 
         // find the difference, or the ratio of how far along the restingDistance the actual distance is.
-        double difference = (restingDistance - d*d) / d*d;
+        double difference = (restingDistance - d) / d;
 
         if (tearable) if (d > tearSensitivity) p1.removeLink(this);
 
         // Inverse the mass quantities
         double im1 = 1 / p1.mass, im2 = 1 / p2.mass;
-        double scalarP1 = (im1 / (im1 + im2)) * stiffness;
-        double scalarP2 = stiffness - scalarP1;
+        double scalarP1 = (im1 / (im1 + im2)) * stiffness, scalarP2 = stiffness - scalarP1;
 
         // Push/pull based on mass
         // heavier objects will be pushed/pulled less than attached light objects

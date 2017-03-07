@@ -1,6 +1,6 @@
 package com.engine.ParticleTypes;
 
-import com.engine.J8Helpers.Interfaces.MoleculeRender;
+import com.engine.Interfaces_Extensions.MoleculeRender;
 import static java.lang.Math.*;
 import static com.engine.EngineHelpers.EConstants.*;
 import java.awt.*;

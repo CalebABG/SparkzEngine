@@ -1,6 +1,6 @@
 package com.engine.ParticleHelpers;
 
-import static com.engine.J8Helpers.Interfaces.EModes.*;
+import static com.engine.Interfaces_Extensions.EModes.*;
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.GUIWindows.ParticleTypeUI.particleTypeUIs;
 import com.engine.GUIWindows.EException;

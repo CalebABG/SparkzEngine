@@ -1,7 +1,7 @@
 package com.engine.GUIWindows;
 
-import com.engine.J8Helpers.Extensions.KAdapter;
-import com.engine.J8Helpers.Extensions.WindowClosing;
+import com.engine.Interfaces_Extensions.KAdapter;
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.JComponents.TextSuggestor;
 import com.engine.ParticleTypes.Particle;
 import com.engine.Utilities.Settings;

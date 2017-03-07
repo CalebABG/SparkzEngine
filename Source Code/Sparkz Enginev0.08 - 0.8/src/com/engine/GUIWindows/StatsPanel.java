@@ -1,8 +1,8 @@
 package com.engine.GUIWindows;
 
 import com.engine.EngineHelpers.EngineMethods;
-import com.engine.J8Helpers.Extensions.TimerTaskX;
-import com.engine.J8Helpers.Extensions.WindowClosing;
+import com.engine.Interfaces_Extensions.TimerTaskX;
+import com.engine.Interfaces_Extensions.WindowClosing;
 import com.engine.JComponents.CLabel;
 import com.engine.Utilities.Settings;
 import javax.swing.*;

@@ -2,7 +2,7 @@ package com.engine.GUIWindows;
 
 import static com.engine.EngineHelpers.EConstants.*;
 
-import com.engine.J8Helpers.Interfaces.WindowAdapterX;
+import com.engine.Interfaces_Extensions.WindowAdapterX;
 import com.engine.Utilities.H5Wrapper;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
