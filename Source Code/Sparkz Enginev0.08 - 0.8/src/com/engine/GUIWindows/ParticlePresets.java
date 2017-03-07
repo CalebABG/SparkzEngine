@@ -1,6 +1,6 @@
 package com.engine.GUIWindows;
 
-import com.engine.Interfaces_Extensions.WindowClosing;
+import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.Utilities.Settings;
 
 import javax.swing.*;

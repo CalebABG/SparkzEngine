@@ -67,16 +67,6 @@ public class Physics {
 
 
     private static void accelerate() {
-        for (int i = 0; i < POINTS.size(); i++) {
-            Point p = POINTS.get(i);
-            gravity = (ZERO_GRAVITY) ? 0.0 : .251;
-            Vect2D temp = new Vect2D(p.currPos.x, p.currPos.y);
-            p.currPos.add((kViscosity * p.currPos.x - kViscosity * p.prevPos.x), (kViscosity * p.currPos.y - kViscosity * p.prevPos.y) + gravity);
-            p.prevPos = temp;
-            if (p.pinned) {
-                p.currPos.x = p.pinX;
-                p.currPos.y = p.pinY;
-            }
-        }
+        POINTS.forEach(Point::accelerate);
     }//end
 }

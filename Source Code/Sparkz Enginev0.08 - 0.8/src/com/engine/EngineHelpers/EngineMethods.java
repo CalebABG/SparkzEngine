@@ -1,7 +1,7 @@
 package com.engine.EngineHelpers;
 
 import static com.engine.EngineHelpers.EConstants.*;
-import static com.engine.Interfaces_Extensions.EModes.*;
+import static com.engine.J8Helpers.Interfaces.EModes.*;
 import static com.engine.Utilities.H5Wrapper.H;
 import static com.engine.Utilities.InputWrapper.minValueGuard;
 import static com.engine.Verlet.Point.POINTS;
@@ -26,7 +26,7 @@ public class EngineMethods {
      * @see com.engine.InputHandlers.MMotionListener
      */
     public static void switchClickMode(MouseEvent e) {
-        if (switchMode == NORMAL_MODE){
+        if (engineMode == NORMAL_MODE){
             if (particleType == PARTICLE)       ParticleModes.singleParticle(e);
             if (particleType == GRAVITY_POINT)  ParticleModes.singleGravityPoint(e);
             if (particleType == EMITTER)        ParticleModes.singleEmitter(e);
@@ -38,7 +38,7 @@ public class EngineMethods {
             if (particleType == PORTAL)         ParticleModes.singlePortal(e);
         }
 
-        else if (switchMode == MULTI_MODE){
+        else if (engineMode == MULTI_MODE){
             if (particleType == PARTICLE)       ParticleModes.multiParticle(e);
             if (particleType == GRAVITY_POINT)  ParticleModes.multiGravityPoint(e, 4);
             if (particleType == EMITTER)        ParticleModes.singleEmitter(e);
@@ -50,8 +50,8 @@ public class EngineMethods {
             if (particleType == PORTAL)         ParticleModes.singlePortal(e);
         }
 
-        else if (switchMode == FIREWORKS_MODE) {mouseGravitation = false; ParticleModes.fireworksTarget(e);}
-        else if (switchMode == RAGDOLL_MODE) {VPHandler.handleRagdollMode(e);}
+        else if (engineMode == FIREWORKS_MODE) {mouseGravitation = false; ParticleModes.fireworksTarget(e);}
+        else if (engineMode == RAGDOLL_MODE) {VPHandler.handleRagdollMode(e);}
     }
 
     /**
@@ -103,7 +103,7 @@ public class EngineMethods {
      * @see com.engine.Main.Engine
      */
     public static void handleGraphicsSmoothing(){
-        if (switchMode == RAGDOLL_MODE){
+        if (engineMode == RAGDOLL_MODE){
             if (SMOOTH){
                 graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
                 graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -413,8 +413,9 @@ public class EngineMethods {
     }
 
     public static void updateEngineMode() {
-        switchMode++;
-        if (switchMode > RAGDOLL_MODE) {switchMode = NORMAL_MODE;}
+        engineMode++;
+        if (engineMode > RAGDOLL_MODE) {
+            engineMode = NORMAL_MODE;}
         displayEngineMode();
         updateParticleModesRadios();
     }
@@ -424,7 +425,7 @@ public class EngineMethods {
      * @see com.engine.InputHandlers.KHandler
      */
     public static void leftArrowFunction(){
-        if (switchMode == RAGDOLL_MODE) {
+        if (engineMode == RAGDOLL_MODE) {
             VPHandler.MODE--;
             if (VPHandler.MODE < 0) VPHandler.MODE = VPHandler.MAX_MODE;
             displayParticleType();
@@ -442,7 +443,7 @@ public class EngineMethods {
      * @see com.engine.InputHandlers.KHandler
      */
     public static void rightArrowFunction(){
-        if (switchMode == RAGDOLL_MODE) {
+        if (engineMode == RAGDOLL_MODE) {
             VPHandler.MODE++;
             if (VPHandler.MODE > VPHandler.MAX_MODE) VPHandler.MODE = 0;
             displayParticleType();
@@ -524,7 +525,7 @@ public class EngineMethods {
      * @see com.engine.InputHandlers.KHandler
      */
     public static void displayEngineMode(){
-        switch (switchMode) {
+        switch (engineMode) {
             case 0: Notifier.getInstance("Normal Mode",     380, 80); break;
             case 1: Notifier.getInstance("Multi Mode",      320, 80); break;
             case 2: Notifier.getInstance("Fireworks Mode",  470, 80); break;
@@ -539,7 +540,7 @@ public class EngineMethods {
      * @see CMenuBar
      */
     public static void displayParticleType(){
-        if (switchMode == RAGDOLL_MODE) {
+        if (engineMode == RAGDOLL_MODE) {
             switch (VPHandler.MODE){
                 case 0: Notifier.getInstance("Point",       150, 80); break;
                 case 1: Notifier.getInstance("Stick",       140, 80); break;
@@ -615,8 +616,8 @@ public class EngineMethods {
      * @see StatsPanel
      */
     public static String getModeText(){
-        if (switchMode == NORMAL_MODE) return "Particle Mode: Normal"; else if (switchMode == MULTI_MODE) return "Particle Mode: Multi";
-        else if (switchMode == FIREWORKS_MODE) return "Particle Mode: Fireworks"; else if (switchMode == GRAPH_MODE) return "Particle Mode: Graph";
+        if (engineMode == NORMAL_MODE) return "Particle Mode: Normal"; else if (engineMode == MULTI_MODE) return "Particle Mode: Multi";
+        else if (engineMode == FIREWORKS_MODE) return "Particle Mode: Fireworks"; else if (engineMode == GRAPH_MODE) return "Particle Mode: Graph";
         else return "Particle Mode: Ragdoll";
     }
 
@@ -662,7 +663,7 @@ public class EngineMethods {
      */
     public static void handleUpdates() {
         try{
-            if (switchMode != RAGDOLL_MODE) {
+            if (engineMode != RAGDOLL_MODE) {
                 updateParticlesArray(); updateGravityPointsArray(); updateFwParticlesArray();
                 updateEmitterArray(); updateFluxArray(); updateObstructArray();
                 updateQEDArray(); updateIonsArray(); updateBlackHoleArray();
@@ -676,9 +677,9 @@ public class EngineMethods {
      */
     public static void handleRenders() {
         try {
-            if (switchMode == GRAPH_MODE){drawMid();}
-            if (switchMode == RAGDOLL_MODE) {displayPointArraySize(); Physics.update(); Physics.render();}
+            if (engineMode == RAGDOLL_MODE) {displayPointArraySize(); Physics.update(); Physics.render();}
             else {
+                if (engineMode == GRAPH_MODE) drawMid();
                 renderParticlesArray(); renderGravityPointsArray(); renderFwParticlesArray();
                 renderEmitterArray(); renderFluxArray(); renderObstructArray();
                 renderQEDArray(); renderIonsArray(); renderBlackHoleArray();

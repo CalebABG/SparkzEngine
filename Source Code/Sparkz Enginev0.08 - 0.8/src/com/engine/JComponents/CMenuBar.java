@@ -186,8 +186,9 @@ public class CMenuBar extends JMenuBar {
         particleModesGroup.add(pModes[4]);
         particleModes.add(pModes[4]);
 
-        for (JRadioButtonMenuItem b : pModes) {if (Integer.parseInt(b.getActionCommand()) == switchMode) {b.setSelected(true); break;}}
-        for (JRadioButtonMenuItem b : pModes) {b.addActionListener(e -> {switchMode = Integer.parseInt(particleModesGroup.getSelection().getActionCommand()); displayEngineMode();});}
+        for (JRadioButtonMenuItem b : pModes) {if (Integer.parseInt(b.getActionCommand()) == engineMode) {b.setSelected(true); break;}}
+        for (JRadioButtonMenuItem b : pModes) {b.addActionListener(e -> {
+            engineMode = Integer.parseInt(particleModesGroup.getSelection().getActionCommand()); displayEngineMode();});}
 
         modes.add(particleModes);
 
@@ -303,7 +304,7 @@ public class CMenuBar extends JMenuBar {
     }
 
     public static void updateParticleModesRadios() {
-        for (JRadioButtonMenuItem b : pModes) {if (Integer.parseInt(b.getActionCommand()) == switchMode) {b.setSelected(true); break;}}}
+        for (JRadioButtonMenuItem b : pModes) {if (Integer.parseInt(b.getActionCommand()) == engineMode) {b.setSelected(true); break;}}}
     public static void updateParticleTypesRadios() {
         for (JRadioButtonMenuItem b : pTypes) {if (Integer.parseInt(b.getActionCommand()) == particleType) {b.setSelected(true); break;}}}
     public static void updateGravitationModesRadios() {

@@ -2,13 +2,13 @@ package com.engine.GUIWindows;
 
 import static com.engine.EngineHelpers.EConstants.*;
 
-import com.engine.Interfaces_Extensions.WindowClosing;
+import com.engine.J8Helpers.Extensions.MLAStruct;
+import com.engine.J8Helpers.Extensions.MLAdapter;
+import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.JComponents.CLabel;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
 
 public class QuitWindow {
@@ -47,26 +47,24 @@ public class QuitWindow {
 
         label2 = new CLabel(new Rectangle(20, frame.getHeight() / 2 - (26), 90, 50), "Yes", new
                 Font("Times", Font.PLAIN, 45), Color.white, option_yes);
-        label2.addMouseListener(new MouseListener() {
-            public void mouseClicked(MouseEvent e) {System.exit(0);}
-            public void mousePressed(MouseEvent e) {}
-            public void mouseReleased(MouseEvent e) {}
-            public void mouseEntered(MouseEvent e) {label2.setBackground(option_yes.brighter());}
-            public void mouseExited(MouseEvent e) {
-                label2.setBackground(option_yes.darker());
-            }
-        });
+
+        MLAdapter mlAdapter1 = new MLAdapter(
+                new MLAStruct("Clicked", e -> System.exit(0)),
+                new MLAStruct("Entered", e -> label2.setBackground(option_yes.brighter())),
+                new MLAStruct("Exited",  e -> label2.setBackground(option_yes.darker()))
+        );
+        label2.addMouseListener(mlAdapter1);
         panel.add(label2);
 
         label3 = new CLabel(new Rectangle((frame.getWidth() - 109), frame.getHeight() / 2 - (26), 90, 50), "No", new
                 Font("Times", Font.PLAIN, 45), Color.white, option_no);
-        label3.addMouseListener(new MouseListener() {
-            public void mouseClicked(MouseEvent e) {exitScreen = null; frame.dispose();}
-            public void mousePressed(MouseEvent e) {}
-            public void mouseReleased(MouseEvent e) {}
-            public void mouseEntered(MouseEvent e) {label3.setBackground(option_no.brighter());}
-            public void mouseExited(MouseEvent e) {label3.setBackground(option_no.darker());}
-        });
+
+        MLAdapter mlAdapter2 = new MLAdapter(
+                new MLAStruct("Clicked", e -> close()),
+                new MLAStruct("Entered", e -> label3.setBackground(option_no.brighter())),
+                new MLAStruct("Exited",  e -> label3.setBackground(option_no.darker()))
+        );
+        label3.addMouseListener(mlAdapter2);
 
         panel.add(label3);
         frame.setVisible(true);

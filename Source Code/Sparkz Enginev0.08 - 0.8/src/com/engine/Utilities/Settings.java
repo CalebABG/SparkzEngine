@@ -96,8 +96,8 @@ public class Settings {
             FileOutputStream out = new FileOutputStream(settings_file_path, false);
             Writer writer = new OutputStreamWriter(out, "UTF-8");
             /*-------------------------------------------------------*/
-            writer.write("# switchMode -- set: 0 - 4 <- MAX \n");
-            writer.write("switchMode: " + switchMode + "\n");
+            writer.write("# engineMode -- set: 0 - 4 <- MAX \n");
+            writer.write("engineMode: " + engineMode + "\n");
             /*-------------------------------------------------------*/
             writer.write("# particleType -- set: 0 - 8 <- MAX \n");
             writer.write("particleType: " + particleType + "\n");
@@ -199,7 +199,7 @@ public class Settings {
     private static void setEngineVariables(ArrayList<String> s) {
         //Set Variables
         /*--------------------------------------------------------*/
-        switchMode = Integer.parseInt(s.get(0));
+        engineMode = Integer.parseInt(s.get(0));
         particleType = Integer.parseInt(s.get(1));
         particleGravitationMode = Integer.parseInt(s.get(2));
         fireworksAmount = Integer.parseInt(s.get(3));

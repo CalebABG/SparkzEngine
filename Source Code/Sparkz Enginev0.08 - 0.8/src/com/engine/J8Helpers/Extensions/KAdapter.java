@@ -1,4 +1,4 @@
-package com.engine.Interfaces_Extensions;
+package com.engine.J8Helpers.Extensions;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

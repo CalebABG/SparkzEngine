@@ -1,5 +1,5 @@
 package com.engine.GUIWindows;
-import com.engine.Interfaces_Extensions.WindowClosing;
+import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.ParticleTypes.Particle;
 import com.engine.ThinkingParticles.SCChoices;
 import com.engine.JComponents.CLabel;
