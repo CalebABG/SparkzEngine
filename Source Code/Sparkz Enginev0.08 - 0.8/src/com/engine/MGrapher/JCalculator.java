@@ -1,22 +1,21 @@
 package com.engine.MGrapher;
 
-import com.engine.Interfaces_Extensions.KeyAdapterX;
-import com.engine.Interfaces_Extensions.WindowClosing;
+import com.engine.J8Helpers.Extensions.KAdapter;
+import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.Utilities.Settings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
 import static com.engine.MGrapher.ParticleGraph.mathFunctions;
 
-public class JCalculator implements KeyAdapterX {
+public class JCalculator {
     private static JCalculator calculator = null;
     private static JFrame frame;
-    private static JTextPane resultfield;
-    private static JTextPane expressionfield;
-    public static ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
+    private JTextPane resultfield;
+    private JTextPane expressionfield;
+    public  ScriptEngine engine;
     private static String mathExpression = "x = 0";
     private static Thread calcThread1;
 
@@ -34,6 +33,8 @@ public class JCalculator implements KeyAdapterX {
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowClosing(windowEvent -> close()));
         frame.setLocationRelativeTo(parent);
+
+        engine = new ScriptEngineManager().getEngineByName("JavaScript");
 
         JPanel panel = new JPanel();
         frame.getContentPane().add(panel, BorderLayout.CENTER);
@@ -87,7 +88,9 @@ public class JCalculator implements KeyAdapterX {
         panel_3.setLayout(gbl_panel_3);
 
         expressionfield = new JTextPane();
-        expressionfield.addKeyListener(this);
+        expressionfield.addKeyListener(new KAdapter(e ->{}, e -> {
+            if (e.isShiftDown() && e.getKeyCode() == KeyEvent.VK_ENTER) try {graph();} catch (Exception x){resultfield.setText(x.getMessage());}
+        }));
         expressionfield.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
         GridBagConstraints gbc_expressionfield = new GridBagConstraints();
@@ -120,16 +123,16 @@ public class JCalculator implements KeyAdapterX {
         frame.setVisible(true);
     }
 
-    private static void evalInput() {
+    private void evalInput() {
         mathExpression = expressionfield.getText();
     }
 
-    private static void graph() throws Exception {
+    private void graph() throws Exception {
         evalInput();
         resultfield.setText(engine.eval(mathExpression).toString());
     }
 
-    private static void threadEvaluate() {
+    private void threadEvaluate() {
         if (calcThread1 != null && calcThread1.isAlive()) {
             try {calcThread1.interrupt(); calcThread1.join();} catch (InterruptedException e1) {e1.printStackTrace();}
 
@@ -143,8 +146,4 @@ public class JCalculator implements KeyAdapterX {
     }
 
     public void close(){calculator = null; frame.dispose();}
-    public void keyReleased(KeyEvent e) {
-        if (e.isShiftDown() && e.getKeyCode() == KeyEvent.VK_ENTER) try {graph();
-        }catch (Exception x){resultfield.setText(x.getMessage());}
-    }
 }
