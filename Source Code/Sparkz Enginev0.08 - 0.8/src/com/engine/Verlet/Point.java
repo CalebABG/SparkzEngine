@@ -24,19 +24,39 @@ public class Point {
     public List<Constraint> constraints = Collections.synchronizedList(new ArrayList<>());
 
     public Point(double xPos, double yPos) {
-        currPos = new Vect2D(xPos, yPos); prevPos = new Vect2D(currPos.x, currPos.y); radius = 10; POINTS.add(this); this.index = POINTS.size()-1;
+        currPos = new Vect2D(xPos, yPos);
+        prevPos = new Vect2D(currPos.x, currPos.y);
+        radius = 10;
+        POINTS.add(this);
+        index = POINTS.size() - 1;
     }
 
     public Point(double xPos, double yPos, Color c) {
-        currPos = new Vect2D(xPos, yPos); prevPos = new Vect2D(currPos.x, currPos.y); radius = 10; color = c; POINTS.add(this); this.index = POINTS.size()-1;
+        currPos = new Vect2D(xPos, yPos);
+        prevPos = new Vect2D(currPos.x, currPos.y);
+        radius = 10;
+        color = c;
+        POINTS.add(this);
+        index = POINTS.size() - 1;
     }
 
     public Point(double xPos, double yPos, double radius, Color c) {
-        currPos = new Vect2D(xPos, yPos); prevPos = new Vect2D(currPos.x, currPos.y); this.radius = radius; color = c; POINTS.add(this); this.index = POINTS.size()-1;
+        currPos = new Vect2D(xPos, yPos);
+        prevPos = new Vect2D(currPos.x, currPos.y);
+        this.radius = radius;
+        color = c;
+        POINTS.add(this);
+        index = POINTS.size() - 1;
     }
 
     public Point(double xPos, double yPos, double radius, double mass, Color c) {
-        currPos = new Vect2D(xPos, yPos); prevPos = new Vect2D(currPos.x, currPos.y); this.radius = radius; this.mass = mass; color = c; POINTS.add(this); this.index = POINTS.size()-1;
+        currPos = new Vect2D(xPos, yPos);
+        prevPos = new Vect2D(currPos.x, currPos.y);
+        this.radius = radius;
+        this.mass = mass;
+        color = c;
+        POINTS.add(this);
+        index = POINTS.size() - 1;
     }
 
     public void solveCollisions (Point p2, boolean preserveImpulse) {
@@ -74,65 +94,52 @@ public class Point {
 
     public void collide(Point p2, boolean preserveImpulse) {
         if (p2 != this) {
-            double x = currPos.x;
-            double y = currPos.y;
-
-            double otherX = p2.currPos.x;
-            double otherY = p2.currPos.y;
-
-            double radii = radius / 2 + p2.radius / 2;
-
-            double diffX = x - otherX;
-            double diffY = y - otherY;
-
+            double diffX = currPos.x - p2.currPos.x;
+            double diffY = currPos.y - p2.currPos.y;
+            double radii = radius / 2.0 + p2.radius / 2.0;
             double diffSquared = diffX * diffX + diffY * diffY;
 
-            if (diffSquared <= radii * radii) { // first make sure they're intersecting
-
+            // first make sure they're intersecting
+            if (diffSquared <= radii * radii) {
                 // Previous velocity
-                double v1x = x - prevPos.x;
-                double v1y = y - prevPos.y;
-                double v2x = otherX - p2.prevPos.x;
-                double v2y = otherY - p2.prevPos.y;
+                double v1x = getVelocityX();
+                double v1y = getVelocityY();
+                double v2x = p2.getVelocityX();
+                double v2y = p2.getVelocityY();
 
                 // distance between centers
                 double d = Math.sqrt(diffSquared);
 
                 // minimum translation distance to push balls apart after intersecting
-                double mtdX;
-                double mtdY;
+                double mtdX, mtdY;
                 if (d <= 0) {
-                    d = radius / 2 + p2.radius / 2;
+                    d = radius / 2.0 + p2.radius / 2.0;
                     diffX = radius + p2.radius;
                     diffY = 0;
                 }
 
-                double difference = ((radius / 2 + p2.radius / 2) - d) / d;
+                double difference = ((radius / 2.0 + p2.radius / 2.0) - d) / d;
 
                 mtdX = diffX * difference;
                 mtdY = diffY * difference;
 
                 // resolve intersection
-                double m0 = mass;
-                double m1 = p2.mass;
-                double tm = (m0 + m1);
-                        m0 = m0 / tm;
-                        m1 = m1 / tm;
+                double m0 = 1.0d / mass;
+                double m1 = 1.0d / p2.mass;
+                double tm = m0 + m1;
+
+                m0 = m0 / tm;
+                m1 = m1 / tm;
+
 //                double im1 = 1f / mass; // inverse mass quantities
 //                double im2 = 1f / p2.mass;
 
-                // push-pull them based on mass
-
-                currPos.x += mtdX * m0;
-                currPos.y += mtdY * m0;
-
+                //push-pull them based on mass
+                currPos.x    += mtdX * m0;
+                currPos.y    += mtdY * m0;
                 p2.currPos.x -= mtdX * m1;
                 p2.currPos.y -= mtdY * m1;
-//                currPos.x += mtdX * (im1 / (im1 + im2));
-//                currPos.y += mtdY * (im1 / (im1 + im2));
-//
-//                p2.currPos.x -= mtdX * (im1 / (im1 + im2));
-//                p2.currPos.y -= mtdY * (im1 / (im1 + im2));
+
 
                 if (preserveImpulse) {
                     double f1 = (damping * (diffX * v1x + diffY * v1y)) / diffSquared;
@@ -189,6 +196,17 @@ public class Point {
     }
 
     public void solveConstraints() {for (int i = 0; i < constraints.size(); i++) constraints.get(i).solve();}
+    
+    public void accelerate(){
+        gravity = (ZERO_GRAVITY) ? 0.0 : .251;
+        Vect2D temp = new Vect2D(currPos.x, currPos.y);
+        currPos.add((kViscosity * currPos.x - kViscosity * prevPos.x), (kViscosity * currPos.y - kViscosity * prevPos.y) + gravity);
+        prevPos = temp;
+        if (pinned) {
+            currPos.x = pinX;
+            currPos.y = pinY;
+        }
+    }
 
     public double distanceTo(Point p1){
         double dx = p1.currPos.x - currPos.x, dy = p1.currPos.y - currPos.y; return Math.sqrt(dx * dx + dy * dy);
@@ -233,6 +251,6 @@ public class Point {
         return "[ " + "CurrPos: [" + dcFormat.format(currPos.x) + " , " + dcFormat.format(currPos.y) +
                 " ] | Acceleration: [" + dcFormat.format(getVelocityX()) + " , " + dcFormat.format(getVelocityY()) +
                 "] | Radius: " + dcFormat.format(radius) + " | Index: " + index + " | Mass: " + dcFormat.format(mass) +
-                " | Mag: " + dcFormat.format(currPos.mag()) + " | Heading: " + dcFormat.format(currPos.heading()) + " ]";
+                " | Mag: " + dcFormat.format(currPos.length()) + " | Heading: " + dcFormat.format(currPos.heading()) + " ]";
     }
 }

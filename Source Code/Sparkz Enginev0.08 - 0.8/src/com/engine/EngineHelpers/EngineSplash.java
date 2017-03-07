@@ -1,7 +1,7 @@
 package com.engine.EngineHelpers;
 
 import com.engine.GUIWindows.EException;
-import com.engine.Interfaces_Extensions.MouseAdapterX;
+import com.engine.J8Helpers.Interfaces.MouseAdapterX;
 
 import javax.swing.*;
 import java.awt.*;

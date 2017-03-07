@@ -1,13 +1,13 @@
 package com.engine.Main;
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EngineMethods.*;
-import static com.engine.Interfaces_Extensions.EModes.GRAPH_MODE;
+import static com.engine.J8Helpers.Interfaces.EModes.GRAPH_MODE;
 import static com.engine.JComponents.CMenuBar.createMenuBar;
 import com.engine.EngineHelpers.EngineSplash;
 import com.engine.GUIWindows.StatsPanel;
 import com.engine.GUIWindows.QuitWindow;
-import com.engine.Interfaces_Extensions.TimerTaskX;
-import com.engine.Interfaces_Extensions.WindowClosing;
+import com.engine.J8Helpers.Extensions.TimerTaskX;
+import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
@@ -140,7 +140,7 @@ public class Engine {
     private void draw() {
         graphics2D.setColor(backgroundColor);
         graphics2D.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        if (switchMode == GRAPH_MODE) graphics2D.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
+        if (engineMode == GRAPH_MODE) graphics2D.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
         else graphics2D.translate(0, 0);
         handleRenders();
     }

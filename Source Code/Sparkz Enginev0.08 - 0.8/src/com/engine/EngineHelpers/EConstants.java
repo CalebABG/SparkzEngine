@@ -9,12 +9,12 @@ import java.awt.*;
 import java.util.*;
 import java.util.Timer;
 import static java.lang.Math.ceil;
-import static com.engine.Interfaces_Extensions.EModes.*;
+import static com.engine.J8Helpers.Interfaces.EModes.*;
 
 public abstract class EConstants {
     /*Ints*/
     /*Limit @ 4 - Add Constant to EModes for any additional modes*/
-    public static int switchMode                = NORMAL_MODE;
+    public static int engineMode                = NORMAL_MODE;
     /*Limit @ 8*/
     public static int particleType              = PARTICLE;
     /*Limit @ 7*/

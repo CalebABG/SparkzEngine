@@ -1,7 +1,7 @@
 package com.engine.GUIWindows;
 
-import com.engine.Interfaces_Extensions.KAdapter;
-import com.engine.Interfaces_Extensions.WindowClosing;
+import com.engine.J8Helpers.Extensions.KAdapter;
+import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.JComponents.CTextField;
 import com.engine.JComponents.RLabel;
 import static com.engine.EngineHelpers.EConstants.*;
@@ -54,7 +54,7 @@ public class SettingsEditor {
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         panel.setLayout(gbl_panel);
 
-        keyAdapters[0]  = new KAdapter(e -> {}, e -> guardValuesInt(switchMode, textFields[0].getText(), textFields[0]));
+        keyAdapters[0]  = new KAdapter(e -> {}, e -> guardValuesInt(engineMode, textFields[0].getText(), textFields[0]));
         keyAdapters[1]  = new KAdapter(e -> {}, e -> guardValuesInt(particleType, textFields[1].getText(), textFields[1]));
         keyAdapters[2]  = new KAdapter(e -> {}, e -> guardValuesInt(particleGravitationMode, textFields[2].getText(), textFields[2]));
         keyAdapters[3]  = new KAdapter(e -> {}, e -> guardValuesInt(fireworksAmount, textFields[3].getText(), textFields[3]));
@@ -131,7 +131,7 @@ public class SettingsEditor {
         RLabel lblNewLabel_1 = new RLabel("Engine Mode - set: 0 - 4", new Font("Times", Font.PLAIN, 17), new Insets(0, 3, 5, 5), GridBagConstraints.WEST, new int[]{0, 1}, new int[]{1, 4});
         panel.add(lblNewLabel_1, lblNewLabel_1.gridBagConstraints);
 
-        textFields[0] = new CTextField("" + switchMode, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 1});
+        textFields[0] = new CTextField("" + engineMode, new Font("Times", Font.PLAIN, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 1});
         panel.add(textFields[0], textFields[0].gridBagConstraints);
 
         RLabel lblParticletypeSet = new RLabel("Particle Type - set: 0 - 8", new Font("Times", Font.PLAIN, 17), GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 2);
@@ -368,7 +368,7 @@ public class SettingsEditor {
     }
 
     private static void intelliSense() {
-        checkValuesInt(switchMode, Integer.parseInt(textFields[0].getText()), textFields[0]);
+        checkValuesInt(engineMode, Integer.parseInt(textFields[0].getText()), textFields[0]);
         checkValuesInt(particleType, Integer.parseInt(textFields[1].getText()), textFields[1]);
         checkValuesInt(particleGravitationMode, Integer.parseInt(textFields[2].getText()), textFields[2]);
         checkValuesInt(fireworksAmount, Integer.parseInt(textFields[3].getText()), textFields[3]);
@@ -416,8 +416,8 @@ public class SettingsEditor {
             FileOutputStream out = new FileOutputStream(Settings.settings_file_path, false);
             Writer writer = new OutputStreamWriter(out, "UTF-8");
             /*-------------------------------------------------------*/
-            writer.write("# switchMode -- set: 0 - 4 <- MAX \n");
-            writer.write("switchMode: " + InputWrapper.intTextfieldGuard(0, 4, switchMode, textFields[0].getText()) + "\n");
+            writer.write("# engineMode -- set: 0 - 4 <- MAX \n");
+            writer.write("engineMode: " + InputWrapper.intTextfieldGuard(0, 4, engineMode, textFields[0].getText()) + "\n");
             /*-------------------------------------------------------*/
             writer.write("# particleType -- set: 0 - 8 <- MAX \n");
             writer.write("particleType: " + InputWrapper.intTextfieldGuard(0, 8, particleType,textFields[1].getText()) + "\n");
@@ -517,7 +517,7 @@ public class SettingsEditor {
     }
 
     private static void refreshUI() {
-        textFields[0].setText("" + switchMode);
+        textFields[0].setText("" + engineMode);
         textFields[1].setText("" + particleType);
         textFields[2].setText("" + particleGravitationMode);
         textFields[3].setText("" + fireworksAmount);

@@ -5,8 +5,8 @@ import com.engine.EngineHelpers.EngineMethods;
 
 import static com.engine.EngineHelpers.EConstants.*;
 
-import com.engine.Interfaces_Extensions.KAdapter;
-import com.engine.Interfaces_Extensions.WindowClosing;
+import com.engine.J8Helpers.Extensions.KAdapter;
+import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.Utilities.InputWrapper;
 import com.engine.Utilities.Settings;
 

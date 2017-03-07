@@ -13,7 +13,7 @@ public class VPHandler {
 
     public static void handleRagdollMode(MouseEvent e){
         switch (MODE) {
-            case 0: VCreations.createPoint(e, randHSLColor(1000, 7000, .8), 25, .9); break;
+            case 0: VCreations.createPoint(e, randHSLColor(1000, 7000, .8), 25, 1); break;
             case 1: VCreations.createStick(e, LCOLOR, PCOLOR, 50, 20, 30, 1, 30, STIFFNESS, TEARDIST, DRAW_LINKS, TEARABLE); break;
             case 2: VCreations.createIKChain(e, NUM_POINTS, SPACING, RADIUS, .2, TEARDIST, DRAW_LINKS, TEARABLE, Color.red, Color.orange); break;
             case 3: VCreations.singleBox(e, Color.blue, Color.cyan, 30, 8, .06, TEARDIST, DRAW_LINKS, TEARABLE); break;

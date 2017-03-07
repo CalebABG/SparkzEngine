@@ -15,8 +15,8 @@ public class Vect2D {
     public Vect2D copy() {return new Vect2D(this.x, this.y);}
     public double[] copyAsArray() {return new double[]{this.x, this.y};}
 
-    public double mag() {return Math.sqrt((this.x * this.x + this.y * this.y));}
-    public double magSq() {return this.x * this.x + this.y * this.y;}
+    public double length() {return Math.sqrt((this.x * this.x + this.y * this.y));}
+    public double lengthSquared() {return this.x * this.x + this.y * this.y;}
 
     public void add(Vect2D v) {this.x += v.x; this.y += v.y;}
     public void add(double x, double y) {this.x += x; this.y += y;}
@@ -56,8 +56,8 @@ public class Vect2D {
     public double dot(double x, double y) {return this.x * x + this.y * y;}
     public static double dot(Vect2D v1, Vect2D v2) {return v1.x * v2.x + v1.y * v2.y;}
 
-    public void normalize() {double m = this.mag(); if(m != 0.0D && m != 1.0D) {this.div(m);}}
-    public void limit(double max) {if(this.mag() > max) {this.normalize(); this.mult(max);}}
+    public void normalize() {double m = this.length(); if(m != 0.0D && m != 1.0D) {this.div(m);}}
+    public void limit(double max) {if(this.length() > max) {this.normalize(); this.mult(max);}}
     public void setMag(double len) {this.normalize(); this.mult(len);}
 
     public double heading() {return Math.atan2(this.y, this.x);}
@@ -69,7 +69,7 @@ public class Vect2D {
     }
 
     public static double angleBetween(Vect2D v1, Vect2D v2) {
-        return (v1.dot(v2) / (v1.mag() * v2.mag()));
+        return (v1.dot(v2) / (v1.length() * v2.length()));
     }
 
     public String toString() {
