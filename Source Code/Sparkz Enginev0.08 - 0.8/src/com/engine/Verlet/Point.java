@@ -10,6 +10,7 @@ import static com.engine.Utilities.Settings.dcFormat;
 import static com.engine.Verlet.VSim.*;
 
 public class Point {
+    private static Font renderFont = new Font("Times", Font.PLAIN, 14);
     public static List<Point> POINTS = Collections.synchronizedList(new ArrayList<>());
     public Vect2D currPos;
     public Vect2D prevPos;
@@ -145,30 +146,13 @@ public class Point {
 
     public void draw() {
         if (this == dragPoint) {
-            if (DEBUG_MODE) {
-                graphics2D.setColor(color);
-                graphics2D.drawLine(Mouse.x, Mouse.y, (int) currPos.x, (int) currPos.y);
-                graphics2D.fill(new Ellipse2D.Double((int) currPos.x - radius / 2, (int) currPos.y - radius / 2, radius, radius));
-                graphics2D.setColor(Color.red);
-                graphics2D.draw(new Ellipse2D.Double((int) currPos.x - radius, (int) currPos.y - radius, 2 * radius, 2 * radius));
-            }
-            else {
-                graphics2D.setColor(color);
-                graphics2D.drawLine(Mouse.x, Mouse.y, (int) currPos.x, (int) currPos.y);
-                graphics2D.fill(new Ellipse2D.Double((int) currPos.x - radius / 2, (int) currPos.y - radius / 2, radius, radius));
-            }
+            graphics2D.setColor(color);
+            graphics2D.drawLine(Mouse.x, Mouse.y, (int) currPos.x, (int) currPos.y);
+            graphics2D.fill(new Ellipse2D.Double((int) currPos.x - radius / 2, (int) currPos.y - radius / 2, radius, radius));
         }
         else {
-            if (DEBUG_MODE) {
-                graphics2D.setColor(Color.red);
-                graphics2D.draw(new Ellipse2D.Double((int) currPos.x - radius, (int) currPos.y - radius, 2 * radius, 2 * radius));
-                graphics2D.setColor(color);
-                graphics2D.fill(new Ellipse2D.Double((int) currPos.x - radius / 2, (int) currPos.y - radius / 2, radius, radius));
-            }
-            else {
-                graphics2D.setColor(color);
-                graphics2D.fill(new Ellipse2D.Double((int) currPos.x - radius / 2, (int) currPos.y - radius / 2, radius, radius));
-            }
+            graphics2D.setColor(color);
+            graphics2D.fill(new Ellipse2D.Double((int) currPos.x - radius / 2, (int) currPos.y - radius / 2, radius, radius));
         }
 
         if (constraints.size() > 0) {for (int i = 0; i < constraints.size(); i++) constraints.get(i).draw();}
@@ -221,15 +205,24 @@ public class Point {
 
     public static void displayPointArraySize(){
         if (VSim.DEBUG_MODE) {
+            graphics2D.setFont(renderFont);
             graphics2D.setColor(Color.white);
-            graphics2D.drawString("Point Array Size: " + POINTS.size(), canvas.getWidth() / 2 - 80, canvas.getHeight() / 2 + 20);
+            graphics2D.drawString("Point Array Size: " + POINTS.size(), canvas.getWidth() / 2 - 80, canvas.getHeight() / 2);
+            if (dragPoint == null) {
+                graphics2D.drawString("Drag-Point is null ", canvas.getWidth() / 2 - 80, canvas.getHeight() / 2 + 20);
+            }
+            else{
+                graphics2D.drawString(dragPoint.toString(), (canvas.getWidth() - graphics2D.getFontMetrics().stringWidth(dragPoint.toString())) / 2, canvas.getHeight() / 2 + 20);
+            }
         }
     }
 
     public String toString() {
         return "[ " + "CurrPos: [" + dcFormat.format(currPos.x) + " , " + dcFormat.format(currPos.y) +
                 " ] | Acceleration: [" + dcFormat.format(getVelocityX()) + " , " + dcFormat.format(getVelocityY()) +
-                "] | Radius: " + dcFormat.format(radius) + " | Index: " + index + " | Mass: " + dcFormat.format(mass) +
-                " | Mag: " + dcFormat.format(currPos.length()) + " | Heading: " + dcFormat.format(currPos.heading()) + " ]";
+                "] | Radius: " + dcFormat.format(radius) +
+                " | Index: " + index +
+                " | Mass: " + dcFormat.format(mass) +
+                " | Heading: " + dcFormat.format(currPos.heading()) + " ]";
     }
 }

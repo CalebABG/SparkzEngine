@@ -1,5 +1,5 @@
 # engineMode -- set: 0 - 4 <- MAX 
-engineMode: 4
+engineMode: 0
 # particleType -- set: 0 - 8 <- MAX 
 particleType: 0
 # particleGravitationMode -- set: 0 - 7 <- MAX 

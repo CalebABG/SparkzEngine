@@ -78,42 +78,42 @@ public class Particle extends Molecule {
         }
         
         switch (particleGravitationMode) {
-            case 0:
+            case DEFAULT:
                 vx += forceX;
                 vy += forceY;
                 break;
 
-            case 1:
+            case COSINE_SINE:
                 vx += cos(forceX);
                 vy += sin(forceY);
                 break;
 
-            case 2:
+            case ARC_TANGENT:
                 vx += atan2((forceY), (forceX));
                 vy += atan2((forceY), (forceX));
                 break;
 
-            case 3:
+            case H_WAVE:
                 forceX = ((dx / Double.POSITIVE_INFINITY / dist));
                 vx += forceX;
                 vy += forceY;
                 break;
 
-            case 4:
+            case V_WAVE:
                 forceY = ((dy / Double.POSITIVE_INFINITY) / dist);
                 vx += forceX;
                 vy += forceY;
                 break;
 
-            case 5:
+            case SPIRALS:
                 forceX = ((dx / atan2(10000, (m != null) ? atan(m.heading()) : atan((atan2(p.y, p.x)))) / dist));
                 vx += forceX;
                 vy += forceY;
                 break;
 
-            case 6:
-                forceX = (dx / 300 / dist);
-                forceY = (dy / 300 / dist);
+            case PARTICLE_REPELLENT:
+                forceX = (dx / 60 / dist);
+                forceY = (dy / 60 / dist);
                 vx += -forceX;
                 vy += -forceY;
                 break;
@@ -163,10 +163,10 @@ public class Particle extends Molecule {
     public void boundsCheck() {
         if (engineMode != GRAPH_MODE) super.boundsCheck();
         else {
-            if (this.x > canvas.getWidth()  /  2) this.x = -canvas.getWidth() / 2;
-            if (this.x < -canvas.getWidth() /  2) this.x = canvas.getWidth()  / 2;
-            if (this.y > canvas.getHeight() /  2) this.y = -canvas.getHeight()/ 2;
-            if (this.y < -canvas.getHeight()/  2) this.y = canvas.getHeight() / 2;
+            if (x > canvas.getWidth()  /  2) x = -canvas.getWidth() / 2;
+            if (x < -canvas.getWidth() /  2) x = canvas.getWidth()  / 2;
+            if (y > canvas.getHeight() /  2) y = -canvas.getHeight()/ 2;
+            if (y < -canvas.getHeight()/  2) y = canvas.getHeight() / 2;
         }
     }
 
