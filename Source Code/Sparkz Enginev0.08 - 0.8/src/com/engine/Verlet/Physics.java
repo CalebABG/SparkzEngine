@@ -16,12 +16,14 @@ public class Physics {
     }
 
     public static void render() {
-        POINTS.forEach(Point::draw);
+        for (int i = 0; i < POINTS.size(); i++) POINTS.get(i).draw();
     }
 
     private static void solveConstraints() {
         for (int i = 0; i < SIM_ACCURACY; i++) {
-            POINTS.forEach(Point::solveConstraints);
+            for (int j = 0; j < POINTS.size(); j++) {
+                POINTS.get(j).solveConstraints();
+            }
         }
     }
 
@@ -37,16 +39,15 @@ public class Physics {
 
         for (int i = 0; i < POINTS.size(); i++) {
             Point point = POINTS.get(i);
-            double distanceSquared = point.getDistanceSq(Mouse);
+            double dist = point.getDistanceSq(Mouse);
             if (isLeftMouseDown && dragPoint == null) {
-                double dist = point.getDistanceSq(Mouse);
                 if (dist < .6 * point.radius * point.radius) {
                     dragPoint = point;
                     break;
                 }
             }
-            else if (isRightMouseDown) {if (distanceSquared < (VSim.mouseTearSize * VSim.mouseTearSize)) point.constraints.clear();}
-        }//end
+            else if (isRightMouseDown) {if (dist < (VSim.mouseTearSize * VSim.mouseTearSize)) point.constraints.clear();}
+        }
     }
 
     private static void circleTcircleNoVelPres() {
@@ -65,8 +66,7 @@ public class Physics {
         }
     }
 
-
     private static void accelerate() {
-        POINTS.forEach(Point::accelerate);
-    }//end
+        for (int i = 0; i < POINTS.size(); i++) POINTS.get(i).accelerate();
+    }
 }

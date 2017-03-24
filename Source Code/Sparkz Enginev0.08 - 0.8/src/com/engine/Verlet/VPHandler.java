@@ -8,7 +8,7 @@ public class VPHandler {
     public static Color LCOLOR = Color.ORANGE, PCOLOR = Color.ORANGE;
     public static int MODE = 0, NUM_POINTS = 25;
     public static final int MAX_MODE = 6;
-    public static double SIZE = 50, SPACING = 8, RADIUS = 10, STIFFNESS = .0144, TEARDIST = 80;
+    public static double SIZE = 50, SPACING = 8, RADIUS = 10, STIFFNESS = 0.0144, TEARDIST = 80;
     public static boolean DRAW_LINKS = true, TEARABLE = false;
 
     public static void handleRagdollMode(MouseEvent e){

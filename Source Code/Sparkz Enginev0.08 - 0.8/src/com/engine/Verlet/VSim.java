@@ -15,7 +15,7 @@ public class VSim {
     public static final double stiffnesses = .8;
     public static double dragForce = 30; // The lower the stronger
     public static final double curtainTearSensitivity = 80;
-    public static int SIM_ACCURACY = 2;
+    public static int SIM_ACCURACY = 7;
     public static int MAX_COLLISIONS = 285;
 
     public static void toggleCollisions() {COLLISION_DETECTION = POINTS.size() <= MAX_COLLISIONS && toggle(COLLISION_DETECTION);}

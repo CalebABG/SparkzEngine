@@ -10,8 +10,10 @@ public class Constraint {
     public boolean drawThis = true, tearable = true;
 
     Constraint(Point link1, Point link2, double restingDist, double stiff, double tearSensitivity, boolean drawMe) {
-        p1 = link1; p2 = link2;
-        restingDistance = restingDist; stiffness = stiff;
+        p1 = link1;
+        p2 = link2;
+        restingDistance = restingDist;
+        stiffness = stiff;
         drawThis = drawMe;
         this.tearSensitivity = tearSensitivity;
     }
@@ -24,9 +26,13 @@ public class Constraint {
     }
 
     Constraint(Point link1, Point link2, double restingDist, double stiff, double tearSensitivity, boolean drawMe, boolean tearable, Color c) {
-        p1 = link1; p2 = link2;
-        restingDistance = restingDist; stiffness = stiff;
-        this.tearable = tearable; drawThis = drawMe; color = c;
+        p1 = link1;
+        p2 = link2;
+        restingDistance = restingDist;
+        stiffness = stiff;
+        this.tearable = tearable;
+        drawThis = drawMe;
+        color = c;
         this.tearSensitivity = tearSensitivity;
     }
 
@@ -34,10 +40,10 @@ public class Constraint {
         // calculate the distance between the two Points
         double diffX = p1.currPos.x - p2.currPos.x;
         double diffY = p1.currPos.y - p2.currPos.y;
-        double d = (diffX * diffX + diffY * diffY);
+        double d = Math.sqrt(diffX * diffX + diffY * diffY);
 
         // find the difference, or the ratio of how far along the restingDistance the actual distance is.
-        double difference = (restingDistance - d*d) / d*d;
+        double difference = (restingDistance - d) / d;
 
         if (tearable) if (d > tearSensitivity) p1.removeLink(this);
 

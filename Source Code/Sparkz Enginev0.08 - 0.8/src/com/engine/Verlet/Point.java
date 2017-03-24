@@ -15,7 +15,8 @@ public class Point {
     public Vect2D prevPos;
     public double radius;
     public double mass = 1;
-    public double damping = .85;
+    public double damping = 0.85;
+    public double stiffness = 1;
     public int index;
     public boolean pinned = false;
     public boolean collidable = true;
@@ -59,29 +60,41 @@ public class Point {
         index = POINTS.size() - 1;
     }
 
+    public Point(double xPos, double yPos, double radius, double mass, double stiffness, Color c) {
+        currPos = new Vect2D(xPos, yPos);
+        prevPos = new Vect2D(currPos.x, currPos.y);
+        this.radius = radius;
+        this.mass = mass;
+        this.stiffness = stiffness;
+        color = c;
+        POINTS.add(this);
+        index = POINTS.size() - 1;
+    }
+
     public void solveCollisions (Point p2, boolean preserveImpulse) {
         double x = currPos.x, y = currPos.y, vx = 0, vy = 0;
         double prevX = prevPos.x, prevY = prevPos.y;
 
         if (preserveImpulse) {
-            vx = ((prevX - x) * damping); vy = ((prevY - y) * damping);
+            vx = (prevX - x) * damping;
+            vy = (prevY - y) * damping;
         }
 
         if (x - radius < 0) {
             x = 2 * (radius) - x;
-            if (preserveImpulse) {prevX = (x - vx);}
+            if (preserveImpulse) prevX = (x - vx);
         }
         if (x + radius > canvas.getWidth()) {
             x = 2 * (canvas.getWidth() - radius) - x;
-            if (preserveImpulse) {prevX = (x - vx);}
+            if (preserveImpulse) prevX = (x - vx);
         }
         if (y - radius < 0) {
             y = 2 * (radius) - y;
-            if (preserveImpulse) {prevY = (y - vy);}
+            if (preserveImpulse) prevY = (y - vy);
         }
         if (y + radius > canvas.getHeight()) {
             y = 2 * (canvas.getHeight() - radius) - y;
-            if (preserveImpulse) {prevY = (y - vy);}
+            if (preserveImpulse) prevY = (y - vy);
         }
 
         currPos.x = x;
@@ -89,73 +102,39 @@ public class Point {
         prevPos.x = prevX;
         prevPos.y = prevY;
 
-        if (COLLISION_DETECTION) {if (collidable) {collide(p2, preserveImpulse);}}
+        if (COLLISION_DETECTION) {if (collidable) {collide(p2);}}
     }
 
-    public void collide(Point p2, boolean preserveImpulse) {
+    public void collide(Point p2) {
         if (p2 != this) {
+            double radii = radius / 2 + p2.radius / 2;
             double diffX = currPos.x - p2.currPos.x;
             double diffY = currPos.y - p2.currPos.y;
-            double radii = radius / 2.0 + p2.radius / 2.0;
             double diffSquared = diffX * diffX + diffY * diffY;
 
-            // first make sure they're intersecting
-            if (diffSquared <= radii * radii) {
-                // Previous velocity
-                double v1x = getVelocityX();
-                double v1y = getVelocityY();
-                double v2x = p2.getVelocityX();
-                double v2y = p2.getVelocityY();
-
+            if (diffSquared <= radii * radii) { // first make sure they're intersecting
                 // distance between centers
                 double d = Math.sqrt(diffSquared);
 
                 // minimum translation distance to push balls apart after intersecting
-                double mtdX, mtdY;
                 if (d <= 0) {
-                    d = radius / 2.0 + p2.radius / 2.0;
-                    diffX = radius + p2.radius;
-                    diffY = 0;
+                    d = radius / 2 + p2.radius / 2;
                 }
 
-                double difference = ((radius / 2.0 + p2.radius / 2.0) - d) / d;
+                // find the difference, or the ratio of how far along the restingDistance the actual distance is.
+                double difference = ((radius / 2 + p2.radius / 2) - d) / d;
 
-                mtdX = diffX * difference;
-                mtdY = diffY * difference;
+                // Inverse the mass quantities
+                double im1      = 1 / mass, im2 = 1 / p2.mass;
+                double scalarP1 = (im1 / (im1 + im2)) * stiffness;
+                double scalarP2 = stiffness - scalarP1;
 
-                // resolve intersection
-                double m0 = 1.0d / mass;
-                double m1 = 1.0d / p2.mass;
-                double tm = m0 + m1;
-
-                m0 = m0 / tm;
-                m1 = m1 / tm;
-
-//                double im1 = 1f / mass; // inverse mass quantities
-//                double im2 = 1f / p2.mass;
-
-                //push-pull them based on mass
-                currPos.x    += mtdX * m0;
-                currPos.y    += mtdY * m0;
-                p2.currPos.x -= mtdX * m1;
-                p2.currPos.y -= mtdY * m1;
-
-
-                if (preserveImpulse) {
-                    double f1 = (damping * (diffX * v1x + diffY * v1y)) / diffSquared;
-                    double f2 = (damping * (diffX * v2x + diffY * v2y)) / diffSquared;
-
-                    v1x += f2 * diffX - f1 * diffX;
-                    v2x += f1 * diffX - f2 * diffX;
-                    v1y += f2 * diffY - f1 * diffY;
-                    v2y += f1 * diffY - f2 * diffY;
-
-                    prevPos.x = currPos.x - v1x;
-                    prevPos.y = currPos.y - v1y;
-
-                    p2.prevPos.x = p2.currPos.x - v2x;
-                    p2.prevPos.y = p2.currPos.y - v2y;
-                }
+                // Push/pull based on mass
+                // heavier objects will be pushed/pulled less than attached light objects
+                currPos.x    += diffX * scalarP1 * difference;
+                currPos.y    += diffY * scalarP1 * difference;
+                p2.currPos.x -= diffX * scalarP2 * difference;
+                p2.currPos.y -= diffY * scalarP2 * difference;
             }
         }
     }
