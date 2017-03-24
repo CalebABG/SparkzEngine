@@ -5,6 +5,8 @@ import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.JComponents.TextSuggestor;
 import com.engine.ParticleTypes.Particle;
 import com.engine.Utilities.Settings;
+
+import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -77,7 +79,7 @@ public class OrganicForces {
         forceXTextField.addKeyListener(new KAdapter(e -> {if (e.getKeyCode() != KeyEvent.VK_ENTER) {forceXTextField.setForeground(Color.black);}}, e -> {}));
 
         String COMMIT_ACTION = "commit";
-        TextSuggestor textSuggestor = new TextSuggestor(forceXTextField, Arrays.asList(suggestions));
+        TextSuggestor textSuggestor = new TextSuggestor(forceXTextField, suggestions);
         forceXTextField.getDocument().addDocumentListener(textSuggestor);
         forceXTextField.getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
         forceXTextField.getActionMap().put(COMMIT_ACTION, textSuggestor.new CommitAction());
@@ -112,7 +114,7 @@ public class OrganicForces {
         forceYTextField.setColumns(10);
         forceYTextField.addKeyListener(new KAdapter(e -> {if (e.getKeyCode() != KeyEvent.VK_ENTER) {forceYTextField.setForeground(Color.black);}}, e -> {}));
 
-        TextSuggestor textSuggestor2 = new TextSuggestor(forceYTextField, Arrays.asList(suggestions));
+        TextSuggestor textSuggestor2 = new TextSuggestor(forceYTextField, suggestions);
         forceYTextField.getDocument().addDocumentListener(textSuggestor2);
         forceYTextField.getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
         forceYTextField.getActionMap().put(COMMIT_ACTION, textSuggestor2.new CommitAction());
@@ -145,7 +147,7 @@ public class OrganicForces {
         angleIncrementTextField.setFont(new Font("Tahoma", Font.PLAIN, 16));
         angleIncrementTextField.setColumns(10);
 
-        TextSuggestor textSuggestor3 = new TextSuggestor(angleIncrementTextField, Arrays.asList(suggestions));
+        TextSuggestor textSuggestor3 = new TextSuggestor(angleIncrementTextField, suggestions);
         angleIncrementTextField.getDocument().addDocumentListener(textSuggestor3);
         angleIncrementTextField.getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
         angleIncrementTextField.getActionMap().put(COMMIT_ACTION, textSuggestor3.new CommitAction());
@@ -189,10 +191,11 @@ public class OrganicForces {
 
     private static void setForces() {
         try {
-            for (String mathFunction : mathFunctions) {
-                particleScriptEngine.eval(mathFunction);
+            for (String[] mathFunction : mathFunctions) {
+                //At 0 are the functions; at 1 are the suggestions
+                particleScriptEngine.eval(mathFunction[0]);
             }
-        }catch (Exception e){EException.append(e);}
+        }catch (ScriptException e){EException.append(e);}
         Particle.expressionForceX = forceXTextField.getText();
         Particle.expressionForceY = forceYTextField.getText();
         Particle.angleIncrement = Particle.evaluateExpr(angleIncrementTextField.getText());

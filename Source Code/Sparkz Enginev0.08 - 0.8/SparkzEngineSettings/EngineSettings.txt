@@ -1,5 +1,5 @@
 # engineMode -- set: 0 - 4 <- MAX 
-engineMode: 4
+engineMode: 3
 # particleType -- set: 0 - 8 <- MAX 
 particleType: 0
 # particleGravitationMode -- set: 0 - 7 <- MAX 
@@ -55,7 +55,7 @@ connectParticles: false
 # particleFriction -- set: true - false 
 particleFriction: true
 # mouseGravitation -- set: true - false 
-mouseGravitation: true
+mouseGravitation: false
 # isPaused -- set: true - false 
 isPaused: false
 # GDMODEBOOL -- set: true - false 

@@ -1,10 +1,12 @@
 package com.engine.MGrapher;
 
+import com.engine.GUIWindows.EException;
 import com.engine.J8Helpers.Extensions.KAdapter;
 import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.Utilities.Settings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -41,7 +43,12 @@ public class JCalculator {
         panel.setLayout(new BorderLayout(0, 0));
 
         //Add Helper Math functions to JavaScript Engine at window creation
-        try {for (String mathFunction : mathFunctions) {engine.eval(mathFunction);}} catch (Exception e) {e.printStackTrace();}
+        try {
+            for (String[] mathFunction : mathFunctions) {
+                //At 0 are the functions; at 1 are the suggestions
+                engine.eval(mathFunction[0]);
+            }
+        }catch (ScriptException e){EException.append(e);}
 
         JPanel panel_1 = new JPanel();
         panel.add(panel_1, BorderLayout.SOUTH);

@@ -44,3 +44,4 @@ rand(x%.1+cos(x%3),signum(sin(.5*x)))+sin(x)%signum(cos(x))
 map(sin(x),-1,1,sin(10000000000*x)+signum(20*cos(1000*x)), cos(2*x))
 map(sin(.4*x),-1,1,sin(40000*x)+signum(20000*cos(10*x)), cos(13*x))*signum(-cos(200*x)*sin(200000*x))*cos(1*x)
 .1*x + csc(1222*x)+cos(.15*x) + abs(2*x) + cos(x) - 9
+cos(pow(.1*x,5))+ tan(9220*x)

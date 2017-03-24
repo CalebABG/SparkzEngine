@@ -5,6 +5,7 @@ import com.engine.GUIWindows.SampleFunctions;
 import com.engine.J8Helpers.Extensions.KAdapter;
 import com.engine.J8Helpers.Extensions.MAdapter;
 import com.engine.J8Helpers.Extensions.WindowClosing;
+import com.engine.JComponents.Autocomplete.AutoCompleteBehaviour;
 import com.engine.JComponents.TextSuggestor;
 import com.engine.JComponents.CTextField;
 import com.engine.JComponents.RButton;
@@ -16,50 +17,74 @@ import com.engine.GUIWindows.EException;
 import com.engine.Utilities.Settings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class ParticleGraph {
     // Best x-scale for all functions = 0.02
     private static ParticleGraph particleGraph = null;
     public static JFrame frame;
     public static CTextField[] textFields = new CTextField[5];
-    public static String[] mathFunctions = {
-            "var sin = Math.sin", "var cos = Math.cos", "var tan = Math.tan",
-            "var asin = Math.asin", "var acos = Math.acos", "var atan = Math.atan",
-            "var log = Math.log", "var sqrt = Math.sqrt", "var pi = Math.PI",
-            "var e = Math.E", "var abs = Math.abs", "var exp = Math.exp", "var pow = Math.pow",
-            "var rand = function(max, min){return (Math.random()*max)+min};",
-            "var signum = function(xpr){return (xpr / Math.abs(xpr))};",
-            "var mod = function(x, y){return (x - y * Math.floor(x / y))};",
-            "var sec = function(x){return 1/Math.cos(x);}",
-            "var csc = function(x){return 1/Math.sin(x);}",
-            "var cot = function(x){return 1/Math.tan(x);}",
-            "var lerp = function(start, stop, amt) {return start + (stop - start) * amt;}",
-            "var norm = function(value, start, stop) {return (value - start) / (stop - start);}",
-            "var clamp = function(val, min, max){return Math.min(Math.min(val, min), max);}",
-            "var map = function(value, sMin, sMax, dMin, dMax) {return dMin + (dMax - dMin) * ((value - sMin) / (sMax - sMin));}"
-    };
 
-    public static String[] suggestions = {
-            "sin(x)", "cos(x)", "tan(x)",
-            "asin(x)", "acos(x)", "atan(x)",
-            "log(x)", "sqrt(x)", "abs(x)",
-            "exp(x)", "pow(x, 2)", "rand(sin(x),0)",
-            "signum(x)", "mod(x,sin(x))", "lerp(sin(x),x/3,.5)",
-            "norm(x,0,0)", "clamp(x,0,1)", "map(sin(x),-1,1,-1,1)",
-            "sec(x)", "csc(x)", "cot(x)"
-    };
-
-    public static ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
+    public static ScriptEngine engine = new ScriptEngineManager().getEngineByName("Nashorn");
     private static String mathExpression = "sin(x)";
     private static double scaleY = 40; //Best at 40
     private static double scaleX = 0.02;
     private static Thread graphThread1;
 
-    //public static void main(String[] args){}
+    public static String[][] mathFunctions = {
+            {"var math = Java.type(\"java.lang.Math\")", ""},
+            {"var sin = math.sin", "sin(x)"},
+            {"var cos = math.cos", "cos(x)"},
+            {"var tan = math.tan", "tan(x)"},
+            {"var asin = math.asin", "asin(x)"},
+            {"var acos = math.acos", "acos(x)"},
+            {"var atan = math.atan", "atan(x)"},
+            {"var sinh = math.sinh", "sinh(x)"},
+            {"var cosh = math.cosh", "cosh(x)"},
+            {"var tanh = math.tanh", "tanh(x)"},
+            {"var atan2 = math.atan2", "atan2(x, y)"},
+            {"var hypot = math.hypot", "hypot(x, y)"},
+            {"var log = math.log", "log(x)"},
+            {"var log10 = math.log10", "log10(x)"},
+            {"var sqrt = math.sqrt", "sqrt(x)"},
+            {"var pi = math.PI", ""}, //1
+            {"var e = math.E", ""},   //2
+            {"var abs = math.abs", "abs(x)"},
+            {"var exp = math.exp", "exp(x)"},
+            {"var pow = math.pow", "pow(x,2)"},
+            {"var cbrt = math.cbrt", "cbrt(x)"},
+            {"var ceil = math.ceil", "ceil(x)"},
+            {"var round = math.round", "round(x)"},
+            {"var floor = math.floor", "floor(x)"},
+            {"var toRadians = math.toRadians", "toRadians(x)"},
+            {"var toDegrees = math.toDegrees", "toDegrees(x)"},
+            {"var rand = function(max, min){return (math.random()*max)+min};", "rand(10, 20)"},
+            {"var signum = math.signum", "signum(x)"},
+            {"var mod = function(x, y){return (x - y * math.floor(x / y))};", "mod(x, y)"},
+            {"var sec = function(x){return 1/math.cos(x);}", "sec(x)"},
+            {"var csc = function(x){return 1/math.sin(x);}", "csc(x)"},
+            {"var cot = function(x){return 1/math.tan(x);}", "cot(x)"},
+            {"var lerp = function(start, stop, amt) {return start + (stop - start) * amt;}", "lerp(0, sin(x), .5)"},
+            {"var norm = function(value, start, stop) {return (value - start) / (stop - start);}", "norm(x, 10, 20)"},
+            {"var clamp = function(val, min, max){return math.min(math.min(val, min), max);}", "clamp(x, 20, 40)"},
+            {"var map = function(value, sMin, sMax, dMin, dMax) {return dMin + (dMax - dMin) * ((value - sMin) / (sMax - sMin));}", "map(sin(x), -1, 1, -10, 20)"}
+    };
+
+    public static List<String> suggestions = new ArrayList<>();
+
+    static {
+        try{engine.eval("y = 0");}catch (ScriptException e){EException.append(e);}
+        for (int i = 0; i < mathFunctions.length; i++) suggestions.add(mathFunctions[i][1]);
+    }
+
+//    public static void main(String[] args){}
 
     public static ParticleGraph getInstance() {
         if (particleGraph == null) {particleGraph = new ParticleGraph();} frame.toFront(); return particleGraph;
@@ -92,7 +117,12 @@ public class ParticleGraph {
         scrollPane.setColumnHeaderView(menuBar);
 
         //Add Helper Math functions to JavaScript Engine at window creation
-        try {for (String mathFunction : mathFunctions) {engine.eval(mathFunction);}} catch (Exception e){EException.append(e);}
+        try {
+            for (String[] mathFunction : mathFunctions) {
+                //At 0 are the functions; at 1 are the suggestions
+                engine.eval(mathFunction[0]);
+            }
+        }catch (ScriptException e){EException.append(e);}
 
         JButton mnHelp = new JButton("Help");
         mnHelp.setFont(new Font("Times", Font.PLAIN, 18));
@@ -119,12 +149,46 @@ public class ParticleGraph {
                 e -> {if (e.getKeyCode() == KeyEvent.VK_ENTER){threadGraph(0, "");}}
         ));
 
-        //Textfield AutoSuggest Functions
-        String COMMIT_ACTION = "commit";
-        TextSuggestor textSuggestor = new TextSuggestor(textFields[0], Arrays.asList(suggestions));
-        textFields[0].getDocument().addDocumentListener(textSuggestor);
-        textFields[0].getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
-        textFields[0].getActionMap().put(COMMIT_ACTION, textSuggestor.new CommitAction());
+        AutoCompleteBehaviour<String> autoComplete = new AutoCompleteBehaviour<>();
+        autoComplete.setCallback(new AutoCompleteBehaviour.DefaultAutoCompleteCallback<String>() {
+            public List<String> getProposals(String input) {
+                if (input.length() < 1) return Collections.emptyList();
+
+                final String lower = input.toLowerCase();
+
+                final List<String> result = new ArrayList<>();
+                for (String c : suggestions) {
+                    if (c.contains(lower)) {
+                        result.add(c);
+                    }
+                }
+                return result;
+            }
+
+            public String getStringToInsert(String value) {
+                return value;
+            }
+        });
+
+        // set a custom renderer for our proposals
+        final DefaultListCellRenderer renderer = new DefaultListCellRenderer() {
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                final Component result = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                final String str = (String) value;
+                setText(str);
+                return result;
+            }
+        };
+        autoComplete.setListCellRenderer(renderer);
+
+        // setup initial size
+        autoComplete.setInitialPopupSize(new Dimension(200,650));
+
+        // how many proposals to display before showing a scroll bar
+        autoComplete.setVisibleRowCount(5);
+
+        // attach behaviour to editor
+        autoComplete.attachTo(textFields[0]);
         makeUndoable(textFields[0]);
         panel.add(textFields[0], textFields[0].gridBagConstraints);
 
