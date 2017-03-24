@@ -161,13 +161,13 @@ public class Particle extends Molecule {
     }
 
     public void boundsCheck() {
-        if (engineMode != GRAPH_MODE) super.boundsCheck();
-        else {
+        if (engineMode == GRAPH_MODE) {
             if (x > canvas.getWidth()  /  2) x = -canvas.getWidth() / 2;
             if (x < -canvas.getWidth() /  2) x = canvas.getWidth()  / 2;
             if (y > canvas.getHeight() /  2) y = -canvas.getHeight()/ 2;
             if (y < -canvas.getHeight()/  2) y = canvas.getHeight() / 2;
         }
+        else super.boundsCheck();
     }
 
     public void friction() {

@@ -1,6 +1,7 @@
 package com.engine.ParticleHelpers;
 
 import static com.engine.EngineHelpers.EConstants.*;
+import static com.engine.J8Helpers.Interfaces.EModes.*;
 import com.engine.ParticleTypes.GravityPoint;
 import com.engine.ParticleTypes.Particle;
 import java.awt.*;
@@ -102,25 +103,25 @@ public class DrawModes {
     public static void giveStyle(double x, double y, double radius, Color c, int particleMode, String txt) {
         graphics2D.setColor(c);
         switch (particleMode) {
-            case 1: drawRect(x, y, radius, radius); break;
-            case 2: drawCircle(x, y, radius, radius); break;
-            case 3: draw3DRect(x, y, radius, radius); break;
-            case 4: drawNumbers(x, y, radius); break;
-            case 5: drawCustomText(txt, x, y, radius); break;
-            case 6: fill3DRect(x, y, radius, radius); break;
-            case 7: fillCircle(x, y, radius, radius); break;
-            case 8: drawSmileyFace(x, y, radius); break;
-            case 9: drawNote1(x, y, radius); break;
-            case 10: drawNote2(x, y, radius); break;
-            case 11: drawHearts(x, y, radius); break;
-            case 12: drawCentSymbol(x, y, radius); break;
-            case 13: drawCopyRight(x, y, radius); break;
-            case 14: drawTradeMark(x, y, radius); break;
-            case 15: drawInfinity(x, y, radius); break;
-            case 16: drawKappaSymbol(x, y, radius); break;
-            case 17: drawSpade(x, y, radius); break;
-            case 18: drawClub(x, y, radius); break;
-            case 19: drawDiamond(x, y, radius); break;
+            case RECTANGLE_NOFILL: drawRect(x, y, radius, radius); break;
+            case CIRCLE_NOFILL: drawCircle(x, y, radius, radius); break;
+            case RECTANGLE3D_NOFILL: draw3DRect(x, y, radius, radius); break;
+            case NUMBERS: drawNumbers(x, y, radius); break;
+            case CUSTOM_TEXT: drawCustomText(txt, x, y, radius); break;
+            case RECTANGLE3D_FILL: fill3DRect(x, y, radius, radius); break;
+            case CIRCLE_FILL: fillCircle(x, y, radius, radius); break;
+            case SMILEY_FACE: drawSmileyFace(x, y, radius); break;
+            case MUSIC_NOTE_1: drawNote1(x, y, radius); break;
+            case MUSIC_NOTE_2: drawNote2(x, y, radius); break;
+            case HEART: drawHearts(x, y, radius); break;
+            case CENT_SYMBOL: drawCentSymbol(x, y, radius); break;
+            case COPYRIGHT_SYMBOL: drawCopyRight(x, y, radius); break;
+            case TRADEMARK_SYMBOL: drawTradeMark(x, y, radius); break;
+            case INFINITY_SYMBOL: drawInfinity(x, y, radius); break;
+            case KAPPA_SYMBOL: drawKappaSymbol(x, y, radius); break;
+            case SPADE_SYMBOL: drawSpade(x, y, radius); break;
+            case CLUB_SYMBOL: drawClub(x, y, radius); break;
+            case DIAMOND_SYMBOL: drawDiamond(x, y, radius); break;
             default: drawRect(x, y, radius, radius); break;
         }
     }
