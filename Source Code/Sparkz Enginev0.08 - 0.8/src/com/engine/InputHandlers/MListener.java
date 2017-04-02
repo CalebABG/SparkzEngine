@@ -16,7 +16,6 @@ public class MListener extends MouseAdapter {
         if (SwingUtilities.isLeftMouseButton(e)){isLeftMouseDown = false;}
         if (SwingUtilities.isRightMouseButton(e)){isRightMouseDown = false;}
         VSim.dragPoint = null;
-
     }
     public void mouseClicked(MouseEvent e){
         if (SwingUtilities.isLeftMouseButton(e)) {EngineMethods.switchClickMode(e);}

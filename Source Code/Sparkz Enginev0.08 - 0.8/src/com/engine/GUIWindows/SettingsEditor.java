@@ -396,18 +396,31 @@ public class SettingsEditor {
     }
 
     private static void guardValuesInt(int var, String comparison, JComponent component) {
-        if (InputWrapper.canParseStringInt(comparison)) {checkValuesInt(var, Integer.parseInt(comparison), component);}}
+        if (InputWrapper.canParseStringInt(comparison)) {
+            checkValuesInt(var, Integer.parseInt(comparison), component);
+        }
+    }
+
     private static void guardValuesDouble(double var, String comparison, JComponent component) {
-        if (InputWrapper.canParseStringDouble(comparison)) {checkValuesDouble(var, Double.parseDouble(comparison), component);}}
+        if (InputWrapper.canParseStringDouble(comparison)) {
+            checkValuesDouble(var, Double.parseDouble(comparison), component);
+        }
+    }
 
     private static void checkValuesInt(int default_var, int comparison_val, JComponent component) {
-        if (comparison_val == default_var){component.setForeground(new Color(0x2D5FBA));}
-        else {component.setForeground(Color.BLACK);}
+        if (comparison_val == default_var) {
+            component.setForeground(new Color(0x2D5FBA));
+        } else {
+            component.setForeground(Color.BLACK);
+        }
     }
 
     private static void checkValuesDouble(double default_var, double comparison_val, JComponent component) {
-        if (comparison_val == default_var){component.setForeground(new Color(0x2D5FBA));}
-        else {component.setForeground(Color.BLACK);}
+        if (comparison_val == default_var) {
+            component.setForeground(new Color(0x2D5FBA));
+        } else {
+            component.setForeground(Color.BLACK);
+        }
     }
 
     private static void saveSettings() {

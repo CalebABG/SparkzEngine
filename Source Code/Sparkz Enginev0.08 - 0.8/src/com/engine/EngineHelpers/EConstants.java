@@ -2,6 +2,8 @@ package com.engine.EngineHelpers;
 
 import com.engine.InputHandlers.*;
 import com.engine.ParticleTypes.*;
+import com.engine.Verlet.Vect2;
+
 import javax.swing.*;
 import java.awt.image.BufferStrategy;
 import java.util.List;
@@ -64,7 +66,8 @@ public abstract class EConstants {
     public static Canvas canvas                 = new Canvas();
 
     /*Mouse Point*/
-    public static Point Mouse                   = new Point();
+    public static Vect2 Mouse                   = new Vect2();
+//    public static Point Mouse                   = new Point();
 
     /*Booleans*/
     public static boolean running               = false;
@@ -81,7 +84,7 @@ public abstract class EConstants {
     public static boolean GDMODEBOOL            = false;
     public static boolean PTMODEBOOL            = false;
     public static boolean DUPLEXMODE            = false;
-    public static boolean SMOOTH                = true;
+    public static boolean SMOOTH                = false;
 
     /*Particle ArrayLists*/
     public static List<Particle> ParticlesArray         = Collections.synchronizedList(new ArrayList<>());

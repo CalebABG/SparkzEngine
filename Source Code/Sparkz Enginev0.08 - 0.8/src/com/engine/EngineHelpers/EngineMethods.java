@@ -5,7 +5,6 @@ import static com.engine.J8Helpers.Interfaces.EModes.*;
 import static com.engine.Utilities.H5Wrapper.H;
 import static com.engine.Utilities.InputWrapper.minValueGuard;
 import static com.engine.Verlet.Point.POINTS;
-import static com.engine.Verlet.Point.displayPointArraySize;
 import static com.engine.JComponents.CMenuBar.*;
 import com.engine.GUIWindows.*;
 import com.engine.JComponents.CMenuBar;
@@ -51,7 +50,7 @@ public class EngineMethods {
         }
 
         else if (engineMode == FIREWORKS_MODE) {mouseGravitation = false; ParticleModes.fireworksTarget(e);}
-        else if (engineMode == RAGDOLL_MODE) {VPHandler.handleRagdollMode(e);}
+        else if (engineMode == RAGDOLL_MODE) {VPHandler.ragdollMode_ClickState(e);}
     }
 
     /**
@@ -493,6 +492,8 @@ public class EngineMethods {
             DuplexArray.clear();
             PortalArray.clear();
             POINTS.clear();
+            //Make sure to delete reference to selected point for drawing constraints
+            VSim.selectedPoint = null;
         }
         catch (Exception e) {EException.append(e);}
     }
@@ -677,7 +678,8 @@ public class EngineMethods {
      */
     public static void handleRenders() {
         try {
-            if (engineMode == RAGDOLL_MODE) {displayPointArraySize(); Physics.update(); Physics.render();}
+            if (engineMode == RAGDOLL_MODE) {
+                VSim.debugPhysics(); Physics.update(); Physics.render();}
             else {
                 if (engineMode == GRAPH_MODE) drawMid();
                 renderParticlesArray(); renderGravityPointsArray(); renderFwParticlesArray();

@@ -14,14 +14,15 @@ import java.awt.*;
 
 // Project started on: 11/22/2015 :D -- REQUIRES Java version 1.8 (lambda functions used) or higher to edit
 // TODO: 2/23/2017 Create new SlideEditor
-// TODO: 2/23/2017 Add Physics Editor
 // TODO: 2/26/2017 Add Preset Editor
 // TODO: 2/26/2017 Refactor Variables with "Good" naming schemes
+// TODO: 3/31/2017 Add Selective Adding(Adding children of Molecule class and Physics objects depending on mode)
 // Notes:
 // "./" for File, FileChooser, or File operations refers to the current working directory the program started from.
 // Research into JVM Garbage Collection Optimization
 
 public class Engine {
+
     public static void main(String[] args) {
         new EngineSplash(2700).display();
         SwingUtilities.invokeLater(() -> new Engine().start());
@@ -64,6 +65,7 @@ public class Engine {
         canvas.addKeyListener(kHandler);
         EFrame.addKeyListener(kHandler);
         EFrame.add(canvas);
+
         setupTimerTask();
         EFrame.setVisible(true);
     }
@@ -88,7 +90,9 @@ public class Engine {
             lastRenderTime = now;
 
             while (now - lastUpdateTime > TIME_BETWEEN_UPDATES && updateCount < MAX_UPDATES_BEFORE_RENDER) {
-                if (!isPaused) {handleUpdates();}
+                if (!isPaused) {
+                    handleUpdates();
+                }
                 lastUpdateTime += TIME_BETWEEN_UPDATES;
                 updateCount++;
             }

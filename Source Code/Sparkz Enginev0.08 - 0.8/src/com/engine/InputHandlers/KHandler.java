@@ -1,6 +1,8 @@
 package com.engine.InputHandlers;
 
 import static com.engine.EngineHelpers.EConstants.*;
+import static com.engine.J8Helpers.Interfaces.EModes.RAGDOLL_MODE;
+
 import com.engine.EngineHelpers.EngineMethods;
 import com.engine.MGrapher.ParticleGraph;
 import com.engine.GUIWindows.*;
@@ -13,48 +15,48 @@ import java.awt.event.KeyEvent;
 
 public class KHandler extends KeyAdapter {
     public void keyPressed(KeyEvent e) {
-        int pressed = e.getKeyCode();
+        int key = e.getKeyCode();
 
         //Keyboard button: SPACE-BAR
-        if (pressed == KeyEvent.VK_SPACE) {
+        if (key == KeyEvent.VK_SPACE) {
             ParticleModes.singleGravityPoint((int) (Math.random() * canvas.getWidth()), (int) (Math.random() * canvas.getHeight()));
         }
 
         //Keyboard button: UP
-        if (pressed == KeyEvent.VK_UP) {
+        if (key == KeyEvent.VK_UP) {
             EngineMethods.upArrowFunction();
         }
 
         //Keyboard button: DOWN
-        if (pressed == KeyEvent.VK_DOWN) {
+        if (key == KeyEvent.VK_DOWN) {
             EngineMethods.downArrowFunction();
         }
 
         //Keyboard button: 1
-        if (pressed == KeyEvent.VK_1) {
+        if (key == KeyEvent.VK_1) {
             EngineMethods.increaseParticleSize();
         }
 
         //Keyboard button: 2
-        if (pressed == KeyEvent.VK_2) {
+        if (key == KeyEvent.VK_2) {
             EngineMethods.decreaseParticleSize();
         }
 
         //Keyboard button: 3
-        if (pressed == KeyEvent.VK_3) {
+        if (key == KeyEvent.VK_3) {
             EngineMethods.trimParticleArrays();
         }
 
         //Keyboard button: CTRL
-        if (pressed == KeyEvent.VK_CONTROL) isCTRLDown = true;
+        if (key == KeyEvent.VK_CONTROL) isCTRLDown = true;
 
         //Keyboard button: F
-        if (pressed == KeyEvent.VK_F) {
+        if (key == KeyEvent.VK_F) {
             EngineMethods.slowParticles();
         }
 
         //Keyboard button: G
-        if (pressed == KeyEvent.VK_G) {
+        if (key == KeyEvent.VK_G) {
             EngineMethods.scatterParticles();
         }
 
@@ -63,130 +65,153 @@ public class KHandler extends KeyAdapter {
     }
 
     public void keyReleased(KeyEvent e) {
-        int pressed = e.getKeyCode();
+        int key = e.getKeyCode();
 
         //Keyboard button: 0
-        if (pressed == KeyEvent.VK_0) {
+        if (key == KeyEvent.VK_0) {
             EngineMethods.mouseGravitationToggle();
         }
 
+        if (key == KeyEvent.VK_A) {
+            if (engineMode == RAGDOLL_MODE) {
+                VPhysicsEditor.EDITOR_MODE = VPhysicsEditor.ADD;
+                Notifier.getInstance(VPhysicsEditor.ADD,       150, 80);
+            }
+        }
+
+        if (key == KeyEvent.VK_D) {
+            if (engineMode == RAGDOLL_MODE) {
+                VPhysicsEditor.EDITOR_MODE = VPhysicsEditor.DRAG;
+                Notifier.getInstance(VPhysicsEditor.DRAG,       150, 80);
+            }
+            //VSim.handlePhysicsDeselect();
+        }
+
+        //Keyboard button: S
+        if (key == KeyEvent.VK_S) {
+            if (engineMode == RAGDOLL_MODE) {
+                VPhysicsEditor.EDITOR_MODE = VPhysicsEditor.SELECT;
+                Notifier.getInstance(VPhysicsEditor.SELECT,       185, 80);
+            }
+            //EngineMethods.toggleGraphicsSmoothing();
+        }
+
         //Keyboard button: W
-        if (pressed == KeyEvent.VK_W) {
+        if (key == KeyEvent.VK_W) {
             ColorEditor.getInstance();
         }
 
         //Keyboard button: 4
-        if (pressed == KeyEvent.VK_4) {
+        if (key == KeyEvent.VK_4) {
             EngineMethods.updateEngineMode();
         }
 
         //Keyboard button: 5
-        if (pressed == KeyEvent.VK_5) {
+        if (key == KeyEvent.VK_5) {
             EngineMethods.thinkingParticlesMode();
         }
 
         //Keyboard button: 6
-        if (pressed == KeyEvent.VK_6) {
+        if (key == KeyEvent.VK_6) {
             EngineMethods.connectParticlesMode();
         }
 
         //Keyboard button: 7
-        if (pressed == KeyEvent.VK_7) {
+        if (key == KeyEvent.VK_7) {
             OptionsMenu.getInstance();
         }
 
         //Keyboard button: 8
-        if (pressed == KeyEvent.VK_8) {
+        if (key == KeyEvent.VK_8) {
             EngineMethods.pauseSimulation();
         }
 
         //Keyboard button: CTRL
-        if (pressed == KeyEvent.VK_CONTROL) isCTRLDown = false;
+        if (key == KeyEvent.VK_CONTROL) isCTRLDown = false;
 
         //Keyboard button: 9
-        if (pressed == KeyEvent.VK_9) {
+        if (key == KeyEvent.VK_9) {
             SlideEditor.getInstance();
         }
 
         //Keyboard button: K
-        if (pressed == KeyEvent.VK_K) {
+        if (key == KeyEvent.VK_K) {
             VSim.toggleCollisions();
         }
 
         //Keyboard button: M
-        if (pressed == KeyEvent.VK_M) {
+        if (key == KeyEvent.VK_M) {
             VSim.toggleGravity();
         }
 
         //Keyboard button: N
-        if (pressed == KeyEvent.VK_N) {
+        if (key == KeyEvent.VK_N) {
             VSim.toggleDebug();
         }
 
+        if (key == KeyEvent.VK_P) {
+            VSim.pinSelectedPoint();
+        }
+
         //Keyboard button: C
-        if (pressed == KeyEvent.VK_C){
+        if (key == KeyEvent.VK_C){
             EngineMethods.clearParticleArrays();
         }
 
         //Keyboard button: Left Arrow
-        if (pressed == KeyEvent.VK_LEFT) {
+        if (key == KeyEvent.VK_LEFT) {
             EngineMethods.leftArrowFunction();
         }
 
         //Keyboard button: Right Arrow
-        if (pressed == KeyEvent.VK_RIGHT) {
+        if (key == KeyEvent.VK_RIGHT) {
             EngineMethods.rightArrowFunction();
         }
 
         //Keyboard button: Q
-        if (pressed == KeyEvent.VK_Q) {
+        if (key == KeyEvent.VK_Q) {
             EngineMethods.createEngineInstructionsWindow(EFrame);
         }
 
         //Keyboard button: R
-        if (pressed == KeyEvent.VK_R) {
+        if (key == KeyEvent.VK_R) {
             ColorConverter.giveBackgroundColor();
         }
 
-        //Keyboard button: S
-        if (pressed == KeyEvent.VK_S) {
-            EngineMethods.toggleGraphicsSmoothing();
-        }
-
         //Keyboard button: T
-        if (pressed == KeyEvent.VK_T) {
+        if (key == KeyEvent.VK_T) {
             EngineMethods.toggleParticleFriction();
         }
 
         //Toggles draw modes for GravityPoint
-        if (pressed == KeyEvent.VK_V) {
+        if (key == KeyEvent.VK_V) {
             GDMODEBOOL = EngineMethods.toggle(GDMODEBOOL);
         }
 
         //Toggles draw modes for Particles
-        if (pressed == KeyEvent.VK_B) {
+        if (key == KeyEvent.VK_B) {
             PTMODEBOOL = EngineMethods.toggle(PTMODEBOOL);
         }
 
         //Load in saved or default settings
-        if (e.isShiftDown() && (pressed == KeyEvent.VK_Z)) {
+        if (e.isShiftDown() && (key == KeyEvent.VK_Z)) {
             Settings.loadSettings();
         }
 
         //Keyboard button: Escape
-        if (pressed == KeyEvent.VK_ESCAPE) QuitWindow.getInstance();
+        if (key == KeyEvent.VK_ESCAPE) QuitWindow.getInstance();
 
         //Opens StatsPanel: precaution since the menubar is now on this panel
         //If the panel is closed, can always get the panel back
-        if (pressed == KeyEvent.VK_I && e.isControlDown()) StatsPanel.getInstance();
+        if (key == KeyEvent.VK_I && e.isControlDown()) StatsPanel.getInstance();
 
         //Open Exception Logger
-        if (e.isShiftDown() && e.isControlDown() && (pressed == KeyEvent.VK_V)) EException.getInstance();
+        if (e.isShiftDown() && e.isControlDown() && (key == KeyEvent.VK_V)) EException.getInstance();
 
         //Open Settings Editor
-        if (e.isShiftDown() && (pressed == KeyEvent.VK_S)) SettingsEditor.getInstance();
+        if (e.isShiftDown() && (key == KeyEvent.VK_S)) SettingsEditor.getInstance();
 
         //Open Particle Graph Editor
-        if (e.isShiftDown() && (pressed == KeyEvent.VK_X)) ParticleGraph.getInstance();
+        if (e.isShiftDown() && (key == KeyEvent.VK_X)) ParticleGraph.getInstance();
     }
 }

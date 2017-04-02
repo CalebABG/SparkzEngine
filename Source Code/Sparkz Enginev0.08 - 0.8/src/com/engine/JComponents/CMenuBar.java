@@ -88,6 +88,10 @@ public class CMenuBar extends JMenuBar {
         particleGraphUI.addActionListener(e -> ParticleGraph.getInstance());
         mnUIWindows.add(particleGraphUI);
 
+        JMenuItem vphysicseditor = new JMenuItem("VPhysics Editor");
+        vphysicseditor.addActionListener(e -> VPhysicsEditor.getInstance(EFrame));
+        mnUIWindows.add(vphysicseditor);
+
         JMenuItem timemachine = new JMenuItem("Color Time Machine");
         timemachine.addActionListener(e -> ColorTimeMachine.getInstance());
         mnUIWindows.add(timemachine);

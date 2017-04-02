@@ -6,6 +6,8 @@ import static java.lang.Math.*;
 import com.engine.GUIWindows.EException;
 import com.engine.ThinkingParticles.SCChoices;
 import com.engine.Utilities.ColorConverter;
+import com.engine.Verlet.Vect2;
+
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import static com.engine.EngineHelpers.EConstants.*;
@@ -57,7 +59,7 @@ public class Particle extends Molecule {
     * If The object of type Molecule is not null, gravitation will be based on the molecule. * Also means that the object for type Point must be null, 
     * and vice versa.
     */
-    public void gravitateTo(Molecule m, Point p) {
+    public void gravitateTo(Molecule m, Vect2 p) {
         double dx, dy, dist, forceX, forceY;
         //Mouse Grav
         if (p != null){
@@ -112,8 +114,8 @@ public class Particle extends Molecule {
                 break;
 
             case PARTICLE_REPELLENT:
-                forceX = (dx / 60 / dist);
-                forceY = (dy / 60 / dist);
+                forceX = (dx / 40 / dist);
+                forceY = (dy / 40 / dist);
                 vx += -forceX;
                 vy += -forceY;
                 break;

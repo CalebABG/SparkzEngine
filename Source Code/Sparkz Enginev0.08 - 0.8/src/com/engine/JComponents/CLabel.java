@@ -49,6 +49,27 @@ public class CLabel extends JLabel {
         setHorizontalAlignment(SwingConstants.CENTER);
     }
 
+    public CLabel(Color foreground, Color background) {
+        this.text = super.getText();
+        setBackground(background);
+        setForeground(foreground);
+        setOpaque(true);
+        setHorizontalAlignment(SwingConstants.CENTER);
+    }
+
+    /**
+     * @param foreground_background used to determine if the color should be used as the background or foreground color.
+     *                              If set to 0 = foreground color; set to 1 = background color.
+     * @param color color to be used as either foreground or background color
+     **/
+    public CLabel(Color color, int foreground_background) {
+        this.text = super.getText();
+        if (foreground_background == 0)      setForeground(color);
+        else if (foreground_background == 1) setBackground(color);
+        setOpaque(true);
+        setHorizontalAlignment(SwingConstants.CENTER);
+    }
+
     public void setUp() {
         setOpaque(true);
         setFont(font);
