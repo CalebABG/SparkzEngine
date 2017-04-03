@@ -65,8 +65,9 @@ public class Physics {
                 //  If the the point we want to drag isn't ull and if the engine isn't paused move it around
                 if (dragPoint != null) {
                     if (!isPaused) {
-                        dragPoint.currPos.x += (Mouse.x - dragPoint.currPos.x) / (dragForce);
-                        dragPoint.currPos.y += (Mouse.y - dragPoint.currPos.y) / (dragForce);
+                        double s = dragPoint.mass * dragForce;
+                        dragPoint.currPos.x += (Mouse.x - dragPoint.currPos.x) / s;
+                        dragPoint.currPos.y += (Mouse.y - dragPoint.currPos.y) / s;
                     }
                 }
 

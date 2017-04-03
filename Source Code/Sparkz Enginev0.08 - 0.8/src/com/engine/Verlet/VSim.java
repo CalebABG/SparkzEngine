@@ -22,7 +22,7 @@ public class VSim {
     public static double gravity                        = 0.0;
     public static double air_viscosity                  = 1.0;
     public static double GConstant                      = 0.251;
-    public static double dragForce                      = 30; // The lower the stronger
+    public static double dragForce                      = 5; // The lower the stronger
     public static int SIM_ACCURACY                      = 7;
     public static int MAX_COLLISIONS                    = 285;
 

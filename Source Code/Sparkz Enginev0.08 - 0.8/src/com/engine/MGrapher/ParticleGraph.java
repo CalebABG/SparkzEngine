@@ -6,7 +6,6 @@ import com.engine.J8Helpers.Extensions.KAdapter;
 import com.engine.J8Helpers.Extensions.MAdapter;
 import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.JComponents.Autocomplete.AutoCompleteBehaviour;
-import com.engine.JComponents.TextSuggestor;
 import com.engine.JComponents.CTextField;
 import com.engine.JComponents.RButton;
 import com.engine.JComponents.RLabel;
@@ -22,7 +21,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

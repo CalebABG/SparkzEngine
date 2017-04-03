@@ -3,13 +3,11 @@ package com.engine.GUIWindows;
 import com.engine.EngineHelpers.EConstants;
 import com.engine.EngineHelpers.EngineMethods;
 import com.engine.J8Helpers.Extensions.MAdapter;
-import com.engine.J8Helpers.Extensions.TimerTaskX;
 import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.JComponents.CLabel;
 import com.engine.Utilities.InputWrapper;
 import com.engine.Utilities.Settings;
 import com.engine.Verlet.Constraint;
-import com.engine.Verlet.Point;
 import com.engine.Verlet.VPHandler;
 import com.engine.Verlet.VSim;
 
@@ -20,12 +18,9 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Color;
-import java.awt.geom.Ellipse2D;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.engine.EngineHelpers.EConstants.graphics2D;
-import static com.engine.EngineHelpers.EConstants.timerFPS;
 import static com.engine.Verlet.VSim.selectedPoint;
 
 public class VPhysicsEditor {
@@ -84,7 +79,7 @@ public class VPhysicsEditor {
         listModel.addElement("-1");
     }
 
-    public static void main(String[] args) {getInstance(null);}
+    //public static void main(String[] args) {getInstance(null);}
 
     public static VPhysicsEditor getInstance(JFrame p) {
         if (instance == null) {

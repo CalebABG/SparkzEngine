@@ -10,7 +10,6 @@ import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
 
 import static com.engine.JComponents.TextSuggestor.makeUndoable;
 import static com.engine.MGrapher.ParticleGraph.mathFunctions;

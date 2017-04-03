@@ -1,7 +1,6 @@
 package com.engine.Verlet;
 
 import com.engine.EngineHelpers.EngineMethods;
-import com.engine.GUIWindows.VPhysicsEditor;
 
 import static com.engine.EngineHelpers.EConstants.*;
 import java.awt.*;

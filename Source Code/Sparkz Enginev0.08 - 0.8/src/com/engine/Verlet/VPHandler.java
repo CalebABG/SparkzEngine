@@ -5,9 +5,6 @@ import com.engine.GUIWindows.VPhysicsEditor;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-import static com.engine.EngineHelpers.EConstants.Mouse;
-import static com.engine.EngineHelpers.EConstants.isLeftMouseDown;
-import static com.engine.Utilities.ColorConverter.randHSLColor;
 import static com.engine.Verlet.Point.POINTS;
 import static com.engine.Verlet.VSim.selectedPoint;
 
