@@ -11,7 +11,7 @@ public class Duplex extends Molecule {
 
     public Duplex() {super();}
     public Duplex(double _x, double _y, double _radius, double speed, int direction) {
-        super(_x, _y, _radius, speed, direction, (byte) 0);
+        super(_x, _y, _radius, speed, direction, 0);
         duplexMode = DUPLEXMODE;
     }
 

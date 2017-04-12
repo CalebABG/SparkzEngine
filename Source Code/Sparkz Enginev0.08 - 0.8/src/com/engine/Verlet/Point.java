@@ -6,6 +6,7 @@ import static com.engine.EngineHelpers.EConstants.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -206,6 +207,8 @@ public class Point {
         return (dx * dx + dy * dy <= radius * radius);
     }
 
+
+    public Vect2 getCenter(){return new Vect2(currPos.x + (radius / 2), currPos.y + (radius / 2));}
     public double getVelocityX(){return currPos.x - prevPos.x;}
     public double getVelocityY(){return currPos.y - prevPos.y;}
     public Vect2 getVelocity(){return new Vect2(getVelocityX(), getVelocityY());}

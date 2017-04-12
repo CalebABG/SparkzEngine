@@ -9,7 +9,7 @@ public class QED extends Molecule {
 
     public QED() {super();}
     public QED(double _x, double _y, double _radius, double speed, int direction) {
-        super(_x, _y, _radius, speed, direction, (byte) 0);
+        super(_x, _y, _radius, speed, direction, 0);
         life = (int) (Math.random() * 400 + 150);
         particletype = (int) (Math.random() * 11);
     }

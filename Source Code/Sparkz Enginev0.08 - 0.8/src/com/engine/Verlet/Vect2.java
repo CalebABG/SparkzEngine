@@ -104,4 +104,5 @@ public class Vect2 {
     public static double norm(double value, double start, double stop) {return (value - start) / (stop - start);}
     public static double clamp(double val, double min, double max){return Math.min(Math.min(val, min), max);}
     public static double map(double value, double sMin, double sMax, double dMin, double dMax) {return dMin + (dMax - dMin) * ((value - sMin) / (sMax - sMin));}
+    public static double nextMultiple(double number, int multiple){ return Math.ceil(number / multiple) * multiple;}
 }

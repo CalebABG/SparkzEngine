@@ -53,7 +53,7 @@ public class VSim {
 
     public static void pinSelectedPoint(){
         if (dragPoint != null) {dragPoint.togglePin();}
-        else selectedPoint.togglePin();
+        else if (selectedPoint != null) selectedPoint.togglePin();
     }
 
     public static void handlePhysicsDeselect() {

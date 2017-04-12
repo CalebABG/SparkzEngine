@@ -23,7 +23,7 @@ public abstract class Molecule implements MoleculeRender {
         this.x = x; this.y = y; this.vx = vx; this.vy = vy; this.radius = radius;
     }
 
-    public Molecule(double x, double y, double radius, double speed, double direction, byte dummy) {
+    public Molecule(double x, double y, double radius, double speed, double direction, int dummy) {
         this.x = x;
         this.y = y;
         this.radius = radius;
