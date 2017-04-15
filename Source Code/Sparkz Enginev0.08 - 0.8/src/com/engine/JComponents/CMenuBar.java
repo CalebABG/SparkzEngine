@@ -191,8 +191,7 @@ public class CMenuBar extends JMenuBar {
         particleModes.add(pModes[4]);
 
         for (JRadioButtonMenuItem b : pModes) {if (Integer.parseInt(b.getActionCommand()) == engineMode) {b.setSelected(true); break;}}
-        for (JRadioButtonMenuItem b : pModes) {b.addActionListener(e -> {
-            engineMode = Integer.parseInt(particleModesGroup.getSelection().getActionCommand()); displayEngineMode();});}
+        for (JRadioButtonMenuItem b : pModes) {b.addActionListener(e -> engineMode = Integer.parseInt(particleModesGroup.getSelection().getActionCommand()));}
 
         modes.add(particleModes);
 
@@ -249,7 +248,7 @@ public class CMenuBar extends JMenuBar {
 
         for (JRadioButtonMenuItem b : pTypes) {if (Integer.parseInt(b.getActionCommand()) == particleType) {b.setSelected(true); break;}}
         for (JRadioButtonMenuItem b : pTypes) {
-            b.addActionListener(e -> {particleType = Integer.parseInt(particleTypesGroup.getSelection().getActionCommand()); displayParticleType();});
+            b.addActionListener(e -> particleType = Integer.parseInt(particleTypesGroup.getSelection().getActionCommand()));
         }
 
         modes.add(particleTypes);

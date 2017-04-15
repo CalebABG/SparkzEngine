@@ -6,6 +6,7 @@ import com.engine.ParticleTypes.GravityPoint;
 import com.engine.ParticleTypes.Particle;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.QuadCurve2D;
 
 public class DrawModes {
@@ -30,14 +31,14 @@ public class DrawModes {
         graphics2D.fillOval((int) x, (int) y, (int) width, (int) height);
     }
 
-    private static void drawCustomText(String t, double x, double y, double radius) {
+    private static void drawCustomText(String text, double x, double y, double radius) {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
-        graphics2D.drawString(t, (int) x, (int) y);
+        graphics2D.drawString(text, (int) x, (int) y);
     }
 
     private static void drawNumbers(double x, double y, double radius) {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
-        graphics2D.drawString((Integer.toString((int) radius)), (int) x, (int) y);
+        graphics2D.drawString(""+radius, (int) x, (int) y);
     }
 
     private static void drawSmileyFace(double x, double y, double radius) {
@@ -101,46 +102,103 @@ public class DrawModes {
     }
 
     public static void giveStyle(double x, double y, double radius, Color c, int particleMode, String txt) {
-        graphics2D.setColor(c);
         switch (particleMode) {
-            case RECTANGLE_NOFILL: drawRect(x, y, radius, radius); break;
-            case CIRCLE_NOFILL: drawCircle(x, y, radius, radius); break;
-            case RECTANGLE3D_NOFILL: draw3DRect(x, y, radius, radius); break;
-            case NUMBERS: drawNumbers(x, y, radius); break;
-            case CUSTOM_TEXT: drawCustomText(txt, x, y, radius); break;
-            case RECTANGLE3D_FILL: fill3DRect(x, y, radius, radius); break;
-            case CIRCLE_FILL: fillCircle(x, y, radius, radius); break;
-            case SMILEY_FACE: drawSmileyFace(x, y, radius); break;
-            case MUSIC_NOTE_1: drawNote1(x, y, radius); break;
-            case MUSIC_NOTE_2: drawNote2(x, y, radius); break;
-            case HEART: drawHearts(x, y, radius); break;
-            case CENT_SYMBOL: drawCentSymbol(x, y, radius); break;
-            case COPYRIGHT_SYMBOL: drawCopyRight(x, y, radius); break;
-            case TRADEMARK_SYMBOL: drawTradeMark(x, y, radius); break;
-            case INFINITY_SYMBOL: drawInfinity(x, y, radius); break;
-            case KAPPA_SYMBOL: drawKappaSymbol(x, y, radius); break;
-            case SPADE_SYMBOL: drawSpade(x, y, radius); break;
-            case CLUB_SYMBOL: drawClub(x, y, radius); break;
-            case DIAMOND_SYMBOL: drawDiamond(x, y, radius); break;
-            default: drawRect(x, y, radius, radius); break;
+            case RECTANGLE_NOFILL:
+                graphics2D.setColor(c);
+                drawRect(x, y, radius, radius);
+                break;
+            case CIRCLE_NOFILL:
+                graphics2D.setColor(c);
+                drawCircle(x, y, radius, radius);
+                break;
+            case RECTANGLE3D_NOFILL:
+                graphics2D.setColor(c);
+                draw3DRect(x, y, radius, radius);
+                break;
+            case NUMBERS:
+                graphics2D.setColor(c);
+                drawNumbers(x, y, radius);
+                break;
+            case CUSTOM_TEXT:
+                graphics2D.setColor(c);
+                drawCustomText(txt, x, y, radius);
+                break;
+            case RECTANGLE3D_FILL:
+                graphics2D.setColor(c);
+                fill3DRect(x, y, radius, radius);
+                break;
+            case CIRCLE_FILL:
+                graphics2D.setColor(c);
+                fillCircle(x, y, radius, radius);
+                break;
+            case SMILEY_FACE:
+                graphics2D.setColor(c);
+                drawSmileyFace(x, y, radius);
+                break;
+            case MUSIC_NOTE_1:
+                graphics2D.setColor(c);
+                drawNote1(x, y, radius);
+                break;
+            case MUSIC_NOTE_2:
+                graphics2D.setColor(c);
+                drawNote2(x, y, radius);
+                break;
+            case HEART:
+                graphics2D.setColor(c);
+                drawHearts(x, y, radius);
+                break;
+            case CENT_SYMBOL:
+                graphics2D.setColor(c);
+                drawCentSymbol(x, y, radius);
+                break;
+            case COPYRIGHT_SYMBOL:
+                graphics2D.setColor(c);
+                drawCopyRight(x, y, radius);
+                break;
+            case TRADEMARK_SYMBOL:
+                graphics2D.setColor(c);
+                drawTradeMark(x, y, radius);
+                break;
+            case INFINITY_SYMBOL:
+                graphics2D.setColor(c);
+                drawInfinity(x, y, radius);
+                break;
+            case KAPPA_SYMBOL:
+                graphics2D.setColor(c);
+                drawKappaSymbol(x, y, radius);
+                break;
+            case SPADE_SYMBOL:
+                graphics2D.setColor(c);
+                drawSpade(x, y, radius);
+                break;
+            case CLUB_SYMBOL:
+                graphics2D.setColor(c);
+                drawClub(x, y, radius);
+                break;
+            case DIAMOND_SYMBOL:
+                graphics2D.setColor(c);
+                drawDiamond(x, y, radius);
+                break;
+            default:
+                graphics2D.setColor(c);
+                drawRect(x, y, radius, radius);
+                break;
         }
     }
 
     public static void ConnectParticles(Particle p, Particle q) {
-        graphics2D.drawLine(p.getCenter().x, p.getCenter().y, q.getCenter().x, q.getCenter().y);
+        graphics2D.draw(new Line2D.Double(p.getCenterX(), p.getCenterY(), q.getCenterX(), q.getCenterY()));
     }
 
     public static void DrawGravConnections(GravityPoint gpoint, double radius, double x, double y) {
-        if (GDMODEBOOL) {DrawQuads(gpoint, radius, x, y);}else {DrawLines(gpoint, radius, x, y);}
+        if (GDMODEBOOL) {DrawQuads(gpoint, radius, x, y);} else {DrawLines(gpoint, radius, x, y);}
     }
 
     private static void DrawLines(GravityPoint gpoint, double radius, double x, double y) {
-        graphics2D.drawLine((gpoint.getCenter().x),(gpoint.getCenter().y),
-                (int) (x + (radius / 2)), (int) (y + (radius / 2)));
+        graphics2D.draw(new Line2D.Double(gpoint.getCenterX(), gpoint.getCenterY(), x + radius / 2, y + radius / 2));
     }
 
     private static void DrawQuads(GravityPoint gpoint, double radius, double x, double y) {
-        graphics2D.draw(new QuadCurve2D.Double((gpoint.getCenter().x), (gpoint.getCenter().y),
-                gpoint.x, y, (int) (x + (radius / 2)), (int) (y + (radius / 2))));
+        graphics2D.draw(new QuadCurve2D.Double(gpoint.getCenterX(), gpoint.getCenterY(), gpoint.x, y, x + radius / 2, y + radius / 2));
     }
 }

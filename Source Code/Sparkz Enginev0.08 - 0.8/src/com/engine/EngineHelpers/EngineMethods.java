@@ -26,27 +26,27 @@ public class EngineMethods {
      */
     public static void switchClickMode(MouseEvent e) {
         if (engineMode == NORMAL_MODE){
-            if (particleType == PARTICLE)       ParticleModes.singleParticle(e);
-            if (particleType == GRAVITY_POINT)  ParticleModes.singleGravityPoint(e);
-            if (particleType == EMITTER)        ParticleModes.singleEmitter(e);
-            if (particleType == FLUX)           ParticleModes.singleSemtex(e);
-            if (particleType == QED)            ParticleModes.singleQED(e);
-            if (particleType == ION)            ParticleModes.singleIon(e);
-            if (particleType == BLACK_HOLE)     ParticleModes.singleBlackHole(e);
-            if (particleType == DUPLEX)         ParticleModes.singleDuplex(e);
-            if (particleType == PORTAL)         ParticleModes.singlePortal(e);
+            if (particleType == PARTICLE)            ParticleModes.singleParticle(e);
+            else if (particleType == GRAVITY_POINT)  ParticleModes.singleGravityPoint(e);
+            else if (particleType == EMITTER)        ParticleModes.singleEmitter(e);
+            else if (particleType == FLUX)           ParticleModes.singleSemtex(e);
+            else if (particleType == QED)            ParticleModes.singleQED(e);
+            else if (particleType == ION)            ParticleModes.singleIon(e);
+            else if (particleType == BLACK_HOLE)     ParticleModes.singleBlackHole(e);
+            else if (particleType == DUPLEX)         ParticleModes.singleDuplex(e);
+            else if (particleType == PORTAL)         ParticleModes.singlePortal(e);
         }
 
         else if (engineMode == MULTI_MODE){
-            if (particleType == PARTICLE)       ParticleModes.multiParticle(e);
-            if (particleType == GRAVITY_POINT)  ParticleModes.multiGravityPoint(e, 4);
-            if (particleType == EMITTER)        ParticleModes.singleEmitter(e);
-            if (particleType == FLUX)           ParticleModes.multiSemtex(e, 5);
-            if (particleType == QED)            ParticleModes.multiQED(e, 4);
-            if (particleType == ION)            ParticleModes.multiIon(e, 10);
-            if (particleType == BLACK_HOLE)     ParticleModes.singleBlackHole(e);
-            if (particleType == DUPLEX)         ParticleModes.singleDuplex(e);
-            if (particleType == PORTAL)         ParticleModes.singlePortal(e);
+            if (particleType == PARTICLE)            ParticleModes.multiParticle(e);
+            else if (particleType == GRAVITY_POINT)  ParticleModes.multiGravityPoint(e, 4);
+            else if (particleType == EMITTER)        ParticleModes.singleEmitter(e);
+            else if (particleType == FLUX)           ParticleModes.multiSemtex(e, 4);
+            else if (particleType == QED)            ParticleModes.multiQED(e, 4);
+            else if (particleType == ION)            ParticleModes.multiIon(e, 10);
+            else if (particleType == BLACK_HOLE)     ParticleModes.singleBlackHole(e);
+            else if (particleType == DUPLEX)         ParticleModes.singleDuplex(e);
+            else if (particleType == PORTAL)         ParticleModes.singlePortal(e);
         }
 
         else if (engineMode == FIREWORKS_MODE) {mouseGravitation = false; ParticleModes.fireworksTarget(e);}
@@ -505,17 +505,17 @@ public class EngineMethods {
      */
     public static void trimParticleArrays(){
         try {
-            for (int i = 0; i < ParticlesArray.size(); i++)     ParticlesArray.remove(i);
-            for (int i = 0; i < GravityPointsArray.size(); i++) GravityPointsArray.remove(i);
-            for (int i = 0; i < FireworksArray.size(); i++)     FireworksArray.remove(i);
-            for (int i = 0; i < EmitterArray.size(); i++)       EmitterArray.remove(i);
-            for (int i = 0; i < FluxArray.size(); i++)          FluxArray.remove(i);
-            for (int i = 0; i < EraserArray.size(); i++)        EraserArray.remove(i);
-            for (int i = 0; i < QEDArray.size(); i++)           QEDArray.remove(i);
-            for (int i = 0; i < IonArray.size(); i++)           IonArray.remove(i);
-            for (int i = 0; i < BlackHoleArray.size(); i++)     BlackHoleArray.remove(i);
-            for (int i = 0; i < DuplexArray.size(); i++)        DuplexArray.remove(i);
-            for (int i = 0; i < PortalArray.size(); i++)        PortalArray.remove(i);
+            synchronized (ParticlesArray) {for (int i = 0; i < ParticlesArray.size(); i++)     ParticlesArray.remove(i);}
+            synchronized (GravityPointsArray) {for (int i = 0; i < GravityPointsArray.size(); i++) GravityPointsArray.remove(i);}
+            synchronized (FireworksArray) {for (int i = 0; i < FireworksArray.size(); i++)     FireworksArray.remove(i);}
+            synchronized (EmitterArray) {for (int i = 0; i < EmitterArray.size(); i++)       EmitterArray.remove(i);}
+            synchronized (FluxArray) {for (int i = 0; i < FluxArray.size(); i++)          FluxArray.remove(i);}
+            synchronized (EraserArray) {for (int i = 0; i < EraserArray.size(); i++)        EraserArray.remove(i);}
+            synchronized (QEDArray) {for (int i = 0; i < QEDArray.size(); i++)           QEDArray.remove(i);}
+            synchronized (IonArray) {for (int i = 0; i < IonArray.size(); i++)           IonArray.remove(i);}
+            synchronized (BlackHoleArray) {for (int i = 0; i < BlackHoleArray.size(); i++)     BlackHoleArray.remove(i);}
+            synchronized (DuplexArray) {for (int i = 0; i < DuplexArray.size(); i++)        DuplexArray.remove(i);}
+            synchronized (PortalArray) {for (int i = 0; i < PortalArray.size(); i++)        PortalArray.remove(i);}
         }
         catch (Exception ex) {EException.append(ex);}
     }
@@ -553,7 +553,6 @@ public class EngineMethods {
                 default: break;
             }
         }
-
         else {
             switch (particleType){
                 case 0: Notifier.getInstance("Particle",      200, 80); break;
@@ -624,31 +623,31 @@ public class EngineMethods {
 
     //Updates all particles in the Engines ArrayLists
     //---------------------------------------------------------------------------------------------------------------------------------------//
-    private static void updateParticlesArray(){for (int i = 0; i < ParticlesArray.size(); i++){ParticlesArray.get(i).update();}}
-    private static void updateGravityPointsArray() {for (int i = 0; i < GravityPointsArray.size(); i++) {GravityPointsArray.get(i).update();}}
-    private static void updateEmitterArray() {for (int i = 0; i < EmitterArray.size(); i++) {EmitterArray.get(i).update();}}
-    private static void updateFwParticlesArray() {for (int i = 0; i < FireworksArray.size(); i++) {FireworksArray.get(i).update();}}
-    private static void updateFluxArray() {for (int i = 0; i < FluxArray.size(); i++) {FluxArray.get(i).update();}}
-    private static void updateObstructArray() {for (int i = 0; i < EraserArray.size(); i++) {EraserArray.get(i).update();}}
-    private static void updateQEDArray() {for (int i = 0; i < QEDArray.size(); i++) {QEDArray.get(i).update();}}
-    private static void updateIonsArray() {for (int i = 0; i < IonArray.size(); i++) {IonArray.get(i).update();}}
-    private static void updateBlackHoleArray() {for (int i = 0; i < BlackHoleArray.size(); i++) {BlackHoleArray.get(i).update();}}
-    private static void updateDuplexArray() {for (int i = 0; i < DuplexArray.size(); i++) {DuplexArray.get(i).update();}}
-    private static void updatePortalArray() {for (int i = 0; i < PortalArray.size(); i++) {PortalArray.get(i).update();}}
+    private static void updateParticlesArray() {for (int i = 0; i < ParticlesArray.size(); i++) ParticlesArray.get(i).update();}
+    private static void updateGravityPointsArray() {for (int i = 0; i < GravityPointsArray.size(); i++) GravityPointsArray.get(i).update();}
+    private static void updateEmitterArray() {for (int i = 0; i < EmitterArray.size(); i++) EmitterArray.get(i).update();}
+    private static void updateFwParticlesArray() {for (int i = 0; i < FireworksArray.size(); i++) FireworksArray.get(i).update();}
+    private static void updateFluxArray() {for (int i = 0; i < FluxArray.size(); i++) FluxArray.get(i).update();}
+    private static void updateObstructArray() {for (int i = 0; i < EraserArray.size(); i++) EraserArray.get(i).update();}
+    private static void updateQEDArray() {for (int i = 0; i < QEDArray.size(); i++) QEDArray.get(i).update();}
+    private static void updateIonsArray() {for (int i = 0; i < IonArray.size(); i++) IonArray.get(i).update();}
+    private static void updateBlackHoleArray() {for (int i = 0; i < BlackHoleArray.size(); i++) BlackHoleArray.get(i).update();}
+    private static void updateDuplexArray() {for (int i = 0; i < DuplexArray.size(); i++) DuplexArray.get(i).update();}
+    private static void updatePortalArray() {for (int i = 0; i < PortalArray.size(); i++) PortalArray.get(i).update();}
 
     //Renders all particles in the Engines ArrayLists
-    //---------------------------------------------------------------------------------------------------------------------------------------//
-    private static void renderParticlesArray() {for (int i = 0; i < ParticlesArray.size(); i++) {ParticlesArray.get(i).render();}}
-    private static void renderGravityPointsArray() {for (int i = 0; i < GravityPointsArray.size(); i++) {GravityPointsArray.get(i).render();}}
-    private static void renderEmitterArray() {for (int i = 0; i < EmitterArray.size(); i++) {EmitterArray.get(i).render();}}
-    private static void renderFwParticlesArray() {for (int i = 0; i < FireworksArray.size(); i++) {FireworksArray.get(i).render();}}
-    private static void renderFluxArray() {for (int i = 0; i < FluxArray.size(); i++) {FluxArray.get(i).render();}}
-    private static void renderObstructArray() {for (int i = 0; i < EraserArray.size(); i++) {EraserArray.get(i).render();}}
-    private static void renderQEDArray() {for (int i = 0; i < QEDArray.size(); i++) {QEDArray.get(i).render();}}
-    private static void renderIonsArray() {for (int i = 0; i < IonArray.size(); i++) {IonArray.get(i).render();}}
-    private static void renderBlackHoleArray() {for (int i = 0; i < BlackHoleArray.size(); i++) {BlackHoleArray.get(i).render();}}
-    private static void renderDuplexArray() {for (int i = 0; i < DuplexArray.size(); i++) {DuplexArray.get(i).render();}}
-    private static void renderPortalArray() {for (int i = 0; i < PortalArray.size(); i++) {PortalArray.get(i).render();}}
+    //--------------------------------------------------------------------------------------------------------------------------------------//
+    private static void renderParticlesArray() {for (int i = 0; i < ParticlesArray.size(); i++) ParticlesArray.get(i).render();}
+    private static void renderGravityPointsArray() {for (int i = 0; i < GravityPointsArray.size(); i++) GravityPointsArray.get(i).render();}
+    private static void renderEmitterArray() {for (int i = 0; i < EmitterArray.size(); i++) EmitterArray.get(i).render();}
+    private static void renderFwParticlesArray() {for (int i = 0; i < FireworksArray.size(); i++) FireworksArray.get(i).render();}
+    private static void renderFluxArray() {for (int i = 0; i < FluxArray.size(); i++) FluxArray.get(i).render();}
+    private static void renderObstructArray() {for (int i = 0; i < EraserArray.size(); i++) EraserArray.get(i).render();}
+    private static void renderQEDArray() {for (int i = 0; i < QEDArray.size(); i++) QEDArray.get(i).render();}
+    private static void renderIonsArray() {for (int i = 0; i < IonArray.size(); i++) IonArray.get(i).render();}
+    private static void renderBlackHoleArray() {for (int i = 0; i < BlackHoleArray.size(); i++) BlackHoleArray.get(i).render();}
+    private static void renderDuplexArray() {for (int i = 0; i < DuplexArray.size(); i++) DuplexArray.get(i).render();}
+    private static void renderPortalArray() {for (int i = 0; i < PortalArray.size(); i++) PortalArray.get(i).render();}
     //---------------------------------------------------------------------------------------------------------------------------------------//
     /**
      * Makes sure that the Engines fireworks mode does not cause an exception due to too many particle explosions

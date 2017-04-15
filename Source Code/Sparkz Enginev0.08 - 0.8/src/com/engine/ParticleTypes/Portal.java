@@ -12,31 +12,40 @@ public class Portal extends Molecule {
     }
 
     private void movePortal() {
-        for (int i = 0; i < PortalArray.size(); i++) {
-            Portal portals = PortalArray.get(i);
-            double dx = Mouse.x - portals.x, dy = Mouse.y - portals.y, dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < (2 * (portals.radius + 1)) && isCTRLDown) {
-                portals.setColor(Particle.thinkingColors[(int) (Math.random() * 4)]);
-                portals.setPos(Mouse.x - (PortalArray.get(i).radius / 2),
-                        (Mouse.y - (PortalArray.get(i).radius / 2)));
+        for (int i = 0, len = PortalArray.size(); i < len; i++) {
+            Portal portal = PortalArray.get(i);
+            double dx = Mouse.x - portal.x;
+            double dy = Mouse.y - portal.y;
+            double dist = dx * dx + dy * dy;
+
+            if (dist < (portal.radius * portal.radius) && isCTRLDown) {
+                portal.setColor(Particle.thinkingColors[(int) (Math.random() * 4)]);
+                portal.setPos(Mouse.x - portal.radius / 2, Mouse.y - portal.radius / 2);
             }
         }
     }
 
     private void transferMatter() {
-        if (PortalArray.size() > 1) {
+        if (PortalArray.size() == 2) {
+            Portal p1 = PortalArray.get(0);
+            Portal p2 = PortalArray.get(1);
+
             for (int i = 0; i < ParticlesArray.size(); i++) {
                 Particle particles = ParticlesArray.get(i);
-                Portal p1 = PortalArray.get(0); Portal p2 = PortalArray.get(1);
-                double dx = particles.x - p1.getCenter().x, dy = particles.y - p1.getCenter().y, dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < (0.6 * (p1.radius))) {particles.setPos(p2.getCenter().x, p2.getCenter().y);}
+                double dx = particles.x - p1.getCenterX();
+                double dy = particles.y - p1.getCenterY();
+                double dist = dx * dx + dy * dy;
+
+                if (dist < p1.radius * p1.radius) {
+                    particles.setPos(p2.getCenterX(), p2.getCenterY());
+                }
             }
         }
     }
 
     public void giveStyle() {
         graphics2D.setColor(color);
-        graphics2D.draw(new Ellipse2D.Double(x, y, radius, radius));
+        graphics2D.draw(new Ellipse2D.Double(x - radius / 2, y - radius / 2, 2 * radius, 2 * radius));
     }
 
     public void render() {

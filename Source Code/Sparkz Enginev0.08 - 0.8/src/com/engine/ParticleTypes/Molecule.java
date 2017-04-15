@@ -1,26 +1,42 @@
 package com.engine.ParticleTypes;
 
 import com.engine.J8Helpers.Interfaces.MoleculeRender;
+import com.engine.Verlet.Vect2;
+
 import static java.lang.Math.*;
 import static com.engine.EngineHelpers.EConstants.*;
 import java.awt.*;
 
 public abstract class Molecule implements MoleculeRender {
     public Color color = DEFAULT_COLOR;
-    public double x, y, vx, vy, radius = 1;
+    public double x;
+    public double y;
+    public double vx;
+    public double vy;
+    public double radius = 1;
 
     public Molecule() {
-        x = (Math.random() * width - radius); y = (Math.random() * height - radius); radius = (int) (Math.random() * 10);
-        vx = Math.cos(Math.random() * 360) * (Math.random() * 10); vy = Math.sin(Math.random() * 360) * (Math.random() * 10);
+        x = (Math.random() * width - radius);
+        y = (Math.random() * height - radius);
+        radius = (Math.random() * 10) + 0.9;
+        vx = cos(toRadians(Math.random() * 360)) * (Math.random() * 10);
+        vy = sin(toRadians(Math.random() * 360)) * (Math.random() * 10);
     }
 
     public Molecule(double x, double y, double radius) {
-        this.x = x; this.y = y; this.radius = radius;
-        vx = Math.cos(Math.random() * 360) * (Math.random() * 10); vy = Math.sin(Math.random() * 360) * (Math.random() * 10);
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        vx = cos(toRadians(Math.random() * 360)) * (Math.random() * 10);
+        vy = sin(toRadians(Math.random() * 360)) * (Math.random() * 10);
     }
 
     public Molecule(double x, double y, double vx, double vy, double radius) {
-        this.x = x; this.y = y; this.vx = vx; this.vy = vy; this.radius = radius;
+        this.x = x;
+        this.y = y;
+        this.vx = vx;
+        this.vy = vy;
+        this.radius = radius;
     }
 
     public Molecule(double x, double y, double radius, double speed, double direction, int dummy) {
@@ -48,7 +64,10 @@ public abstract class Molecule implements MoleculeRender {
     public double getVelX() {return vx;}
     public double getVelY() {return vy;}
     public double getRadius() {return radius;}
+    public double getCenterX(){return (x + radius / 2);}
+    public double getCenterY(){return (y + radius / 2);}
     public Point getCenter(){return new Point((int) (x + (radius / 2)), (int) ((y + (radius / 2))));}
+    public Vect2 getCenterVect(){return new Vect2(x + radius / 2,y + radius / 2);}
     public double getDistance () {
         return Math.sqrt(x * x + y * y);
     }
@@ -60,12 +79,28 @@ public abstract class Molecule implements MoleculeRender {
     public void friction () {vx *= 0.9993; vy *= 0.9993;}
     public void friction (double fr) {vx *= fr; vy *= fr;}
     public void friction (double fx, double fy) {vx *= fx; vy *= fy;}
+    public void invertVelocity(){setVx(-getVelX()); setVy(-getVelY());}
 
-    public void boundsCheck () {
-        if ((x+radius) >= canvas.getWidth()) {x = canvas.getWidth() - radius - 1; setVx(-getVelX());}
-        else if (x <= 0) {x = 1; setVx(-getVelX());}
-        if (y >= canvas.getHeight() - radius) {y = canvas.getHeight() - radius - 1; setVy(-getVelY());}
-        else if (y <= 0) {y = 1; setVy(-getVelY());}
+    public void boundsCheck() {
+        double canvaswidth = canvas.getWidth();
+        double canvasheight = canvas.getHeight();
+
+        if (x - radius < 0) {
+            x = 2 * (radius) - x;
+            setVx(-getVelX());
+        }
+        if (x + radius > canvaswidth) {
+            x = 2 * (canvaswidth - radius) - x;
+            setVx(-getVelX());
+        }
+        if (y - radius < 0) {
+            y = 2 * (radius) - y;
+            setVy(-getVelY());
+        }
+        if (y + radius > canvasheight) {
+            y = 2 * (canvasheight - radius) - y;
+            setVy(-getVelY());
+        }
     }
 
     public double angleTo (Molecule v) {
@@ -80,30 +115,21 @@ public abstract class Molecule implements MoleculeRender {
         double dx = v.x - x, dy = v.y - y; return Math.sqrt(dx * dx + dy * dy);
     }
 
-    public void gravitateTo(Molecule p) {
-        double  dx = p.x - x,
-                dy = p.y - y,
-                dist = Math.sqrt(dx * dx + dy * dy);
-
-        double forceX = ((dx / 5) / dist); vx += forceX;
-        double forceY = ((dy / 5) / dist); vy += forceY;
-    }
-
     public void gravitateTo(Molecule p, double z) {
-        double  dx = p.x - x,
-                dy = p.y - y,
-                dist = Math.sqrt(dx * dx + dy * dy);
+        double  dx = p.x - x;
+        double dy = p.y - y;
+        double dist = dx * dx + dy * dy;
+//        double dist = Math.sqrt(dx * dx + dy * dy);
 
-        double forceX = ((dx / z) / dist); vx += forceX;
-        double forceY = ((dy / z) / dist); vy += forceY;
-    }
+        double forceX = ((dx * z) / dist);
+        double forceY = ((dy * z) / dist);
 
-    public void gravitateTo(Point p) {
-        double  dx = p.x - x,
-                dy = p.y - y,
-                dist = Math.sqrt(dx * dx + dy * dy);
+        vx += forceX;
+        vy += forceY;
 
-        double forceX = ((dx / 5) / dist); vx += forceX;
-        double forceY = ((dy / 5) / dist); vy += forceY;
+//        double forceX = ((dx / z) / dist);
+//        double forceY = ((dy / z) / dist);
+//        vx += forceX;
+//        vy += forceY;
     }
 }

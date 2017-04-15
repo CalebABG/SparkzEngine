@@ -7,20 +7,23 @@ import static com.engine.ParticleHelpers.DrawModes.giveStyle;
 import static java.lang.Math.*;
 
 public class Fireworks extends Molecule {
-    private int life = (int) (random() * fireworksLife + 3), wind = fireworksWind, jitter = fireworksJitter;
+    private int life = (int) (random() * fireworksLife + 3);
+    private int wind = fireworksWind;
+    private int jitter = fireworksJitter;
 
     public Fireworks(){super();}
-    public Fireworks(double _x, double _y, double _radius, double speed, int direction) {
+    public Fireworks(double _x, double _y, double _radius, double speed, double direction) {
         super(_x, _y, _radius, speed, direction, 0);
     }
 
-    public Fireworks(double _x, double _y, double _radius, double speed, int direction, int windval) {
+    public Fireworks(double _x, double _y, double _radius, double speed, double direction, int windval) {
         super(_x, _y, _radius, speed, direction, 0);
         wind = windval;
     }
 
     public void accelerateTo(double _vx, double _vy) {
-        x += _vx; y += _vy;
+        x += _vx;
+        y += _vy;
         vx += (random() * wind - (wind / 2)) / jitter;
         vy += (random() * wind - (wind / 2)) / jitter;
     }
@@ -36,14 +39,16 @@ public class Fireworks extends Molecule {
     }
 
     public void render() {
-        if (thinkingParticles) {color = getSelfColor();} else {color = ColorConverter.getColor();}
-        giveStyle(x, y, radius, color, fireworksRenderType, fireworksParticleText);
+        if (thinkingParticles) color = getSelfColor();
+        else color = ColorConverter.getColor();
+        giveStyle(x - radius / 2, y - radius / 2, 2 * radius, color, fireworksRenderType, fireworksParticleText);
     }
 
     public void update () {
         boundsCheck(); 
         accelerateTo(vx, vy); 
         friction(0.9793);
-        if (life == 0) {FireworksArray.remove(this);} life -= 1;
+        if (life == 0) FireworksArray.remove(this);
+        life -= 1;
     }
 }

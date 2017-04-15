@@ -1,8 +1,10 @@
 package com.engine.Main;
+
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EngineMethods.*;
 import static com.engine.J8Helpers.Interfaces.EModes.GRAPH_MODE;
 import static com.engine.JComponents.CMenuBar.createMenuBar;
+
 import com.engine.EngineHelpers.EngineSplash;
 import com.engine.GUIWindows.StatsPanel;
 import com.engine.GUIWindows.QuitWindow;
@@ -24,7 +26,7 @@ import java.awt.*;
 public class Engine {
 
     public static void main(String[] args) {
-        new EngineSplash(2700).display();
+        new EngineSplash(2500).display();
         SwingUtilities.invokeLater(() -> new Engine().start());
     }
 
@@ -111,7 +113,7 @@ public class Engine {
     /**
      * Synchronized start of the program; Creates and then starts the programs Thread.
      */
-    private synchronized void start() {
+    public void start() {
         running = true;
         renderer.scheduleAtFixedRate(task, 0, timerFPS);
         StatsPanel.getInstance();
@@ -120,7 +122,7 @@ public class Engine {
     /**
      * Synchronized stop of the program; Stops the Engines Thread, set's the disposes of the programs window, and then shuts down the program.
      */
-    public static synchronized void stop(){running = false; EFrame.setVisible(false); renderer.cancel(); renderer.purge(); System.exit(0);}
+    public static void stop(){running = false; EFrame.setVisible(false); renderer.cancel(); renderer.purge(); System.exit(0);}
 
     /**
      * This method actively renders the canvas for the program; it creates and disposes of the Engines graphics Object each frame.

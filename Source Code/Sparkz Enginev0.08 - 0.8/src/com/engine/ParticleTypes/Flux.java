@@ -9,7 +9,7 @@ public class Flux extends Molecule {
     public int life = (int) (Math.random() * 400 + 100);
 
     public Flux(){super();}
-    public Flux(double _x, double _y, double _radius, double speed, int direction) {
+    public Flux(double _x, double _y, double _radius, double speed, double direction) {
         super(_x, _y, _radius, speed, direction, 0);
     }
 
@@ -28,13 +28,18 @@ public class Flux extends Molecule {
     public void update () {
         boundsCheck();
         accelerateTo(vx,vy);
-        if (life % 140 == 0){radius += 10;}
-        if (life % 40 == 1) {color = Color.red;} else color = Color.white;
+
+        if (life % 140 == 0) radius += 10;
+        if (life % 40 == 1) color = Color.red;
+        else color = Color.white;
+
         if (life == 0) {
-            if (ParticlesArray.size() < 15000)
-            {FluxArray.remove(this); ParticleModes.createEraser(x, y, 10);} else
-            {FluxArray.remove(this);}
+            if (ParticlesArray.size() < 15000) {
+                FluxArray.remove(this);
+                ParticleModes.createEraser(x, y, 10);
+            } else FluxArray.remove(this);
         }
-        life -= 1; radius -= 0.09;
+        life -= 1;
+        radius -= 0.09;
     }
 }

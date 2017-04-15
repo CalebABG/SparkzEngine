@@ -43,7 +43,8 @@ public class Notifier implements WindowAdapterX {
         panel.add(label);
 
         frame.setVisible(true);
-        new Thread(() -> {try {Thread.sleep(timeout); close();}catch (Exception e){EException.append(e);}}).start();
+        SwingUtilities.invokeLater(() -> {try {Thread.sleep(timeout); close();} catch (Exception e){EException.append(e);}});
+        //new Thread(() -> {try {Thread.sleep(timeout); close();}catch (Exception e){EException.append(e);}}).start();
     }
 
     private Notifier(String text, int width, int height) {
@@ -66,7 +67,8 @@ public class Notifier implements WindowAdapterX {
         panel.add(label);
 
         frame.setVisible(true);
-        new Thread(() -> {try {Thread.sleep(timeout); close();} catch (Exception e){EException.append(e);}}).start();
+        SwingUtilities.invokeLater(() -> {try {Thread.sleep(timeout); close();} catch (Exception e){EException.append(e);}});
+//        new Thread(() -> {try {Thread.sleep(timeout); close();} catch (Exception e){EException.append(e);}}).start();
     }
 
     private Notifier(String text, final int timeout, int width, int height) {
@@ -89,7 +91,8 @@ public class Notifier implements WindowAdapterX {
         panel.add(label);
 
         frame.setVisible(true);
-        new Thread(() -> {try {Thread.sleep(timeout); close();} catch (Exception e){EException.append(e);}}).start();
+        SwingUtilities.invokeLater(() -> {try {Thread.sleep(timeout); close();} catch (Exception e){EException.append(e);}});
+        //new Thread(() -> {try {Thread.sleep(timeout); close();} catch (Exception e){EException.append(e);}}).start();
     }
 
     private void close() {notifier = null; frame.dispose();}

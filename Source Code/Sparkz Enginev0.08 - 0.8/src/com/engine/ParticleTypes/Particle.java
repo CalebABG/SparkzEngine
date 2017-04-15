@@ -12,6 +12,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import static com.engine.EngineHelpers.EConstants.*;
 import java.awt.*;
+import java.awt.geom.Line2D;
+
 import static com.engine.ParticleHelpers.DrawModes.giveStyle;
 
 public class Particle extends Molecule {
@@ -23,7 +25,7 @@ public class Particle extends Molecule {
     public static ScriptEngine particleScriptEngine = new ScriptEngineManager().getEngineByName("JavaScript");
 
     public Particle() {super();}
-    public Particle(double _x, double _y, double _radius, double speed, int direction) {
+    public Particle(double _x, double _y, double _radius, double speed, double direction) {
         super(_x, _y, _radius, speed, direction, 0);
     }
 
@@ -36,8 +38,7 @@ public class Particle extends Molecule {
     }
 
     private static int[] getRGBA(int index) {
-        return new int[]{
-                thinkingColors[index].getRed(), thinkingColors[index].getGreen(),
+        return new int[]{thinkingColors[index].getRed(), thinkingColors[index].getGreen(),
                 thinkingColors[index].getBlue(), thinkingColors[index].getAlpha()
         };
     }
@@ -150,15 +151,17 @@ public class Particle extends Molecule {
 
     private void connectModeAll() {
         for (int i = 0; i < ParticlesArray.size(); i++) {
-            graphics2D.drawLine(ParticlesArray.get(i).getCenter().x, ParticlesArray.get(i).getCenter().y,
-                    getCenter().x, getCenter().y);
+            Particle particle = ParticlesArray.get(i);
+            graphics2D.draw(new Line2D.Double(particle.getCenterX(), particle.getCenterY(), getCenterX(), getCenterY()));
         }
     }
     private void connectModeSequential() {
         for (int i = 0; i < ParticlesArray.size() - 1; i++) {
+            Particle p1 = ParticlesArray.get(i);
+            Particle p2 = ParticlesArray.get(i + 1);
+
             graphics2D.setColor(ParticlesArray.get(i).getSelfColor());
-            graphics2D.drawLine(ParticlesArray.get(i).getCenter().x, ParticlesArray.get(i).getCenter().y,
-                    ParticlesArray.get(i + 1).getCenter().x, ParticlesArray.get(i + 1).getCenter().y);
+            graphics2D.draw(new Line2D.Double(p1.getCenterX(), p1.getCenterY(), p2.getCenterX(), p2.getCenterY()));
         }
     }
 
@@ -184,7 +187,7 @@ public class Particle extends Molecule {
         if (thinkingParticles) color = getSelfColor();
         else color = ColorConverter.getColor();
         if (connectParticles && ParticlesArray.size() <= 100) {if (PTMODEBOOL) {connectModeSequential();} else {connectModeAll();}}
-        giveStyle(x, y, radius, color, particleRenderType, baseParticleText);
+        giveStyle(x - radius / 2, y - radius / 2, 2 * radius, color, particleRenderType, baseParticleText);
     }
 
     public void update() {
@@ -192,7 +195,7 @@ public class Particle extends Molecule {
         if (mouseGravitation) gravitateTo(null, Mouse);
         if ((engineMode == NORMAL_MODE || engineMode == MULTI_MODE) && (particleGravitationMode == ORGANIC) && ParticlesArray.size() <= 265){
             accelerateTo(evaluateExpr(expressionForceX), evaluateExpr(expressionForceY));
-            if (angle >= 100 * (2 * PI)) {angle = 0.0;} angle += angleIncrement; particleScriptEngine.put("x", angle);
+            if (angle >= 100 * (2 * PI * angleIncrement)) {angle = 0.0;} angle += angleIncrement; particleScriptEngine.put("x", angle);
         }
         else {
             accelerateTo(vx, vy);
@@ -202,7 +205,7 @@ public class Particle extends Molecule {
         if (engineMode == FIREWORKS_MODE) {
             if (life == 0) {
                 ParticlesArray.remove(this);
-                if (isSafeAmount) fireworksMode(getCenter().getX(), getCenter().getY());
+                if (isSafeAmount) fireworksMode(getCenterX(), getCenterY());
             }
             life -= 1;
         }
