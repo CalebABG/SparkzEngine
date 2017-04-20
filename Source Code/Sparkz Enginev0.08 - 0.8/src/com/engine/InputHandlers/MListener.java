@@ -3,7 +3,7 @@ package com.engine.InputHandlers;
 import com.engine.EngineHelpers.EngineMethods;
 import static com.engine.EngineHelpers.EConstants.*;
 import com.engine.Verlet.*;
-import javax.swing.*;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 

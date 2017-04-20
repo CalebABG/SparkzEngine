@@ -2,11 +2,10 @@ package com.engine.JComponents;
 
 import com.engine.EngineHelpers.EngineMethods;
 import com.engine.GUIWindows.*;
-import com.engine.MGrapher.JCalculator;
+import com.engine.MGrapher.JSCalc.JSCalc;
 import com.engine.MGrapher.ParticleGraph;
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EngineMethods.*;
-
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
@@ -97,7 +96,7 @@ public class CMenuBar extends JMenuBar {
         mnUIWindows.add(timemachine);
 
         JMenuItem jcalculator = new JMenuItem("JavaScript Calculator");
-        jcalculator.addActionListener(e -> JCalculator.getInstance(EFrame));
+        jcalculator.addActionListener(e -> JSCalc.getInstance(EFrame));
         mnUIWindows.add(jcalculator);
 
         menuBar.add(Box.createHorizontalStrut(11));

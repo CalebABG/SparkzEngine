@@ -5,7 +5,7 @@ import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.J8Helpers.Interfaces.EModes.RAGDOLL_MODE;
 
 import com.engine.Verlet.*;
-import javax.swing.*;
+
 import java.awt.event.MouseEvent;
 
 public class ParticleModes {
