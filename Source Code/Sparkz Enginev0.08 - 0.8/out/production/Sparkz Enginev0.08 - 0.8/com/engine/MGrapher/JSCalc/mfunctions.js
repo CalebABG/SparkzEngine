@@ -13,7 +13,6 @@ var hypot = math.hypot
 var ln = math.log
 var log = math.log10
 var sqrt = math.sqrt
-var π = math.PI
 var e = math.E
 var abs = math.abs
 var exp = math.exp

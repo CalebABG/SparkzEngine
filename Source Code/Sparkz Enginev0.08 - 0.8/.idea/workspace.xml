@@ -72,72 +72,92 @@
       <file leaf-file-name="JSCalc.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/JSCalc.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="18" column="40" lean-forward="false" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
+            <state relative-caret-position="116">
+              <caret line="589" column="21" lean-forward="false" selection-start-line="589" selection-start-column="21" selection-end-line="589" selection-end-column="21" />
               <folding>
-                <element signature="e#5712#5851#0" expanded="true" />
-                <element signature="e#5850#5851#0" expanded="true" />
-                <element signature="e#6423#6560#0" expanded="true" />
-                <element signature="e#6559#6560#0" expanded="true" />
-                <element signature="e#6960#7104#0" expanded="true" />
-                <element signature="e#7103#7104#0" expanded="true" />
-                <element signature="e#7558#7702#0" expanded="true" />
-                <element signature="e#7701#7702#0" expanded="true" />
-                <element signature="e#8156#8300#0" expanded="true" />
-                <element signature="e#8299#8300#0" expanded="true" />
-                <element signature="e#8756#8900#0" expanded="true" />
-                <element signature="e#8899#8900#0" expanded="true" />
-                <element signature="e#9375#9516#0" expanded="true" />
-                <element signature="e#9515#9516#0" expanded="true" />
-                <element signature="e#10033#10169#0" expanded="true" />
-                <element signature="e#10168#10169#0" expanded="true" />
-                <element signature="e#10653#10797#0" expanded="true" />
-                <element signature="e#10796#10797#0" expanded="true" />
-                <element signature="e#11245#11389#0" expanded="true" />
-                <element signature="e#11388#11389#0" expanded="true" />
-                <element signature="e#11839#11984#0" expanded="true" />
-                <element signature="e#11983#11984#0" expanded="true" />
-                <element signature="e#12437#12582#0" expanded="true" />
-                <element signature="e#12581#12582#0" expanded="true" />
-                <element signature="e#13045#13179#0" expanded="true" />
-                <element signature="e#13178#13179#0" expanded="true" />
-                <element signature="e#13626#13761#0" expanded="true" />
-                <element signature="e#13760#13761#0" expanded="true" />
-                <element signature="e#14207#14352#0" expanded="true" />
-                <element signature="e#14351#14352#0" expanded="true" />
-                <element signature="e#14798#14943#0" expanded="true" />
-                <element signature="e#14942#14943#0" expanded="true" />
-                <element signature="e#15389#15534#0" expanded="true" />
-                <element signature="e#15533#15534#0" expanded="true" />
-                <element signature="e#15999#16144#0" expanded="true" />
-                <element signature="e#16143#16144#0" expanded="true" />
-                <element signature="e#16608#16753#0" expanded="true" />
-                <element signature="e#16752#16753#0" expanded="true" />
-                <element signature="e#17210#17355#0" expanded="true" />
-                <element signature="e#17354#17355#0" expanded="true" />
-                <element signature="e#17885#18030#0" expanded="true" />
-                <element signature="e#18029#18030#0" expanded="true" />
-                <element signature="e#18524#18669#0" expanded="true" />
-                <element signature="e#18668#18669#0" expanded="true" />
-                <element signature="e#19140#19285#0" expanded="true" />
-                <element signature="e#19284#19285#0" expanded="true" />
-                <element signature="e#19791#19936#0" expanded="true" />
-                <element signature="e#19935#19936#0" expanded="true" />
-                <element signature="e#20401#20541#0" expanded="true" />
-                <element signature="e#20540#20541#0" expanded="true" />
-                <element signature="e#21033#21173#0" expanded="true" />
-                <element signature="e#21172#21173#0" expanded="true" />
-                <element signature="e#21669#21804#0" expanded="true" />
-                <element signature="e#21803#21804#0" expanded="true" />
-                <element signature="e#22331#22457#0" expanded="true" />
-                <element signature="e#22456#22457#0" expanded="true" />
-                <element signature="e#22877#23022#0" expanded="true" />
-                <element signature="e#23021#23022#0" expanded="true" />
-                <element signature="e#23476#23602#0" expanded="true" />
-                <element signature="e#23601#23602#0" expanded="true" />
-                <element signature="e#24392#24590#0" expanded="true" />
-                <element signature="e#24589#24590#0" expanded="true" />
+                <element signature="e#6173#6312#0" expanded="true" />
+                <element signature="e#6311#6312#0" expanded="true" />
+                <element signature="e#6884#7021#0" expanded="true" />
+                <element signature="e#7020#7021#0" expanded="true" />
+                <element signature="e#7421#7565#0" expanded="true" />
+                <element signature="e#7564#7565#0" expanded="true" />
+                <element signature="e#8019#8163#0" expanded="true" />
+                <element signature="e#8162#8163#0" expanded="true" />
+                <element signature="e#8617#8761#0" expanded="true" />
+                <element signature="e#8760#8761#0" expanded="true" />
+                <element signature="e#9217#9361#0" expanded="true" />
+                <element signature="e#9360#9361#0" expanded="true" />
+                <element signature="e#9836#9977#0" expanded="true" />
+                <element signature="e#9976#9977#0" expanded="true" />
+                <element signature="e#10494#10630#0" expanded="true" />
+                <element signature="e#10629#10630#0" expanded="true" />
+                <element signature="e#11114#11258#0" expanded="true" />
+                <element signature="e#11257#11258#0" expanded="true" />
+                <element signature="e#11706#11850#0" expanded="true" />
+                <element signature="e#11849#11850#0" expanded="true" />
+                <element signature="e#12300#12445#0" expanded="true" />
+                <element signature="e#12444#12445#0" expanded="true" />
+                <element signature="e#12898#13043#0" expanded="true" />
+                <element signature="e#13042#13043#0" expanded="true" />
+                <element signature="e#13506#13640#0" expanded="true" />
+                <element signature="e#13639#13640#0" expanded="true" />
+                <element signature="e#14087#14222#0" expanded="true" />
+                <element signature="e#14221#14222#0" expanded="true" />
+                <element signature="e#14668#14813#0" expanded="true" />
+                <element signature="e#14812#14813#0" expanded="true" />
+                <element signature="e#15259#15404#0" expanded="true" />
+                <element signature="e#15403#15404#0" expanded="true" />
+                <element signature="e#15850#15995#0" expanded="true" />
+                <element signature="e#15994#15995#0" expanded="true" />
+                <element signature="e#16460#16605#0" expanded="true" />
+                <element signature="e#16604#16605#0" expanded="true" />
+                <element signature="e#17064#17209#0" expanded="true" />
+                <element signature="e#17208#17209#0" expanded="true" />
+                <element signature="e#17666#17811#0" expanded="true" />
+                <element signature="e#17810#17811#0" expanded="true" />
+                <element signature="e#18341#18486#0" expanded="true" />
+                <element signature="e#18485#18486#0" expanded="true" />
+                <element signature="e#18980#19125#0" expanded="true" />
+                <element signature="e#19124#19125#0" expanded="true" />
+                <element signature="e#19596#19741#0" expanded="true" />
+                <element signature="e#19740#19741#0" expanded="true" />
+                <element signature="e#20247#20392#0" expanded="true" />
+                <element signature="e#20391#20392#0" expanded="true" />
+                <element signature="e#20857#20997#0" expanded="true" />
+                <element signature="e#20996#20997#0" expanded="true" />
+                <element signature="e#21489#21629#0" expanded="true" />
+                <element signature="e#21628#21629#0" expanded="true" />
+                <element signature="e#22125#22260#0" expanded="true" />
+                <element signature="e#22259#22260#0" expanded="true" />
+                <element signature="e#22787#22913#0" expanded="true" />
+                <element signature="e#22912#22913#0" expanded="true" />
+                <element signature="e#23333#23478#0" expanded="true" />
+                <element signature="e#23477#23478#0" expanded="true" />
+                <element signature="e#23932#24058#0" expanded="true" />
+                <element signature="e#24057#24058#0" expanded="true" />
+                <element signature="e#24848#25046#0" expanded="true" />
+                <element signature="e#25045#25046#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JSMenuBar.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/JSMenuBar.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="27" column="45" lean-forward="false" selection-start-line="27" selection-start-column="45" selection-end-line="27" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Themes.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/Themes.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="42">
+              <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -191,7 +211,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/engine/Verlet/Vect2D.java" />
         <option value="$PROJECT_DIR$/src/com/engine/Verlet/Physics2.java" />
         <option value="$PROJECT_DIR$/src/com/engine/newverletphysics/CollisionSolver.java" />
         <option value="$PROJECT_DIR$/src/com/engine/newverletphysics/NVector2.java" />
@@ -236,12 +255,13 @@
         <option value="$PROJECT_DIR$/src/com/engine/ParticleHelpers/ParticleModes.java" />
         <option value="$PROJECT_DIR$/src/com/engine/EngineHelpers/EngineMethods.java" />
         <option value="$PROJECT_DIR$/src/com/engine/Main/Engine.java" />
-        <option value="$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/mfunctions.js" />
         <option value="$PROJECT_DIR$/src/com/engine/JComponents/CMenuBar.java" />
-        <option value="$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/JSMenuBar.java" />
-        <option value="$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/JSOperations.java" />
+        <option value="$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/mfunctions.js" />
         <option value="$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/JFontChooser.java" />
+        <option value="$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/Themes.java" />
+        <option value="$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/JSOperations.java" />
         <option value="$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/JSCalc.java" />
+        <option value="$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/JSMenuBar.java" />
       </list>
     </option>
   </component>
@@ -621,10 +641,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.1732342" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/Sparkz Engine Tests/Sparkz Enginev0.08 - 0.8" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/lib" />
     <property name="last.edited.regexp" value="" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="SearchEverywhereHistoryKey" value="try &#9;PSI&#9;JAVA://jdk.nashorn.internal.parser.TokenType#TRY" />
@@ -660,7 +680,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.JSCalc">
+  <component name="RunManager" selected="Application.Engine">
     <configuration default="false" name="Engine" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -1016,8 +1036,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.JSCalc" />
-        <item index="1" class="java.lang.String" itemvalue="Application.Engine" />
+        <item index="0" class="java.lang.String" itemvalue="Application.Engine" />
+        <item index="1" class="java.lang.String" itemvalue="Application.JSCalc" />
         <item index="2" class="java.lang.String" itemvalue="Application.VPhysicsEditor" />
         <item index="3" class="java.lang.String" itemvalue="Application.ParticleGraph" />
         <item index="4" class="java.lang.String" itemvalue="Application.JCalculator" />
@@ -1095,7 +1115,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13217768" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11140725" sideWeight="0.49563047" order="5" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.110341154" sideWeight="0.49563047" order="5" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5980498" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1076759" sideWeight="0.50436956" order="6" side_tool="true" content_ui="tabs" />
@@ -1133,22 +1153,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/engine/GUIWindows/TestNote.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="4" column="61" lean-forward="true" selection-start-line="4" selection-start-column="61" selection-end-line="4" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/EngineHelpers/EngineSplash.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/engine/EngineHelpers/SplashPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
@@ -1416,60 +1420,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/JComponents/CMenuBar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/Utilities/Settings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/engine/Utilities/H5Wrapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
           <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/mfunctions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="567">
-          <caret line="27" column="62" lean-forward="false" selection-start-line="27" selection-start-column="62" selection-end-line="27" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/JSMenuBar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="924">
-          <caret line="47" column="25" lean-forward="false" selection-start-line="47" selection-start-column="25" selection-end-line="47" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/JFontChooser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="3" column="67" lean-forward="false" selection-start-line="3" selection-start-column="67" selection-end-line="3" selection-end-column="67" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/JSOperations.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1506,18 +1460,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/EngineHelpers/EConstants.java">
+    <entry file="file://$PROJECT_DIR$/src/com/engine/Main/Engine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+        <state relative-caret-position="21">
+          <caret line="37" column="43" lean-forward="false" selection-start-line="37" selection-start-column="43" selection-end-line="37" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/InputHandlers/KHandler.java">
+    <entry file="file://$PROJECT_DIR$/src/com/engine/Utilities/Settings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="110" column="50" lean-forward="false" selection-start-line="110" selection-start-column="50" selection-end-line="110" selection-end-column="50" />
+        <state relative-caret-position="84">
+          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/engine/pump/swing/ColorPicker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="12" column="7" lean-forward="true" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
           <folding />
         </state>
       </provider>
@@ -1530,81 +1492,137 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/engine/Main/Engine.java">
+    <entry file="file://$PROJECT_DIR$/src/com/engine/EngineHelpers/EConstants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/engine/JComponents/CMenuBar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3402">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/engine/InputHandlers/KHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="110" column="50" lean-forward="false" selection-start-line="110" selection-start-column="50" selection-end-line="110" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/mfunctions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="14" column="20" lean-forward="false" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/JFontChooser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="3" column="67" lean-forward="false" selection-start-line="3" selection-start-column="67" selection-end-line="3" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/Themes.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/JSOperations.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21">
-          <caret line="37" column="43" lean-forward="false" selection-start-line="37" selection-start-column="43" selection-end-line="37" selection-end-column="43" />
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/JSMenuBar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="27" column="45" lean-forward="false" selection-start-line="27" selection-start-column="45" selection-end-line="27" selection-end-column="45" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/engine/MGrapher/JSCalc/JSCalc.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="18" column="40" lean-forward="false" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
+        <state relative-caret-position="116">
+          <caret line="589" column="21" lean-forward="false" selection-start-line="589" selection-start-column="21" selection-end-line="589" selection-end-column="21" />
           <folding>
-            <element signature="e#5712#5851#0" expanded="true" />
-            <element signature="e#5850#5851#0" expanded="true" />
-            <element signature="e#6423#6560#0" expanded="true" />
-            <element signature="e#6559#6560#0" expanded="true" />
-            <element signature="e#6960#7104#0" expanded="true" />
-            <element signature="e#7103#7104#0" expanded="true" />
-            <element signature="e#7558#7702#0" expanded="true" />
-            <element signature="e#7701#7702#0" expanded="true" />
-            <element signature="e#8156#8300#0" expanded="true" />
-            <element signature="e#8299#8300#0" expanded="true" />
-            <element signature="e#8756#8900#0" expanded="true" />
-            <element signature="e#8899#8900#0" expanded="true" />
-            <element signature="e#9375#9516#0" expanded="true" />
-            <element signature="e#9515#9516#0" expanded="true" />
-            <element signature="e#10033#10169#0" expanded="true" />
-            <element signature="e#10168#10169#0" expanded="true" />
-            <element signature="e#10653#10797#0" expanded="true" />
-            <element signature="e#10796#10797#0" expanded="true" />
-            <element signature="e#11245#11389#0" expanded="true" />
-            <element signature="e#11388#11389#0" expanded="true" />
-            <element signature="e#11839#11984#0" expanded="true" />
-            <element signature="e#11983#11984#0" expanded="true" />
-            <element signature="e#12437#12582#0" expanded="true" />
-            <element signature="e#12581#12582#0" expanded="true" />
-            <element signature="e#13045#13179#0" expanded="true" />
-            <element signature="e#13178#13179#0" expanded="true" />
-            <element signature="e#13626#13761#0" expanded="true" />
-            <element signature="e#13760#13761#0" expanded="true" />
-            <element signature="e#14207#14352#0" expanded="true" />
-            <element signature="e#14351#14352#0" expanded="true" />
-            <element signature="e#14798#14943#0" expanded="true" />
-            <element signature="e#14942#14943#0" expanded="true" />
-            <element signature="e#15389#15534#0" expanded="true" />
-            <element signature="e#15533#15534#0" expanded="true" />
-            <element signature="e#15999#16144#0" expanded="true" />
-            <element signature="e#16143#16144#0" expanded="true" />
-            <element signature="e#16608#16753#0" expanded="true" />
-            <element signature="e#16752#16753#0" expanded="true" />
-            <element signature="e#17210#17355#0" expanded="true" />
-            <element signature="e#17354#17355#0" expanded="true" />
-            <element signature="e#17885#18030#0" expanded="true" />
-            <element signature="e#18029#18030#0" expanded="true" />
-            <element signature="e#18524#18669#0" expanded="true" />
-            <element signature="e#18668#18669#0" expanded="true" />
-            <element signature="e#19140#19285#0" expanded="true" />
-            <element signature="e#19284#19285#0" expanded="true" />
-            <element signature="e#19791#19936#0" expanded="true" />
-            <element signature="e#19935#19936#0" expanded="true" />
-            <element signature="e#20401#20541#0" expanded="true" />
-            <element signature="e#20540#20541#0" expanded="true" />
-            <element signature="e#21033#21173#0" expanded="true" />
-            <element signature="e#21172#21173#0" expanded="true" />
-            <element signature="e#21669#21804#0" expanded="true" />
-            <element signature="e#21803#21804#0" expanded="true" />
-            <element signature="e#22331#22457#0" expanded="true" />
-            <element signature="e#22456#22457#0" expanded="true" />
-            <element signature="e#22877#23022#0" expanded="true" />
-            <element signature="e#23021#23022#0" expanded="true" />
-            <element signature="e#23476#23602#0" expanded="true" />
-            <element signature="e#23601#23602#0" expanded="true" />
-            <element signature="e#24392#24590#0" expanded="true" />
-            <element signature="e#24589#24590#0" expanded="true" />
+            <element signature="e#6173#6312#0" expanded="true" />
+            <element signature="e#6311#6312#0" expanded="true" />
+            <element signature="e#6884#7021#0" expanded="true" />
+            <element signature="e#7020#7021#0" expanded="true" />
+            <element signature="e#7421#7565#0" expanded="true" />
+            <element signature="e#7564#7565#0" expanded="true" />
+            <element signature="e#8019#8163#0" expanded="true" />
+            <element signature="e#8162#8163#0" expanded="true" />
+            <element signature="e#8617#8761#0" expanded="true" />
+            <element signature="e#8760#8761#0" expanded="true" />
+            <element signature="e#9217#9361#0" expanded="true" />
+            <element signature="e#9360#9361#0" expanded="true" />
+            <element signature="e#9836#9977#0" expanded="true" />
+            <element signature="e#9976#9977#0" expanded="true" />
+            <element signature="e#10494#10630#0" expanded="true" />
+            <element signature="e#10629#10630#0" expanded="true" />
+            <element signature="e#11114#11258#0" expanded="true" />
+            <element signature="e#11257#11258#0" expanded="true" />
+            <element signature="e#11706#11850#0" expanded="true" />
+            <element signature="e#11849#11850#0" expanded="true" />
+            <element signature="e#12300#12445#0" expanded="true" />
+            <element signature="e#12444#12445#0" expanded="true" />
+            <element signature="e#12898#13043#0" expanded="true" />
+            <element signature="e#13042#13043#0" expanded="true" />
+            <element signature="e#13506#13640#0" expanded="true" />
+            <element signature="e#13639#13640#0" expanded="true" />
+            <element signature="e#14087#14222#0" expanded="true" />
+            <element signature="e#14221#14222#0" expanded="true" />
+            <element signature="e#14668#14813#0" expanded="true" />
+            <element signature="e#14812#14813#0" expanded="true" />
+            <element signature="e#15259#15404#0" expanded="true" />
+            <element signature="e#15403#15404#0" expanded="true" />
+            <element signature="e#15850#15995#0" expanded="true" />
+            <element signature="e#15994#15995#0" expanded="true" />
+            <element signature="e#16460#16605#0" expanded="true" />
+            <element signature="e#16604#16605#0" expanded="true" />
+            <element signature="e#17064#17209#0" expanded="true" />
+            <element signature="e#17208#17209#0" expanded="true" />
+            <element signature="e#17666#17811#0" expanded="true" />
+            <element signature="e#17810#17811#0" expanded="true" />
+            <element signature="e#18341#18486#0" expanded="true" />
+            <element signature="e#18485#18486#0" expanded="true" />
+            <element signature="e#18980#19125#0" expanded="true" />
+            <element signature="e#19124#19125#0" expanded="true" />
+            <element signature="e#19596#19741#0" expanded="true" />
+            <element signature="e#19740#19741#0" expanded="true" />
+            <element signature="e#20247#20392#0" expanded="true" />
+            <element signature="e#20391#20392#0" expanded="true" />
+            <element signature="e#20857#20997#0" expanded="true" />
+            <element signature="e#20996#20997#0" expanded="true" />
+            <element signature="e#21489#21629#0" expanded="true" />
+            <element signature="e#21628#21629#0" expanded="true" />
+            <element signature="e#22125#22260#0" expanded="true" />
+            <element signature="e#22259#22260#0" expanded="true" />
+            <element signature="e#22787#22913#0" expanded="true" />
+            <element signature="e#22912#22913#0" expanded="true" />
+            <element signature="e#23333#23478#0" expanded="true" />
+            <element signature="e#23477#23478#0" expanded="true" />
+            <element signature="e#23932#24058#0" expanded="true" />
+            <element signature="e#24057#24058#0" expanded="true" />
+            <element signature="e#24848#25046#0" expanded="true" />
+            <element signature="e#25045#25046#0" expanded="true" />
           </folding>
         </state>
       </provider>

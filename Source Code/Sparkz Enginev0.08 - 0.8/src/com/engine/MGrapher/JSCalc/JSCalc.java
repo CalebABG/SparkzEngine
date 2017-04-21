@@ -2,6 +2,7 @@ package com.engine.MGrapher.JSCalc;
 
 import com.engine.J8Helpers.Extensions.KAdapter;
 import com.engine.J8Helpers.Extensions.MAdapter;
+import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.JComponents.CLabel;
 import com.engine.Utilities.Settings;
 
@@ -17,9 +18,14 @@ import static com.engine.JComponents.TextSuggestor.makeUndoable;
 
 public class JSCalc {
     private static JSCalc jsCalc = null;
+
     public static JFrame frame;
-    public static JTextPane textPane;
-    public static JTextPane resultsPane;
+    public static JPanel panel;
+    public static JSMenuBar menuBar;
+    public static JTextArea textPane;
+    public static JTextArea resultsPane;
+    public static JSplitPane primary_splitpane, edits_results;
+    public static JScrollPane jstexteditor_scrollpane, results_scrollpane;
     public static ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("Nashorn");
     public static CLabel[] buttons = new CLabel[30];
     public static Font font1 = new Font(Font.SERIF, Font.PLAIN, 20);
@@ -27,7 +33,7 @@ public class JSCalc {
     public static Color keyColorbg = new Color(20, 23, 25).brighter();
     public static Color keyColorfg = Color.WHITE;
     public static Robot robot;
-    public static String for_state = "\n" + "for(var i = 0, j=\"\"; i < 5; i++){\n" + "    \n" + "}";
+    public static String for_state = "for(var i = 0, j=\"\"; i < 5; i++){\n" + "    \n" + "}";
     public static String if_state = "if(){\n" + "    \n" + "}";
     public static String while_state = "while(){\n" + "    \n" + "}";
     public static String switch_state = "switch() {\n" +
@@ -40,6 +46,7 @@ public class JSCalc {
     static {
         try {
             robot = new Robot();
+            scriptEngine.put("π", Math.PI); // Have to add here, will not put from mfunctions file
             scriptEngine.eval(new InputStreamReader(JSCalc.class.getClass().getResourceAsStream("/com/engine/MGrapher/JSCalc/mfunctions.js")));
         } catch (Exception e) {e.printStackTrace();}
     }
@@ -53,43 +60,43 @@ public class JSCalc {
     public JSCalc(JFrame parent) {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());} catch (Exception e1) {e1.printStackTrace();}
         UIManager.put("SplitPane.background", keyColorbg.darker());
-        UIManager.put("MenuItem.background", keyColorbg);
-        UIManager.put("MenuItem.foreground", keyColorfg.brighter());
-        UIManager.put("PopupMenu.border", BorderFactory.createLineBorder(keyColorbg.brighter(), 2));
-        UIManager.put("MenuItem.opaque", true);
-        UIManager.put("SplitPane.border", BorderFactory.createLineBorder(keyColorbg.brighter(), 1));
-        UIManager.put("ScrollPane.border", BorderFactory.createLineBorder(keyColorbg, 1));
         UIManager.put("SplitPaneDivider.border", BorderFactory.createLineBorder(keyColorbg, 1));
-
         frame = new JFrame("JSCalc <(^.^)> -- Shift+Enter to Calculate");
-        frame.setSize(440, 570);
+        frame.setSize(430, 570);
         frame.setIconImage(Settings.getIcon());
         frame.setLocationRelativeTo(parent);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setJMenuBar(JSMenuBar.createMenuBar());
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        frame.addWindowListener(new WindowClosing(e -> close()));
 
-        JSplitPane splitPane = new JSplitPane();
-        splitPane.setOneTouchExpandable(true);
-        splitPane.setDividerSize(8);
-        splitPane.setResizeWeight(1.0);
-        splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        splitPane.setDoubleBuffered(true);
-        splitPane.setContinuousLayout(true);
-        frame.getContentPane().add(splitPane, BorderLayout.CENTER);
+        menuBar = new JSMenuBar();
+        frame.setJMenuBar(menuBar);
 
-        JSplitPane splitPane_1 = new JSplitPane();
-        splitPane_1.setDividerSize(8);
-        splitPane_1.setContinuousLayout(true);
-        splitPane_1.setDoubleBuffered(true);
-        splitPane_1.setResizeWeight(0.2);
-        splitPane_1.setOneTouchExpandable(true);
-        splitPane_1.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        splitPane.setLeftComponent(splitPane_1);
+        primary_splitpane = new JSplitPane();
+        primary_splitpane.setBorder(BorderFactory.createLineBorder(keyColorbg.darker(), 3));
+        primary_splitpane.setOneTouchExpandable(true);
+        primary_splitpane.setDividerSize(8);
+        primary_splitpane.setResizeWeight(1.0);
+        primary_splitpane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        primary_splitpane.setDoubleBuffered(true);
+        primary_splitpane.setContinuousLayout(true);
+        frame.getContentPane().add(primary_splitpane, BorderLayout.CENTER);
 
-        JScrollPane scrollPane_1 = new JScrollPane();
-        splitPane_1.setRightComponent(scrollPane_1);
+        edits_results = new JSplitPane();
+        edits_results.setBorder(BorderFactory.createLineBorder(keyColorbg, 1));
+        edits_results.setDividerSize(8);
+        edits_results.setContinuousLayout(true);
+        edits_results.setDoubleBuffered(true);
+        edits_results.setResizeWeight(0.2);
+        edits_results.setOneTouchExpandable(true);
+        edits_results.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        primary_splitpane.setLeftComponent(edits_results);
 
-        textPane = new JTextPane();
+        jstexteditor_scrollpane = new JScrollPane();
+        jstexteditor_scrollpane.setBorder(BorderFactory.createLineBorder(keyColorbg, 1));
+        edits_results.setRightComponent(jstexteditor_scrollpane);
+
+        textPane = new JTextArea();
+        textPane.setTabSize(2);
         textPane.setFont(textFont);
         textPane.setBackground(keyColorbg);
         textPane.setForeground(Color.white);
@@ -100,22 +107,23 @@ public class JSCalc {
             if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_ENTER) shortcut_switch(textPane.getSelectedText());
         }));
         makeUndoable(textPane);
-        scrollPane_1.setViewportView(textPane);
+        jstexteditor_scrollpane.setViewportView(textPane);
 
-        resultsPane = new JTextPane();
+        resultsPane = new JTextArea();
         resultsPane.setEditable(false);
         resultsPane.setForeground(Color.WHITE);
         resultsPane.setFont(textFont);
         resultsPane.setCaretColor(Color.WHITE);
         resultsPane.setBackground(keyColorbg);
 
-        JScrollPane scrollPane1 = new JScrollPane();
-        scrollPane1.setViewportView(resultsPane);
-        splitPane_1.setLeftComponent(scrollPane1);
+        results_scrollpane = new JScrollPane();
+        results_scrollpane.setBorder(BorderFactory.createLineBorder(keyColorbg, 1));
+        results_scrollpane.setViewportView(resultsPane);
+        edits_results.setLeftComponent(results_scrollpane);
 
-        JPanel panel = new JPanel();
-        panel.setBackground(new Color(10, 10, 9));
-        splitPane.setRightComponent(panel);
+        panel = new JPanel();
+        panel.setBackground(keyColorbg.darker().darker());
+        primary_splitpane.setRightComponent(panel);
         GridBagLayout gbl_panel = new GridBagLayout();
         gbl_panel.columnWidths = new int[]{65, 65, 95, 95, 95, 90, 0};
         gbl_panel.rowHeights = new int[]{55, 55, 55, 55, 60, 0};
@@ -396,7 +404,7 @@ public class JSCalc {
         panel.add(buttons[17], gbc_minus);
 
         // pi
-        buttons[18] = new CLabel("\u03C0", font1, keyColorfg, keyColorbg);
+        buttons[18] = new CLabel("π", font1, keyColorfg, keyColorbg);
         buttons[18].addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 addText(buttons[18].getText());
@@ -616,11 +624,7 @@ public class JSCalc {
     }
 
     public void calculate() {
-        try {
-            resultsPane.setText(scriptEngine.eval(textPane.getText()).toString());
-        } catch (Exception e) {
-            resultsPane.setText(e.getMessage());
-        }
+        try {resultsPane.setText(scriptEngine.eval(textPane.getText()).toString());} catch (Exception e) {resultsPane.setText(e.getMessage());}
     }
 
     public static double evaluateExpr(String express) throws Exception {
@@ -648,5 +652,5 @@ public class JSCalc {
         }
     }
 
-    public void close(){jsCalc = null; frame.dispose();}
+    public static void close(){jsCalc = null; frame.dispose();}
 }

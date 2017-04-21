@@ -19,14 +19,14 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * The <code>JFontChooser</code> class is a swing component
+ * The <code>JSCalc.JFontChooser</code> class is a swing component
  * for font selection.
  * This class has <code>JFileChooser</code> like APIs.
  * The following code pops up a font chooser dialog.
  * <pre>
- *   JFontChooser fontChooser = new JFontChooser();
+ *   JSCalc.JFontChooser fontChooser = new JSCalc.JFontChooser();
  *   int result = fontChooser.showDialog(parent);
- *   if (result == JFontChooser.OK_OPTION)
+ *   if (result == JSCalc.JFontChooser.OK_OPTION)
  *   {
  *      Font font = fontChooser.getSelectedFont();
  *      System.out.println("Selected Font : " + font);
@@ -85,14 +85,14 @@ public class JFontChooser extends JComponent {
     private JTextField sampleText = null;
 
     /**
-     * Constructs a <code>JFontChooser</code> object.
+     * Constructs a <code>JSCalc.JFontChooser</code> object.
      **/
     public JFontChooser() {
         this(DEFAULT_FONT_SIZE_STRINGS);
     }
 
     /**
-     * Constructs a <code>JFontChooser</code> object using the given font size array.
+     * Constructs a <code>JSCalc.JFontChooser</code> object using the given font size array.
      *
      * @param fontSizeStrings the array of font size string.
      **/
