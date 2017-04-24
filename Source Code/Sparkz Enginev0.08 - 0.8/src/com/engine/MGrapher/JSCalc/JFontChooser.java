@@ -53,7 +53,7 @@ public class JFontChooser extends JComponent {
      * @see #showDialog
      **/
     public static final int ERROR_OPTION = -1;
-    private static final Font DEFAULT_SELECTED_FONT = new Font("Serif", Font.PLAIN, 12);
+    private static final Font DEFAULT_SELECTED_FONT = new Font("Serif", Font.PLAIN, 18);
     private static final Font DEFAULT_FONT = new Font("Dialog", Font.PLAIN, 10);
     private static final int[] FONT_STYLE_CODES =
             {
@@ -234,7 +234,7 @@ public class JFontChooser extends JComponent {
      * @see #setSelectedFontSize
      **/
     public int getSelectedFontSize() {
-        int fontSize = 1;
+        int fontSize;
         String fontSizeString = getFontSizeTextField().getText();
         while (true) {
             try {
@@ -354,7 +354,6 @@ public class JFontChooser extends JComponent {
 
         dialog.setVisible(true);
         dialog.dispose();
-        dialog = null;
 
         return dialogResultValue;
     }

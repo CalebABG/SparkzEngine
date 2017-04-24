@@ -19,7 +19,7 @@ public class EException {
     private static EException EException = null;
     private static String ELOG = "";
     public static JFrame frame;
-    private static JTextArea textArea;
+    private static JTextArea textArea = new JTextArea(ELOG);
     private static Timer timer;
 
     //public static void main(String[] args) {}
@@ -46,8 +46,9 @@ public class EException {
         panel.setLayout(new BorderLayout());
         frame.add(panel);
 
-        textArea = new JTextArea(ELOG);
         textArea.setEditable(false);
+        textArea.setLineWrap(true);
+        textArea.setDoubleBuffered(true);
         textArea.setDragEnabled(false);
         textArea.setEnabled(false);
         textArea.setFont(new Font("Arial", Font.ITALIC, 14));

@@ -4,7 +4,6 @@ import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EngineMethods.*;
 import static com.engine.J8Helpers.Interfaces.EModes.GRAPH_MODE;
 import static com.engine.JComponents.CMenuBar.createMenuBar;
-
 import com.engine.EngineHelpers.EngineSplash;
 import com.engine.GUIWindows.StatsPanel;
 import com.engine.GUIWindows.QuitWindow;

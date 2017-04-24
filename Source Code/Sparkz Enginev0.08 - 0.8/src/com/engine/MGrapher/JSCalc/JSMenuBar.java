@@ -24,9 +24,19 @@ public class JSMenuBar extends JMenuBar {
         menus.add(file);
         add(Box.createHorizontalStrut(8));
 
+        JMenuItem reset = new JMenuItem("Clear Calculator");
+        reset.addActionListener(e -> {
+            String msg = "Clear calculator data? This will delete all user saved variables and functions";
+            String[] options = {"Yes Clear", "No, cancel!"};
+            int n = JOptionPane.showOptionDialog(JSCalc.frame, msg, reset.getText(), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+            if (n == JOptionPane.YES_OPTION) JSCalc.reset();
+        });
+        file.add(reset);
+        menuItems.add(reset);
+
         //Exit
-        JMenuItem exit = new JMenuItem("Close");
-        exit.addActionListener(e -> JSCalc.close());
+        JMenuItem exit = new JMenuItem("Exit");
+        exit.addActionListener(e -> System.exit(0));
         file.add(exit);
         menuItems.add(exit);
 
@@ -112,6 +122,12 @@ public class JSMenuBar extends JMenuBar {
         theme9.setBorder(BorderFactory.createLineBorder(bgColor));
         theme_menu.add(theme9);
         menuItems.add(theme9);
+
+        JMenuItem theme10 = new JMenuItem("Night Violet");
+        theme10.addActionListener(e -> Themes.nightViolet());
+        theme10.setBorder(BorderFactory.createLineBorder(bgColor));
+        theme_menu.add(theme10);
+        menuItems.add(theme10);
 
 
         add(Box.createHorizontalStrut(8));

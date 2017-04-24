@@ -8,6 +8,12 @@ public class CLabel extends JLabel {
     public Font font;
     public Rectangle bounds;
 
+    //Colors used for Calculator
+    public Color pressed_bgcolor;
+    public Color pressed_fgcolor;
+    public Color released_bgcolor;
+    public Color released_fgcolor;
+
     public CLabel(Rectangle bounds, String text, Font font, Color foreground, Color background) {
         super(text);
         this.text = super.getText();

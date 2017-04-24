@@ -1,11 +1,10 @@
 package com.engine.MGrapher.JSCalc;
 
-import com.engine.J8Helpers.Extensions.MAdapter;
+import com.engine.JComponents.CLabel;
 import com.engine.Utilities.ColorConverter;
 import javax.swing.*;
 import java.awt.*;
 import static com.engine.MGrapher.JSCalc.JSCalc.*;
-
 
 public class Themes {
     public static void defaultTheme(){setTheme(new Color(20, 23, 25).brighter(), Color.white);}
@@ -15,8 +14,9 @@ public class Themes {
     public static void sienna(){setTheme(ColorConverter.HEXtoRGB("#3B151E"), Color.white);}
     public static void winterGreenDream(){setTheme(ColorConverter.HEXtoRGB("#1C312C"), Color.white);}
     public static void vegasGold(){setTheme(ColorConverter.HEXtoRGB("#594500"), Color.white);}
-    public static void antiquePink(){setTheme(ColorConverter.HEXtoRGB("#962D35"), Color.white);}
     public static void roseWood(){setTheme(ColorConverter.HEXtoRGB("#5A0001"), Color.white);}
+    public static void antiquePink(){setTheme(ColorConverter.HEXtoRGB("#962D35"), Color.white);}
+    public static void nightViolet(){setTheme(ColorConverter.HEXtoRGB("#1A0F30"), Color.white);}
 
     public static void setTheme(Color keyColorbg, Color keyColorfg) {
         UIManager.put("SplitPane.background", keyColorbg.darker());
@@ -28,17 +28,9 @@ public class Themes {
         edits_results.setBorder(BorderFactory.createLineBorder(keyColorbg, 1));
         results_scrollpane.setBorder(BorderFactory.createLineBorder(keyColorbg, 1));
         jstexteditor_scrollpane.setBorder(BorderFactory.createLineBorder(keyColorbg, 1));
-        for (int i = 0; i < buttons.length; i++) {
-            buttons[i].setBackground(keyColorbg);
-            buttons[i].setForeground(keyColorfg);
-            int finalI = i;
-            buttons[i].addMouseListener(new MAdapter(e -> {
-                buttons[finalI].setBackground(keyColorbg.darker().darker());
-                buttons[finalI].setForeground(keyColorfg);
-            }, e -> {
-                buttons[finalI].setBackground(keyColorbg);
-                buttons[finalI].setForeground(keyColorfg);
-            }));
+        for (CLabel button : buttons) {
+            button.setBackground(keyColorbg);
+            button.setForeground(keyColorfg);
         }
         menuBar.bgColor = keyColorbg;
         for (int i = 0; i < menuBar.menus.size(); i++) {

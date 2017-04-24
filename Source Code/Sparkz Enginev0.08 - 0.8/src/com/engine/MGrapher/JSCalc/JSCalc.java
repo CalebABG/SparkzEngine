@@ -2,6 +2,7 @@ package com.engine.MGrapher.JSCalc;
 
 import com.engine.J8Helpers.Extensions.KAdapter;
 import com.engine.J8Helpers.Extensions.MAdapter;
+import com.engine.J8Helpers.Extensions.WAdapter;
 import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.JComponents.CLabel;
 import com.engine.Utilities.Settings;
@@ -33,15 +34,15 @@ public class JSCalc {
     public static Color keyColorbg = new Color(20, 23, 25).brighter();
     public static Color keyColorfg = Color.WHITE;
     public static Robot robot;
-    public static String for_state = "for(var i = 0, j=\"\"; i < 5; i++){\n" + "    \n" + "}";
+    public static String for_state = "for(var i = 0; i < 5; i++){\n" + "    \n" + "}";
     public static String if_state = "if(){\n" + "    \n" + "}";
     public static String while_state = "while(){\n" + "    \n" + "}";
     public static String switch_state = "switch() {\n" +
-            "    case :\n" +
-            "        break;\n" +
-            "    default:\n" +
-            "        break;\n" +
-            "}";
+                                        "    case :\n" +
+                                        "        break;\n" +
+                                        "    default:\n" +
+                                        "        break;\n" +
+                                        "}";
 
     static {
         try {
@@ -96,6 +97,7 @@ public class JSCalc {
         edits_results.setRightComponent(jstexteditor_scrollpane);
 
         textPane = new JTextArea();
+        textPane.setLineWrap(true);
         textPane.setTabSize(2);
         textPane.setFont(textFont);
         textPane.setBackground(keyColorbg);
@@ -110,6 +112,8 @@ public class JSCalc {
         jstexteditor_scrollpane.setViewportView(textPane);
 
         resultsPane = new JTextArea();
+        resultsPane.setTabSize(2);
+        resultsPane.setLineWrap(true);
         resultsPane.setEditable(false);
         resultsPane.setForeground(Color.WHITE);
         resultsPane.setFont(textFont);
@@ -151,6 +155,7 @@ public class JSCalc {
 
         //x^3
         buttons[1] = new CLabel("<html>x<sup>3</sup></html>", font1, keyColorfg, keyColorbg);
+        //buttons[1].getMouseListeners()[0].mouseClicked();
         buttons[1].addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 JSOperations.x_cubed();
@@ -582,28 +587,35 @@ public class JSCalc {
         gbc_equals.gridy = 4;
         panel.add(buttons[29], gbc_equals);
 
-        for (int i = 0; i < buttons.length; i++) {
-            int finalI = i;
-            buttons[i].addMouseListener(new MAdapter(e -> {
-                buttons[finalI].setBackground(buttons[finalI].getBackground().darker().darker());
-                buttons[finalI].setForeground(Color.white);
+        for (CLabel button : buttons) {
+            button.addMouseListener(new MAdapter(e -> {
+                button.pressed_bgcolor = button.getBackground().darker().darker();
+                button.pressed_fgcolor = button.getForeground();
+                button.released_bgcolor = button.getBackground();
+                button.released_fgcolor = button.getForeground();
+
+                button.setBackground(button.pressed_bgcolor);
+                button.setForeground(button.pressed_fgcolor);
             }, e -> {
-                buttons[finalI].setBackground(keyColorbg);
-                buttons[finalI].setForeground(Color.WHITE);
+                button.setBackground(button.released_bgcolor);
+                button.setForeground(button.released_fgcolor);
             }));
         }
 
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowOpened(WindowEvent e) {
-                textPane.requestFocus();
-                e.getWindow().removeWindowListener(this);
-            }
-        });
+        frame.addWindowListener(new WAdapter.WindowOpened(e -> textPane.requestFocus()));
         frame.setVisible(true);
     }
 
+    public static void reset(){
+        try {
+            scriptEngine = new ScriptEngineManager().getEngineByName("Nashorn");
+            scriptEngine.put("π", Math.PI); // Have to add here, will not put from mfunctions file
+            scriptEngine.eval(new InputStreamReader(JSCalc.class.getClass().getResourceAsStream("/mfunctions.js")));
+        } catch (Exception e) {e.printStackTrace();}
+    }
+
     private void shortcut_switch(String state) {
-        if (state != null && !state.isEmpty()) {
+        if (state != null && !state.isEmpty()){
             switch (state) {
                 case "for":
                     textPane.replaceSelection(for_state);
