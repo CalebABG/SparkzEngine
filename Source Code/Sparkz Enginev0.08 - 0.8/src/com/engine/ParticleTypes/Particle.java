@@ -5,7 +5,7 @@ import static com.engine.ParticleHelpers.ParticleModes.fireworksMode;
 import static java.lang.Math.*;
 import com.engine.GUIWindows.EException;
 import com.engine.ThinkingParticles.SCChoices;
-import com.engine.Utilities.ColorConverter;
+import com.engine.Utilities.ColorUtility;
 import com.engine.Verlet.Vect2;
 
 import javax.script.ScriptEngine;
@@ -38,48 +38,54 @@ public class Particle extends Molecule {
     }
 
     private static int[] getRGBA(int index) {
-        return new int[]{thinkingColors[index].getRed(), thinkingColors[index].getGreen(),
-                thinkingColors[index].getBlue(), thinkingColors[index].getAlpha()
-        };
+        return new int[]{
+                thinkingColors[index].getRed(),
+                thinkingColors[index].getGreen(),
+                thinkingColors[index].getBlue(),
+                thinkingColors[index].getAlpha()};
     }
 
     public static void setThinkingParticlesColor(Color[] colors) {
-        thinkingColors[0] = colors[0]; thinkingColors[1] = colors[1];
-        thinkingColors[2] = colors[2]; thinkingColors[3] = colors[3];
+        thinkingColors[0] = colors[0];
+        thinkingColors[1] = colors[1];
+        thinkingColors[2] = colors[2];
+        thinkingColors[3] = colors[3];
         thinkingColors[4] = colors[4];
     }
 
     public static String[] getThinkingParticlesStrings() {
-        return new String[]{ColorConverter.RGBAtoHEXA(getRGBA(0)), ColorConverter.RGBAtoHEXA(getRGBA(1)),
-                ColorConverter.RGBAtoHEXA(getRGBA(2)), ColorConverter.RGBAtoHEXA(getRGBA(3)),
-                ColorConverter.RGBAtoHEXA(getRGBA(4))
-        };
+        return new String[]{
+                ColorUtility.RGBAtoHEXA(getRGBA(0)),
+                ColorUtility.RGBAtoHEXA(getRGBA(1)),
+                ColorUtility.RGBAtoHEXA(getRGBA(2)),
+                ColorUtility.RGBAtoHEXA(getRGBA(3)),
+                ColorUtility.RGBAtoHEXA(getRGBA(4))};
     }
 
     /**
-    * If The object of type Molecule is not null, gravitation will be based on the molecule. * Also means that the object for type Point must be null, 
+    * If The object of type Molecule is not null, gravitation will be based on the molecule. * Also means that the object for type Point must be null,
     * and vice versa.
     */
-    public void gravitateTo(Molecule m, Vect2 p) {
+    public void gravitateTo(Molecule molecule, Vect2 mouse) {
         double dx, dy, dist, forceX, forceY;
         //Mouse Grav
-        if (p != null){
-            dx = p.x - x;
-            dy = p.y - y;
+        if (mouse != null){
+            dx = mouse.x - x;
+            dy = mouse.y - y;
             dist = sqrt(dx * dx + dy * dy);
-            forceX = ((dx / 5) / dist);
-            forceY = ((dy / 5) / dist);
+            forceX = (dx / 5) / dist;
+            forceY = (dy / 5) / dist;
         }
 
         //Molecule Grav
         else {
-            dx = m.x - x;
-            dy = m.y - y;
+            dx = molecule.x - x;
+            dy = molecule.y - y;
             dist = sqrt(dx * dx + dy * dy);
-            forceX = ((dx / 5) / dist);
-            forceY = ((dy / 5) / dist);
+            forceX = (dx / 5) / dist;
+            forceY = (dy / 5) / dist;
         }
-        
+
         switch (particleGravitationMode) {
             case DEFAULT:
                 vx += forceX;
@@ -92,31 +98,31 @@ public class Particle extends Molecule {
                 break;
 
             case ARC_TANGENT:
-                vx += atan2((forceY), (forceX));
-                vy += atan2((forceY), (forceX));
+                vx += atan2(forceY, forceX);
+                vy += atan2(forceY, forceX);
                 break;
 
             case H_WAVE:
-                forceX = ((dx / Double.POSITIVE_INFINITY / dist));
+                forceX = (dx / Double.POSITIVE_INFINITY / dist);
                 vx += forceX;
                 vy += forceY;
                 break;
 
             case V_WAVE:
-                forceY = ((dy / Double.POSITIVE_INFINITY) / dist);
+                forceY = (dy / Double.POSITIVE_INFINITY) / dist;
                 vx += forceX;
                 vy += forceY;
                 break;
 
             case SPIRALS:
-                forceX = ((dx / atan2(10000, (m != null) ? atan(m.heading()) : atan((atan2(p.y, p.x)))) / dist));
+                forceX = (dx / atan2(10000, (molecule != null) ? atan(molecule.heading()) : atan(atan2(mouse.y, mouse.x))) / dist);
                 vx += forceX;
                 vy += forceY;
                 break;
 
             case PARTICLE_REPELLENT:
-                forceX = (dx / 40 / dist);
-                forceY = (dy / 40 / dist);
+                forceX = (dx / 40) / dist;
+                forceY = (dy / 40) / dist;
                 vx += -forceX;
                 vy += -forceY;
                 break;
@@ -152,7 +158,7 @@ public class Particle extends Molecule {
     private void connectModeAll() {
         for (int i = 0; i < ParticlesArray.size(); i++) {
             Particle particle = ParticlesArray.get(i);
-            graphics2D.draw(new Line2D.Double(particle.getCenterX(), particle.getCenterY(), getCenterX(), getCenterY()));
+            graphics2D.drawLine(particle.getCenterX(), particle.getCenterY(), getCenterX(), getCenterY());
         }
     }
     private void connectModeSequential() {
@@ -161,7 +167,7 @@ public class Particle extends Molecule {
             Particle p2 = ParticlesArray.get(i + 1);
 
             graphics2D.setColor(ParticlesArray.get(i).getSelfColor());
-            graphics2D.draw(new Line2D.Double(p1.getCenterX(), p1.getCenterY(), p2.getCenterX(), p2.getCenterY()));
+            graphics2D.drawLine(p1.getCenterX(), p1.getCenterY(), p2.getCenterX(), p2.getCenterY());
         }
     }
 
@@ -176,7 +182,7 @@ public class Particle extends Molecule {
     }
 
     public void friction() {
-        float minVel = 0.01f, scale = 0.9993f;
+        float minVel = (float) pow(2, -7), scale = 0.9993f;
         if (abs(vx) <= minVel) vx = 0.0;
         if (abs(vy) <= minVel) vy = 0.0;
         vx *= scale;
@@ -185,17 +191,22 @@ public class Particle extends Molecule {
 
     public void render() {
         if (thinkingParticles) color = getSelfColor();
-        else color = ColorConverter.getColor();
-        if (connectParticles && ParticlesArray.size() <= 100) {if (PTMODEBOOL) {connectModeSequential();} else {connectModeAll();}}
+        else color = ColorUtility.getColor();
+        if (connectParticles && ParticlesArray.size() <= 100) {
+            if (PTMODEBOOL) connectModeSequential();
+            else connectModeAll();
+        }
         giveStyle(x - radius / 2, y - radius / 2, 2 * radius, color, particleRenderType, baseParticleText);
     }
 
     public void update() {
         boundsCheck();
         if (mouseGravitation) gravitateTo(null, Mouse);
-        if ((engineMode == NORMAL_MODE || engineMode == MULTI_MODE) && (particleGravitationMode == ORGANIC) && ParticlesArray.size() <= 265){
+        if ((engineMode == NORMAL_MODE || engineMode == MULTI_MODE) && (particleGravitationMode == ORGANIC) && ParticlesArray.size() <= 265) {
             accelerateTo(evaluateExpr(expressionForceX), evaluateExpr(expressionForceY));
-            if (angle >= 100 * (2 * PI * angleIncrement)) {angle = 0.0;} angle += angleIncrement; particleScriptEngine.put("x", angle);
+            if (angle >= 100 * (2 * PI * angleIncrement)) angle = 0.0;
+            angle += angleIncrement;
+            particleScriptEngine.put("x", angle);
         }
         else {
             accelerateTo(vx, vy);

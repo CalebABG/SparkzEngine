@@ -40,6 +40,6 @@ public class Flux extends Molecule {
             } else FluxArray.remove(this);
         }
         life -= 1;
-        radius -= 0.09;
+        radius -= 0.08;
     }
 }

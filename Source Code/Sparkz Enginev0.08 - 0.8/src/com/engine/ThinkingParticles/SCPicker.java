@@ -6,7 +6,7 @@ import com.engine.ParticleTypes.Particle;
 import javax.swing.*;
 import java.awt.*;
 
-import static com.engine.Utilities.ColorConverter.setAlpha;
+import static com.engine.Utilities.ColorUtility.setAlpha;
 
 public class SCPicker {
     private static void pickColor(JFrame parent, int scParticleIndex, String text) {

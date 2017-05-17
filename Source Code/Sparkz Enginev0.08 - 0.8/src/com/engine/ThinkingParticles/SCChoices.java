@@ -2,7 +2,7 @@ package com.engine.ThinkingParticles;
 
 import com.engine.GUIWindows.ColorEditor;
 import com.engine.ParticleTypes.Particle;
-import com.engine.Utilities.ColorConverter;
+import com.engine.Utilities.ColorUtility;
 import java.awt.*;
 
 public class SCChoices {
@@ -37,128 +37,128 @@ public class SCChoices {
     public static Color[] defaultColor() {return furiousfire();}
 
     public static Color[] oceanBlues() {
-        Color f = ColorConverter.HEXtoRGB("#C4DFE6");
-        Color s = ColorConverter.HEXtoRGB("#66A5AD");
-        Color thr = ColorConverter.HEXtoRGB("#07575b");
-        Color fourth = ColorConverter.HEXtoRGB("#003B46");
-        Color l = ColorConverter.HEXtoRGB("#021C1E");
+        Color f = ColorUtility.HEXtoRGB("#C4DFE6");
+        Color s = ColorUtility.HEXtoRGB("#66A5AD");
+        Color thr = ColorUtility.HEXtoRGB("#07575b");
+        Color fourth = ColorUtility.HEXtoRGB("#003B46");
+        Color l = ColorUtility.HEXtoRGB("#021C1E");
         return new Color[]{f, s, thr, fourth, l};
     }
 
     public static Color[] dayAndNight() {
-        Color f = ColorConverter.HEXtoRGB("#E6DF44");
-        Color s = ColorConverter.HEXtoRGB("#F0810F");
-        Color thr = ColorConverter.HEXtoRGB("#2D4262");
-        Color fourth = ColorConverter.HEXtoRGB("#063852");
-        Color l = ColorConverter.HEXtoRGB("#011A27");
+        Color f = ColorUtility.HEXtoRGB("#E6DF44");
+        Color s = ColorUtility.HEXtoRGB("#F0810F");
+        Color thr = ColorUtility.HEXtoRGB("#2D4262");
+        Color fourth = ColorUtility.HEXtoRGB("#063852");
+        Color l = ColorUtility.HEXtoRGB("#011A27");
         return new Color[]{f, s, thr, fourth, l};
     }
 
     public static Color[] plantLife() {
-        Color f = ColorConverter.HEXtoRGB("#C6D166");
-        Color s = ColorConverter.HEXtoRGB("#739F3D");
-        Color thr = ColorConverter.HEXtoRGB("#5C821A");
-        Color fourth = ColorConverter.HEXtoRGB("#ffffff");
-        Color l = ColorConverter.HEXtoRGB("#0F1B07");
+        Color f = ColorUtility.HEXtoRGB("#C6D166");
+        Color s = ColorUtility.HEXtoRGB("#739F3D");
+        Color thr = ColorUtility.HEXtoRGB("#5C821A");
+        Color fourth = ColorUtility.HEXtoRGB("#ffffff");
+        Color l = ColorUtility.HEXtoRGB("#0F1B07");
         return new Color[]{f, s, thr, fourth, l};
     }
 
     public static Color[] fancyCoffee() {
         Color f = Color.white;
-        Color s = ColorConverter.HEXtoRGB("#F1F3CE");
-        Color thr = ColorConverter.HEXtoRGB("#DDBC95");
-        Color fourth = ColorConverter.HEXtoRGB("#B38867");
-        Color l = ColorConverter.HEXtoRGB("#CDCDC0");
+        Color s = ColorUtility.HEXtoRGB("#F1F3CE");
+        Color thr = ColorUtility.HEXtoRGB("#DDBC95");
+        Color fourth = ColorUtility.HEXtoRGB("#B38867");
+        Color l = ColorUtility.HEXtoRGB("#CDCDC0");
         return new Color[]{f, s, thr, fourth, l};
     }
 
     public static Color[] cinnamonSpice() {
-        Color f = ColorConverter.HEXtoRGB("#EBDCB2");
-        Color s = ColorConverter.HEXtoRGB("#C9A66B");
-        Color thr = ColorConverter.HEXtoRGB("#805A3B");
-        Color fourth = ColorConverter.HEXtoRGB("#662E1C");
+        Color f = ColorUtility.HEXtoRGB("#EBDCB2");
+        Color s = ColorUtility.HEXtoRGB("#C9A66B");
+        Color thr = ColorUtility.HEXtoRGB("#805A3B");
+        Color fourth = ColorUtility.HEXtoRGB("#662E1C");
         return new Color[]{f, s, thr, fourth, fourth.darker()};
     }
 
     public static Color[] citrus() {
-        Color f = ColorConverter.HEXtoRGB("#FEF3E2");
-        Color s = ColorConverter.HEXtoRGB("#FA4032");
-        Color thr = ColorConverter.HEXtoRGB("#FA812F");
-        Color fourth = ColorConverter.HEXtoRGB("#FAAF08");
-        Color l = ColorConverter.HEXtoRGB("#E73F0B");
+        Color f = ColorUtility.HEXtoRGB("#FEF3E2");
+        Color s = ColorUtility.HEXtoRGB("#FA4032");
+        Color thr = ColorUtility.HEXtoRGB("#FA812F");
+        Color fourth = ColorUtility.HEXtoRGB("#FAAF08");
+        Color l = ColorUtility.HEXtoRGB("#E73F0B");
         return new Color[]{f, s, thr, fourth, l};
     }
 
     public static Color[] pastels() {
-        Color f = ColorConverter.HEXtoRGB("#C1E1DC");
-        Color s = ColorConverter.HEXtoRGB("#FFCCAC");
-        Color thr = ColorConverter.HEXtoRGB("#FFEB94");
-        Color fourth = ColorConverter.HEXtoRGB("#FDD475");
+        Color f = ColorUtility.HEXtoRGB("#C1E1DC");
+        Color s = ColorUtility.HEXtoRGB("#FFCCAC");
+        Color thr = ColorUtility.HEXtoRGB("#FFEB94");
+        Color fourth = ColorUtility.HEXtoRGB("#FDD475");
         return new Color[]{f, s, thr, fourth, fourth.darker()};
     }
 
     public static Color[] exoticBerries() {
-        Color f = ColorConverter.HEXtoRGB("#C0B2B5");
-        Color s = ColorConverter.HEXtoRGB("#F0EFEA");
-        Color thr = ColorConverter.HEXtoRGB("#D72C16");
-        Color fourth = ColorConverter.HEXtoRGB("#A10115");
+        Color f = ColorUtility.HEXtoRGB("#C0B2B5");
+        Color s = ColorUtility.HEXtoRGB("#F0EFEA");
+        Color thr = ColorUtility.HEXtoRGB("#D72C16");
+        Color fourth = ColorUtility.HEXtoRGB("#A10115");
         return new Color[]{f, s, thr, fourth, fourth.darker()};
     }
 
     public static Color[] candy() {
-        Color f = ColorConverter.HEXtoRGB("#008DCB");
-        Color s = ColorConverter.HEXtoRGB("#FFEC5C");
-        Color thr = ColorConverter.HEXtoRGB("#E1315B");
-        Color fourth = ColorConverter.HEXtoRGB("#F47D4A");
-        Color l = ColorConverter.HEXtoRGB("#D24135");
+        Color f = ColorUtility.HEXtoRGB("#008DCB");
+        Color s = ColorUtility.HEXtoRGB("#FFEC5C");
+        Color thr = ColorUtility.HEXtoRGB("#E1315B");
+        Color fourth = ColorUtility.HEXtoRGB("#F47D4A");
+        Color l = ColorUtility.HEXtoRGB("#D24135");
         return new Color[]{f, s, thr, fourth, l};
     }
 
     public static Color[] maritime() {
-        Color f = ColorConverter.HEXtoRGB("#FF4447").darker();
-        Color s = ColorConverter.HEXtoRGB("#FFFFFF");
-        Color thr = ColorConverter.HEXtoRGB("#5EA8A7");
-        Color fourth = ColorConverter.HEXtoRGB("#257985");
-        Color l = ColorConverter.HEXtoRGB("#113743");
+        Color f = ColorUtility.HEXtoRGB("#FF4447").darker();
+        Color s = ColorUtility.HEXtoRGB("#FFFFFF");
+        Color thr = ColorUtility.HEXtoRGB("#5EA8A7");
+        Color fourth = ColorUtility.HEXtoRGB("#257985");
+        Color l = ColorUtility.HEXtoRGB("#113743");
         return new Color[]{f, s, thr, fourth, l};
     }
 
     public static Color[] hazyday() {
-        Color f = ColorConverter.HEXtoRGB("#F4EBDb").darker();
-        Color s = ColorConverter.HEXtoRGB("#8E9B97");
-        Color thr = ColorConverter.HEXtoRGB("#97B8C2");
-        Color fourth = ColorConverter.HEXtoRGB("#537072");
-        Color l = ColorConverter.HEXtoRGB("#2C4A52");
+        Color f = ColorUtility.HEXtoRGB("#F4EBDb").darker();
+        Color s = ColorUtility.HEXtoRGB("#8E9B97");
+        Color thr = ColorUtility.HEXtoRGB("#97B8C2");
+        Color fourth = ColorUtility.HEXtoRGB("#537072");
+        Color l = ColorUtility.HEXtoRGB("#2C4A52");
         return new Color[]{f, s, thr, fourth, l};
     }
 
     public static Color[] retro() {
-        Color f = ColorConverter.HEXtoRGB("#B3DBC0");
-        Color s = ColorConverter.HEXtoRGB("#FE0000");
-        Color thr = ColorConverter.HEXtoRGB("#FDF6F6");
-        Color fourth = ColorConverter.HEXtoRGB("#67BACA");
+        Color f = ColorUtility.HEXtoRGB("#B3DBC0");
+        Color s = ColorUtility.HEXtoRGB("#FE0000");
+        Color thr = ColorUtility.HEXtoRGB("#FDF6F6");
+        Color fourth = ColorUtility.HEXtoRGB("#67BACA");
         return new Color[]{f, s, thr, fourth, fourth.darker().darker()};
     }
 
     public static Color[] furiousfire(){
-        Color f = ColorConverter.HEXtoRGB("#e6df44");
-        Color s = ColorConverter.HEXtoRGB("#fcaa00");
-        Color thr = ColorConverter.HEXtoRGB("#fa6001");
-        Color fourth = ColorConverter.HEXtoRGB("#ff3300");
-        Color l = ColorConverter.HEXtoRGB("#cc0000");
+        Color f = ColorUtility.HEXtoRGB("#e6df44");
+        Color s = ColorUtility.HEXtoRGB("#fcaa00");
+        Color thr = ColorUtility.HEXtoRGB("#fa6001");
+        Color fourth = ColorUtility.HEXtoRGB("#ff3300");
+        Color l = ColorUtility.HEXtoRGB("#cc0000");
         return new Color[]{f, s, thr, fourth, l};
     }
 
     public static Color[] onyximpact() {
-        Color f = ColorConverter.HEXtoRGB("#0F1F38");
-        Color s = ColorConverter.HEXtoRGB("#8E7970");
+        Color f = ColorUtility.HEXtoRGB("#0F1F38");
+        Color s = ColorUtility.HEXtoRGB("#8E7970");
         Color thr = new Color(15, 0, 0);
-        Color fourth = ColorConverter.HEXtoRGB("#42313A");
+        Color fourth = ColorUtility.HEXtoRGB("#42313A");
         return new Color[]{f, s, thr, fourth, fourth.darker()};
     }
 
     public static Color[] shadowslate() {
-        Color f = ColorConverter.HEXtoRGB("#262F34");
+        Color f = ColorUtility.HEXtoRGB("#262F34");
         Color fourth = new Color(51, 51, 51);
         return new Color[]{f, f.darker(), f.darker().darker(), fourth, fourth.darker()};
     }

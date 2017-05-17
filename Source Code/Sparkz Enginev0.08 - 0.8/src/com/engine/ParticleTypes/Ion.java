@@ -42,5 +42,5 @@ public class Ion extends Molecule {
         graphics2D.draw(new Ellipse2D.Double(x - radius / 2, y - radius / 2, 2 * radius, 2 * radius));
     }
     public void render() {giveStyle(); coagulate();}
-    public void update () {boundsCheck(); accelerateTo(vx, vy);}
+    public void update() {boundsCheck(); accelerateTo(vx, vy);}
 }

@@ -5,13 +5,13 @@ import com.engine.JComponents.CLabel;
 import com.engine.ParticleTypes.Particle;
 import com.engine.ThinkingParticles.PresetHolder;
 import com.engine.ThinkingParticles.SCChoices;
-import com.engine.Utilities.ColorConverter;
+import com.engine.Utilities.ColorUtility;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
-import static com.engine.Utilities.ColorConverter.setAlpha;
+import static com.engine.Utilities.ColorUtility.setAlpha;
 import static com.engine.Utilities.H5Wrapper.HCenter;
 
 public class ColorTimeMachine {
@@ -56,7 +56,7 @@ public class ColorTimeMachine {
             if (colorList == null || colorList.size() <= 0) {
                 Settings.saveColors(0, null);
             }
-            else Settings.saveColors(1, ColorConverter.getThinkingParticlesStrings(colorList.get(index).colors));
+            else Settings.saveColors(1, ColorUtility.getThinkingParticlesStrings(colorList.get(index).colors));
         });
         presets.setFont(new Font("Tahoma", Font.BOLD, 13));
         buttons_panel.add(presets);

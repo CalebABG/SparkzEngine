@@ -43,62 +43,62 @@ public class DrawModes {
 
     private static void drawSmileyFace(double x, double y, double radius) {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
-        graphics2D.drawString( ("☻"), (int) x, (int) y);
+        graphics2D.drawString("☻", (int) x, (int) y);
     }
 
     private static void drawNote1(double x, double y, double radius) {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
-        graphics2D.drawString(("♪"), (int) x, (int) y);
+        graphics2D.drawString("♪", (int) x, (int) y);
     }
 
     private static void drawNote2(double x, double y, double radius) {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
-        graphics2D.drawString(("♫"), (int) x, (int) y);
+        graphics2D.drawString("♫", (int) x, (int) y);
     }
 
     private static void drawHearts(double x, double y, double radius) {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
-        graphics2D.drawString(("♥"), (int) x, (int) y);
+        graphics2D.drawString("♥", (int) x, (int) y);
     }
 
     private static void drawTradeMark(double x, double y, double radius) {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
-        graphics2D.drawString(("®"), (int) x, (int) y);
+        graphics2D.drawString("®", (int) x, (int) y);
     }
 
     private static void drawCopyRight(double x, double y, double radius) {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
-        graphics2D.drawString(("©"), (int) x, (int) y);
+        graphics2D.drawString("©", (int) x, (int) y);
     }
 
     private static void drawCentSymbol(double x, double y, double radius) {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
-        graphics2D.drawString(("¢"), (int) x, (int) y);
+        graphics2D.drawString("¢", (int) x, (int) y);
     }
 
     private static void drawInfinity(double x, double y, double radius) {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
-        graphics2D.drawString(("∞"), (int) x, (int) y);
+        graphics2D.drawString("∞", (int) x, (int) y);
     }
 
     private static void drawKappaSymbol(double x, double y, double radius) {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
-        graphics2D.drawString(("ϰ"), (int) x, (int) y);
+        graphics2D.drawString("ϰ", (int) x, (int) y);
     }
 
     private static void drawSpade(double x, double y, double radius) {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
-        graphics2D.drawString(("♠"), (int) x, (int) y);
+        graphics2D.drawString("♠", (int) x, (int) y);
     }
 
     private static void drawClub(double x, double y, double radius) {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
-        graphics2D.drawString(("♣"), (int) x, (int) y);
+        graphics2D.drawString("♣", (int) x, (int) y);
     }
 
     private static void drawDiamond(double x, double y, double radius) {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
-        graphics2D.drawString(("♦"), (int) x, (int) y);
+        graphics2D.drawString("♦", (int) x, (int) y);
     }
 
     public static void giveStyle(double x, double y, double radius, Color c, int particleMode, String txt) {
@@ -186,16 +186,12 @@ public class DrawModes {
         }
     }
 
-    public static void ConnectParticles(Particle p, Particle q) {
-        graphics2D.draw(new Line2D.Double(p.getCenterX(), p.getCenterY(), q.getCenterX(), q.getCenterY()));
-    }
-
     public static void DrawGravConnections(GravityPoint gpoint, double radius, double x, double y) {
         if (GDMODEBOOL) {DrawQuads(gpoint, radius, x, y);} else {DrawLines(gpoint, radius, x, y);}
     }
 
     private static void DrawLines(GravityPoint gpoint, double radius, double x, double y) {
-        graphics2D.draw(new Line2D.Double(gpoint.getCenterX(), gpoint.getCenterY(), x + radius / 2, y + radius / 2));
+        graphics2D.drawLine(gpoint.getCenterX(), gpoint.getCenterY(), (int) (x + radius / 2), (int) (y + radius / 2));
     }
 
     private static void DrawQuads(GravityPoint gpoint, double radius, double x, double y) {

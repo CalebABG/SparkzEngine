@@ -12,7 +12,7 @@ import com.engine.ParticleHelpers.ParticleModes;
 import com.engine.ParticleTypes.Particle;
 import com.engine.Verlet.*;
 import com.engine.ThinkingParticles.SCCycle;
-import com.engine.Utilities.ColorConverter;
+import com.engine.Utilities.ColorUtility;
 import com.engine.Utilities.InputWrapper;
 import javax.swing.*;
 import java.awt.*;
@@ -398,7 +398,7 @@ public class EngineMethods {
             case 2: particleDrag();             break;
             case 3: particleFireworks();        break;
             case 4: ParticleTypeUI.getInstance(0, "Particle Type Options"); break; //Regular Particle Type
-            case 5: ColorConverter.setColor();  break;
+            case 5: ColorUtility.setColor();  break;
             case 6: gravitationOptions();       break;
             case 7: particleSizeSeedOptions();  break;
             case 8: particleSpeedSeedOptions(); break;
@@ -678,7 +678,8 @@ public class EngineMethods {
     public static void handleRenders() {
         try {
             if (engineMode == RAGDOLL_MODE) {
-                VSim.debugPhysics(); Physics.update(); Physics.render();}
+                Physics.update(); Physics.render(); VSim.debugPhysics();
+            }
             else {
                 if (engineMode == GRAPH_MODE) drawMid();
                 renderParticlesArray(); renderGravityPointsArray(); renderFwParticlesArray();

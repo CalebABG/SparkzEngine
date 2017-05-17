@@ -8,7 +8,7 @@ import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
 
-import static com.engine.Utilities.ColorConverter.setAlpha;
+import static com.engine.Utilities.ColorUtility.setAlpha;
 
 public class PresetsLoader {
     private static PresetsLoader presetsLoaderUI = null;

@@ -1,7 +1,7 @@
 package com.engine.ParticleTypes;
 
 import static com.engine.EngineHelpers.EConstants.*;
-import com.engine.Utilities.ColorConverter;
+import com.engine.Utilities.ColorUtility;
 import java.awt.*;
 import static com.engine.ParticleHelpers.DrawModes.giveStyle;
 import static java.lang.Math.*;
@@ -40,7 +40,7 @@ public class Fireworks extends Molecule {
 
     public void render() {
         if (thinkingParticles) color = getSelfColor();
-        else color = ColorConverter.getColor();
+        else color = ColorUtility.getColor();
         giveStyle(x - radius / 2, y - radius / 2, 2 * radius, color, fireworksRenderType, fireworksParticleText);
     }
 

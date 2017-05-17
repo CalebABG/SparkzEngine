@@ -31,16 +31,22 @@ public class Duplex extends Molecule {
     private void activeForces(Molecule p, boolean m, double dist) {
         //Contain force
         if (m) {
-            double forceX = (((p.x - x)) / 2 / dist);
-            double forceY = (((p.y - y)) / 2 / dist);
+            double dx = p.x - x;
+            double dy = p.y - y;
+            double forceX = (dx / 2) / dist;
+            double forceY = (dy / 2) / dist;
+
             p.vx -= forceX;
             p.vy -= forceY;
             p.normalize(0.997);
         }
         //Repel force
         else {
-            double forceX = (((p.x - x)) / 0.09 / dist);
-            double forceY = (((p.y - y)) / 0.09 / dist);
+            double dx = p.x - x;
+            double dy = p.y - y;
+            double forceX = (dx / 0.09) / dist;
+            double forceY = (dy / 0.09) / dist;
+
             p.vx += forceX;
             p.vy += forceY;
             p.normalize(0.50);
@@ -55,5 +61,5 @@ public class Duplex extends Molecule {
     public void render() {
         giveStyle();
     }
-    public void update() {boundsCheck(); deter(); if (radius < 0) {DuplexArray.remove(this);} radius -= 0.02;}
+    public void update() {boundsCheck(); deter(); if (radius < 0) {DuplexArray.remove(this);} radius -= 0.012;}
 }

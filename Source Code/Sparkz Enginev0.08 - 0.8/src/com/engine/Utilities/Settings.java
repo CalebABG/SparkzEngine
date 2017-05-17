@@ -4,7 +4,7 @@ import com.engine.EngineHelpers.EngineMethods;
 import com.engine.GUIWindows.EException;
 import static com.engine.EngineHelpers.EConstants.*;
 import com.engine.ParticleTypes.Particle;
-import static com.engine.Utilities.ColorConverter.HEXAtoRGBA;
+import static com.engine.Utilities.ColorUtility.HEXAtoRGBA;
 import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;

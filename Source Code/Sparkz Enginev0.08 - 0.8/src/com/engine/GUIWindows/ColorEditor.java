@@ -12,7 +12,7 @@ import com.engine.JComponents.CLabel;
 import com.engine.Utilities.Settings;
 import java.awt.*;
 import javax.swing.*;
-import static com.engine.Utilities.ColorConverter.setAlpha;
+import static com.engine.Utilities.ColorUtility.setAlpha;
 
 public class ColorEditor {
     private static ColorEditor thinkingParticlesUI = null;

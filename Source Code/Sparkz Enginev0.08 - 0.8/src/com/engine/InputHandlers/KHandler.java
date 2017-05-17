@@ -7,7 +7,7 @@ import com.engine.EngineHelpers.EngineMethods;
 import com.engine.MGrapher.ParticleGraph;
 import com.engine.GUIWindows.*;
 import com.engine.ParticleHelpers.ParticleModes;
-import com.engine.Utilities.ColorConverter;
+import com.engine.Utilities.ColorUtility;
 import com.engine.Utilities.Settings;
 import com.engine.Verlet.VSim;
 import java.awt.event.KeyAdapter;
@@ -175,7 +175,7 @@ public class KHandler extends KeyAdapter {
 
         //Keyboard button: R
         if (key == KeyEvent.VK_R) {
-            ColorConverter.giveBackgroundColor();
+            ColorUtility.giveBackgroundColor();
         }
 
         //Keyboard button: T

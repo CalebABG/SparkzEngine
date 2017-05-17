@@ -4,9 +4,10 @@ import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EngineMethods.*;
 import static com.engine.J8Helpers.Interfaces.EModes.GRAPH_MODE;
 import static com.engine.JComponents.CMenuBar.createMenuBar;
+
 import com.engine.EngineHelpers.EngineSplash;
-import com.engine.GUIWindows.StatsPanel;
 import com.engine.GUIWindows.QuitWindow;
+import com.engine.GUIWindows.StatsPanel;
 import com.engine.J8Helpers.Extensions.TimerTaskX;
 import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.Utilities.Settings;
@@ -23,7 +24,6 @@ import java.awt.*;
 // Research into JVM Garbage Collection Optimization
 
 public class Engine {
-
     public static void main(String[] args) {
         new EngineSplash(2500).display();
         SwingUtilities.invokeLater(() -> new Engine().start());
@@ -32,9 +32,9 @@ public class Engine {
     //Adding slight performance boost + UI properties
     static {
         //Uncomment for slight performance kick: will cause gui tearing
-        //System.setProperty("sun.java2d.opengl", "True");
-        System.setProperty("sun.java2d.transaccel", "True");
-        System.setProperty("sun.java2d.ddforcevram", "True");
+//        System.setProperty("sun.java2d.opengl", "true");
+        System.setProperty("sun.java2d.transaccel", "true");
+        System.setProperty("sun.java2d.ddforcevram", "true");
         System.setProperty("apple.laf.useScreenMenuBar", "true");
         System.setProperty("com.apple.macos.use-file-dialog-packages", "true");
     }

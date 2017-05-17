@@ -33,29 +33,31 @@ public class GravityPoint extends Molecule {
             GravityPoint gPoint = GravityPointsArray.get(i);
             double dx = gPoint.x - x;
             double dy = gPoint.y - y;
+            double dradius = gPoint.radius + radius;
             double distance = dx * dx + dy * dy;
+            //System.out.println(distance);
 
-            if (distance < 500 * 500) {
+            if (distance < 950 * dradius * dradius) {
                 graphics2D.setColor(Particle.thinkingColors[0]);
                 DrawModes.DrawGravConnections(gPoint, radius, getX(), getY());
             }
 
-            if (distance < 400 * 400) {
+            if (distance < 850 * dradius * dradius) {
                 graphics2D.setColor(Particle.thinkingColors[1]);
                 DrawModes.DrawGravConnections(gPoint, radius, getX(), getY());
             }
 
-            if (distance < 300 * 300) {
+            if (distance < 750 * dradius * dradius) {
                 graphics2D.setColor(Particle.thinkingColors[2]);
                 DrawModes.DrawGravConnections(gPoint, radius, getX(), getY());
             }
 
-            if (distance < 200 * 200) {
+            if (distance < 650 * dradius * dradius) {
                 graphics2D.setColor(Particle.thinkingColors[3]);
                 DrawModes.DrawGravConnections(gPoint, radius, getX(), getY());
             }
 
-            if (distance < 100 * 100) {
+            if (distance < 550 * dradius * dradius) {
                 graphics2D.setColor(Particle.thinkingColors[4]);
                 DrawModes.DrawGravConnections(gPoint, radius, getX(), getY());
             }
@@ -65,7 +67,8 @@ public class GravityPoint extends Molecule {
     public void giveStyle() {
         color = getSelfColor();
         graphics2D.setColor(color);
-        graphics2D.draw(new Ellipse2D.Double(x - radius / 2, y - radius / 2, 2 * radius, 2 * radius));
+        graphics2D.drawOval((int)(x - radius / 2), (int)(y - radius / 2), (int) (2 * radius), (int) (2 * radius));
+//        graphics2D.draw(new Ellipse2D.Double(x - radius / 2, y - radius / 2, 2 * radius, 2 * radius));
         if (GravityPointsArray.size() <= 100) {gravProximity();}
     }
 

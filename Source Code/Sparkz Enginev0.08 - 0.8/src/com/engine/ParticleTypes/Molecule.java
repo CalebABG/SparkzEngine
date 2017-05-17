@@ -64,8 +64,8 @@ public abstract class Molecule implements MoleculeRender {
     public double getVelX() {return vx;}
     public double getVelY() {return vy;}
     public double getRadius() {return radius;}
-    public double getCenterX(){return (x + radius / 2);}
-    public double getCenterY(){return (y + radius / 2);}
+    public int getCenterX(){return (int) (x + radius / 2);}
+    public int getCenterY(){return (int) (y + radius / 2);}
     public Point getCenter(){return new Point((int) (x + (radius / 2)), (int) ((y + (radius / 2))));}
     public Vect2 getCenterVect(){return new Vect2(x + radius / 2,y + radius / 2);}
     public double getDistance () {
@@ -118,18 +118,17 @@ public abstract class Molecule implements MoleculeRender {
     public void gravitateTo(Molecule p, double z) {
         double  dx = p.x - x;
         double dy = p.y - y;
-        double dist = dx * dx + dy * dy;
-//        double dist = Math.sqrt(dx * dx + dy * dy);
+//        double dist = dx * dx + dy * dy;
+        double dist = Math.sqrt(dx * dx + dy * dy);
 
-        double forceX = ((dx * z) / dist);
-        double forceY = ((dy * z) / dist);
-
-        vx += forceX;
-        vy += forceY;
-
-//        double forceX = ((dx / z) / dist);
-//        double forceY = ((dy / z) / dist);
+//        double forceX = ((dx * z) / (dist*dist));
+//        double forceY = ((dy * z) / (dist*dist));
 //        vx += forceX;
 //        vy += forceY;
+
+        double forceX = ((dx / z) / dist);
+        double forceY = ((dy / z) / dist);
+        vx += forceX;
+        vy += forceY;
     }
 }

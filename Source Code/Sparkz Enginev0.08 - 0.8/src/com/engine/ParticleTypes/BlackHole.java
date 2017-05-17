@@ -21,8 +21,8 @@ public class BlackHole extends Molecule {
             double dist = dx * dx + dy * dy;
 
             if (dist < bigR * bigR) {
-                p.normalize(0.6);
-                p.gravitateTo(this, 70);
+                p.normalize(0.37);
+                p.gravitateTo(this, 1);
             }
 
             if (dist < radius * radius) ParticlesArray.remove(i);

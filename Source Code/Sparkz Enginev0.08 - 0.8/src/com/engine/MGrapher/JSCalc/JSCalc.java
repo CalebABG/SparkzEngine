@@ -6,7 +6,6 @@ import com.engine.J8Helpers.Extensions.WAdapter;
 import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.JComponents.CLabel;
 import com.engine.Utilities.Settings;
-
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.swing.*;
@@ -14,8 +13,8 @@ import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-
 import static com.engine.JComponents.TextSuggestor.makeUndoable;
+import static com.engine.MGrapher.JSCalc.JSOperations.*;
 
 public class JSCalc {
     private static JSCalc jsCalc = null;
@@ -36,6 +35,7 @@ public class JSCalc {
     public static Robot robot;
     public static String for_state = "for(var i = 0; i < 5; i++){\n" + "    \n" + "}";
     public static String if_state = "if(){\n" + "    \n" + "}";
+    public static String if_else_state = "if(){\n" + "\t\n" + "} else{\n" + "\t\n" + "}";
     public static String while_state = "while(){\n" + "    \n" + "}";
     public static String switch_state = "switch() {\n" +
                                         "    case :\n" +
@@ -58,7 +58,7 @@ public class JSCalc {
         if (jsCalc == null) {jsCalc = new JSCalc(parent);} frame.toFront(); return jsCalc;
     }
 
-    public JSCalc(JFrame parent) {
+    private JSCalc(JFrame parent) {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());} catch (Exception e1) {e1.printStackTrace();}
         UIManager.put("SplitPane.background", keyColorbg.darker());
         UIManager.put("SplitPaneDivider.border", BorderFactory.createLineBorder(keyColorbg, 1));
@@ -138,11 +138,7 @@ public class JSCalc {
 
         // x^2
         buttons[0] = new CLabel("<html>x<sup>2</sup></html>", font1, keyColorfg, keyColorbg);
-        buttons[0].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                JSOperations.x_squared();
-            }
-        });
+        buttons[0].addMouseListener(new MAdapter.MouseClicked(e -> x_squared()));
         buttons[0].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_x_squared = new GridBagConstraints();
         gbc_x_squared.fill = GridBagConstraints.BOTH;
@@ -156,11 +152,7 @@ public class JSCalc {
         //x^3
         buttons[1] = new CLabel("<html>x<sup>3</sup></html>", font1, keyColorfg, keyColorbg);
         //buttons[1].getMouseListeners()[0].mouseClicked();
-        buttons[1].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                JSOperations.x_cubed();
-            }
-        });
+        buttons[1].addMouseListener(new MAdapter.MouseClicked(e -> x_cubed()));
         GridBagConstraints gbc_x_cubed = new GridBagConstraints();
         gbc_x_cubed.fill = GridBagConstraints.BOTH;
         gbc_x_cubed.insets = new Insets(0, 0, 5, 5);
@@ -170,11 +162,7 @@ public class JSCalc {
 
         // 7
         buttons[2] = new CLabel("7", font1, keyColorfg, keyColorbg);
-        buttons[2].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[2].getText());
-            }
-        });
+        buttons[2].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[2].getText())));
         buttons[2].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_seven = new GridBagConstraints();
         gbc_seven.fill = GridBagConstraints.BOTH;
@@ -185,11 +173,7 @@ public class JSCalc {
 
         // 8
         buttons[3] = new CLabel("8", font1, keyColorfg, keyColorbg);
-        buttons[3].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[3].getText());
-            }
-        });
+        buttons[3].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[3].getText())));
         buttons[3].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_eight = new GridBagConstraints();
         gbc_eight.fill = GridBagConstraints.BOTH;
@@ -200,11 +184,7 @@ public class JSCalc {
 
         // 9
         buttons[4] = new CLabel("9", font1, keyColorfg, keyColorbg);
-        buttons[4].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[4].getText());
-            }
-        });
+        buttons[4].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[4].getText())));
         buttons[4].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_nine = new GridBagConstraints();
         gbc_nine.fill = GridBagConstraints.BOTH;
@@ -215,11 +195,7 @@ public class JSCalc {
 
         // divide: /
         buttons[5] = new CLabel("/", font1, keyColorfg, keyColorbg);
-        buttons[5].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[5].getText());
-            }
-        });
+        buttons[5].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[5].getText())));
         buttons[5].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_divide = new GridBagConstraints();
         gbc_divide.fill = GridBagConstraints.BOTH;
@@ -230,11 +206,7 @@ public class JSCalc {
 
         // square root
         buttons[6] = new CLabel("\u221A", font1, keyColorfg, keyColorbg);
-        buttons[6].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                JSOperations.square_root();
-            }
-        });
+        buttons[6].addMouseListener(new MAdapter.MouseClicked(e -> square_root()));
         buttons[6].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_square_root = new GridBagConstraints();
         gbc_square_root.fill = GridBagConstraints.BOTH;
@@ -245,11 +217,7 @@ public class JSCalc {
 
         // e^x
         buttons[7] = new CLabel("<html>e<sup>x</sup></html>", font1, keyColorfg, keyColorbg);
-        buttons[7].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                JSOperations.e_to_x();
-            }
-        });
+        buttons[7].addMouseListener(new MAdapter.MouseClicked(e -> e_to_x()));
         buttons[7].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_one_over_x = new GridBagConstraints();
         gbc_one_over_x.fill = GridBagConstraints.BOTH;
@@ -260,11 +228,7 @@ public class JSCalc {
 
         // 4
         buttons[8] = new CLabel("4", font1, keyColorfg, keyColorbg);
-        buttons[8].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[8].getText());
-            }
-        });
+        buttons[8].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[8].getText())));
         buttons[8].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_four = new GridBagConstraints();
         gbc_four.fill = GridBagConstraints.BOTH;
@@ -275,11 +239,7 @@ public class JSCalc {
 
         // 5
         buttons[9] = new CLabel("5", font1, keyColorfg, keyColorbg);
-        buttons[9].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[9].getText());
-            }
-        });
+        buttons[9].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[9].getText())));
         buttons[9].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_five = new GridBagConstraints();
         gbc_five.fill = GridBagConstraints.BOTH;
@@ -290,11 +250,7 @@ public class JSCalc {
 
         // 6
         buttons[10] = new CLabel("6", font1, keyColorfg, keyColorbg);
-        buttons[10].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[10].getText());
-            }
-        });
+        buttons[10].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[10].getText())));
         buttons[10].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_six = new GridBagConstraints();
         gbc_six.fill = GridBagConstraints.BOTH;
@@ -305,11 +261,7 @@ public class JSCalc {
 
         // times: *
         buttons[11] = new CLabel("*", font1, keyColorfg, keyColorbg);
-        buttons[11].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[11].getText());
-            }
-        });
+        buttons[11].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[11].getText())));
         buttons[11].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_times = new GridBagConstraints();
         gbc_times.fill = GridBagConstraints.BOTH;
@@ -320,11 +272,7 @@ public class JSCalc {
 
         // ln(x)
         buttons[12] = new CLabel("ln", font1, keyColorfg, keyColorbg);
-        buttons[12].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                JSOperations.ln_x();
-            }
-        });
+        buttons[12].addMouseListener(new MAdapter.MouseClicked(e -> ln_x()));
         buttons[12].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_ln = new GridBagConstraints();
         gbc_ln.fill = GridBagConstraints.BOTH;
@@ -335,11 +283,7 @@ public class JSCalc {
 
         // log(x)
         buttons[13] = new CLabel("log", font1, keyColorfg, keyColorbg);
-        buttons[13].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                JSOperations.log_x();
-            }
-        });
+        buttons[13].addMouseListener(new MAdapter.MouseClicked(e -> log_x()));
         buttons[13].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_log = new GridBagConstraints();
         gbc_log.fill = GridBagConstraints.BOTH;
@@ -350,11 +294,7 @@ public class JSCalc {
 
         // 1
         buttons[14] = new CLabel("1", font1, keyColorfg, keyColorbg);
-        buttons[14].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[14].getText());
-            }
-        });
+        buttons[14].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[14].getText())));
         buttons[14].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_one = new GridBagConstraints();
         gbc_one.fill = GridBagConstraints.BOTH;
@@ -365,11 +305,7 @@ public class JSCalc {
 
         // 2
         buttons[15] = new CLabel("2", font1, keyColorfg, keyColorbg);
-        buttons[15].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[15].getText());
-            }
-        });
+        buttons[15].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[15].getText())));
         buttons[15].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_two = new GridBagConstraints();
         gbc_two.fill = GridBagConstraints.BOTH;
@@ -380,11 +316,7 @@ public class JSCalc {
 
         // 3
         buttons[16] = new CLabel("3", font1, keyColorfg, keyColorbg);
-        buttons[16].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[16].getText());
-            }
-        });
+        buttons[16].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[16].getText())));
         buttons[16].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_three = new GridBagConstraints();
         gbc_three.fill = GridBagConstraints.BOTH;
@@ -395,11 +327,7 @@ public class JSCalc {
 
         // minus: -
         buttons[17] = new CLabel("-", font1, keyColorfg, keyColorbg);
-        buttons[17].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[17].getText());
-            }
-        });
+        buttons[17].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[17].getText())));
         buttons[17].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_minus = new GridBagConstraints();
         gbc_minus.fill = GridBagConstraints.BOTH;
@@ -410,11 +338,7 @@ public class JSCalc {
 
         // pi
         buttons[18] = new CLabel("π", font1, keyColorfg, keyColorbg);
-        buttons[18].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[18].getText());
-            }
-        });
+        buttons[18].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[18].getText())));
         buttons[18].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_pi = new GridBagConstraints();
         gbc_pi.fill = GridBagConstraints.BOTH;
@@ -425,11 +349,7 @@ public class JSCalc {
 
         // eulers constant: e
         buttons[19] = new CLabel("e", font1, keyColorfg, keyColorbg);
-        buttons[19].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[19].getText());
-            }
-        });
+        buttons[19].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[19].getText())));
         buttons[19].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_eulersConstant = new GridBagConstraints();
         gbc_eulersConstant.fill = GridBagConstraints.BOTH;
@@ -440,11 +360,7 @@ public class JSCalc {
 
         // left parentheses: (
         buttons[20] = new CLabel("(", font1, keyColorfg, keyColorbg);
-        buttons[20].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[20].getText());
-            }
-        });
+        buttons[20].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[20].getText())));
         buttons[20].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_left_parens = new GridBagConstraints();
         gbc_left_parens.fill = GridBagConstraints.BOTH;
@@ -455,11 +371,7 @@ public class JSCalc {
 
         // 0
         buttons[21] = new CLabel("0", font1, keyColorfg, keyColorbg);
-        buttons[21].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[21].getText());
-            }
-        });
+        buttons[21].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[21].getText())));
         buttons[21].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_zero = new GridBagConstraints();
         gbc_zero.fill = GridBagConstraints.BOTH;
@@ -470,11 +382,7 @@ public class JSCalc {
 
         // right parentheses: (
         buttons[22] = new CLabel(")", font1, keyColorfg, keyColorbg);
-        buttons[22].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[22].getText());
-            }
-        });
+        buttons[22].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[22].getText())));
         buttons[22].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_right_parens = new GridBagConstraints();
         gbc_right_parens.fill = GridBagConstraints.BOTH;
@@ -485,11 +393,7 @@ public class JSCalc {
 
         // plus: +
         buttons[23] = new CLabel("+", font1, keyColorfg, keyColorbg);
-        buttons[23].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[23].getText());
-            }
-        });
+        buttons[23].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[23].getText())));
         buttons[23].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_plus = new GridBagConstraints();
         gbc_plus.fill = GridBagConstraints.BOTH;
@@ -500,11 +404,7 @@ public class JSCalc {
 
         // factorial: n!
         buttons[24] = new CLabel("n!", font1, keyColorfg, keyColorbg);
-        buttons[24].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                JSOperations.nfactorial();
-            }
-        });
+        buttons[24].addMouseListener(new MAdapter.MouseClicked(e -> nfactorial()));
         buttons[24].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_nfactorial = new GridBagConstraints();
         gbc_nfactorial.fill = GridBagConstraints.BOTH;
@@ -515,11 +415,7 @@ public class JSCalc {
 
         // 1/x
         buttons[25] = new CLabel("1/x", font1, keyColorfg, keyColorbg);
-        buttons[25].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                JSOperations.one_over_x();
-            }
-        });
+        buttons[25].addMouseListener(new MAdapter.MouseClicked(e -> one_over_x()));
         buttons[25].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_ten_to_x = new GridBagConstraints();
         gbc_ten_to_x.fill = GridBagConstraints.BOTH;
@@ -530,11 +426,7 @@ public class JSCalc {
 
         // clear everything: CE
         buttons[26] = new CLabel("CE", font1, keyColorfg, keyColorbg);
-        buttons[26].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                textPane.setText("");
-            }
-        });
+        buttons[26].addMouseListener(new MAdapter.MouseClicked(e -> textPane.setText("")));
         buttons[26].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_ce = new GridBagConstraints();
         gbc_ce.fill = GridBagConstraints.BOTH;
@@ -546,11 +438,7 @@ public class JSCalc {
         // Backspace button
         buttons[27] = new CLabel("\u00AB", font1, keyColorfg, keyColorbg);
         buttons[27].setHorizontalAlignment(SwingConstants.CENTER);
-        buttons[27].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                backspace();
-            }
-        });
+        buttons[27].addMouseListener(new MAdapter.MouseClicked(e -> backspace()));
         GridBagConstraints gbc_backspace = new GridBagConstraints();
         gbc_backspace.fill = GridBagConstraints.BOTH;
         gbc_backspace.insets = new Insets(0, 0, 0, 5);
@@ -560,11 +448,7 @@ public class JSCalc {
 
         // dot: .
         buttons[28] = new CLabel(".", font1, keyColorfg, keyColorbg);
-        buttons[28].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                addText(buttons[28].getText());
-            }
-        });
+        buttons[28].addMouseListener(new MAdapter.MouseClicked(e -> addText(buttons[28].getText())));
         buttons[28].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_dot = new GridBagConstraints();
         gbc_dot.fill = GridBagConstraints.BOTH;
@@ -575,11 +459,7 @@ public class JSCalc {
 
         // equals: =
         buttons[29] = new CLabel("=", font1, keyColorfg, keyColorbg);
-        buttons[29].addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                calculate();
-            }
-        });
+        buttons[29].addMouseListener(new MAdapter.MouseClicked(e -> calculate()));
         buttons[29].setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc_equals = new GridBagConstraints();
         gbc_equals.fill = GridBagConstraints.BOTH;
@@ -623,6 +503,9 @@ public class JSCalc {
                 case "if":
                     textPane.replaceSelection(if_state);
                     break;
+                case "ifel":
+                    textPane.replaceSelection(if_else_state);
+                    break;
                 case "while":
                     textPane.replaceSelection(while_state);
                     break;
@@ -648,20 +531,16 @@ public class JSCalc {
     public static void addText(String text) {
         try {
             textPane.getDocument().insertString(textPane.getCaretPosition(), text, null);
-        } catch (BadLocationException e1) {
-            e1.printStackTrace();
-        }
+        } catch (BadLocationException e1) {e1.printStackTrace();}
     }
 
     public static void backspace() {
         try {
             robot.keyPress(KeyEvent.VK_SHIFT);
+            robot.keyRelease(KeyEvent.VK_SHIFT);
             robot.keyPress(KeyEvent.VK_BACK_SPACE);
             robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-            robot.keyRelease(KeyEvent.VK_SHIFT);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {e.printStackTrace();}
     }
 
     public static void close(){jsCalc = null; frame.dispose();}

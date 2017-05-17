@@ -3,14 +3,12 @@ package com.engine.EngineHelpers;
 import com.engine.InputHandlers.*;
 import com.engine.ParticleTypes.*;
 import com.engine.Verlet.Vect2;
-
 import javax.swing.*;
 import java.awt.image.BufferStrategy;
 import java.util.List;
 import java.awt.*;
 import java.util.*;
 import java.util.Timer;
-
 import static com.engine.J8Helpers.Interfaces.EModes.*;
 import static java.lang.Math.floor;
 
@@ -68,7 +66,6 @@ public abstract class EConstants {
 
     /*Mouse Point*/
     public static Vect2 Mouse                   = new Vect2();
-//    public static Point Mouse                   = new Point();
 
     /*Booleans*/
     public static boolean running               = false;
