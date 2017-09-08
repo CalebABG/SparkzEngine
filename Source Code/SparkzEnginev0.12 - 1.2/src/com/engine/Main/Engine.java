@@ -140,7 +140,7 @@ public class Engine {
     }
 
     /**
-     * This method actively renders the canvas for the program; it creates and disposes of the Engines graphics Object each frame.
+     * This method actively renders the canvas for the program. It creates and disposes of the Engines graphics object each frame.
      * It is used within the programs main Thread.
      */
     private void render() {
