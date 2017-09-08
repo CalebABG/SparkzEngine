@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SparkzEngine">
+    <output-path>$PROJECT_DIR$/../../Sparkz Engine Jar</output-path>
+    <root id="archive" name="SparkzEngine.jar">
+      <element id="module-output" name="SparkzEnginev0.12 - 1.2" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/gson-2.8.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/flow-noise-1.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/autocomplete-2.6.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/commons-math3-3.6.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
