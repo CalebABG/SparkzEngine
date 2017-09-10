@@ -38,7 +38,7 @@ public class Engine {
     //Adding slight performance boost + UI properties
     static {
         //Uncomment for slight performance kick: will cause gui tearing
-        System.setProperty("sun.java2d.opengl", "True");
+        //System.setProperty("sun.java2d.opengl", "True");
         System.setProperty("sun.java2d.transaccel", "True");
         System.setProperty("sun.java2d.ddforcevram", "True");
         System.setProperty("apple.laf.useScreenMenuBar", "true");
