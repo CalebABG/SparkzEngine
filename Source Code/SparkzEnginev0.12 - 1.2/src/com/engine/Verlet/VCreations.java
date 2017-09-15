@@ -95,21 +95,21 @@ public class VCreations {
             if (i == 0) {
                 //First Point
                 Vertex p = new Vertex(startX, mY, rad, pc);
-                p.pinTo(p.currPos.x, p.currPos.y);
+                p.pinTo(p.currX, p.currY);
                 index = p.index;
             }
             //Last Point in Line
             else if (i == NUM_POINTS - 1) {
                 Vertex lastVertex = Vertices.get(index);
                 //Second Point
-                Vertex q = new Vertex(lastVertex.currPos.x + spacing, lastVertex.currPos.y, rad, pc);
-                q.pinTo(q.currPos.x, q.currPos.y);
+                Vertex q = new Vertex(lastVertex.currX + spacing, lastVertex.currY, rad, pc);
+                q.pinTo(q.currX, q.currY);
                 lastVertex.attachTo(q, lastVertex.getDistance(q), stiffness, tear, drawlinks, tearable, lc);
             }
             else {
                 Vertex lastVertex = Vertices.get(index);
                 //Second Point
-                Vertex q = new Vertex(lastVertex.currPos.x + spacing, lastVertex.currPos.y, rad, pc);
+                Vertex q = new Vertex(lastVertex.currX + spacing, lastVertex.currY, rad, pc);
                 //q.mass = (random() * 25) + 5;
                 lastVertex.attachTo(q, lastVertex.getDistance(q), stiffness, tear, drawlinks, tearable, lc);
                 index = q.index;
@@ -129,7 +129,7 @@ public class VCreations {
                     p.attachTo(vertices.get(vertices.size() - 1), restingDistances, stiffness, tearDistance, drawLinks, tear, LC);
                 }
                 if (y == 0) {
-                    p.pinTo(p.currPos.x, p.currPos.y);
+                    p.pinTo(p.currX, p.currY);
                     p.color = SPC;
                 }
                 if (y != 0) {

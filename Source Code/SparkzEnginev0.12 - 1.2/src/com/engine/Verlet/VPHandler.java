@@ -11,21 +11,21 @@ import static com.engine.Verlet.VSim.selectedVertex;
 
 public class VPHandler {
     //Add functionality for pressing 'P' to pin point in Verlet mode
-    public static final Color LCOLOR          = Color.ORANGE;
-    public static final Color PCOLOR          = Color.ORANGE;
+    public static Color LCOLOR          = Color.ORANGE;
+    public static Color PCOLOR          = Color.ORANGE;
     public static int MODE              = 3;
-    public static final int NUM_POINTS        = 50;
-    public static final int MAX_MODE    = 6;
-    public static final float SIZE           = 50;
-    public static final float SPACING        = 10;
-    public static final float RADIUS         = 6;
-    public static final float STIFFNESS      = 0.0444f;
-    public static final float TEARDIST       = 80;
-    public static final boolean DRAW_LINKS    = true;
-    public static final boolean TEARABLE      = false;
+    public static int NUM_POINTS        = 50;
+    public static int MAX_MODE          = 6;
+    public static float SIZE            = 50;
+    public static float SPACING         = 10;
+    public static float RADIUS          = 6;
+    public static float STIFFNESS       = 0.0444f;
+    public static float TEARDIST        = 80;
+    public static boolean DRAW_LINKS    = true;
+    public static boolean TEARABLE      = false;
 
     public static void ragdollMode_ClickState(MouseEvent e){
-        if (VPhysicsEditor.EDITOR_MODE.equals(VPhysicsEditor.ADD)) {
+        if (VPhysicsEditor.EDITOR_MODE == VModes.EditorModes.Add) {
             switch (MODE) {
                 case 0:
                     //VCreations.createPoint(e, randHSLColor(1000, 7000, 0.8), 25, 100);
@@ -52,7 +52,7 @@ public class VPHandler {
                     break;
             }
         }
-        else if (VPhysicsEditor.EDITOR_MODE.equals(VPhysicsEditor.SELECT)) {
+        else if (VPhysicsEditor.EDITOR_MODE == VModes.EditorModes.Select) {
             for (int i = 0; i < Vertices.size(); i++) {
                 Vertex point = Vertices.get(i);
                 if (point.contains(e.getPoint())) {

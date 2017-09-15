@@ -6,12 +6,11 @@ import com.engine.J8Helpers.Extensions.UIThread;
 import com.engine.ParticleHelpers.ParticleModes;
 import com.engine.Utilities.ColorUtility;
 import com.engine.Utilities.Settings;
+import com.engine.Verlet.VModes;
 import com.engine.Verlet.VSim;
-import com.sun.management.OperatingSystemMXBean;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.lang.management.ManagementFactory;
 
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EModes.ENGINE_MODES.RAGDOLL_MODE;
@@ -112,23 +111,23 @@ public class KHandler extends KeyAdapter {
 
         if (key == KeyEvent.VK_A) {
             if (ENGINE_MODE == RAGDOLL_MODE && !Notifier.drawingNotification) {
-                VPhysicsEditor.EDITOR_MODE = VPhysicsEditor.ADD;
-                Notifier.pushNotification(VPhysicsEditor.ADD);
+                VPhysicsEditor.EDITOR_MODE = VModes.EditorModes.Add;
+                Notifier.pushNotification(VModes.EditorModes.Add.name());
             }
         }
 
         if (key == KeyEvent.VK_D) {
             if (ENGINE_MODE == RAGDOLL_MODE && !Notifier.drawingNotification) {
-                VPhysicsEditor.EDITOR_MODE = VPhysicsEditor.DRAG;
-                Notifier.pushNotification(VPhysicsEditor.DRAG);
+                VPhysicsEditor.EDITOR_MODE = VModes.EditorModes.Drag;
+                Notifier.pushNotification(VModes.EditorModes.Drag.name());
             }
         }
 
         //Keyboard button: S
         if (key == KeyEvent.VK_S) {
             if (ENGINE_MODE == RAGDOLL_MODE && !Notifier.drawingNotification) {
-                VPhysicsEditor.EDITOR_MODE = VPhysicsEditor.SELECT;
-                Notifier.pushNotification(VPhysicsEditor.SELECT);
+                VPhysicsEditor.EDITOR_MODE = VModes.EditorModes.Select;
+                Notifier.pushNotification(VModes.EditorModes.Select.name());
             }
         }
 

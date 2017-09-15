@@ -1,14 +1,12 @@
 package com.engine.GUIWindows;
 
-import com.engine.J8Helpers.Extensions.MLAStruct;
-import com.engine.J8Helpers.Extensions.MLAdapter;
 import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.JComponents.CLabel;
 import com.engine.Utilities.Settings;
-
 import javax.swing.*;
 import java.awt.*;
-
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import static com.engine.EngineHelpers.EConstants.EFrame;
 
 public class QuitWindow {
@@ -46,23 +44,21 @@ public class QuitWindow {
 
         CLabel label2 = new CLabel(new Rectangle(20, (frame.getHeight() / 2) - 26, 90, 50), "Yes", font, Color.white, option_yes);
 
-        MLAdapter mlAdapter1 = new MLAdapter(
-                new MLAStruct("Clicked", e -> System.exit(0)),
-                new MLAStruct("Entered", e -> label2.setBackground(option_yes.brighter())),
-                new MLAStruct("Exited",  e -> label2.setBackground(option_yes.darker()))
-        );
+        label2.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {System.exit(0);}
+            public void mouseEntered(MouseEvent e) {label2.setBackground(option_yes.brighter());}
+            public void mouseExited(MouseEvent e) {label2.setBackground(option_yes.darker());}
+        });
 
-        label2.addMouseListener(mlAdapter1);
         panel.add(label2);
 
         CLabel label3 = new CLabel(new Rectangle(frame.getWidth() - 109, (frame.getHeight() / 2) - 26, 90, 50), "No", font, Color.white, option_no);
 
-        MLAdapter mlAdapter2 = new MLAdapter(
-                new MLAStruct("Clicked", e -> close()),
-                new MLAStruct("Entered", e -> label3.setBackground(option_no.brighter())),
-                new MLAStruct("Exited",  e -> label3.setBackground(option_no.darker()))
-        );
-        label3.addMouseListener(mlAdapter2);
+        label3.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {close();}
+            public void mouseEntered(MouseEvent e) {label3.setBackground(option_no.brighter());}
+            public void mouseExited(MouseEvent e) {label3.setBackground(option_no.darker());}
+        });
 
         panel.add(label3);
         frame.setVisible(true);

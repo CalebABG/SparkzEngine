@@ -9,12 +9,12 @@ import com.engine.InputHandlers.KHandler;
 import com.engine.InputHandlers.MListener;
 import com.engine.InputHandlers.MMotionListener;
 import com.engine.InputHandlers.MWheelListener;
-import com.engine.J8Helpers.Extensions.TimerTaskX;
 import com.engine.J8Helpers.Extensions.UIThread;
 import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
+import java.util.TimerTask;
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EngineMethods.*;
 import static com.engine.EngineHelpers.EBOOLS.*;
@@ -39,8 +39,8 @@ public class Engine {
     static {
         //Uncomment for slight performance kick: will cause gui tearing
         //System.setProperty("sun.java2d.opengl", "True");
-        System.setProperty("sun.java2d.transaccel", "True");
-        System.setProperty("sun.java2d.ddforcevram", "True");
+        System.setProperty("sun.java2d.transaccel", "true");
+        System.setProperty("sun.java2d.ddforcevram", "true");
         System.setProperty("apple.laf.useScreenMenuBar", "true");
         System.setProperty("com.apple.macos.use-file-dialog-packages", "true");
     }
@@ -52,7 +52,6 @@ public class Engine {
     public Engine(){
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){EException.append(e);}
     	EFrame = new JFrame(title);
-        EFrame.setLayout(new BorderLayout());
         EFrame.setIconImage(Settings.iconImage);
         EFrame.setSize(980,680);
         EFrame.setLocationRelativeTo(null);
@@ -63,7 +62,7 @@ public class Engine {
         Settings.loadSettings();
 
         // Setup Menu-bar
-        EFrame.add(menuBar, BorderLayout.NORTH);
+        EFrame.setJMenuBar(menuBar);
 
         // Mouse Click Listener
         canvas.addMouseListener(new MListener());
@@ -78,7 +77,7 @@ public class Engine {
         KHandler handler = new KHandler();
         canvas.addKeyListener(handler);
         EFrame.addKeyListener(handler);
-        EFrame.add(canvas, BorderLayout.CENTER);
+        EFrame.add(canvas);
 
         // Load or Set needed things
         // From Settings Set FPS
@@ -103,7 +102,7 @@ public class Engine {
 
             //  Keep track of frameCount
             frameCount++;
-            if (frameCount > Long.MAX_VALUE - 2) frameCount = 0;
+            if (frameCount > Integer.MAX_VALUE - 2) frameCount = 0;
 
             // Keep track of fps
             fps++;
@@ -134,9 +133,8 @@ public class Engine {
      * Synchronized start of the program; Creates and then starts the programs Thread.
      */
     private synchronized void start() {
-        renderer.scheduleAtFixedRate(new TimerTaskX(this::simulationLoop), 0, ENGINE_TIMER_FPS.value());
+        renderer.scheduleAtFixedRate(new TimerTask() {public void run() {simulationLoop();}}, 0, ENGINE_TIMER_FPS.value());
         StatsPanel.getInstance();
-        //UIThread.openUI(StatsPanel::getInstance);
     }
 
     /**

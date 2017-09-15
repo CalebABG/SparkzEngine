@@ -37,8 +37,8 @@ public class Edge {
 
     public void solve() {
         // calculate the distance between the two Points
-        float dx = p1.currPos.x - p2.currPos.x;
-        float dy = p1.currPos.y - p2.currPos.y;
+        float dx = p1.currX - p2.currX;
+        float dy = p1.currY - p2.currY;
         float dist = (float) sqrt(dx * dx + dy * dy);
 
         // find the difference, or the ratio of how far along the restingDistance the actual distance is.
@@ -61,16 +61,16 @@ public class Edge {
 
         // Push/pull based on mass
         // heavier objects will be pushed/pulled less than attached light objects
-        p1.currPos.x += dx * scalarP1;
-        p1.currPos.y += dy * scalarP1;
-        p2.currPos.x -= dx * scalarP2;
-        p2.currPos.y -= dy * scalarP2;
+        p1.currX += dx * scalarP1;
+        p1.currY += dy * scalarP1;
+        p2.currX -= dx * scalarP2;
+        p2.currY -= dy * scalarP2;
     }
 
     public void draw() {
         if (drawThis) {
             graphics2D.setColor(color);
-            graphics2D.draw(new Line2D.Float(p1.currPos.x, p1.currPos.y, p2.currPos.x, p2.currPos.y));
+            graphics2D.draw(new Line2D.Float(p1.currX, p1.currY, p2.currX, p2.currY));
         }
     }
 }

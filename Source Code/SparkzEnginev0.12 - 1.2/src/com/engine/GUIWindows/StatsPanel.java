@@ -2,12 +2,10 @@ package com.engine.GUIWindows;
 
 import com.engine.EngineHelpers.EModes;
 import com.engine.EngineHelpers.EngineMethods;
-import com.engine.J8Helpers.Extensions.TimerTaskX;
 import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.JComponents.CLabel;
 import com.engine.Utilities.Settings;
 import com.engine.Verlet.Vertex;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
@@ -16,6 +14,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.Timer;
+import java.util.TimerTask;
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EINTS.*;
 
@@ -23,7 +22,7 @@ public class StatsPanel {
     private static StatsPanel statsUI = null;
     private static JFrame frame;
     private static Timer timer;
-    public static long framesPerSec = 0;
+    public static int framesPerSec = 0;
     public JPanel panel;
     public Color bgColor = new Color(20, 23, 25).brighter();
     public Font font = new Font(Font.SERIF, Font.PLAIN, 25);
@@ -303,7 +302,7 @@ public class StatsPanel {
 
     private void startTimer() {
         timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTaskX(this::update), 0, 16); // 16ms = 60 updates per second
+        timer.scheduleAtFixedRate(new TimerTask() {public void run() {update();}}, 0, 16); // 16ms = 60 updates per second
     }
 
     private void stopTimer() {timer.cancel(); timer.purge();}

@@ -5,13 +5,11 @@ import javax.swing.*;
 public class UIThread {
     public static void openUI(final Runnable runnable){
         SwingWorker s = new SwingWorker() {
-            protected Object doInBackground() throws Exception {
+            protected Object doInBackground() {
                 runnable.run();
                 return null;
             }
         };
         s.execute();
-        // Get s ready for garbage collector
-        s = null;
     }
 }

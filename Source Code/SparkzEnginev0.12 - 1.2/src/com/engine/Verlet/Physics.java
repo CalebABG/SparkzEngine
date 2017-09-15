@@ -17,37 +17,34 @@ public class Physics {
     public static void update() {
         if (!ENGINE_IS_PAUSED.value()) {
             solveConstraints();
-            handleMouseInteration();
+            handleMouseInteraction();
             integrate();
             collisionsNoVelPres();    //Experiment w/ both collisions; disabling one will increase performance
             collisionsWithVelPres();
-        } else handleMouseInteration();
+        } else handleMouseInteraction();
     }
 
     public static void render() {
         for (int i = Vertices.size() - 1; i >= 0; i--) Vertices.get(i).draw();
 
-        if (VPhysicsEditor.isActive() && selectedVertex != null && selectedVertex.edges != null) {
-            List<String> selectedValues = VPhysicsEditor.constraint_jlist.getSelectedValuesList();
+        if (VPhysicsEditor.instance != null && selectedVertex != null) {
+            List<Integer> selectedPointConstraintList = VPhysicsEditor.constraint_jlist.getSelectedValuesList();
 
             //  Check for all possibilities for list of selected values: if the list is null,
             //  if the list is empty, if the only value in the list is "-1"
-            if (selectedValues == null || showselectionconstraint_checkbox == null ||
-                    selectedValues.isEmpty() ||
-                    selectedValues.get(0).equals("-1") ||
-                    !showselectionconstraint_checkbox.isSelected()) return;
-            else {
-                for (int i = 0; i < selectedValues.size(); i++) {
-                    Vertex constraintpoint = selectedVertex.edges.get(Integer.parseInt(selectedValues.get(i))).p2;
+            if (selectedPointConstraintList != null && showselectionconstraint_checkbox != null &&
+                !selectedPointConstraintList.isEmpty() && !(selectedPointConstraintList.get(0) == -1) && showselectionconstraint_checkbox.isSelected()){
+                for (int i = 0; i < selectedPointConstraintList.size(); i++) {
+                    Vertex constraintPoint = selectedVertex.edges.get(selectedPointConstraintList.get(i)).p2;
                     graphics2D.setColor(Color.red);
-                    graphics2D.draw(new Line2D.Float(selectedVertex.currPos.x, selectedVertex.currPos.y,
-                                                      constraintpoint.currPos.x, constraintpoint.currPos.y));
+                    graphics2D.draw(new Line2D.Float(selectedVertex.currX, selectedVertex.currY,
+                            constraintPoint.currX, constraintPoint.currY));
                     graphics2D.setColor(Color.red);
                     float scale = 3.0f;
-                    graphics2D.draw(new Ellipse2D.Float(constraintpoint.currPos.x - ((scale / 2) * constraintpoint.radius),
-                                                         constraintpoint.currPos.y - ((scale / 2) * constraintpoint.radius),
-                                                         scale * constraintpoint.radius,
-                                                         scale * constraintpoint.radius));
+                    graphics2D.draw(new Ellipse2D.Float(constraintPoint.currX - ((scale / 2) * constraintPoint.radius),
+                            constraintPoint.currY - ((scale / 2) * constraintPoint.radius),
+                            scale * constraintPoint.radius,
+                            scale * constraintPoint.radius));
                 }
             }
         }
@@ -61,16 +58,16 @@ public class Physics {
         }
     }
 
-    private static void handleMouseInteration() {
-        if (VPhysicsEditor.EDITOR_MODE.equals(VPhysicsEditor.DRAG)) {
+    private static void handleMouseInteraction() {
+        if (VPhysicsEditor.EDITOR_MODE == VModes.EditorModes.Drag) {
             //  Handle if the Left mouse button is held down in drag mode
             if (LEFT_MOUSE_IS_DOWN.value()) {
                 //  If the the point we want to drag isn't ull and if the engine isn't paused move it around
                 if (dragVertex != null) {
                     if (!ENGINE_IS_PAUSED.value()) {
                         float s = dragVertex.mass * dragForce;
-                        dragVertex.currPos.x += (Mouse.x - dragVertex.currPos.x) / s;
-                        dragVertex.currPos.y += (Mouse.y - dragVertex.currPos.y) / s;
+                        dragVertex.currX += (Mouse.x - dragVertex.currX) / s;
+                        dragVertex.currY += (Mouse.y - dragVertex.currY) / s;
                     }
                 }
 
@@ -94,9 +91,9 @@ public class Physics {
             else if (RIGHT_MOUSE_IS_DOWN.value()) {
                 for (int i = 0; i < Vertices.size(); i++) {
                     Vertex searchVertex = Vertices.get(i);
-                    float tear_distance = searchVertex.getDistanceSq(Mouse);
+                    float tear_distance = searchVertex.getDistance(Mouse);
 
-                    if (tear_distance < mouseTearSize * mouseTearSize) {
+                    if (tear_distance < mouseTearSize) {
                         if (searchVertex == selectedVertex) {
                             searchVertex.edges.clear();
                             VPhysicsEditor.updateJListConstraints(selectedVertex.edges);

@@ -1,23 +1,28 @@
 package com.engine.EngineHelpers;
 
 import com.engine.GUIWindows.EException;
-import com.engine.J8Helpers.Interfaces.MouseAdapterX;
 import com.engine.Utilities.Settings;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import static com.engine.EngineHelpers.EConstants.toolkit;
 
-public class EngineSplash extends JWindow implements MouseAdapterX {
+public class EngineSplash extends JWindow {
     private int duration;
     private Point mpt = new Point();
 
     public EngineSplash(int d) {
         duration = d;
-        addMouseListener(this);
-        addMouseMotionListener(this);
+        addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {mpt.x = e.getX(); mpt.y = e.getY(); }
+        });
+        addMouseMotionListener(new MouseAdapter() {
+            public void mouseDragged(MouseEvent e) {
+                setLocation((e.getXOnScreen() - mpt.x), (e.getYOnScreen() - mpt.y));
+            }
+        });
     }
 
     public void display() {
@@ -34,9 +39,6 @@ public class EngineSplash extends JWindow implements MouseAdapterX {
         catch (Exception e) {EException.append(e);}
         dispose();
     }
-
-    public void mousePressed(MouseEvent e) {mpt.x = e.getX(); mpt.y = e.getY();}
-    public void mouseDragged(MouseEvent e) {setLocation((e.getXOnScreen() - mpt.x), (e.getYOnScreen() - mpt.y));}
 
     class SplashPanel extends JPanel {
         protected void paintComponent(Graphics g) {

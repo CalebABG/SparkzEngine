@@ -18,10 +18,10 @@ public class CMenuBar extends JMenuBar {
     public Color bgColor = new Color(20, 23, 25).brighter();
     private static JMenuItem enginepause;
 
-    private Font font1 = new Font(Font.SERIF, Font.PLAIN, 21);
-    public Font menuitemfont = new Font(Font.SERIF, Font.PLAIN, 18);
-    public ArrayList<JMenu> menus = new ArrayList<>();
-    public ArrayList<JMenuItem> menuItems = new ArrayList<>();
+    private static Font font1 = new Font(Font.SERIF, Font.PLAIN, 21);
+    public static Font menuitemfont = new Font(Font.SERIF, Font.PLAIN, 18);
+    public static ArrayList<JMenu> menus = new ArrayList<>();
+    public static ArrayList<JMenuItem> menuItems = new ArrayList<>();
 
     public static JRadioButtonMenuItem[] pModes,pTypes, pGravModes;
     public static ButtonGroup particleModesGroup, particleTypesGroup, particleGravitationGroup;

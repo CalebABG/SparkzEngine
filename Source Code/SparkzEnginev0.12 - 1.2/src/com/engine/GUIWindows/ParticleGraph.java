@@ -2,7 +2,6 @@ package com.engine.GUIWindows;
 
 import com.engine.EngineHelpers.EngineMethods;
 import com.engine.J8Helpers.Extensions.KAdapter;
-import com.engine.J8Helpers.Extensions.MAdapter;
 import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.JComponents.CTextField;
 import com.engine.JComponents.RButton;
@@ -19,6 +18,7 @@ import javax.script.ScriptEngine;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -184,12 +184,12 @@ public class ParticleGraph {
     }
 
     private static void evalInput(int mode, String express) {
-        scaleY = guardDouble(textFields[1].getText(), engine, textFields[1]);
-        scaleX = guardDouble(textFields[2].getText(), engine, textFields[2]);
+        scaleY = guardDouble(textFields[1].getText(),textFields[1]);
+        scaleX = guardDouble(textFields[2].getText(),textFields[2]);
         mathExpression = (mode == 0) ? textFields[0].getText() : express;
     }
 
-    public static float evaluateExpr(ScriptEngine engine, String express) throws Exception {
+    private static float evaluateExpr(ScriptEngine engine, String express) throws Exception {
         return (float) ((double) engine.eval(express));
     }
 
@@ -198,7 +198,7 @@ public class ParticleGraph {
             isGraphing = true;
             graphButton.setEnabled(false);
             SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-                protected Void doInBackground() throws Exception {
+                protected Void doInBackground() {
                     if (mode == 0) graphFunction();
                     else graphFunction(express);
                     return null;
@@ -210,14 +210,12 @@ public class ParticleGraph {
                 }
             };
             worker.execute();
-            // Get worker ready for garbage collector
-            worker = null;
         }
     }
 
 
     private static void graphFunction() {evalInput(0, ""); graph();}
-    public static void graphFunction(String express) {evalInput(1, express); graph();}
+    private static void graphFunction(String express) {evalInput(1, express); graph();}
 
     public static float tryEval(String expr, ScriptEngine engine, JTextField textField) throws Exception {
         float result;
@@ -235,7 +233,7 @@ public class ParticleGraph {
         return result;
     }
 
-    public static float guardDouble(String expr, ScriptEngine engine, JTextField textField){
+    private static float guardDouble(String expr, JTextField textField){
         float result = 0;
 
         try{result = evaluateExpr(engine, expr);}
@@ -249,7 +247,10 @@ public class ParticleGraph {
     }
 
     private void addPopup(Component c, JPopupMenu p) {
-        c.addMouseListener(new MAdapter(e -> { if (e.isPopupTrigger()) showMenu(e, p); }, e -> { if (e.isPopupTrigger()) showMenu(e, p); }));
+        c.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {if (e.isPopupTrigger()) showMenu(e, p); }
+            public void mouseReleased(MouseEvent e) {if (e.isPopupTrigger()) showMenu(e, p); }
+        });
     }
 
     /**
@@ -257,18 +258,16 @@ public class ParticleGraph {
      */
     private static CompletionProvider createCompletionProvider() {
         DefaultCompletionProvider provider = new DefaultCompletionProvider();
-
-        for (Object suggestion : suggestions) provider.addCompletion(new BasicCompletion(provider, (String) suggestion));
-
+        for (String suggestion : suggestions) provider.addCompletion(new BasicCompletion(provider, suggestion));
         return provider;
     }
 
 
     private void showMenu(MouseEvent e, JPopupMenu p) {p.show(e.getComponent(), e.getX(), e.getY());}
-    public static void throwError(JTextField textField) {textField.setForeground(Color.red);}
+    private static void throwError(JTextField textField) {textField.setForeground(Color.red);}
     public void close(){particleGraph = null; frame.dispose();}
 
-    private static class CCellRenderer implements ListCellRenderer {
+    static class CCellRenderer implements ListCellRenderer {
         private final Font font;
         private final DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
         public CCellRenderer(Font font) {this.font = font; }

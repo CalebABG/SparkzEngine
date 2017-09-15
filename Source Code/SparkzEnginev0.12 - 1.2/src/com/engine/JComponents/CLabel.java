@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CLabel extends JLabel {
-    public String text = "";
+    public String text;
     public Font font;
     public Rectangle bounds;
 

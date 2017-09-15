@@ -1,62 +1,27 @@
 package com.engine.GUIWindows;
 
 import com.engine.EngineHelpers.EngineMethods;
-import com.engine.J8Helpers.Extensions.MAdapter;
 import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.JComponents.CLabel;
 import com.engine.Utilities.InputGuard;
 import com.engine.Utilities.Settings;
 import com.engine.Verlet.Edge;
-import com.engine.Verlet.VPHandler;
+import com.engine.Verlet.VModes;
 import com.engine.Verlet.VSim;
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashMap;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
-
 import static com.engine.EngineHelpers.EBOOLS.ENGINE_ENABLE_SMOOTH_RENDER;
 import static com.engine.Verlet.VSim.selectedVertex;
 
 public class VPhysicsEditor {
-    //  Editor Constants
-    //  Modes
-    public static final String ADD          = "Add";
-    public static final String DELETE       = "Delete";
-    public static final String SELECT       = "Select";
-    public static final String DRAG         = "Drag";
-    public static final String POSITION     = "Position";
-    public static final String ATTATCH      = "Attach";
-
-    //  Addition Modes
-    public static final String POINT        = "Point";
-    public static final String STICK        = "Stick";
-    public static final String IKCHAIN      = "IK Chain";
-    public static final String BOX          = "Box";
-    public static final String SOLIDMESH    = "Solid Mesh";
-    public static final String ELASTICMESH  = "Elastic Mesh";
-    public static final String CLOTH        = "Cloth";
-
-    private static Font font = new Font(Font.SERIF, Font.PLAIN, 14);
-    
-    //  HashMap to store creation modes
-    public static HashMap<String, Integer> creationmodes_hash = new HashMap<>(15);
-    static {
-        creationmodes_hash.put(POINT, 0);
-        creationmodes_hash.put(STICK, 1);
-        creationmodes_hash.put(IKCHAIN, 2);
-        creationmodes_hash.put(BOX, 3);
-        creationmodes_hash.put(SOLIDMESH, 4);
-        creationmodes_hash.put(ELASTICMESH, 5);
-        creationmodes_hash.put(CLOTH, 6);
-    }
-
     public static VPhysicsEditor instance = null;
     public static JFrame frame;
-    public static String[] EDITOR_MODES   = new String[]{ADD, DELETE, SELECT, DRAG, POSITION, ATTATCH};
-    public static String[] CREATION_MODES = new String[]{POINT, STICK, IKCHAIN, BOX, SOLIDMESH, ELASTICMESH, CLOTH};
-    public static String EDITOR_MODE = ADD;
-    public static String CREATEION_MODE = POINT;
+
+    public static VModes.EditorModes EDITOR_MODE = VModes.EditorModes.Add;
+    public static VModes.CreationModes CREATEION_MODE = VModes.CreationModes.Point;
 
     public static JTextField simacc_field, dragforce_field, gravity_field,
             numpoints_field, objectsize_field, dampening_field,
@@ -65,15 +30,17 @@ public class VPhysicsEditor {
             selectiondampening_field, selectionstiffness_field, teardistance_field,
             constraint_stiffness_field, constraint_teardistance_field;
 
+    private static Font font = new Font(Font.SERIF, Font.PLAIN, 14);
     public static JButton btnSetSimulationProperties, objectsetproperties_button, setconstraintsbutton;
     public static CLabel pointcolor_panel, linkcolor_panel, selectioncolor_panel, constraint_link_panel;
-    public static JList<String> constraint_jlist;
-    public static DefaultListModel<String> listModel = new DefaultListModel<>();
+    public static JList<Integer> constraint_jlist;
+
+    public static DefaultListModel<Integer> listModel = new DefaultListModel<>();
     public static JCheckBox showselectionconstraint_checkbox, constraintdrawlink_checkbox, constrainttearable_checkbox,
                             selectionshowpoint_checkbox, selectioncollidable_checkbox;
 
     static {
-        listModel.addElement("-1");
+        listModel.addElement(-1);
     }
 
     //public static void main(String[] args) {getInstance(null);}
@@ -117,13 +84,15 @@ public class VPhysicsEditor {
         editormode_label.setFont(font);
         editormode_label.setIconTextGap(5);
 
-        JComboBox<String> editormode_combobox = new JComboBox<>();
-        editormode_combobox.setModel(new DefaultComboBoxModel<>(EDITOR_MODES));
+        JComboBox<VModes.EditorModes> editormode_combobox = new JComboBox<>();
+        editormode_combobox.setModel(new DefaultComboBoxModel<>(VModes.EditorModes.values()));
         editormode_combobox.setSelectedItem(EDITOR_MODE);
         editormode_combobox.setFont(font);
         editormode_combobox.addActionListener(e -> {
-            String selected = String.valueOf(editormode_combobox.getSelectedItem());
-            if (!selected.equals(EDITOR_MODE)) EDITOR_MODE = selected;
+            VModes.EditorModes selectedMode = (VModes.EditorModes) editormode_combobox.getSelectedItem();
+            if (selectedMode != EDITOR_MODE) EDITOR_MODE = selectedMode;
+//            String selected = String.valueOf(editormode_combobox.getSelectedItem());
+//            if (!selected.equals(EDITOR_MODE)) EDITOR_MODE = selected;
         });
         GridBagConstraints gbc_editormode_combobox = new GridBagConstraints();
         gbc_editormode_combobox.fill = GridBagConstraints.HORIZONTAL;
@@ -314,13 +283,15 @@ public class VPhysicsEditor {
         gbc_addmode_label.gridy = 0;
         addmode_panel.add(addmode_label, gbc_addmode_label);
 
-        JComboBox<String> addmode_combobox = new JComboBox<>();
-        addmode_combobox.setModel(new DefaultComboBoxModel<>(CREATION_MODES));
+        JComboBox<VModes.CreationModes> addmode_combobox = new JComboBox<>();
+        addmode_combobox.setModel(new DefaultComboBoxModel<>(VModes.CreationModes.values()));
         addmode_combobox.setSelectedItem(CREATEION_MODE);
         addmode_combobox.setFont(font);
         addmode_combobox.addActionListener(e -> {
-            String selected = String.valueOf(addmode_combobox.getSelectedItem());
-            if (!selected.equals(CREATEION_MODE)) {CREATEION_MODE = selected; VPHandler.MODE = creationmodes_hash.get(CREATEION_MODE);}
+            VModes.CreationModes selectedMode = (VModes.CreationModes) addmode_combobox.getSelectedItem();
+            if (selectedMode != CREATEION_MODE) CREATEION_MODE = selectedMode;
+//            String selected = String.valueOf(addmode_combobox.getSelectedItem());
+//            if (!selected.equals(CREATEION_MODE)) {CREATEION_MODE = selected; VPHandler.MODE = creationmodes_hash.get(CREATEION_MODE);}
         });
         GridBagConstraints gbc_addmode_combobox = new GridBagConstraints();
         gbc_addmode_combobox.fill = GridBagConstraints.BOTH;
@@ -502,13 +473,13 @@ public class VPhysicsEditor {
         addmode_panel.add(pointcolor_label, gbc_pointcolor_label);
 
         pointcolor_panel = new CLabel(Color.GREEN, 1);
-        pointcolor_panel.addMouseListener(new MAdapter(e ->
-        {
-            Color default_c = pointcolor_panel.getBackground();
-            Color c = JColorChooser.showDialog(frame, "Point Color", default_c);
-            pointcolor_panel.setBackground((c != null) ? c : default_c);
-        }, e -> {
-        }));
+        pointcolor_panel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                Color default_c = pointcolor_panel.getBackground();
+                Color c = JColorChooser.showDialog(frame, "Point Color", default_c);
+                pointcolor_panel.setBackground((c != null) ? c : default_c);
+            }
+        });
         GridBagConstraints gbc_pointcolor_panel = new GridBagConstraints();
         gbc_pointcolor_panel.insets = new Insets(0, 0, 0, 5);
         gbc_pointcolor_panel.fill = GridBagConstraints.BOTH;
@@ -527,13 +498,13 @@ public class VPhysicsEditor {
         addmode_panel.add(linkcolor_label, gbc_linkcolor_label);
 
         linkcolor_panel = new CLabel(Color.PINK, 1);
-        linkcolor_panel.addMouseListener(new MAdapter(e ->
-        {
-            Color default_c = linkcolor_panel.getBackground();
-            Color c = JColorChooser.showDialog(frame, "Link Color", default_c);
-            linkcolor_panel.setBackground((c != null) ? c : default_c);
-        }, e -> {
-        }));
+        linkcolor_panel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                Color default_c = linkcolor_panel.getBackground();
+                Color c = JColorChooser.showDialog(frame, "Link Color", default_c);
+                linkcolor_panel.setBackground((c != null) ? c : default_c);
+            }
+        });
         GridBagConstraints gbc_linkcolor_panel = new GridBagConstraints();
         gbc_linkcolor_panel.fill = GridBagConstraints.BOTH;
         gbc_linkcolor_panel.gridx = 3;
@@ -588,13 +559,13 @@ public class VPhysicsEditor {
         selection_panel.add(objectcolor_label, gbc_objectcolor_label);
 
         selectioncolor_panel = new CLabel(Color.CYAN, 1);
-        selectioncolor_panel.addMouseListener(new MAdapter(e ->
-        {
-            Color default_c = selectioncolor_panel.getBackground();
-            Color c = JColorChooser.showDialog(frame, "Color", default_c);
-            selectioncolor_panel.setBackground((c != null) ? c : default_c);
-        }, e -> {
-        }));
+        selectioncolor_panel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                Color default_c = selectioncolor_panel.getBackground();
+                Color c = JColorChooser.showDialog(frame, "Color", default_c);
+                selectioncolor_panel.setBackground((c != null) ? c : default_c);
+            }
+        });
         GridBagConstraints gbc_objectcolor_panel = new GridBagConstraints();
         gbc_objectcolor_panel.fill = GridBagConstraints.BOTH;
         gbc_objectcolor_panel.insets = new Insets(0, 0, 5, 0);
@@ -838,13 +809,13 @@ public class VPhysicsEditor {
         panel.add(constraint_link_color_label, gbc_label_3);
 
         constraint_link_panel = new CLabel(Color.BLUE, 1);
-        constraint_link_panel.addMouseListener(new MAdapter(e ->
-        {
-            Color default_c = constraint_link_panel.getBackground();
-            Color c = JColorChooser.showDialog(frame, "Link Color", default_c);
-            constraint_link_panel.setBackground((c != null) ? c : default_c);
-        }, e -> {
-        }));
+        constraint_link_panel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                Color default_c = constraint_link_panel.getBackground();
+                Color c = JColorChooser.showDialog(frame, "Link Color", default_c);
+                constraint_link_panel.setBackground((c != null) ? c : default_c);
+            }
+        });
         GridBagConstraints gbc_panel_1 = new GridBagConstraints();
         gbc_panel_1.fill = GridBagConstraints.BOTH;
         gbc_panel_1.gridwidth = 2;
@@ -883,19 +854,22 @@ public class VPhysicsEditor {
 
     private void setObjectConstraints() {
         if (selectedVertex != null) {
-            String cstiffness = constraint_stiffness_field.getText(), cteardist = constraint_teardistance_field.getText();
+            String cStiffness = constraint_stiffness_field.getText();
+            String cTeardist = constraint_teardistance_field.getText();
+
             if (selectedVertex != null && selectedVertex.edges != null) {
-                List<String> selectedValues = constraint_jlist.getSelectedValuesList();
-                if (selectedValues == null || selectedValues.isEmpty()) return;
-                else {
+                List<Integer> selectedValues = constraint_jlist.getSelectedValuesList();
+
+                if (selectedValues != null && !selectedValues.isEmpty()){
                     for (int i = 0; i < selectedValues.size(); i++) {
-                        int index = Integer.parseInt(selectedValues.get(i));
+                        int index = selectedValues.get(i);
                         Edge c = selectedVertex.edges.get(index);
+
                         c.drawThis = constraintdrawlink_checkbox.isSelected();
                         c.tearable = constrainttearable_checkbox.isSelected();
                         c.color    = constraint_link_panel.getBackground();
-                        c.stiffness = InputGuard.floatTextfieldGuardDefault(0.0f, c.stiffness, cstiffness);
-                        c.tearSensitivity = InputGuard.floatTextfieldGuardDefault(0.0f, c.tearSensitivity, cteardist);
+                        c.stiffness = InputGuard.floatTextfieldGuardDefault(0.0f, c.stiffness, cStiffness);
+                        c.tearSensitivity = InputGuard.floatTextfieldGuardDefault(0.0f, c.tearSensitivity, cTeardist);
                     }
                 }
             }
@@ -909,14 +883,13 @@ public class VPhysicsEditor {
 
         VSim.SIM_ACCURACY = InputGuard.intTextfieldGuardDefault(1, VSim.SIM_ACCURACY, simacc);
         VSim.dragForce = InputGuard.floatTextfieldGuardDefault(1, VSim.dragForce, dragforce);
-        VSim.GConstant = guardDouble(VSim.GConstant, grav);
+        VSim.GConstant = guardFloat(VSim.GConstant, grav);
         VSim.air_viscosity = InputGuard.floatTextfieldGuardDefault(0.0f, VSim.air_viscosity, airvis);
     }
 
-    private float guardDouble(float default_, String value) {
-        if (value == null || value.isEmpty() || value.equalsIgnoreCase("")) {
-            return default_;
-        } else return Float.parseFloat(value);
+    private float guardFloat(float default_, String value) {
+        if (value == null || value.isEmpty()) return default_;
+        else return Float.parseFloat(value);
     }
 
     private void close() {
@@ -924,14 +897,12 @@ public class VPhysicsEditor {
         frame.dispose();
     }
 
-    public static boolean isActive(){return instance != null;}
-
-    public static void updateJListConstraints(List<Edge> data) {
-        if (isActive()) {
+    public static void updateJListConstraints(List<Edge> edgeList) {
+        if (instance != null) {
             listModel.removeAllElements();
-            if (data == null || data.size() <= 0) listModel.addElement("-1");
+            if (edgeList == null || edgeList.size() <= 0) listModel.addElement(-1);
             else {
-                for (int i = 0, len = data.size(); i < len; i++) listModel.addElement("" + i);
+                for (int i = 0, len = edgeList.size(); i < len; i++) listModel.addElement(i);
                 constraint_jlist.setSelectedIndex(0);
             }
         }

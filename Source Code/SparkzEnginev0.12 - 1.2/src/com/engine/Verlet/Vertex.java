@@ -17,12 +17,14 @@ public class Vertex {
     public static final DecimalFormat dcFormat = new DecimalFormat("0.000");
     public static final List<Vertex> Vertices = new ArrayList<>();
 
-    public Vect2 currPos;
-    public Vect2 prevPos;
-    public float radius = 10;
-    public float mass = 1;
+    public float currX, currY;
+    public float prevX, prevY;
+//    public Vect2 currPos;
+//    public Vect2 prevPos;
+    public float radius = 10.0f;
+    public float mass = 1.0f;
     public float damping = 0.85f;
-    public float stiffness = 1;
+    public float stiffness = 1.0f;
     public final int index;
     public boolean pinned = false;
     public boolean collidable = true;
@@ -31,8 +33,12 @@ public class Vertex {
     public final List<Edge> edges = new ArrayList<>();
 
     public Vertex(float xPos, float yPos) {
-        currPos = new Vect2(xPos, yPos);
-        prevPos = new Vect2(currPos.x, currPos.y);
+        currX = xPos;
+        currY = yPos;
+        prevX = currX;
+        prevY = currY;
+//        currPos = new Vect2(xPos, yPos);
+//        prevPos = new Vect2(currPos.x, currPos.y);
         Vertices.add(this);
         index = Vertices.size() - 1;
     }
@@ -65,52 +71,53 @@ public class Vertex {
     }
 
     public void accelerate(){
-        if (pinned) {currPos.x = pinX; currPos.y = pinY; return;}
+        if (pinned) {currX = pinX; currY = pinY; return;}
 
         gravity = (ZERO_GRAVITY) ? 0.0f : GConstant;
-        Vect2 temp = currPos.copy();
-        currPos.add(air_viscosity * currPos.x - air_viscosity * prevPos.x, (air_viscosity * currPos.y - air_viscosity * prevPos.y) + gravity);
-        prevPos = temp;
+        
+        float tempX = currX, tempY = currY;
+        
+        currX += air_viscosity * currX - air_viscosity * prevX;
+        currY += (air_viscosity * currY - air_viscosity * prevY) + gravity;
+
+        prevX = tempX;
+        prevY = tempY;
     }
 
     public void solveConstraints() {for (int i = edges.size() - 1; i >= 0; i--) edges.get(i).solve();}
 
     public void solveCollisions (Vertex p2, boolean preserveImpulse) {
-        float x = currPos.x;
-        float y = currPos.y;
         float vx = 0;
         float vy = 0;
-        float prevX = prevPos.x;
-        float prevY = prevPos.y;
         float canvaswidth = canvas.getWidth();
         float canvasheight = canvas.getHeight();
 
         if (preserveImpulse) {
-            vx = (prevX - x) * damping;
-            vy = (prevY - y) * damping;
+            vx = (prevX - currX) * damping;
+            vy = (prevY - currY) * damping;
         }
 
-        if (x - radius < 0) {
-            x = 2 * (radius) - x;
-            if (preserveImpulse) prevX = (x - vx);
+        if (currX - radius < 0) {
+            currX = 2 * (radius) - currX;
+            if (preserveImpulse) prevX = (currX - vx);
         }
-        if (x + radius > canvaswidth) {
-            x = 2 * (canvaswidth - radius) - x;
-            if (preserveImpulse) prevX = (x - vx);
+        if (currX + radius > canvaswidth) {
+            currX = 2 * (canvaswidth - radius) - currX;
+            if (preserveImpulse) prevX = (currX - vx);
         }
-        if (y - radius < 0) {
-            y = 2 * (radius) - y;
-            if (preserveImpulse) prevY = (y - vy);
+        if (currY - radius < 0) {
+            currY = 2 * (radius) - currY;
+            if (preserveImpulse) prevY = (currY - vy);
         }
-        if (y + radius > canvasheight) {
-            y = 2 * (canvasheight - radius) - y;
-            if (preserveImpulse) prevY = (y - vy);
+        if (currY + radius > canvasheight) {
+            currY = 2 * (canvasheight - radius) - currY;
+            if (preserveImpulse) prevY = (currY - vy);
         }
 
-        currPos.x = x;
-        currPos.y = y;
-        prevPos.x = prevX;
-        prevPos.y = prevY;
+//        currPos.currX = currX;
+//        currPos.y = y;
+//        prevPos.x = prevX;
+//        prevPos.y = prevY;
 
         if (COLLISION_DETECTION) {if (collidable) {collide(p2);}}
     }
@@ -118,8 +125,8 @@ public class Vertex {
     public void collide(Vertex p2) {
         if (p2 != this) {
             float radii = radius + p2.radius;
-            float diffX = currPos.x - p2.currPos.x;
-            float diffY = currPos.y - p2.currPos.y;
+            float diffX = currX - p2.currX;
+            float diffY = currY - p2.currY;
             float lenDiff = (float) sqrt(diffX * diffX + diffY * diffY);
 
             if (lenDiff <= radii) { // first make sure they're intersecting
@@ -141,10 +148,10 @@ public class Vertex {
 
                 // Push/pull based on mass
                 // heavier objects will be pushed/pulled less than attached light objects
-                currPos.x    += diffX * scalarP1 * difference;
-                currPos.y    += diffY * scalarP1 * difference;
-                p2.currPos.x -= diffX * scalarP2 * difference;
-                p2.currPos.y -= diffY * scalarP2 * difference;
+                currX    += diffX * scalarP1 * difference;
+                currY    += diffY * scalarP1 * difference;
+                p2.currX -= diffX * scalarP2 * difference;
+                p2.currY -= diffY * scalarP2 * difference;
             }
         }
     }
@@ -154,19 +161,19 @@ public class Vertex {
 
         if (this == dragVertex) {
             graphics2D.setColor(color);
-            graphics2D.draw(new Line2D.Float(Mouse.x, Mouse.y, currPos.x, currPos.y));
-            graphics2D.fill(new Ellipse2D.Float(currPos.x - radius, currPos.y - radius, 2 * radius, 2 * radius));
+            graphics2D.draw(new Line2D.Float(Mouse.x, Mouse.y, currX, currY));
+            graphics2D.fill(new Ellipse2D.Float(currX - radius, currY - radius, 2 * radius, 2 * radius));
         }
         if (this == selectedVertex && (selectionshowpoint_checkbox != null && selectionshowpoint_checkbox.isSelected())){
             graphics2D.setColor(color);
-            graphics2D.fill(new Ellipse2D.Float(currPos.x - radius, currPos.y - radius, 2 * radius, 2 * radius));
+            graphics2D.fill(new Ellipse2D.Float(currX - radius, currY - radius, 2 * radius, 2 * radius));
             graphics2D.setColor(Color.green);
             float scale = 3.0f;
-            graphics2D.draw(new Ellipse2D.Float(currPos.x - ((scale / 2) * radius), currPos.y - ((scale / 2) * radius), scale * radius, scale * radius));
+            graphics2D.draw(new Ellipse2D.Float(currX - ((scale / 2) * radius), currY - ((scale / 2) * radius), scale * radius, scale * radius));
         }
         else {
             graphics2D.setColor(color);
-            graphics2D.fill(new Ellipse2D.Float(currPos.x - radius, currPos.y - radius, 2 * radius, 2 * radius));
+            graphics2D.fill(new Ellipse2D.Float(currX - radius, currY - radius, 2 * radius, 2 * radius));
         }
     }
 
@@ -174,27 +181,26 @@ public class Vertex {
     public float getCircumference() {return 2 * PI * radius;}
 
     public boolean contains(Point p) {
-        float dx = abs(p.x - currPos.x);
-        float dy = abs(p.y - currPos.y);
+        float dx = abs(p.x - currX);
+        float dy = abs(p.y - currY);
         return dx * dx + dy * dy <= radius * radius;
     }
 
     public boolean contains(Vect2 p) {
-        float dx = abs(p.x - currPos.x);
-        float dy = abs(p.y - currPos.y);
+        float dx = abs(p.x - currX);
+        float dy = abs(p.y - currY);
         return dx * dx + dy * dy <= radius * radius;
     }
 
 
-    public Vect2 getCenter(){return new Vect2(currPos.x + (radius / 2), currPos.y + (radius / 2));}
-    public float getVelocityX(){return currPos.x - prevPos.x;}
-    public float getVelocityY(){return currPos.y - prevPos.y;}
+    public Vect2 getCenter(){return new Vect2(currX + (radius / 2), currY + (radius / 2));}
+    public float getVelocityX(){return currX - prevX;}
+    public float getVelocityY(){return currY - prevY;}
     public Vect2 getVelocity(){return new Vect2(getVelocityX(), getVelocityY());}
-    //public float getDistance(Point p) {return p.distance(currPos.x, currPos.y);}
-    public float getDistanceSq(Point p) {return (float) p.distanceSq(currPos.x, currPos.y);}
-    public float getDistance(Vertex p) {return p.currPos.dist(currPos);}
-    public float getDistanceSq(Vect2 p) {return p.distSq(currPos);}
-    public float getDistanceSq(Vertex p) {return p.currPos.distSq(currPos);}
+    //public float getDistance(Point p) {return p.distance(currX, currY);}
+    public float getDistanceSq(Point p) {return (float) p.distanceSq(currX, currY);}
+    public float getDistance(Vertex p) {return (float) hypot(currX - p.currX, currY - p.currY);}
+    public float getDistance(Vect2 p) {return (float) hypot(currX - p.x, currY - p.y);}
 
     public void attachTo(Vertex P, float restingDist, float stiff) {attachTo(P, restingDist, stiff, 30, true);}
     public void attachTo(Vertex P, float restingDist, float stiff, boolean drawLink) {attachTo(P, restingDist, stiff, 30, drawLink);}
@@ -217,12 +223,12 @@ public class Vertex {
 
     public void removeLink(Edge lnk) {
         edges.remove(lnk);}
-    public void togglePin(){pinned = EngineMethods.toggle(pinned); pinX = currPos.x; pinY = currPos.y;}
+    public void togglePin(){pinned = EngineMethods.toggle(pinned); pinX = currX; pinY = currY;}
     public void pinTo(float pX, float pY) {pinned = true; pinX = pX; pinY = pY;}
     public void unPin(){pinned = false;}
 
     public String toString() {
-        return "Pos: (" + dcFormat.format(currPos.x) + " , " + dcFormat.format(currPos.y) +
+        return "Pos: (" + dcFormat.format(currX) + " , " + dcFormat.format(currY) +
                 " ) | Accel: (" + dcFormat.format(getVelocityX()) + " , " + dcFormat.format(getVelocityY()) +
                 ") | Radius: " + dcFormat.format(radius) +
                 " | Mass: " + dcFormat.format(mass);

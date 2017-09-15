@@ -3,7 +3,6 @@ package com.engine.ParticleTypes;
 import com.engine.ParticleHelpers.ParticleModes;
 import java.awt.*;
 import static com.engine.EngineHelpers.EConstants.*;
-import static com.engine.EngineHelpers.EConstants.PI;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public class Flux extends Molecule {

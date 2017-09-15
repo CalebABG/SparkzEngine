@@ -9,7 +9,6 @@ import java.awt.image.BufferStrategy;
 import java.util.*;
 import java.util.List;
 import java.util.Timer;
-import java.util.concurrent.ArrayBlockingQueue;
 
 import static com.engine.EngineHelpers.EModes.*;
 import static com.engine.EngineHelpers.EModes.ENGINE_MODES.*;
@@ -26,8 +25,8 @@ public abstract class EConstants {
     public static MOLECULE_RENDER_MODES FIREWORKS_RENDER_MODE       = RECTANGLE_NOFILL; // Limit @ 19
 
     /*Ints*/
-    public static long fps                                          = 0L;
-    public static long frameCount                                   = 0L;
+    public static int fps                                           = 0;
+    public static int frameCount                                    = 0;
 
     /*Floats*/
     public static final float PI                                    = 3.141592653589793f;

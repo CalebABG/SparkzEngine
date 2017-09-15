@@ -1,16 +1,13 @@
 package com.engine.ThinkingParticles;
 
 import com.engine.GUIWindows.ColorTimeMachine;
-import com.engine.J8Helpers.Extensions.TimerTaskX;
 import com.engine.ParticleTypes.Interfaces.ThinkingColors;
 import com.engine.Utilities.Settings;
-
 import java.awt.*;
 import java.util.Timer;
-
+import java.util.TimerTask;
 import static com.engine.EngineHelpers.EConstants.random;
 import static com.engine.EngineHelpers.EINTS.ENGINE_COLOR_CYCLE_RATE;
-import static com.engine.Verlet.Vect2.clamp;
 
 public class SCCycle {
     public static Timer time;
@@ -20,7 +17,7 @@ public class SCCycle {
             Settings.loadColors();
         } // Needs Exception handling
         time = new Timer();
-        time.scheduleAtFixedRate(new TimerTaskX(SCCycle::cycleColors), 0, ENGINE_COLOR_CYCLE_RATE.value() * 1000);
+        time.scheduleAtFixedRate(new TimerTask() {public void run() {cycleColors();}}, 0, ENGINE_COLOR_CYCLE_RATE.value() * 1000);
     }
 
     public static void cycleColors() {
