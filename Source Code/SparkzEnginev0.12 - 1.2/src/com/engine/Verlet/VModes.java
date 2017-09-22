@@ -19,4 +19,9 @@ public interface VModes {
         ElasticMesh ,
         Cloth
     }
+
+    static CreationModes getMode(CreationModes mode, int sign) {
+        if (sign > 0) return CreationModes.values()[(mode.ordinal() + 1) % CreationModes.values().length];
+        else return CreationModes.values()[(CreationModes.values().length + (mode.ordinal() - 1)) % CreationModes.values().length];
+    }
 }

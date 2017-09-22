@@ -13,7 +13,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import static com.engine.EngineHelpers.EConstants.*;
-import static com.engine.EngineHelpers.EModes.ENGINE_MODES.RAGDOLL_MODE;
 import static com.engine.EngineHelpers.EngineMethods.toggleParticleBoundsChecking;
 import static com.engine.EngineHelpers.EBOOLS.*;
 
@@ -110,25 +109,16 @@ public class KHandler extends KeyAdapter {
         if (key == KeyEvent.VK_CONTROL) CONTROL_IS_DOWN.setValue(false);
 
         if (key == KeyEvent.VK_A) {
-            if (ENGINE_MODE == RAGDOLL_MODE && !Notifier.drawingNotification) {
-                VPhysicsEditor.EDITOR_MODE = VModes.EditorModes.Add;
-                Notifier.pushNotification(VModes.EditorModes.Add.name());
-            }
+            EngineMethods.changeVPhysicsEditorMode(VModes.EditorModes.Add);
         }
 
         if (key == KeyEvent.VK_D) {
-            if (ENGINE_MODE == RAGDOLL_MODE && !Notifier.drawingNotification) {
-                VPhysicsEditor.EDITOR_MODE = VModes.EditorModes.Drag;
-                Notifier.pushNotification(VModes.EditorModes.Drag.name());
-            }
+            EngineMethods.changeVPhysicsEditorMode(VModes.EditorModes.Drag);
         }
 
         //Keyboard button: S
         if (key == KeyEvent.VK_S) {
-            if (ENGINE_MODE == RAGDOLL_MODE && !Notifier.drawingNotification) {
-                VPhysicsEditor.EDITOR_MODE = VModes.EditorModes.Select;
-                Notifier.pushNotification(VModes.EditorModes.Select.name());
-            }
+            EngineMethods.changeVPhysicsEditorMode(VModes.EditorModes.Select);
         }
 
         //Keyboard button: W

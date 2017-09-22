@@ -60,7 +60,7 @@ public class ParticleTypeUI {
     }
 
     private void getOption(int type){
-        if (textField.getText() != null) {
+        if (!textField.getText().isEmpty()) {
             try {
                 if (type == 0) {
                     if (InputGuard.canParseStringInt(textField.getText())) {

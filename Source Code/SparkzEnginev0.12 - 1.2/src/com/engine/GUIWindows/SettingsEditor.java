@@ -353,7 +353,7 @@ public class SettingsEditor {
     }
 
     private static int constrain(int min, int max, int def, String s){
-        if (s != null && s.length() > 0 && InputGuard.canParseStringInt(s)){
+        if (!s.isEmpty() && InputGuard.canParseStringInt(s)){
             int val = Integer.parseInt(s);
             return EJsonHelpers.constrain(def, val, min, max);
         }

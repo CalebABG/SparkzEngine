@@ -30,7 +30,7 @@ public class EJsonHelpers {
     public static void writeEngineSettingsJson(){
         String settings = getEngineSettingsJson();
         
-        try(FileOutputStream out = new FileOutputStream(Settings.settings_file_path, false); 
+        try(FileOutputStream out = new FileOutputStream(Settings.settings_file_path, false);
             Writer writer = new OutputStreamWriter(out, "UTF-8"))
         {
             writer.write(settings);
@@ -54,23 +54,29 @@ public class EJsonHelpers {
         ints.addProperty(SETTINGS_PARTICLE_RENDER_MODE_PROPERTY, PARTICLE_RENDER_MODE.getValue());
         ints.addProperty(SETTINGS_FIREWORKS_RENDER_MODE_PROPERTY, FIREWORKS_RENDER_MODE.getValue());
 
-        //Adjust Excluded Variables Bounds as needed
-        int EINTS_LOWERBOUND = 7, EINTS_UPPERBOUND = 11;
-        for (int i = 0; i < EINTS.values().length; i++) {
-            if (i >= EINTS_LOWERBOUND && i <= EINTS_UPPERBOUND) continue;
-            EINTS enum_ = EINTS.values()[i];
-            ints.addProperty(enum_.name(), enum_.value());
+        // Add other Enums
+        EINTS[] eints = EINTS.values();
+        for (int i = 0; i < eints.length; i++) {
+            if (!eints[i].exclude) {
+                EINTS intVar = eints[i];
+                ints.addProperty(intVar.name(), intVar.value());
+            }
         }
 
-        for (EFLOATS enum_ : EFLOATS.values()) doubles.addProperty(enum_.name(), enum_.value());
+        EFLOATS[] efloats = EFLOATS.values();
+        for (int i = 0; i < efloats.length; i++) {
+            if (!efloats[i].exclude) {
+                EFLOATS floatVar = efloats[i];
+                doubles.addProperty(floatVar.name(), floatVar.value());
+            }
+        }
 
-        //Adjust Excluded Variables Bounds as needed -
-        // i==0 is always needed, as bool at index 0 details whether engine is running
-        int EBOOLS_LOWERBOUND = 7, EBOOLS_UPPERBOUND = 10;
-        for (int i = 0; i < EBOOLS.values().length; i++) {
-            if (i == 0 || (i >= EBOOLS_LOWERBOUND && i <= EBOOLS_UPPERBOUND)) continue;
-            EBOOLS enum_ = EBOOLS.values()[i];
-            bools.addProperty(enum_.name(), enum_.value());
+        EBOOLS[] ebools = EBOOLS.values();
+        for (int i = 0; i < ebools.length; i++) {
+            if (!ebools[i].exclude) {
+                EBOOLS boolVar = ebools[i];
+                bools.addProperty(boolVar.name(), boolVar.value());
+            }
         }
 
         settingsObject.add(SETTINGS_JSON_INTS_KEY, ints);
@@ -114,8 +120,8 @@ public class EJsonHelpers {
             int i = 0;
             for (Entry<String, JsonElement> element : intsKey.entrySet()) {
                 i++;
-                if (i < 6) continue; // Offset Setting Properties because indexes 0-5 are not enum values
-                else {
+                // Offset Setting Properties because indexes 0-5 are not enum values
+                if (i > 5){
                     EINTS.valueOf(element.getKey())
                             .setValue(element.getValue().getAsInt());
                 }

@@ -1,12 +1,12 @@
 {
   "Settings": {
     "Ints": {
-      "ENGINE_MODE": 0,
+      "ENGINE_MODE": 4,
       "PARTICLE_TYPE": 0,
       "PARTICLE_GRAVITATION_MODE": 8,
       "PARTICLE_RENDER_MODE": 0,
       "FIREWORKS_RENDER_MODE": 0,
-      "PARTICLE_DRAG_AMOUNT": 35,
+      "PARTICLE_DRAG_AMOUNT": 50,
       "PARTICLE_BASE_LIFE": 65,
       "FIREWORKS_AMOUNT": 50,
       "FIREWORKS_LIFE": 90,

@@ -1,10 +1,7 @@
 package com.engine.Verlet;
 
-import com.engine.GUIWindows.VPhysicsEditor;
-
 import java.awt.*;
 import static com.engine.EngineHelpers.EConstants.*;
-import static com.engine.EngineHelpers.EModes.ENGINE_MODES.RAGDOLL_MODE;
 import static com.engine.EngineHelpers.EngineMethods.toggle;
 import static com.engine.Verlet.Vertex.Vertices;
 import static org.apache.commons.math3.util.FastMath.*;
@@ -21,7 +18,7 @@ public class VSim {
     public static float air_viscosity                   = 1.0f;
     public static float GConstant                       = 0.251f;
     public static float dragForce                       = 5; // The lower the stronger
-    public static int SIM_ACCURACY                      = 7; // The higher = better accuracy but slightly slower render
+    public static int SIM_ACCURACY                      = 12; // The higher = better accuracy but slightly slower render
     public static final int MAX_COLLISIONS              = 1000;
 
     public static void toggleCollisions() {COLLISION_DETECTION = Vertices.size() <= MAX_COLLISIONS && toggle(COLLISION_DETECTION);}
@@ -29,34 +26,25 @@ public class VSim {
     public static void toggleDebug() {DEBUG_MODE = toggle(DEBUG_MODE);}
 
     public static void debugPhysics(){
-        if (VSim.DEBUG_MODE) {
-            graphics2D.setFont(renderFont);
-            graphics2D.setColor(Color.white);
-            if (dragVertex == null) {
-                graphics2D.drawString("Drag-Point is null ", canvas.getWidth() / 2 - 80, canvas.getHeight() / 2 + 20);
-            }
-            else{
-                graphics2D.drawString(dragVertex.toString(), (canvas.getWidth() - graphics2D.getFontMetrics().stringWidth(dragVertex.toString())) / 2, canvas.getHeight() / 2 + 20);
-            }
+        graphics2D.setFont(renderFont);
+        graphics2D.setColor(Color.white);
+        if (dragVertex == null) {
+            graphics2D.drawString("Drag-Point is null ", canvas.getWidth() / 2 - 80, canvas.getHeight() / 2 + 20);
+        }
+        else{
+            graphics2D.drawString(dragVertex.toString(), (canvas.getWidth() - graphics2D.getFontMetrics().stringWidth(dragVertex.toString())) / 2, canvas.getHeight() / 2 + 20);
+        }
 
-            if (selectedVertex == null) {
-                graphics2D.drawString("Selected-Point is null ", canvas.getWidth() / 2 - 80, canvas.getHeight() / 2 + 40);
-            }
-            else{
-                graphics2D.drawString(selectedVertex.toString(), (canvas.getWidth() - graphics2D.getFontMetrics().stringWidth(selectedVertex.toString())) / 2, canvas.getHeight() / 2 + 40);
-            }
+        if (selectedVertex == null) {
+            graphics2D.drawString("Selected-Point is null ", canvas.getWidth() / 2 - 80, canvas.getHeight() / 2 + 40);
+        }
+        else{
+            graphics2D.drawString(selectedVertex.toString(), (canvas.getWidth() - graphics2D.getFontMetrics().stringWidth(selectedVertex.toString())) / 2, canvas.getHeight() / 2 + 40);
         }
     }
 
     public static void pinSelectedPoint(){
         if (dragVertex != null) dragVertex.togglePin();
         else if (selectedVertex != null) selectedVertex.togglePin();
-    }
-
-    public static void handlePhysicsDeselect() {
-        if (ENGINE_MODE == RAGDOLL_MODE) {
-            VSim.selectedVertex = null;
-            VPhysicsEditor.updateJListConstraints(null);
-        }
     }
 }

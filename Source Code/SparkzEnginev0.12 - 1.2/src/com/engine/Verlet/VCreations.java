@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import static com.engine.EngineHelpers.EConstants.canvas;
+
 import static com.engine.Verlet.Vertex.Vertices;
 import static org.apache.commons.math3.util.FastMath.*;
 
@@ -51,7 +51,7 @@ public class VCreations {
         List<Vertex> vertexArr = new ArrayList<>(POINTS);
         for (int i = 0; i < POINTS; i++) {
             float angle = (float) (i * (2 * PI) / POINTS);
-            vertexArr.add(new Vertex((float) (size * cos(angle) + (x)), (float) (size * sin(angle) + (y)), rad, pc));
+            vertexArr.add(new Vertex((float) (size * cos(angle) + x), (float) (size * sin(angle) + y), rad, pc));
         }
         for (int i = 0; i < vertexArr.size(); i++) {
             Vertex p = vertexArr.get(i);
@@ -95,7 +95,7 @@ public class VCreations {
             if (i == 0) {
                 //First Point
                 Vertex p = new Vertex(startX, mY, rad, pc);
-                p.pinTo(p.currX, p.currY);
+                p.isPinned(true);
                 index = p.index;
             }
             //Last Point in Line
@@ -103,7 +103,7 @@ public class VCreations {
                 Vertex lastVertex = Vertices.get(index);
                 //Second Point
                 Vertex q = new Vertex(lastVertex.currX + spacing, lastVertex.currY, rad, pc);
-                q.pinTo(q.currX, q.currY);
+                q.isPinned(true);
                 lastVertex.attachTo(q, lastVertex.getDistance(q), stiffness, tear, drawlinks, tearable, lc);
             }
             else {
@@ -117,19 +117,19 @@ public class VCreations {
         }
     }//To here, personal algorithms
 
-    public static void createCloth(int cloth_width, int cloth_height, int restingDistances, float yStart,
-                                   float stiffness, float tearDistance, float r, Color DPC, Color SPC, Color LC, boolean drawLinks, boolean tear) {
+    public static void createCloth(int cloth_width, int cloth_height, int restingDistances, float yStart, float xStart,
+                                   float stiffness, float tearDistance, float radius, Color DPC, Color SPC, Color LC, boolean drawLinks, boolean tear, boolean collidable) {
         List<Vertex> vertices = new ArrayList<>();
-        int start_x = (canvas.getWidth() / 2 - cloth_width * restingDistances / 2);
+        int start_x = (int) (xStart - ((cloth_width * restingDistances) / 2));
         for (int y = 0; y <= cloth_height; y++) {
             for (int x = 0; x <= cloth_width; x++) {
-                Vertex p = new Vertex(start_x + x * restingDistances, yStart + y * restingDistances, r, DPC);
-                p.collidable = false;
+                Vertex p = new Vertex(start_x + x * restingDistances, yStart + y * restingDistances, radius, DPC);
+                p.collidable = collidable;
                 if (x != 0) {
                     p.attachTo(vertices.get(vertices.size() - 1), restingDistances, stiffness, tearDistance, drawLinks, tear, LC);
                 }
                 if (y == 0) {
-                    p.pinTo(p.currX, p.currY);
+                    p.isPinned(true);
                     p.color = SPC;
                 }
                 if (y != 0) {

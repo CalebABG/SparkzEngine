@@ -8,6 +8,7 @@ import com.engine.ThinkingParticles.SCCycle;
 import com.engine.Utilities.ColorUtility;
 import com.engine.Utilities.InputGuard;
 import com.engine.Verlet.Physics;
+import com.engine.Verlet.VModes;
 import com.engine.Verlet.VPHandler;
 import com.engine.Verlet.VSim;
 
@@ -26,6 +27,7 @@ import static com.engine.JComponents.CMenuBar.*;
 import static com.engine.Utilities.H5Util.H;
 import static com.engine.Utilities.InputGuard.minValueGuard;
 import static com.engine.Verlet.Vertex.Vertices;
+import static org.apache.commons.math3.util.FastMath.abs;
 
 public class EngineMethods {
     /**
@@ -62,7 +64,7 @@ public class EngineMethods {
             ParticleModes.fireworksTarget(e);
         }
         else if (ENGINE_MODE == RAGDOLL_MODE) {
-            VPHandler.ragdollMode_ClickState(e);
+            VPHandler.handleRagdollClickEvent(e);
         }
     }
 
@@ -112,7 +114,6 @@ public class EngineMethods {
             Particle p = ParticlesArray.get(i);
             p.vx *= n;
             p.vy *= n;
-            //ParticlesArray.get(i).vel.mult(1.5);
         }
     }
 
@@ -159,21 +160,7 @@ public class EngineMethods {
      * @see com.engine.InputHandlers.MMotionListener
      */
     public static void updateMouse(MouseEvent e) {
-        Mouse.x = e.getX();
-        Mouse.y = e.getY();
-        int newX = e.getX(), newY = e.getY();
-
-        if (ENIGNE_OLD_MOUSE_X.value() == -1) {
-            ENIGNE_OLD_MOUSE_X.setValue(newX);
-            ENIGNE_OLD_MOUSE_Y.setValue(newY);
-            return;
-        }
-
-        ENGINE_MOUSE_DX.setValue(Math.abs(ENIGNE_OLD_MOUSE_X.value() - newX));
-        ENGINE_MOUSE_DY.setValue(Math.abs(ENIGNE_OLD_MOUSE_Y.value() - newY));
-
-        ENIGNE_OLD_MOUSE_X.setValue(newX);
-        ENIGNE_OLD_MOUSE_Y.setValue(newY);
+        Mouse.x = e.getX(); Mouse.y = e.getY();
     }
 
     /**
@@ -193,7 +180,7 @@ public class EngineMethods {
      * @see SlideEditor
      */
     public static void setDragAmount(int amount) {
-        if (amount >= 0) PARTICLE_DRAG_AMOUNT.setValue(amount);
+        if (amount > -1) PARTICLE_DRAG_AMOUNT.setValue(amount);
     }
 
     /**
@@ -201,7 +188,7 @@ public class EngineMethods {
      * @see SlideEditor
      */
     public static void setFireworksAmount(int amount) {
-        if (amount >= 0) FIREWORKS_AMOUNT.setValue(amount);
+        if (amount > -1) FIREWORKS_AMOUNT.setValue(amount);
     }
 
     /**
@@ -209,7 +196,7 @@ public class EngineMethods {
      * @see SlideEditor
      */
     public static void setLifeAmount(int amount) {
-        if (amount >= 0) PARTICLE_BASE_LIFE.setValue(amount);
+        if (amount > -1) PARTICLE_BASE_LIFE.setValue(amount);
     }
 
     /**
@@ -217,7 +204,7 @@ public class EngineMethods {
      * @see SlideEditor
      */
     public static void setWindAmount(int amount) {
-        if (amount >= 0) FIREWORKS_WIND.setValue(amount);
+        if (amount > -1) FIREWORKS_WIND.setValue(amount);
     }
 
     /**
@@ -225,7 +212,7 @@ public class EngineMethods {
      * @see SlideEditor
      */
     public static void setJitterAmount(int amount) {
-        if (amount >= 0) FIREWORKS_JITTER.setValue(amount);
+        if (amount > -1) FIREWORKS_JITTER.setValue(amount);
     }
 
     /**
@@ -233,7 +220,7 @@ public class EngineMethods {
      * @see SlideEditor
      */
     public static void setSingleClickSizeMin(int amount) {
-        if (amount >= 0) SINGLE_CLICK_SIZE_MIN.setValue(amount);
+        if (amount > -1) SINGLE_CLICK_SIZE_MIN.setValue(amount);
     }
 
     /**
@@ -241,7 +228,7 @@ public class EngineMethods {
      * @see SlideEditor
      */
     public static void setSingleClickSizeMax(int amount) {
-        if (amount >= 0) SINGLE_CLICK_SIZE_MAX.setValue(amount);
+        if (amount > -1) SINGLE_CLICK_SIZE_MAX.setValue(amount);
     }
 
     /**
@@ -249,7 +236,7 @@ public class EngineMethods {
      * @see SlideEditor
      */
     public static void setFireworksSizeMin(int amount) {
-        if (amount >= 0) FIREWORKS_SIZE_MIN.setValue(amount);
+        if (amount > -1) FIREWORKS_SIZE_MIN.setValue(amount);
     }
 
     /**
@@ -257,7 +244,7 @@ public class EngineMethods {
      * @see SlideEditor
      */
     public static void setFireworksSizeMax(int amount) {
-        if (amount >= 0) FIREWORKS_SIZE_MAX.setValue(amount);
+        if (amount > -1) FIREWORKS_SIZE_MAX.setValue(amount);
     }
 
     /**
@@ -265,7 +252,7 @@ public class EngineMethods {
      * @see SlideEditor
      */
     public static void setDragSizeMin(int amount) {
-        if (amount >= 0) PARTICLE_DRAG_SIZE_MIN.setValue(amount);
+        if (amount > -1) PARTICLE_DRAG_SIZE_MIN.setValue(amount);
     }
 
     /**
@@ -273,7 +260,7 @@ public class EngineMethods {
      * @see SlideEditor
      */
     public static void setDragSizeMax(int amount) {
-        if (amount >= 0) PARTICLE_DRAG_SIZE_MAX.setValue(amount);
+        if (amount > -1) PARTICLE_DRAG_SIZE_MAX.setValue(amount);
     }
 
     /**
@@ -281,7 +268,7 @@ public class EngineMethods {
      * @see SlideEditor
      */
     public static void setSingleClickSpeed(int amount) {
-        if (amount >= 0) SINGLE_CLICK_SPEED.setValue(amount);
+        if (amount > -1) SINGLE_CLICK_SPEED.setValue(amount);
     }
 
     /**
@@ -289,7 +276,7 @@ public class EngineMethods {
      * @see SlideEditor
      */
     public static void setFireworksSpeed(int amount) {
-        if (amount >= 0) FIREWORKS_SPEED.setValue(amount);
+        if (amount > -1) FIREWORKS_SPEED.setValue(amount);
     }
 
     /**
@@ -297,7 +284,7 @@ public class EngineMethods {
      * @see SlideEditor
      */
     public static void setDragSpeed(int amount) {
-        if (amount >= 0) PARTICLE_DRAG_SPEED.setValue(amount);
+        if (amount > -1) PARTICLE_DRAG_SPEED.setValue(amount);
     }
 
     /**
@@ -565,6 +552,14 @@ public class EngineMethods {
         }
     }
 
+    public static void changeVPhysicsEditorMode(VModes.EditorModes editorMode){
+        if (ENGINE_MODE == RAGDOLL_MODE && !Notifier.drawingNotification){
+            VPhysicsEditor.EDITOR_MODE = editorMode;
+            VPhysicsEditor.editorModesJComboBox.setSelectedItem(editorMode);
+            Notifier.pushNotification(editorMode.name());
+        }
+    }
+
     /**
      * Handles the action in response to a key listener for the left arrow key.
      *
@@ -573,8 +568,8 @@ public class EngineMethods {
     public static void leftArrowFunction() {
         if (ENGINE_MODE == RAGDOLL_MODE) {
             if (!Notifier.drawingNotification) {
-                VPHandler.MODE--;
-                if (VPHandler.MODE < 0) VPHandler.MODE = VPHandler.MAX_MODE;
+                VPhysicsEditor.CREATION_MODE = VModes.getMode(VPhysicsEditor.CREATION_MODE, -1);
+                VPhysicsEditor.creationModesJComboBox.setSelectedItem(VPhysicsEditor.CREATION_MODE);
                 displayParticleType();
             }
         }
@@ -596,8 +591,8 @@ public class EngineMethods {
     public static void rightArrowFunction() {
         if (ENGINE_MODE == RAGDOLL_MODE) {
             if (!Notifier.drawingNotification) {
-                VPHandler.MODE++;
-                if (VPHandler.MODE > VPHandler.MAX_MODE) VPHandler.MODE = 0;
+                VPhysicsEditor.CREATION_MODE = VModes.getMode(VPhysicsEditor.CREATION_MODE, 1);
+                VPhysicsEditor.creationModesJComboBox.setSelectedItem(VPhysicsEditor.CREATION_MODE);
                 displayParticleType();
             }
         }
@@ -639,22 +634,28 @@ public class EngineMethods {
      * @see CMenuBar
      */
     public static void clearParticleArrays() {
-        VSim.selectedVertex = null;
-        try {
-            if (ParticlesArray.size() > 0) ParticlesArray.clear();
-            if (GravityPointsArray.size() > 0) GravityPointsArray.clear();
-            if (EmitterArray.size() > 0) EmitterArray.clear();
-            if (FireworksArray.size() > 0) FireworksArray.clear();
-            if (FluxArray.size() > 0) FluxArray.clear();
-            if (EraserArray.size() > 0) EraserArray.clear();
-            if (QEDArray.size() > 0) QEDArray.clear();
-            if (IonArray.size() > 0) IonArray.clear();
-            if (BlackHoleArray.size() > 0) BlackHoleArray.clear();
-            if (DuplexArray.size() > 0) DuplexArray.clear();
-            if (PortalArray.size() > 0) PortalArray.clear();
-            if (Vertices.size() > 0) Vertices.clear();
+        if(ENGINE_MODE == RAGDOLL_MODE) {
+            VSim.selectedVertex = null;
+            try{
+                if (Vertices.size() > 0) Vertices.clear();
+            }catch (Exception e){EException.append(e);}
         }
-        catch (Exception e) {EException.append(e);}
+        else {
+            try {
+                if (ParticlesArray.size() > 0) ParticlesArray.clear();
+                if (GravityPointsArray.size() > 0) GravityPointsArray.clear();
+                if (EmitterArray.size() > 0) EmitterArray.clear();
+                if (FireworksArray.size() > 0) FireworksArray.clear();
+                if (FluxArray.size() > 0) FluxArray.clear();
+                if (EraserArray.size() > 0) EraserArray.clear();
+                if (QEDArray.size() > 0) QEDArray.clear();
+                if (IonArray.size() > 0) IonArray.clear();
+                if (BlackHoleArray.size() > 0) BlackHoleArray.clear();
+                if (DuplexArray.size() > 0) DuplexArray.clear();
+                if (PortalArray.size() > 0) PortalArray.clear();
+            }
+            catch (Exception e) {EException.append(e);}
+        }
     }
 
     /**
@@ -748,14 +749,14 @@ public class EngineMethods {
      */
     public static void displayParticleType() {
         if (ENGINE_MODE == RAGDOLL_MODE) {
-            switch (VPHandler.MODE) {
-                case 0: Notifier.pushNotification("Point"); break;
-                case 1: Notifier.pushNotification("Stick"); break;
-                case 2: Notifier.pushNotification("IK Chain"); break;
-                case 3: Notifier.pushNotification("Box"); break;
-                case 4: Notifier.pushNotification("Solid Mesh"); break;
-                case 5: Notifier.pushNotification("Elastic Mesh"); break;
-                case 6: Notifier.pushNotification("Cloth"); break;
+            switch (VPhysicsEditor.CREATION_MODE) {
+                case Point: Notifier.pushNotification("Point"); break;
+                case Stick: Notifier.pushNotification("Stick"); break;
+                case IKChain: Notifier.pushNotification("IKChain"); break;
+                case Box: Notifier.pushNotification("Box"); break;
+                case SolidMesh: Notifier.pushNotification("SolidMesh"); break;
+                case ElasticMesh: Notifier.pushNotification("ElasticMesh"); break;
+                case Cloth: Notifier.pushNotification("Cloth"); break;
                 default: break;
             }
         }
@@ -779,11 +780,13 @@ public class EngineMethods {
      * Draws a horizontal line with a mid point for the Engines Graph mode.
      */
     public static void drawMid() {
-        int neg_W = -canvas.getWidth() / 2, pos_W = canvas.getWidth() / 2, vheight = 35;
+        int neg_W = -canvas.getWidth() / 2;
+        int pos_W = canvas.getWidth() / 2;
+        int vHeight = 35;
         graphics2D.setColor(Color.gray);
         graphics2D.drawLine(neg_W, 0, pos_W, 0);
-        graphics2D.drawLine(0, 0, 0, -vheight);
-        graphics2D.drawLine(0, 0, 0, vheight);
+        graphics2D.drawLine(0, 0, 0, -vHeight);
+        graphics2D.drawLine(0, 0, 0, vHeight);
     }
 
     /**
@@ -852,7 +855,7 @@ public class EngineMethods {
     private static void updateEmitterArray() {for (int i = 0; i < EmitterArray.size(); i++) EmitterArray.get(i).update();}
     private static void updateFwParticlesArray() {for (int i = 0; i < FireworksArray.size(); i++) FireworksArray.get(i).update();}
     private static void updateFluxArray() {for (int i = 0; i < FluxArray.size(); i++) FluxArray.get(i).update();}
-    private static void updateObstructArray() {for (int i = 0; i < EraserArray.size(); i++) EraserArray.get(i).update();}
+    private static void updateEraserArray() {for (int i = 0; i < EraserArray.size(); i++) EraserArray.get(i).update();}
     private static void updateQEDArray() {for (int i = 0; i < QEDArray.size(); i++) QEDArray.get(i).update();}
     private static void updateIonsArray() {for (int i = 0; i < IonArray.size(); i++) IonArray.get(i).update();}
     private static void updateBlackHoleArray() {for (int i = 0; i < BlackHoleArray.size(); i++) BlackHoleArray.get(i).update();}
@@ -866,7 +869,7 @@ public class EngineMethods {
     private static void renderEmitterArray() {for (int i = 0; i < EmitterArray.size(); i++) EmitterArray.get(i).render();}
     private static void renderFwParticlesArray() {for (int i = 0; i < FireworksArray.size(); i++) FireworksArray.get(i).render();}
     private static void renderFluxArray() {for (int i = 0; i < FluxArray.size(); i++) FluxArray.get(i).render();}
-    private static void renderObstructArray() {for (int i = 0; i < EraserArray.size(); i++) EraserArray.get(i).render();}
+    private static void renderEraserArray() {for (int i = 0; i < EraserArray.size(); i++) EraserArray.get(i).render();}
     private static void renderQEDArray() {for (int i = 0; i < QEDArray.size(); i++) QEDArray.get(i).render();}
     private static void renderIonsArray() {for (int i = 0; i < IonArray.size(); i++) IonArray.get(i).render();}
     private static void renderBlackHoleArray() {for (int i = 0; i < BlackHoleArray.size(); i++) BlackHoleArray.get(i).render();}
@@ -895,16 +898,15 @@ public class EngineMethods {
                 updateFwParticlesArray();
                 updateEmitterArray();
                 updateFluxArray();
-                updateObstructArray();
+                updateEraserArray();
                 updateQEDArray();
                 updateIonsArray();
                 updateBlackHoleArray();
                 updateDuplexArray();
                 updatePortalArray();
             }
-        } catch (Exception e) {
-            EException.append(e);
         }
+        catch (Exception e) {EException.append(e);}
     }
     //---------------------------------------------------------------------------------------------------------------------------------------//
 
@@ -916,25 +918,25 @@ public class EngineMethods {
         else graphics2D.translate(0, 0);
         try {
             if (ENGINE_MODE == RAGDOLL_MODE) {
+                if (VSim.DEBUG_MODE) VSim.debugPhysics();
                 Physics.update();
                 Physics.render();
-                VSim.debugPhysics();
-            } else {
+            }
+            else {
                 if (ENGINE_MODE == GRAPH_MODE) drawMid();
                 renderParticlesArray();
                 renderGravityPointsArray();
                 renderFwParticlesArray();
                 renderEmitterArray();
                 renderFluxArray();
-                renderObstructArray();
+                renderEraserArray();
                 renderQEDArray();
                 renderIonsArray();
                 renderBlackHoleArray();
                 renderDuplexArray();
                 renderPortalArray();
             }
-        } catch (Exception e) {
-            EException.append(e);
         }
+        catch (Exception e) {EException.append(e);}
     }
 }

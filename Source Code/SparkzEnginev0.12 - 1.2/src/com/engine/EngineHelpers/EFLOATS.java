@@ -16,8 +16,11 @@ public enum EFLOATS {
     ;
 
     private float value;
+    public boolean exclude = false;
+
     EFLOATS(){}
     EFLOATS(float val) {this.value = val;}
+    EFLOATS(float val, boolean exclude) {this.value = val; this.exclude = exclude;}
 
     public void increment(){value++;}
     public void increment(int val){this.value += val;}

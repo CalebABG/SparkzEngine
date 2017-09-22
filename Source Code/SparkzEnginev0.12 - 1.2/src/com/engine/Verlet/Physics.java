@@ -5,64 +5,83 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.util.List;
+
+import static com.engine.EngineHelpers.EBOOLS.*;
 import static com.engine.EngineHelpers.EConstants.*;
-import static com.engine.EngineHelpers.EBOOLS.ENGINE_IS_PAUSED;
-import static com.engine.EngineHelpers.EBOOLS.LEFT_MOUSE_IS_DOWN;
-import static com.engine.EngineHelpers.EBOOLS.RIGHT_MOUSE_IS_DOWN;
 import static com.engine.GUIWindows.VPhysicsEditor.showselectionconstraint_checkbox;
 import static com.engine.Verlet.Vertex.Vertices;
 import static com.engine.Verlet.VSim.*;
 
 public class Physics {
+    /**
+     * Actively updates all Verlet Physics objects
+     * If the engine is paused, then the solving of constraints and collision
+     * detection is halted. When paused only mouse interactions with objects is updated.
+     */
     public static void update() {
         if (!ENGINE_IS_PAUSED.value()) {
             solveConstraints();
             handleMouseInteraction();
             integrate();
-            collisionsNoVelPres();    //Experiment w/ both collisions; disabling one will increase performance
+            collisionsNoVelPres();
             collisionsWithVelPres();
-        } else handleMouseInteraction();
+        }
+        else handleMouseInteraction();
     }
 
+    /**
+     * Renders all of the Vertex objects, and also shows their constraints if selected
+     * @see Vertex
+     * @see Edge
+     */
     public static void render() {
-        for (int i = Vertices.size() - 1; i >= 0; i--) Vertices.get(i).draw();
+        for (int i = 0; i < Vertices.size(); i++) Vertices.get(i).draw();
 
-        if (VPhysicsEditor.instance != null && selectedVertex != null) {
-            List<Integer> selectedPointConstraintList = VPhysicsEditor.constraint_jlist.getSelectedValuesList();
+        if (VPhysicsEditor.vPhysicsEditorInstance != null && selectedVertex != null) {
+            List<Integer> selectedPointConstraintList = VPhysicsEditor.constraintJlist.getSelectedValuesList();
 
-            //  Check for all possibilities for list of selected values: if the list is null,
-            //  if the list is empty, if the only value in the list is "-1"
-            if (selectedPointConstraintList != null && showselectionconstraint_checkbox != null &&
-                !selectedPointConstraintList.isEmpty() && !(selectedPointConstraintList.get(0) == -1) && showselectionconstraint_checkbox.isSelected()){
+            // Check whether the list of constraints is empty; check if the point has any constrains (if the first index in the array
+            // is not -1; and check whether to show the constraint at all (checkbox)
+            if (!selectedPointConstraintList.isEmpty() && (selectedPointConstraintList.get(0) != -1) && showselectionconstraint_checkbox.isSelected())
+            {
                 for (int i = 0; i < selectedPointConstraintList.size(); i++) {
                     Vertex constraintPoint = selectedVertex.edges.get(selectedPointConstraintList.get(i)).p2;
+
                     graphics2D.setColor(Color.red);
-                    graphics2D.draw(new Line2D.Float(selectedVertex.currX, selectedVertex.currY,
-                            constraintPoint.currX, constraintPoint.currY));
-                    graphics2D.setColor(Color.red);
+                    graphics2D.draw(new Line2D.Float(selectedVertex.currX, selectedVertex.currY, constraintPoint.currX, constraintPoint.currY));
+
                     float scale = 3.0f;
-                    graphics2D.draw(new Ellipse2D.Float(constraintPoint.currX - ((scale / 2) * constraintPoint.radius),
+                    graphics2D.setColor(Color.red);
+                    graphics2D.draw(new Ellipse2D.Float(
+                            constraintPoint.currX - ((scale / 2) * constraintPoint.radius),
                             constraintPoint.currY - ((scale / 2) * constraintPoint.radius),
                             scale * constraintPoint.radius,
-                            scale * constraintPoint.radius));
+                            scale * constraintPoint.radius)
+                    );
                 }
             }
         }
     }
 
+    /**
+     * Calculates the interactions between Vertex objects with length constraints(Edges)
+     * This calculation is performed various times (up to SIM_ACCURACY times)
+     * @see Edge
+     */
     private static void solveConstraints() {
-        for (int i = 0; i < SIM_ACCURACY; i++) {
-            for (int j = 0; j < Vertices.size(); j++) {
+        for (int i = 0; i < SIM_ACCURACY; i++)
+            for (int j = 0; j < Vertices.size(); j++)
                 Vertices.get(j).solveConstraints();
-            }
-        }
     }
 
+    /**
+     * Handles the interaction between the mouse pointer and Verlet physics objects
+     */
     private static void handleMouseInteraction() {
         if (VPhysicsEditor.EDITOR_MODE == VModes.EditorModes.Drag) {
             //  Handle if the Left mouse button is held down in drag mode
             if (LEFT_MOUSE_IS_DOWN.value()) {
-                //  If the the point we want to drag isn't ull and if the engine isn't paused move it around
+                //  If the the point we want to drag isn't null and if the engine isn't paused move it around
                 if (dragVertex != null) {
                     if (!ENGINE_IS_PAUSED.value()) {
                         float s = dragVertex.mass * dragForce;
@@ -77,9 +96,10 @@ public class Physics {
                 else {
                     for (int i = 0; i < Vertices.size(); i++) {
                         Vertex searchVertex = Vertices.get(i);
-                        if (searchVertex.contains(Mouse)) {
+                        if (searchVertex.contains(Mouse.x, Mouse.y)) {
                             dragVertex = searchVertex;
                             selectedVertex = searchVertex;
+                            VPhysicsEditor.setObjectPropertiesOnSelect(selectedVertex);
                             VPhysicsEditor.updateJListConstraints(selectedVertex.edges);
                             break;
                         }
@@ -87,7 +107,9 @@ public class Physics {
                 }
             }
 
-            //  Else, if the Right mouse button is held down, then look through the list of points and search for
+            // Else, if the right mouse button is held down,
+            // search to see if the mouse is within the bounds of a verlet physics object.
+            // If that's the case, then remove that objects constraints.
             else if (RIGHT_MOUSE_IS_DOWN.value()) {
                 for (int i = 0; i < Vertices.size(); i++) {
                     Vertex searchVertex = Vertices.get(i);
@@ -106,17 +128,17 @@ public class Physics {
     }
 
     private static void collisionsNoVelPres() {
-        for (int j = 0; j < Vertices.size(); j++) {
-            for (int k = 0; k < Vertices.size(); k++) {
-                Vertices.get(j).solveCollisions(Vertices.get(k), false);
+        for (int i = 0; i < Vertices.size(); i++) {
+            for (int j = 0; j < Vertices.size(); j++) {
+                Vertices.get(i).solveCollisions(Vertices.get(j), false);
             }
         }
     }
 
     private static void collisionsWithVelPres() {
-        for (int j = 0; j < Vertices.size(); j++) {
-            for (int k = 0; k < Vertices.size(); k++) {
-                Vertices.get(j).solveCollisions(Vertices.get(k), true);
+        for (int i = 0; i < Vertices.size(); i++) {
+            for (int j = 0; j < Vertices.size(); j++) {
+                Vertices.get(i).solveCollisions(Vertices.get(j), true);
             }
         }
     }

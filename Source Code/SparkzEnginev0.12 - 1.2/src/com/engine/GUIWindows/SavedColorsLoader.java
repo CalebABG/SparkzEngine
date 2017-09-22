@@ -90,7 +90,7 @@ public class SavedColorsLoader {
     }
 
     private int setMinorTicks() {
-        if (Settings.userSavedColors == null || Settings.userSavedColors.size() < 25) return 1;
+        if (Settings.userSavedColors.size() < 25) return 1;
         else if (Settings.userSavedColors.size() % 15 == 0) {
             return Settings.userSavedColors.size() / 15;
         }
@@ -98,10 +98,7 @@ public class SavedColorsLoader {
     }
 
     private int setMajorTicks() {
-        if (Settings.userSavedColors == null) return 1;
-        else if (Settings.userSavedColors.size() >= 25) {
-            return Settings.userSavedColors.size() / 5;
-        }
+        if (Settings.userSavedColors.size() >= 25) return Settings.userSavedColors.size() / 5;
         return 1;
     }
 

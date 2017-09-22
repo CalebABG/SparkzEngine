@@ -22,10 +22,8 @@ public interface EModes {
     }
 
     static ENGINE_MODES getMode(ENGINE_MODES mode, int sign) {
-        if (sign > 0)
-            return ENGINE_MODES.values()[(mode.value + 1) % ENGINE_MODES.values().length];
-        else
-            return ENGINE_MODES.values()[(ENGINE_MODES.values().length + (mode.value - 1)) % ENGINE_MODES.values().length];
+        if (sign > 0) return ENGINE_MODES.values()[(mode.value + 1) % ENGINE_MODES.values().length];
+        else return ENGINE_MODES.values()[(ENGINE_MODES.values().length + (mode.value - 1)) % ENGINE_MODES.values().length];
     }
 
     /*Corresponds to Particle Type*/

@@ -42,11 +42,13 @@ public class Edge {
         float dist = (float) sqrt(dx * dx + dy * dy);
 
         // find the difference, or the ratio of how far along the restingDistance the actual distance is.
-        float delta = (float) (restingDistance / (dist + restingDistance) - 0.5);
+        float delta = (restingDistance / (dist + restingDistance)) - 0.5f;
 
         if (tearable) if (dist > tearSensitivity) {
             p1.removeLink(this);
-            if (p1 == selectedVertex || p2 == selectedVertex) VPhysicsEditor.updateJListConstraints(selectedVertex.edges);
+
+            if (p1 == selectedVertex || p2 == selectedVertex)
+                VPhysicsEditor.updateJListConstraints(selectedVertex.edges);
         }
         //if (tearable) if (d > tearSensitivity) p2.removeLink(this);
 

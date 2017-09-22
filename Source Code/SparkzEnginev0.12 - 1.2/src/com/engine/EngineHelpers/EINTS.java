@@ -1,25 +1,24 @@
 package com.engine.EngineHelpers;
 
 public enum EINTS {
-    /* 0 */    PARTICLE_DRAG_AMOUNT(1),
-    /* 1 */    PARTICLE_BASE_LIFE(65),
-    /* 2 */    FIREWORKS_AMOUNT(30),
-    /* 3 */    FIREWORKS_LIFE(90),
-    /* 4 */    FIREWORKS_WIND(2),
-    /* 5 */    FIREWORKS_JITTER(5),
-    /* 6 */    ENGINE_FPS(60),
-    /* 7 */    ENGINE_TIMER_FPS(1000 / ENGINE_FPS.value),
-    /* 8 */    ENIGNE_OLD_MOUSE_X(-1),
-    /* 9 */    ENIGNE_OLD_MOUSE_Y(-1),
-    /* 10 */    ENGINE_MOUSE_DX(0),
-    /* 11 */    ENGINE_MOUSE_DY(0),
-    /* 12 */    ENGINE_SAFETY_AMOUNT(120),
-    /* 13 */    ENGINE_COLOR_CYCLE_RATE(5)
+    PARTICLE_DRAG_AMOUNT(1),
+    PARTICLE_BASE_LIFE(65),
+    FIREWORKS_AMOUNT(30),
+    FIREWORKS_LIFE(90),
+    FIREWORKS_WIND(2),
+    FIREWORKS_JITTER(5),
+    ENGINE_FPS(60),
+    ENGINE_TIMER_FPS(1000 / ENGINE_FPS.value, true),
+    ENGINE_SAFETY_AMOUNT(120),
+    ENGINE_COLOR_CYCLE_RATE(5)
     ;
 
     private int value;
+    public boolean exclude = false;
+
     EINTS(){}
-    EINTS(final int val) {this.value = val;}
+    EINTS(int val) {this.value = val;}
+    EINTS(int val, boolean exclude) {value = val; this.exclude = exclude;}
 
     public void increment(){value++;}
     public void increment(int val){this.value += val;}
