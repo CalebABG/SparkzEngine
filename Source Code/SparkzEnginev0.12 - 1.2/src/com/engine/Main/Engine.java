@@ -92,13 +92,13 @@ public class Engine {
 
         final long tB = 1_000_000_000;
         final int TIME_BETWEEN_UPDATES = (int) (tB / ENGINE_FPS.value());
-        final int MAX_UPDATES_BEFORE_RENDER = 1;
+        final short MAX_UPDATES_BEFORE_RENDER = 1;
         long lastUpdateTime = System.nanoTime();
         long lastSecondTime = lastUpdateTime / tB;
 
         while (ENGINE_RUNNING.value()) {
             long now = System.nanoTime();
-            int updateCount = 0;
+            short updateCount = 0;
 
             //  Keep track of frameCount
             frameCount++;
@@ -110,7 +110,8 @@ public class Engine {
             render();
 
             while (((now - lastUpdateTime) > TIME_BETWEEN_UPDATES) && (updateCount < MAX_UPDATES_BEFORE_RENDER)) {
-                if (!ENGINE_IS_PAUSED.value()) handleUpdates();
+                if (!ENGINE_IS_PAUSED.value())
+                    handleUpdates();
 
                 lastUpdateTime += TIME_BETWEEN_UPDATES;
                 updateCount++;

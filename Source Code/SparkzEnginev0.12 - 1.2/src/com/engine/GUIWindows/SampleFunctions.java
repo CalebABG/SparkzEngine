@@ -72,7 +72,8 @@ public class SampleFunctions {
     private void graphSelectedSample(JList<String> list) {
         String selectedSampleFunction = list.getSelectedValue();
         ParticleGraph.textFields[0].setText(selectedSampleFunction);
-        ParticleGraph.threadGraph(1, selectedSampleFunction);
+        ParticleGraph.threadGraph(selectedSampleFunction);
     }
+
     private void close(){sampleFunctions = null; frame.dispose();}
 }

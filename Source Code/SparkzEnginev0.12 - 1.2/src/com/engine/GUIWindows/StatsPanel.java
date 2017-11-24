@@ -36,7 +36,7 @@ public class StatsPanel {
     private StatsPanel() {
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){EException.append(e);}
         frame = new JFrame("Stats Panel");
-        frame.setSize(727, 453);
+        frame.setSize(730, 450);
         frame.setIconImage(Settings.iconImage);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowClosing(windowEvent -> close()));

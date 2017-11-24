@@ -1,9 +1,9 @@
 {
   "Settings": {
     "Ints": {
-      "ENGINE_MODE": 4,
+      "ENGINE_MODE": 3,
       "PARTICLE_TYPE": 0,
-      "PARTICLE_GRAVITATION_MODE": 8,
+      "PARTICLE_GRAVITATION_MODE": 0,
       "PARTICLE_RENDER_MODE": 0,
       "FIREWORKS_RENDER_MODE": 0,
       "PARTICLE_DRAG_AMOUNT": 50,
@@ -36,7 +36,7 @@
       "CONNECT_PARTICLES": false,
       "PARTICLE_FRICTION": true,
       "PARTICLE_BOUNDLESS": false,
-      "MOUSE_GRAVITATION": true,
+      "MOUSE_GRAVITATION": false,
       "ENGINE_CYCLE_COLORS": false,
       "TOGGLE_GRAVITYPOINTS_LINK_RENDER": false,
       "TOGGLE_PARTICLE_LINK_RENDER": false,

@@ -8,17 +8,17 @@ import static com.engine.Verlet.Vect2.clamp;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public abstract class Molecule implements MoleculeBehavior {
-    public static Color plain_color = new Color(63, 138, 242);
+    public  static Color plain_color   = new Color(63, 138, 242);
     private static Color default_color = Color.WHITE;
 
     private static float max_speed = 180.0f;
-    public float x = 0.0f;
-    public float y = 0.0f;
-    public float radius = 1.0f;
-    public float vx = 0.0f;
-    public float vy = 0.0f;
-    public float ax = 0.0f;
-    public float ay = 0.0f;
+    public float x                 = 0.0f;
+    public float y                 = 0.0f;
+    public float radius            = 1.0f;
+    public float vx                = 0.0f;
+    public float vy                = 0.0f;
+    public float ax                = 0.0f;
+    public float ay                = 0.0f;
 
     public Color color = default_color;
 
@@ -26,16 +26,16 @@ public abstract class Molecule implements MoleculeBehavior {
         radius = (random.nextFloat() * 10f) + 0.9f;
         x = (random.nextFloat() * canvas.getWidth()) - radius;
         y = (random.nextFloat() * canvas.getHeight()) - radius;
-        vx = (float) (cos(toRadians(random.nextFloat() * 360)) * (random.nextFloat() * 10));
-        vy = (float) (sin(toRadians(random.nextFloat() * 360)) * (random.nextFloat() * 10));
+        vx = (float) (cos(toRadians(random.nextFloat() * 360f)) * (random.nextFloat() * 10f));
+        vy = (float) (sin(toRadians(random.nextFloat() * 360f)) * (random.nextFloat() * 10f));
     }
 
     public Molecule(float x, float y, float radius) {
         this.radius = radius;
         this.x = x;
         this.y = y;
-        this.vx = (float) (cos(toRadians(random.nextFloat() * 360)) * (random.nextFloat() * 10));
-        this.vy = (float) (sin(toRadians(random.nextFloat() * 360)) * (random.nextFloat() * 10));
+        this.vx = (float) (cos(toRadians(random.nextFloat() * 360f)) * (random.nextFloat() * 10f));
+        this.vy = (float) (sin(toRadians(random.nextFloat() * 360f)) * (random.nextFloat() * 10f));
     }
 
     public Molecule(float x, float y, float vx, float vy, float radius) {

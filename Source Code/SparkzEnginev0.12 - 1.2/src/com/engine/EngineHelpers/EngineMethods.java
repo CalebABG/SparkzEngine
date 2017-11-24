@@ -7,10 +7,7 @@ import com.engine.ParticleTypes.Particle;
 import com.engine.ThinkingParticles.SCCycle;
 import com.engine.Utilities.ColorUtility;
 import com.engine.Utilities.InputGuard;
-import com.engine.Verlet.Physics;
-import com.engine.Verlet.VModes;
-import com.engine.Verlet.VPHandler;
-import com.engine.Verlet.VSim;
+import com.engine.Verlet.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -914,8 +911,11 @@ public class EngineMethods {
      * Renders all the particles in their respective ArrayLists and updates + renders Ragdoll physics.
      */
     public static void handleRenders() {
-        if (ENGINE_MODE == GRAPH_MODE) graphics2D.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
-        else graphics2D.translate(0, 0);
+        if (ENGINE_MODE == GRAPH_MODE)
+            graphics2D.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
+        else
+            graphics2D.translate(0, 0);
+
         try {
             if (ENGINE_MODE == RAGDOLL_MODE) {
                 if (VSim.DEBUG_MODE) VSim.debugPhysics();

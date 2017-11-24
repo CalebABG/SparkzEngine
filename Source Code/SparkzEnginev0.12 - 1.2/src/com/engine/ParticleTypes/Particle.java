@@ -17,6 +17,7 @@ import static com.engine.GUIWindows.OrganicForces.*;
 import static com.engine.ParticleHelpers.DrawModes.giveStyle;
 import static com.engine.ParticleHelpers.ParticleModes.fireworksMode;
 import static com.engine.Verlet.Vect2.clamp;
+import static com.engine.Verlet.Vect2.map;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public class Particle extends Molecule implements ThinkingColors {
@@ -30,7 +31,7 @@ public class Particle extends Molecule implements ThinkingColors {
 
     public Particle(float x, float y, float radius, float speed, int pX, int pY, int tX, int tY) {
         super(x, y, (float) cos(atan2(toRadians(tY - pY), toRadians(tX - pX))) * speed,
-                (float) sin(atan2(toRadians(tY - pY), toRadians(tX - pX))) * speed, radius);
+                    (float) sin(atan2(toRadians(tY - pY), toRadians(tX - pX))) * speed, radius);
     }
 
     public Particle(float x, float y, float radius) {
@@ -49,13 +50,18 @@ public class Particle extends Molecule implements ThinkingColors {
         if (PARTICLE_GRAVITATION_MODE == ORGANIC && ParticlesArray.size() <= 850) {
             ParticleGraph.engine.put("x", angle);
 
-            vx = ParticleGraph.guardDouble(expressionForceX, ParticleGraph.engine);
-            vy = ParticleGraph.guardDouble(expressionForceY, ParticleGraph.engine);
+            Float tvx = ParticleGraph.evaluateExpr(ParticleGraph.engine, expressionForceX,false);
+            Float tvy = ParticleGraph.evaluateExpr(ParticleGraph.engine, expressionForceY,false);
+
+            vx = tvx == null ? vx : tvx;
+            vy = tvy == null ? vy : tvy;
 
             angle += angleIncrement;
-            if (angle >= 1000 * PI * angleIncrement) angle = 0.0f;
+
+            if (angle >= 1000 * (2 * PI) * angleIncrement) angle = 0.0f;
         }
-        else if (PARTICLE_GRAVITATION_MODE == FLOW_FIELD) {
+        else if (PARTICLE_GRAVITATION_MODE == FLOW_FIELD)
+        {
             float a = (float) (Noise.gradientCoherentNoise3D(
                                 x * FlowFieldUI.noiseX,
                                 y * FlowFieldUI.noiseY,
@@ -149,13 +155,13 @@ public class Particle extends Molecule implements ThinkingColors {
         for (int i = 0; i < ParticlesArray.size(); i++) {
             Particle particle = ParticlesArray.get(i);
             graphics2D.setColor(particle.color);
-            graphics2D.drawLine(particle.getX(), particle.getY(), getX(), getY());
+            graphics2D.drawLine((int) particle.x, (int) particle.y, (int) x, (int) y);
         }
     }
     private void connectSequential() {
-        Particle p2 = ParticlesArray.get(clamp(ParticlesArray.indexOf(this) + 1, 0, ParticlesArray.size() - 1));
+        Particle p2 = ParticlesArray.get((ParticlesArray.indexOf(this) + 1) % ParticlesArray.size());
         graphics2D.setColor(color);
-        graphics2D.drawLine(p2.getX(), p2.getY(), getX(), getY());
+        graphics2D.drawLine((int) p2.x, (int) p2.y, (int) x, (int) y);
     }
 
     public void boundsCheck() {
@@ -192,7 +198,18 @@ public class Particle extends Molecule implements ThinkingColors {
     }
 
     public void update() {
-        if (MOUSE_GRAVITATION.value()) gravitateTo(Mouse.x, Mouse.y);
+        if (MOUSE_GRAVITATION.value()){
+            if (ENGINE_MODE == GRAPH_MODE) {
+                int cw = canvas.getWidth();
+                int ch = canvas.getHeight();
+
+                int mx = (int) map(Mouse.x, 0, cw, -cw / 2, cw / 2);
+                int my = (int) map(Mouse.y, 0, ch, -ch / 2, ch / 2);
+
+                gravitateTo(mx, my);
+            }
+            else gravitateTo(Mouse.x, Mouse.y);
+        }
 
         accelerate();
 

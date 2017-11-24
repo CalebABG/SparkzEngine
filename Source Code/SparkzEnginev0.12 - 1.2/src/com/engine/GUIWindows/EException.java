@@ -68,8 +68,10 @@ public class EException {
 
     public static void append(Exception e) {
         textArea.append(new SimpleDateFormat("h:mm:ss a").format(new Date()) + " - " + logException(e) + "\n");
-//        textArea.append(new SimpleDateFormat("h:mm:ss a").format(new Date())).append(" - ").append(logException(except)).append("\n");
-//        textArea.setText(logString.toString());
+    }
+
+    public static void append(String text) {
+        textArea.append(text + '\n');
     }
 
     private void close() {

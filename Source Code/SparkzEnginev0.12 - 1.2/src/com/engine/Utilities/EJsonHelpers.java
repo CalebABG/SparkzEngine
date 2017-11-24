@@ -120,7 +120,7 @@ public class EJsonHelpers {
             int i = 0;
             for (Entry<String, JsonElement> element : intsKey.entrySet()) {
                 i++;
-                // Offset Setting Properties because indexes 0-5 are not enum values
+                // Offset Setting Properties because indexes 0-5
                 if (i > 5){
                     EINTS.valueOf(element.getKey())
                             .setValue(element.getValue().getAsInt());

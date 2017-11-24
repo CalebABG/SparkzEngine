@@ -138,6 +138,6 @@ public class DrawModes {
     }
 
     private static void DrawQuads(GravityPoint gpoint, float x, float y) {
-        graphics2D.draw(new QuadCurve2D.Float(gpoint.getX(), gpoint.getY(), gpoint.x, y, x, y));
+        graphics2D.draw(new QuadCurve2D.Float(gpoint.x, gpoint.y, gpoint.x, y, x, y));
     }
 }

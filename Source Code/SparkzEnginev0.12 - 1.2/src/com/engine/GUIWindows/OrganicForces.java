@@ -179,19 +179,11 @@ public class OrganicForces {
         String fxText = forceXTextField.getText();
         String fyText = forceYTextField.getText();
         String axText = angleIncrementTextField.getText();
-        float tempAngleIncrement;
+        float tempAngleIncrement = ParticleGraph.guardDouble(axText, ParticleGraph.engine, angleIncrementTextField);
 
-        try {
-            ParticleGraph.tryEval(fxText, ParticleGraph.engine, forceXTextField);
-            ParticleGraph.tryEval(fyText, ParticleGraph.engine, forceYTextField);
-            tempAngleIncrement = ParticleGraph.tryEval(axText, ParticleGraph.engine, angleIncrementTextField);
-
-            expressionForceX = fxText;
-            expressionForceY = fyText;
-            angleIncrement = tempAngleIncrement;
-            withError = false;
-        }
-        catch (Exception e){EException.append(e); withError = true;}
+        expressionForceX = fxText;
+        expressionForceY = fyText;
+        angleIncrement = tempAngleIncrement;
     }
 
     private void close(){customForces = null; frame.dispose();}

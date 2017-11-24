@@ -18,7 +18,6 @@ public class GUIText {
 
     public static String getHtml(String file){
         try (BufferedReader br = new BufferedReader(new InputStreamReader(GUIText.class.getResourceAsStream(file)))){
-//        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))){
             StringBuilder lines = new StringBuilder(1024);
             String line;
             while ((line = br.readLine()) != null) lines.append(line);

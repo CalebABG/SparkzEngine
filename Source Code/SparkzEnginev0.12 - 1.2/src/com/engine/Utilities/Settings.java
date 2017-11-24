@@ -18,6 +18,7 @@ import static com.engine.Utilities.ColorUtility.fromHex;
 public class Settings {
     public static Image iconImage = toolkit.getImage(Settings.class.getResource("/EngineLogo.png"));
     public static Image splashImage = toolkit.getImage(Settings.class.getResource("/EngineSplash.png"));
+
     public static String folder_name = "SparkzEngineSettings";
     public static String settings_file_name = "EngineSettings.json";
     public static String colors_file_name = "SavedColors.txt";
@@ -48,9 +49,7 @@ public class Settings {
     public static void saveColors(String color_string) {
         try(Writer writer = new OutputStreamWriter(new FileOutputStream(colors_file_path, true), "UTF-8"))
         {
-            File directory = new File(engine_settings_folder_path);
-            if (!directory.exists()) directory.mkdir();
-
+            new File("./" + folder_name).mkdir();
             if (color_string != null) writer.write(color_string + '\n');
             else writer.write(ColorUtility.getThinkingParticlesStrings(ThinkingColors.COLORS) + '\n');
         }
@@ -71,12 +70,8 @@ public class Settings {
     }
 
     public static void saveSettings() {
-        File directory = new File(engine_settings_folder_path);
-        if (!directory.exists()) {
-            directory.mkdir();
-            EJsonHelpers.writeEngineSettingsJson();
-        }
-        else EJsonHelpers.writeEngineSettingsJson();
+        new File("./" + folder_name).mkdir();
+        EJsonHelpers.writeEngineSettingsJson();
     }
 
     public static void loadSettings() {

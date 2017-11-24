@@ -26,7 +26,7 @@ public class Ion extends Molecule {
             if (isMouseOver) {
                 ion.color = hover;
                 graphics2D.setColor(Color.orange);
-                graphics2D.drawLine(ion.getX(), ion.getY(), getX(), getY());
+                graphics2D.drawLine((int) ion.x, (int) ion.y, (int) x, (int) y);
             }
             else ion.color = Color.white;
 

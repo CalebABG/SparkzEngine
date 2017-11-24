@@ -42,22 +42,20 @@ public class Physics {
 
             // Check whether the list of constraints is empty; check if the point has any constrains (if the first index in the array
             // is not -1; and check whether to show the constraint at all (checkbox)
-            if (!selectedPointConstraintList.isEmpty() && (selectedPointConstraintList.get(0) != -1) && showselectionconstraint_checkbox.isSelected())
-            {
+            if (!selectedPointConstraintList.isEmpty() && (selectedPointConstraintList.get(0) != -1) && showselectionconstraint_checkbox.isSelected()) {
                 for (int i = 0; i < selectedPointConstraintList.size(); i++) {
                     Vertex constraintPoint = selectedVertex.edges.get(selectedPointConstraintList.get(i)).p2;
 
                     graphics2D.setColor(Color.red);
-                    graphics2D.draw(new Line2D.Float(selectedVertex.currX, selectedVertex.currY, constraintPoint.currX, constraintPoint.currY));
+                    graphics2D.drawLine((int)selectedVertex.currX, (int)selectedVertex.currY, (int)constraintPoint.currX, (int)constraintPoint.currY);
 
                     float scale = 3.0f;
                     graphics2D.setColor(Color.red);
-                    graphics2D.draw(new Ellipse2D.Float(
-                            constraintPoint.currX - ((scale / 2) * constraintPoint.radius),
-                            constraintPoint.currY - ((scale / 2) * constraintPoint.radius),
-                            scale * constraintPoint.radius,
-                            scale * constraintPoint.radius)
-                    );
+                    graphics2D.drawOval(
+                            (int) (constraintPoint.currX - ((scale / 2) * constraintPoint.radius)),
+                            (int) (constraintPoint.currY - ((scale / 2) * constraintPoint.radius)),
+                            (int) (scale * constraintPoint.radius),
+                            (int) (scale * constraintPoint.radius));
                 }
             }
         }
@@ -94,14 +92,15 @@ public class Physics {
                 //  Check the distance between a given point in the list and the mouse. If the mouse point (x, y) is within the radius
                 //  of the given point in the list, then we've found a point to drag. Set the dragPoint variable to that point and break out of searching
                 else {
-                    for (int i = 0; i < Vertices.size(); i++) {
+                    boolean found = false;
+                    for (int i = 0; i < Vertices.size() && !found; i++) {
                         Vertex searchVertex = Vertices.get(i);
                         if (searchVertex.contains(Mouse.x, Mouse.y)) {
                             dragVertex = searchVertex;
                             selectedVertex = searchVertex;
                             VPhysicsEditor.setObjectPropertiesOnSelect(selectedVertex);
                             VPhysicsEditor.updateJListConstraints(selectedVertex.edges);
-                            break;
+                            found = true;
                         }
                     }
                 }
@@ -144,6 +143,7 @@ public class Physics {
     }
 
     private static void integrate() {
-        for (int i = 0; i < Vertices.size(); i++) Vertices.get(i).accelerate();
+        for (int i = 0; i < Vertices.size(); i++)
+            Vertices.get(i).accelerate();
     }
 }
