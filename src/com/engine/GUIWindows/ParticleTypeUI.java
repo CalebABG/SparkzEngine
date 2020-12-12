@@ -23,7 +23,11 @@ public class ParticleTypeUI {
     }
 
     private ParticleTypeUI(int type, String title) {
-        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){EException.append(e);}
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            EException.append(e);
+        }
         frame = new JFrame(title);
         frame.setIconImage(Settings.iconImage);
         frame.setSize(320, 520);
@@ -45,7 +49,10 @@ public class ParticleTypeUI {
         textField = new JTextField();
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setFont(new Font(Font.SERIF, Font.PLAIN, 17));
-        textField.addKeyListener(new KAdapter(e -> {if (e.getKeyCode() == KeyEvent.VK_ENTER) getOption(type);}, e -> {}));
+        textField.addKeyListener(new KAdapter(e -> {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) getOption(type);
+        }, e -> {
+        }));
         jPanel1.add(textField, BorderLayout.CENTER);
 
         frame.add(jPanel1, BorderLayout.PAGE_END);
@@ -59,21 +66,26 @@ public class ParticleTypeUI {
         frame.setVisible(true);
     }
 
-    private void getOption(int type){
+    private void getOption(int type) {
         if (!textField.getText().isEmpty()) {
             try {
                 if (type == 0) {
                     if (InputGuard.canParseStringInt(textField.getText())) {
                         ParticleTypeOptions.baseParticleOptions(Integer.parseInt(textField.getText()));
                     }
-                }
-                else if (type == 1) {
+                } else if (type == 1) {
                     if (InputGuard.canParseStringInt(textField.getText())) {
                         ParticleTypeOptions.realFireworksOptions(Integer.parseInt(textField.getText()));
                     }
                 }
-            }catch (Exception ex){EException.append(ex);}
+            } catch (Exception ex) {
+                EException.append(ex);
+            }
         }
     }
-    private void close(int index){particleTypeUIs[index] = null; frame.dispose();}
+
+    private void close(int index) {
+        frame.dispose();
+        particleTypeUIs[index] = null;
+    }
 }

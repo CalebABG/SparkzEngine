@@ -2,6 +2,7 @@ package com.engine.InputHandlers;
 
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+
 import static com.engine.EngineHelpers.EINTS.PARTICLE_DRAG_AMOUNT;
 
 public class MWheelListener implements MouseWheelListener {

@@ -64,7 +64,9 @@ public class KHandler extends KeyAdapter {
         }
 
         //Force Quit
-        if (e.isShiftDown() && e.isControlDown() && e.getKeyCode() == KeyEvent.VK_Q) {System.exit(0);}
+        if (e.isShiftDown() && e.isControlDown() && e.getKeyCode() == KeyEvent.VK_Q) {
+            System.exit(0);
+        }
     }
 
     public void keyReleased(KeyEvent e) {
@@ -146,7 +148,7 @@ public class KHandler extends KeyAdapter {
         }
 
         //Keyboard button: C
-        if (key == KeyEvent.VK_C){
+        if (key == KeyEvent.VK_C) {
             EngineMethods.clearParticleArrays();
         }
 

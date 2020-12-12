@@ -5,8 +5,10 @@ import com.engine.JComponents.CTextField;
 import com.engine.JComponents.RButton;
 import com.engine.JComponents.RLabel;
 import com.engine.Utilities.Settings;
+
 import javax.swing.*;
 import java.awt.*;
+
 import static com.engine.EngineHelpers.EFLOATS.*;
 import static com.engine.Utilities.InputGuard.stringNotNull;
 
@@ -18,11 +20,18 @@ public class ParticleSpeedSeed {
     //public static void main(String[] args) {getInstance(0);}
 
     public static void getInstance(int type) {
-        if (particleSpeedSeed == null) {particleSpeedSeed = new ParticleSpeedSeed(type);} frame.toFront();
+        if (particleSpeedSeed == null) {
+            particleSpeedSeed = new ParticleSpeedSeed(type);
+        }
+        frame.toFront();
     }
 
     private ParticleSpeedSeed(int type) {
-        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){EException.append(e);}
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            EException.append(e);
+        }
         frame = new JFrame(setTitle(type));
         frame.setIconImage(Settings.iconImage);
         frame.setSize(402, 145);
@@ -71,15 +80,20 @@ public class ParticleSpeedSeed {
         try {
             if (type == 0) {
                 SINGLE_CLICK_SPEED.setValue(stringNotNull(speedTextField.getText()) ? Float.parseFloat(speedTextField.getText()) : SINGLE_CLICK_SPEED.value());
-            }
-            else if (type == 1) {
+            } else if (type == 1) {
                 FIREWORKS_SPEED.setValue(stringNotNull(speedTextField.getText()) ? Float.parseFloat(speedTextField.getText()) : FIREWORKS_SPEED.value());
-            }
-            else if (type == 2) {
+            } else if (type == 2) {
                 PARTICLE_DRAG_SPEED.setValue(stringNotNull(speedTextField.getText()) ? Float.parseFloat(speedTextField.getText()) : PARTICLE_DRAG_SPEED.value());
             }
-        } catch (Exception e){EException.append(e);}  finally {close();}
+        } catch (Exception e) {
+            EException.append(e);
+        } finally {
+            close();
+        }
     }
 
-    private void close(){particleSpeedSeed = null; frame.dispose();}
+    private void close() {
+        frame.dispose();
+        particleSpeedSeed = null;
+    }
 }

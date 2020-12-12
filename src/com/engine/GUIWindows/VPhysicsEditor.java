@@ -9,11 +9,13 @@ import com.engine.Verlet.Edge;
 import com.engine.Verlet.VModes;
 import com.engine.Verlet.VSim;
 import com.engine.Verlet.Vertex;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+
 import static com.engine.EngineHelpers.EBOOLS.ENGINE_ENABLE_SMOOTH_RENDER;
 import static com.engine.Verlet.VSim.selectedVertex;
 
@@ -30,12 +32,14 @@ public class VPhysicsEditor {
 
     public static DefaultListModel<Integer> listModel = new DefaultListModel<>();
     public static JCheckBox showselectionconstraint_checkbox = new JCheckBox("Show Constraint"),
-                            constraintdrawlink_checkbox = new JCheckBox("Draw Link"),
-                            constrainttearable_checkbox = new JCheckBox("Tearable"),
-                            selectionshowpoint_checkbox = new JCheckBox("Show Point"),
-                            selectioncollidable_checkbox = new JCheckBox("Collidable");
+            constraintdrawlink_checkbox = new JCheckBox("Draw Link"),
+            constrainttearable_checkbox = new JCheckBox("Tearable"),
+            selectionshowpoint_checkbox = new JCheckBox("Show Point"),
+            selectioncollidable_checkbox = new JCheckBox("Collidable");
 
-    static {listModel.addElement(-1);}
+    static {
+        listModel.addElement(-1);
+    }
 
     public static JList<Integer> constraintJlist = new JList<>(listModel);
     public static JComboBox<VModes.EditorModes> editorModesJComboBox = new JComboBox<>();
@@ -43,7 +47,7 @@ public class VPhysicsEditor {
     public static JTextField simacc_field = new JTextField(10),
             dragforce_field = new JTextField(10),
             gravity_field = new JTextField(10),
-            numpoints_field = new JTextField("4",10),
+            numpoints_field = new JTextField("4", 10),
             objectsize_field = new JTextField(10),
             dampening_field = new JTextField(10),
             objectmass_field = new JTextField(10),
@@ -67,7 +71,11 @@ public class VPhysicsEditor {
     }
 
     public VPhysicsEditor(JFrame parent) {
-        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){EException.append(e);}
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            EException.append(e);
+        }
         frame = new JFrame("Verlet Physics Editor");
         frame.setIconImage(Settings.iconImage);
         frame.setSize(568, 610);
@@ -476,7 +484,7 @@ public class VPhysicsEditor {
         gbc_pointcolor_label.gridy = 6;
         addmode_panel.add(pointcolor_label, gbc_pointcolor_label);
 
-        pointcolor_panel = new CLabel(Color.GREEN, 1);
+        pointcolor_panel = new CLabel(Color.GREEN, false);
         pointcolor_panel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 Color default_c = pointcolor_panel.getBackground();
@@ -501,7 +509,7 @@ public class VPhysicsEditor {
         gbc_linkcolor_label.gridy = 6;
         addmode_panel.add(linkcolor_label, gbc_linkcolor_label);
 
-        linkcolor_panel = new CLabel(Color.PINK, 1);
+        linkcolor_panel = new CLabel(Color.PINK, false);
         linkcolor_panel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 Color default_c = linkcolor_panel.getBackground();
@@ -560,7 +568,7 @@ public class VPhysicsEditor {
         gbc_objectcolor_label.gridy = 1;
         selection_panel.add(objectcolor_label, gbc_objectcolor_label);
 
-        selectioncolor_panel = new CLabel(Color.CYAN, 1);
+        selectioncolor_panel = new CLabel(Color.CYAN, false);
         selectioncolor_panel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 Color default_c = selectioncolor_panel.getBackground();
@@ -659,7 +667,7 @@ public class VPhysicsEditor {
         selection_panel.add(objectsetproperties_button, gbc_objectsetproperties_button);
 
         JLabel lblConstraintProperties = new JLabel("<html><h3>Selection Constraint Properties <br> <span style='color: green'>Green = Selected Point</span>" +
-                                                                                                    " <br> <span style='color: red'>Red = Selected Constraint</span></h3></html>");
+                " <br> <span style='color: red'>Red = Selected Constraint</span></h3></html>");
         lblConstraintProperties.setFont(font);
         GridBagConstraints gbc_lblConstraintProperties = new GridBagConstraints();
         gbc_lblConstraintProperties.insets = new Insets(0, 0, 5, 0);
@@ -800,7 +808,7 @@ public class VPhysicsEditor {
         gbc_label_3.gridy = 4;
         panel.add(constraint_link_color_label, gbc_label_3);
 
-        constraint_link_panel = new CLabel(Color.BLUE, 1);
+        constraint_link_panel = new CLabel(Color.BLUE, false);
         constraint_link_panel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 Color default_c = constraint_link_panel.getBackground();
@@ -855,13 +863,13 @@ public class VPhysicsEditor {
 
             List<Integer> selectedValues = constraintJlist.getSelectedValuesList();
 
-            if (!selectedValues.isEmpty()){
+            if (!selectedValues.isEmpty()) {
                 for (int i = 0; i < selectedValues.size(); i++) {
                     Edge c = selectedVertex.edges.get(selectedValues.get(i));
 
                     c.drawThis = constraintdrawlink_checkbox.isSelected();
                     c.tearable = constrainttearable_checkbox.isSelected();
-                    c.color    = constraint_link_panel.getBackground();
+                    c.color = constraint_link_panel.getBackground();
                     c.stiffness = InputGuard.floatTextfieldGuardDefault(0.0f, c.stiffness, cStiffness);
                     c.tearSensitivity = InputGuard.floatTextfieldGuardDefault(0.0f, c.tearSensitivity, cTeardist);
                 }
@@ -869,7 +877,7 @@ public class VPhysicsEditor {
         }
     }
 
-    public static void unsetObjectPropertiesOnDeselect(){
+    public static void unsetObjectPropertiesOnDeselect() {
         if (vPhysicsEditorInstance != null) {
             selectiondampening_field.setText("");
             selectionmass_field.setText("");
@@ -878,7 +886,7 @@ public class VPhysicsEditor {
         }
     }
 
-    public static void setObjectPropertiesOnSelect(Vertex v){
+    public static void setObjectPropertiesOnSelect(Vertex v) {
         if (vPhysicsEditorInstance != null) {
             selectioncolor_panel.setBackground(v.color);
             selectioncollidable_checkbox.setSelected(v.collidable);
@@ -906,8 +914,8 @@ public class VPhysicsEditor {
     }
 
     private void close() {
-        vPhysicsEditorInstance = null;
         frame.dispose();
+        vPhysicsEditorInstance = null;
     }
 
     public static void updateJListConstraints(List<Edge> edgeList) {

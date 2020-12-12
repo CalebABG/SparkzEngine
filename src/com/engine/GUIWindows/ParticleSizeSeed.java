@@ -5,6 +5,7 @@ import com.engine.JComponents.CTextField;
 import com.engine.JComponents.RButton;
 import com.engine.JComponents.RLabel;
 import com.engine.Utilities.Settings;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -25,7 +26,11 @@ public class ParticleSizeSeed {
 
     // Type == 0 : singleClickSize; Type == 1 : fireworksSize; Type == 2 : dragSize
     private ParticleSizeSeed(int type) {
-        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){EException.append(e);}
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            EException.append(e);
+        }
         frame = new JFrame(setTitle(type));
         frame.setIconImage(Settings.iconImage);
         frame.setSize(402, 215);
@@ -83,17 +88,22 @@ public class ParticleSizeSeed {
             if (type == 0) {
                 SINGLE_CLICK_SIZE_MIN.setValue(stringNotNull(minTextField.getText()) ? Float.parseFloat(minTextField.getText()) : SINGLE_CLICK_SIZE_MIN.value());
                 SINGLE_CLICK_SIZE_MAX.setValue(stringNotNull(maxTextField.getText()) ? Float.parseFloat(maxTextField.getText()) : SINGLE_CLICK_SIZE_MAX.value());
-            }
-            else if (type == 1) {
+            } else if (type == 1) {
                 FIREWORKS_SIZE_MIN.setValue(stringNotNull(minTextField.getText()) ? Float.parseFloat(minTextField.getText()) : FIREWORKS_SIZE_MIN.value());
                 FIREWORKS_SIZE_MAX.setValue(stringNotNull(maxTextField.getText()) ? Float.parseFloat(maxTextField.getText()) : FIREWORKS_SIZE_MAX.value());
-            }
-            else if (type == 2) {
+            } else if (type == 2) {
                 PARTICLE_DRAG_SIZE_MIN.setValue(stringNotNull(minTextField.getText()) ? Float.parseFloat(minTextField.getText()) : PARTICLE_DRAG_SIZE_MIN.value());
                 PARTICLE_DRAG_SIZE_MAX.setValue(stringNotNull(maxTextField.getText()) ? Float.parseFloat(maxTextField.getText()) : PARTICLE_DRAG_SIZE_MAX.value());
             }
-        } catch (Exception e){EException.append(e);}  finally {close();}
+        } catch (Exception e) {
+            EException.append(e);
+        } finally {
+            close();
+        }
     }
 
-    private void close(){particleSizeSeed = null; frame.dispose();}
+    private void close() {
+        frame.dispose();
+        particleSizeSeed = null;
+    }
 }

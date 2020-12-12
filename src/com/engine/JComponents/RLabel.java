@@ -3,7 +3,7 @@ package com.engine.JComponents;
 import javax.swing.*;
 import java.awt.*;
 
-public class RLabel extends JLabel{
+public class RLabel extends JLabel {
     public String text;
     public Font font;
     public GridBagConstraints gridBagConstraints = new GridBagConstraints();

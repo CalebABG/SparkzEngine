@@ -3,10 +3,12 @@ package com.engine.GUIWindows;
 import com.engine.J8Helpers.Extensions.WindowClosing;
 import com.engine.JComponents.CLabel;
 import com.engine.Utilities.Settings;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import static com.engine.EngineHelpers.EConstants.EFrame;
 
 public class QuitWindow {
@@ -45,9 +47,17 @@ public class QuitWindow {
         CLabel label2 = new CLabel(new Rectangle(20, (frame.getHeight() / 2) - 26, 90, 50), "Yes", font, Color.white, option_yes);
 
         label2.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {System.exit(0);}
-            public void mouseEntered(MouseEvent e) {label2.setBackground(option_yes.brighter());}
-            public void mouseExited(MouseEvent e) {label2.setBackground(option_yes.darker());}
+            public void mouseClicked(MouseEvent e) {
+                System.exit(0);
+            }
+
+            public void mouseEntered(MouseEvent e) {
+                label2.setBackground(option_yes.brighter());
+            }
+
+            public void mouseExited(MouseEvent e) {
+                label2.setBackground(option_yes.darker());
+            }
         });
 
         panel.add(label2);
@@ -55,14 +65,25 @@ public class QuitWindow {
         CLabel label3 = new CLabel(new Rectangle(frame.getWidth() - 109, (frame.getHeight() / 2) - 26, 90, 50), "No", font, Color.white, option_no);
 
         label3.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {close();}
-            public void mouseEntered(MouseEvent e) {label3.setBackground(option_no.brighter());}
-            public void mouseExited(MouseEvent e) {label3.setBackground(option_no.darker());}
+            public void mouseClicked(MouseEvent e) {
+                close();
+            }
+
+            public void mouseEntered(MouseEvent e) {
+                label3.setBackground(option_no.brighter());
+            }
+
+            public void mouseExited(MouseEvent e) {
+                label3.setBackground(option_no.darker());
+            }
         });
 
         panel.add(label3);
         frame.setVisible(true);
     }
 
-    public void close(){exitScreen = null; frame.dispose();}
+    public void close() {
+        frame.dispose();
+        exitScreen = null;
+    }
 }

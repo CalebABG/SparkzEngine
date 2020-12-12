@@ -16,18 +16,36 @@ public enum EBOOLS {
     TOGGLE_GRAVITYPOINTS_LINK_RENDER(false),
     TOGGLE_PARTICLE_LINK_RENDER(false),
     TOGGLE_DUPLEX_MODE(false),
-    ENGINE_ENABLE_SMOOTH_RENDER(false)
-    ;
+    ENGINE_ENABLE_SMOOTH_RENDER(false);
 
     private boolean value;
     public boolean exclude = false;
 
-    EBOOLS(){}
-    EBOOLS(boolean val) {this.value = val;}
-    EBOOLS(boolean val, boolean exclude) {this.value = val; this.exclude = exclude;}
+    EBOOLS() {
+    }
 
-    public void toggleValue(){this.value = !this.value;}
-    public void setValue(boolean val){value = val;}
-    public boolean value() {return value;}
-    public String valueS(){return ""+value;}
+    EBOOLS(boolean val) {
+        this.value = val;
+    }
+
+    EBOOLS(boolean val, boolean exclude) {
+        this.value = val;
+        this.exclude = exclude;
+    }
+
+    public void toggleValue() {
+        this.value = !this.value;
+    }
+
+    public void setValue(boolean val) {
+        value = val;
+    }
+
+    public boolean value() {
+        return value;
+    }
+
+    public String valueS() {
+        return "" + value;
+    }
 }

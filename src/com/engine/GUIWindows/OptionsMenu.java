@@ -25,7 +25,11 @@ public class OptionsMenu {
     }
 
     private OptionsMenu() {
-        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){EException.append(e);}
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            EException.append(e);
+        }
         frame = new JFrame("Options Menu");
         frame.setIconImage(Settings.iconImage);
         frame.setSize(495, 480);
@@ -42,13 +46,19 @@ public class OptionsMenu {
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setFont(new Font(Font.SERIF, Font.PLAIN, 17));
         //Needs to be keyPressed() handler - keyReleased() will cause windows to display twice
-        textField.addKeyListener(new KAdapter.KeyPressed(e -> {if (e.getKeyCode() == KeyEvent.VK_ENTER) getOption();}));
+        textField.addKeyListener(new KAdapter.KeyPressed(e -> {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) getOption();
+        }));
         jPanel1.add(textField, BorderLayout.CENTER);
 
         JButton jButton1 = new JButton();
         jButton1.setFont(new Font(Font.SERIF, Font.BOLD, 14));
         jButton1.setText("Enter");
-        jButton1.addActionListener(e -> {if (e.getSource() == jButton1) {getOption();}});
+        jButton1.addActionListener(e -> {
+            if (e.getSource() == jButton1) {
+                getOption();
+            }
+        });
         jPanel1.add(jButton1, BorderLayout.LINE_END);
 
         frame.add(jPanel1, BorderLayout.PAGE_END);
@@ -69,7 +79,7 @@ public class OptionsMenu {
     }
 
     private void close() {
-        optionsMenu = null;
         frame.dispose();
+        optionsMenu = null;
     }
 }

@@ -36,7 +36,11 @@ public class SettingsEditor {
     }
 
     private SettingsEditor() {
-        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){EException.append(e);}
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            EException.append(e);
+        }
         frame = new JFrame("Settings Editor");
         frame.setIconImage(Settings.iconImage);
         frame.setSize(670, 500);
@@ -64,7 +68,10 @@ public class SettingsEditor {
         JButton setSettingsBtn = new JButton("Set Settings");
         setSettingsBtn.setMargin(new Insets(1, 1, 1, 1));
         setSettingsBtn.setFont(menuFont);
-        setSettingsBtn.addActionListener(e -> {setSettings(); updateAllRadios();});
+        setSettingsBtn.addActionListener(e -> {
+            setSettings();
+            updateAllRadios();
+        });
         menuBar.add(setSettingsBtn);
 
         menuBar.add(Box.createHorizontalStrut(8));
@@ -352,12 +359,11 @@ public class SettingsEditor {
         TOGGLE_DUPLEX_MODE.setValue(getBoolFromString(TOGGLE_DUPLEX_MODE.value(), textFields[31].getText()));
     }
 
-    private static int constrain(int min, int max, int def, String s){
-        if (!s.isEmpty() && InputGuard.canParseStringInt(s)){
+    private static int constrain(int min, int max, int def, String s) {
+        if (!s.isEmpty() && InputGuard.canParseStringInt(s)) {
             int val = Integer.parseInt(s);
             return EJsonHelpers.constrain(def, val, min, max);
-        }
-        else return def;
+        } else return def;
     }
 
     private static boolean getBoolFromString(boolean def, String input) {
@@ -410,7 +416,7 @@ public class SettingsEditor {
     }
 
     public void close() {
-        settingsEditor = null;
         frame.dispose();
+        settingsEditor = null;
     }
 }

@@ -4,6 +4,7 @@ import com.engine.ParticleTypes.*;
 import com.engine.Verlet.*;
 
 import java.awt.event.MouseEvent;
+
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EBOOLS.CONTROL_IS_DOWN;
 import static com.engine.EngineHelpers.EBOOLS.LEFT_MOUSE_IS_DOWN;
@@ -20,7 +21,7 @@ public class ParticleModes {
      * @param y Y currposition.
      */
     public static void singleParticle(int x, int y) {
-        Particle p = new Particle(x, y, (random.nextFloat()* SINGLE_CLICK_SIZE_MAX.value()) + SINGLE_CLICK_SIZE_MIN.value(),
+        Particle p = new Particle(x, y, (random.nextFloat() * SINGLE_CLICK_SIZE_MAX.value()) + SINGLE_CLICK_SIZE_MIN.value(),
                 random.nextFloat() * SINGLE_CLICK_SPEED.value(), random.nextFloat() * 361);
         ParticlesArray.add(p);
     }
@@ -66,7 +67,6 @@ public class ParticleModes {
      * Creates multiple particle objects (from Engine fireworks amount) at the currposition of the passed in x and y.
      *
      * @param x X currposition.
-     *
      * @param y Y currposition.
      */
     public static void fireworksMode(float x, float y) {
@@ -181,13 +181,18 @@ public class ParticleModes {
         }
     }
 
-    public static void multiGravityPoint(MouseEvent e, int amount) {for (int i = 0; i < amount; i++) singleGravityPoint(e);}
+    public static void multiGravityPoint(MouseEvent e, int amount) {
+        for (int i = 0; i < amount; i++) singleGravityPoint(e);
+    }
+
     public static void multiSemtex(MouseEvent e, int amount) {
         for (int i = 0; i < amount; i++) singleSemtex(e);
     }
+
     public static void multiQED(MouseEvent e, int amount) {
         for (int i = 0; i < amount; i++) singleQED(e);
     }
+
     public static void multiIon(MouseEvent e, int amount) {
         for (int i = 0; i < amount; i++) singleIon(e);
     }
@@ -200,17 +205,15 @@ public class ParticleModes {
             if (LEFT_MOUSE_IS_DOWN.value() && CONTROL_IS_DOWN.value()) {
                 VPHandler.dragMode(e);
             }
-        }
-        else {
+        } else {
             if (LEFT_MOUSE_IS_DOWN.value()) {
-                if (ENGINE_MODE == GRAPH_MODE){
+                if (ENGINE_MODE == GRAPH_MODE) {
                     for (int i = 0; i < PARTICLE_DRAG_AMOUNT.value(); i++) {
-                        float mouseX = Vect2.map(Mouse.x, 0, canvas.getWidth(), -canvas.getWidth() / 2, canvas.getWidth() / 2);
-                        float mouseY = Vect2.map(Mouse.y, 0, canvas.getHeight(), -canvas.getHeight() / 2, canvas.getHeight() / 2);
+                        float mouseX = Vect2.map(Mouse.x, 0, canvas.getWidth(), -canvas.getWidth() / 2.0f, canvas.getWidth() / 2.0f);
+                        float mouseY = Vect2.map(Mouse.y, 0, canvas.getHeight(), -canvas.getHeight() / 2.0f, canvas.getHeight() / 2.0f);
                         singleParticle(mouseX, mouseY, PARTICLE_DRAG_SIZE_MAX.value(), PARTICLE_DRAG_SIZE_MIN.value(), PARTICLE_DRAG_SPEED.value());
                     }
-                }
-                else{
+                } else {
                     for (int i = 0; i < PARTICLE_DRAG_AMOUNT.value(); i++) {
                         singleParticle(e, PARTICLE_DRAG_SIZE_MAX.value(), PARTICLE_DRAG_SIZE_MIN.value(), PARTICLE_DRAG_SPEED.value());
                     }
@@ -221,7 +224,7 @@ public class ParticleModes {
 
     /**
      * This method spawns a particle from half the screen width and the screen height-1 dimension.
-     *
+     * <p>
      * The particle accelerates in the direction (angle) calculated between the bottom of the screen and the location of the
      * mpt at the given moment.
      *
@@ -229,7 +232,7 @@ public class ParticleModes {
      */
     public static void fireworksTarget(MouseEvent e) {
         int w = canvas.getWidth(), h = canvas.getHeight();
-        ParticlesArray.add(new Particle((w / 2), (h - 1),
+        ParticlesArray.add(new Particle((w / 2.0f), (h - 1),
                 (random.nextFloat() * SINGLE_CLICK_SIZE_MAX.value()) + SINGLE_CLICK_SIZE_MIN.value(),
                 (random.nextFloat() * SINGLE_CLICK_SPEED.value()) + 3, (w / 2), (h - 1), e.getX(), e.getY()));
     }

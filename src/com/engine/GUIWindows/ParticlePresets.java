@@ -18,7 +18,11 @@ public class ParticlePresets {
     }
 
     private ParticlePresets() {
-        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){EException.append(e);}
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            EException.append(e);
+        }
         frame = new JFrame("Color Presets :D");
         frame.setIconImage(Settings.iconImage);
         frame.setSize(323, 290);
@@ -105,5 +109,8 @@ public class ParticlePresets {
         frame.setVisible(true);
     }
 
-    public void close(){scPresetsUI = null; frame.dispose();}
+    public void close() {
+        frame.dispose();
+        scPresetsUI = null;
+    }
 }

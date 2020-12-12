@@ -6,10 +6,12 @@ import com.engine.ParticleTypes.Interfaces.ThinkingColors;
 import com.engine.ThinkingParticles.SCChoices;
 import com.engine.Utilities.ColorUtility;
 import com.engine.Utilities.Settings;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
 import static com.engine.EngineHelpers.EConstants.EFrame;
 import static com.engine.Utilities.H5Util.HCenter;
 import static com.engine.Utilities.Settings.convertColors;
@@ -32,7 +34,11 @@ public class ColorTimeMachine {
     }
 
     private ColorTimeMachine() {
-        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){EException.append(e);}
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            EException.append(e);
+        }
         frame = new JFrame(title + " - Colors Seen: " + colorList.size());
         frame.setIconImage(Settings.iconImage);
         frame.setSize(688, 206);
@@ -182,7 +188,7 @@ public class ColorTimeMachine {
     }
 
     //Resource: http://www.nbdtech.com/Blog/archive/2008/04/27/Calculating-the-Perceived-Brightness-of-a-Color.aspx
-    public static int isDark(Color c){
+    public static int isDark(Color c) {
         return ((c.getRed() << 5) + (c.getGreen() << 6) + (c.getBlue() << 2)) / 100;
     }
 
@@ -194,8 +200,7 @@ public class ColorTimeMachine {
             if (isDark(lableBGColor) >= 55) {
                 label.setText(labelBGText);
                 label.setForeground(Color.black);
-            }
-            else {
+            } else {
                 label.setText(labelBGText);
                 label.setForeground(Color.white);
             }
@@ -247,5 +252,8 @@ public class ColorTimeMachine {
             setLabelsBackgroundColor(ThinkingColors.COLORS);
     }
 
-    private void close(){timeMachine = null; frame.dispose();}
+    private void close() {
+        frame.dispose();
+        timeMachine = null;
+    }
 }

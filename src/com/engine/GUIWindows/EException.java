@@ -27,7 +27,11 @@ public class EException {
     }
 
     private EException() {
-        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){EException.append(e);}
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            EException.append(e);
+        }
         frame = new JFrame("Exception Log");
         frame.setIconImage(Settings.iconImage);
         frame.setSize(430, 260);
@@ -75,7 +79,7 @@ public class EException {
     }
 
     private void close() {
-        logger = null;
         frame.dispose();
+        logger = null;
     }
 }

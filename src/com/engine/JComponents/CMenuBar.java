@@ -5,10 +5,12 @@ import com.engine.EngineHelpers.EngineMethods;
 import com.engine.GUIWindows.*;
 import com.engine.J8Helpers.Extensions.UIThread;
 import com.engine.Utilities.Settings;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import static com.engine.EngineHelpers.EBOOLS.ENGINE_IS_PAUSED;
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EngineMethods.createEngineInstructionsWindow;
@@ -23,12 +25,16 @@ public class CMenuBar extends JMenuBar {
     public static ArrayList<JMenu> menus = new ArrayList<>();
     public static ArrayList<JMenuItem> menuItems = new ArrayList<>();
 
-    public static JRadioButtonMenuItem[] pModes,pTypes, pGravModes;
+    public static JRadioButtonMenuItem[] pModes, pTypes, pGravModes;
     public static ButtonGroup particleModesGroup, particleTypesGroup, particleGravitationGroup;
 
     /*Note: Check that accelerators don't affect changing variables*/
-    public CMenuBar(){
-        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){EException.append(e);}
+    public CMenuBar() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            EException.append(e);
+        }
         this.setBorder(BorderFactory.createLineBorder(bgColor, 1, false));
         this.add(Box.createHorizontalStrut(11));
 
@@ -141,7 +147,11 @@ public class CMenuBar extends JMenuBar {
         menus.add(mnSettings);
 
         enginepause = new JMenuItem(isPaused());
-        enginepause.addActionListener(e -> {ENGINE_IS_PAUSED.toggleValue(); enginepause.setText(isPaused()); EngineMethods.setEngineTitleState();});
+        enginepause.addActionListener(e -> {
+            ENGINE_IS_PAUSED.toggleValue();
+            enginepause.setText(isPaused());
+            EngineMethods.setEngineTitleState();
+        });
         mnSettings.add(enginepause);
         menuItems.add(enginepause);
 
@@ -247,7 +257,13 @@ public class CMenuBar extends JMenuBar {
 
         if (System.getProperty("os.name").toLowerCase().contains("windows")) {
             JMenuItem accessibility = new JMenuItem("On-Screen Keyboard");
-            accessibility.addActionListener(e -> {try {Runtime.getRuntime().exec("cmd /c osk");} catch (Exception f) {EException.append(f);}});
+            accessibility.addActionListener(e -> {
+                try {
+                    Runtime.getRuntime().exec("cmd /c osk");
+                } catch (Exception f) {
+                    EException.append(f);
+                }
+            });
             mnHelp.add(accessibility);
             menuItems.add(accessibility);
         }
@@ -493,8 +509,13 @@ public class CMenuBar extends JMenuBar {
         updateState();
     }
 
-    private static String isPaused() {return ENGINE_IS_PAUSED.value() ? "Resume Engine" : "Pause Engine";}
-    public static void updateState() {enginepause.setText(isPaused());}
+    private static String isPaused() {
+        return ENGINE_IS_PAUSED.value() ? "Resume Engine" : "Pause Engine";
+    }
+
+    public static void updateState() {
+        enginepause.setText(isPaused());
+    }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

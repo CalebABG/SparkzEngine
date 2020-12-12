@@ -2,6 +2,7 @@ package com.engine.EngineHelpers;
 
 import com.engine.GUIWindows.EException;
 import com.engine.Utilities.Settings;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -16,7 +17,10 @@ public class EngineSplash extends JWindow {
     public EngineSplash(int d) {
         duration = d;
         addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {mpt.x = e.getX(); mpt.y = e.getY(); }
+            public void mousePressed(MouseEvent e) {
+                mpt.x = e.getX();
+                mpt.y = e.getY();
+            }
         });
         addMouseMotionListener(new MouseAdapter() {
             public void mouseDragged(MouseEvent e) {
@@ -30,13 +34,16 @@ public class EngineSplash extends JWindow {
         setContentPane(content);
         int w = 434;
         int h = 536;
-        Dimension screen =  toolkit.getScreenSize();
+        Dimension screen = toolkit.getScreenSize();
         int x = (screen.width - w) / 2;
         int y = (screen.height - h) / 2;
         setBounds(x, y, w, h);
         setVisible(true);
-        try {Thread.sleep(duration);}
-        catch (Exception e) {EException.append(e);}
+        try {
+            Thread.sleep(duration);
+        } catch (Exception e) {
+            EException.append(e);
+        }
         dispose();
     }
 

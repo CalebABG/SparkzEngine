@@ -18,18 +18,35 @@ public class KAdapter extends KeyAdapter {
         this.release_function = release_function;
     }
 
-    public void keyReleased(KeyEvent e) {release_function.accept(e);}
-    public void keyPressed(KeyEvent e) {pressed_function.accept(e);}
+    public void keyReleased(KeyEvent e) {
+        release_function.accept(e);
+    }
+
+    public void keyPressed(KeyEvent e) {
+        pressed_function.accept(e);
+    }
 
     public static class KeyPressed implements KeyAdapterX {
         private Consumer<KeyEvent> pressed;
-        public KeyPressed(Consumer<KeyEvent> pressed) { this.pressed = pressed; }
-        public void keyPressed(KeyEvent e) { pressed.accept(e); }
+
+        public KeyPressed(Consumer<KeyEvent> pressed) {
+            this.pressed = pressed;
+        }
+
+        public void keyPressed(KeyEvent e) {
+            pressed.accept(e);
+        }
     }
 
     public static class KeyReleased implements KeyAdapterX {
         private Consumer<KeyEvent> released;
-        public KeyReleased(Consumer<KeyEvent> released) { this.released = released; }
-        public void keyReleased(KeyEvent e) { released.accept(e); }
+
+        public KeyReleased(Consumer<KeyEvent> released) {
+            this.released = released;
+        }
+
+        public void keyReleased(KeyEvent e) {
+            released.accept(e);
+        }
     }
 }

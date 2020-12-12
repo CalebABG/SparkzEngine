@@ -24,7 +24,11 @@ public class SavedColorsLoader {
     }
 
     private SavedColorsLoader() {
-        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){EException.append(e);}
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            EException.append(e);
+        }
         frame = new JFrame();
         frame.setIconImage(Settings.iconImage);
         frame.setSize(523, 155);
@@ -93,8 +97,7 @@ public class SavedColorsLoader {
         if (Settings.userSavedColors.size() < 25) return 1;
         else if (Settings.userSavedColors.size() % 15 == 0) {
             return Settings.userSavedColors.size() / 15;
-        }
-        else return Settings.userSavedColors.size() / 25;
+        } else return Settings.userSavedColors.size() / 25;
     }
 
     private int setMajorTicks() {

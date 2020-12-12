@@ -22,7 +22,11 @@ public class InstructionsWindow {
     }
 
     private InstructionsWindow(int type, JFrame parent, int w, int h, String title, String instructions) {
-        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){EException.append(e);}
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            EException.append(e);
+        }
 
         frame = new JFrame(title);
         frame.setIconImage(Settings.iconImage);
@@ -47,6 +51,12 @@ public class InstructionsWindow {
         frame.setVisible(true);
     }
 
-    private void close(){windows[index] = null; frame.dispose();}
-    private void close(KeyEvent e) {if (e.getKeyCode() == KeyEvent.VK_ESCAPE) close();}
+    private void close() {
+        frame.dispose();
+        windows[index] = null;
+    }
+
+    private void close(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) close();
+    }
 }

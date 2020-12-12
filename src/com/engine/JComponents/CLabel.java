@@ -58,14 +58,14 @@ public class CLabel extends JLabel {
     }
 
     /**
-     * @param foreground_background used to determine if the color should be used as the background or foreground color.
-     *                              If set to 0 = foreground color; set to 1 = background color.
-     * @param color color to be used as either foreground or background color
+     * @param useAsForeground used to determine if the color should be used as the background or foreground color.
+     *                              If set to true = foreground color; set to false = background color.
+     * @param color                 color to be used as either foreground or background color
      **/
-    public CLabel(Color color, int foreground_background) {
+    public CLabel(Color color, boolean useAsForeground) {
         this.text = super.getText();
-        if (foreground_background == 0)      setForeground(color);
-        else if (foreground_background == 1) setBackground(color);
+        if (useAsForeground) setForeground(color);
+        else setBackground(color);
         setOpaque(true);
         setHorizontalAlignment(SwingConstants.CENTER);
     }
@@ -77,7 +77,7 @@ public class CLabel extends JLabel {
         setBounds((int) (bounds.getX()), (int) (bounds.getY()), (int) (bounds.getWidth()), (int) (bounds.getHeight()));
     }
 
-    public String getBGColorText(){
+    public String getBGColorText() {
         Color bg = getBackground();
         return "<html><h2> R: " + bg.getRed() + "<br> G: " + bg.getGreen() + "<br> B: " + bg.getBlue() + "</h2></html>";
     }

@@ -4,7 +4,7 @@ package com.engine.JComponents;
 import javax.swing.*;
 import java.awt.*;
 
-public class RButton extends JButton{
+public class RButton extends JButton {
     public String text;
     public Font font;
     public GridBagConstraints gridBagConstraints = new GridBagConstraints();

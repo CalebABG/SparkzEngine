@@ -30,8 +30,12 @@ public class FlowFieldUI {
         frame.toFront();
     }
 
-    private FlowFieldUI(JFrame parent){
-        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){EException.append(e);}
+    private FlowFieldUI(JFrame parent) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            EException.append(e);
+        }
         frame = new JFrame("Flow Field Editor");
         frame.setIconImage(Settings.iconImage);
         frame.setSize(350, 440);
@@ -227,10 +231,14 @@ public class FlowFieldUI {
         gbc_setFlowBtn.gridy = 8;
         panel.add(setFlowBtn, gbc_setFlowBtn);
 
-        for (JTextField f : fields){
+        for (JTextField f : fields) {
             f.addKeyListener(new KAdapter.KeyReleased(e -> {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER)
-                    try {setFlow();}catch (Exception g){EException.append(g);}
+                    try {
+                        setFlow();
+                    } catch (Exception g) {
+                        EException.append(g);
+                    }
             }));
         }
 
@@ -249,7 +257,7 @@ public class FlowFieldUI {
     }
 
     private void close() {
-        flowFieldUI = null;
         frame.dispose();
+        flowFieldUI = null;
     }
 }
