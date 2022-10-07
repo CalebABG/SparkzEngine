@@ -1,6 +1,6 @@
 package com.engine.Verlet;
 
-import com.engine.GUIWindows.VPhysicsEditor;
+import com.engine.GUIWindows.VerletPhysicsEditor;
 import java.awt.*;
 import java.awt.geom.Line2D;
 import static com.engine.EngineHelpers.EConstants.graphics2D;
@@ -48,7 +48,7 @@ public class Edge {
             p1.removeLink(this);
 
             if (p1 == selectedVertex || p2 == selectedVertex)
-                VPhysicsEditor.updateJListConstraints(selectedVertex.edges);
+                VerletPhysicsEditor.updateConstraintsList(selectedVertex.edges);
         }
         //if (tearable) if (d > tearSensitivity) p2.removeLink(this);
 

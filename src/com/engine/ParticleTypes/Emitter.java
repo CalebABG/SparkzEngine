@@ -10,9 +10,6 @@ import static com.engine.EngineHelpers.EINTS.FIREWORKS_WIND;
 public class Emitter extends Molecule {
     public int life = 800;
 
-    public Emitter() {
-        super();
-    }
     public Emitter(float x, float y, float radius, float speed, float direction) {
         super(x, y, radius, speed, direction, 0);
     }
@@ -28,7 +25,6 @@ public class Emitter extends Molecule {
     public void update() {
         emitAtPoint();
         boundsCheck();
-        if (life < 0) EmitterArray.remove(this);
-        life -= 1;
+        if (--life < 0) Emitters.remove(this);
     }
 }

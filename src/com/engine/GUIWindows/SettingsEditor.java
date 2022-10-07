@@ -1,12 +1,15 @@
 package com.engine.GUIWindows;
 
-import com.engine.EngineHelpers.EModes;
-import com.engine.J8Helpers.Extensions.KAdapter;
-import com.engine.J8Helpers.Extensions.WindowClosing;
+import com.engine.Enums.EngineMode;
+import com.engine.Enums.GravitationMode;
+import com.engine.Enums.MoleculeRenderMode;
+import com.engine.Enums.ParticleType;
+import com.engine.InputHandlers.ExtendedKeyAdapter;
+import com.engine.InputHandlers.ExtendedWindowAdapter;
 import com.engine.JComponents.CTextField;
 import com.engine.JComponents.RLabel;
-import com.engine.Utilities.EJsonHelpers;
 import com.engine.Utilities.InputGuard;
+import com.engine.Utilities.JsonUtil;
 import com.engine.Utilities.Settings;
 
 import javax.swing.*;
@@ -22,13 +25,12 @@ import static com.engine.Utilities.InputGuard.intTextfieldGuardDefault;
 
 public class SettingsEditor {
     private static SettingsEditor settingsEditor = null;
+
     public static JFrame frame;
     public static JPanel panel;
-    private static CTextField[] textFields = new CTextField[32];
-    private static Font menuFont = new Font(Font.SERIF, Font.PLAIN, 17);
-    private static Font textFieldFont = new Font(Font.SERIF, Font.PLAIN, 18);
-
-    //public static void main(String[] args) {}
+    private static final CTextField[] textFields = new CTextField[32];
+    private static final Font menuFont = new Font(Font.SERIF, Font.PLAIN, 17);
+    private static final Font textFieldFont = new Font(Font.SERIF, Font.PLAIN, 18);
 
     public static void getInstance() {
         if (settingsEditor == null) settingsEditor = new SettingsEditor();
@@ -39,13 +41,13 @@ public class SettingsEditor {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-            EException.append(e);
+            ExceptionLogger.append(e);
         }
         frame = new JFrame("Settings Editor");
         frame.setIconImage(Settings.iconImage);
         frame.setSize(670, 500);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowClosing(windowEvent -> close()));
+        frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
         frame.setLocationRelativeTo(EFrame);
 
         JScrollPane scrollPane = new JScrollPane();
@@ -94,22 +96,22 @@ public class SettingsEditor {
         RLabel lblNewLabel = new RLabel("-- Ints --", textFieldFont, 2, textFieldInsets, new int[]{0, 0});
         panel.add(lblNewLabel, lblNewLabel.gridBagConstraints);
 
-        RLabel lblNewLabel_1 = new RLabel("Engine Mode - set: 0 - " + (EModes.ENGINE_MODES.values().length - 1), textFieldFont, textFieldInsets, GridBagConstraints.WEST, new int[]{0, 1}, new int[]{1, 4});
+        RLabel lblNewLabel_1 = new RLabel("Engine Mode - set: 0 - " + (EngineMode.values().length - 1), textFieldFont, textFieldInsets, GridBagConstraints.WEST, new int[]{0, 1}, new int[]{1, 4});
         panel.add(lblNewLabel_1, lblNewLabel_1.gridBagConstraints);
 
-        textFields[0] = new CTextField("" + ENGINE_MODE.getValue(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 1});
+        textFields[0] = new CTextField("" + ENGINE_MODE.ordinal(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 1});
         panel.add(textFields[0], textFields[0].gridBagConstraints);
 
-        RLabel lblParticletypeSet = new RLabel("Particle Type - set: 0 - " + (EModes.PARTICLE_TYPES.values().length - 1), textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 2);
+        RLabel lblParticletypeSet = new RLabel("Particle Type - set: 0 - " + (ParticleType.values().length - 1), textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 2);
         panel.add(lblParticletypeSet, lblParticletypeSet.gridBagConstraints);
 
-        textFields[1] = new CTextField("" + PARTICLE_TYPE.getValue(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 2});
+        textFields[1] = new CTextField("" + PARTICLE_TYPE.ordinal(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 2});
         panel.add(textFields[1], textFields[1].gridBagConstraints);
 
-        RLabel lblPtgravitationintSet = new RLabel("Particle Gravitation - set: 0 - " + (EModes.GRAVITATION_MODES.values().length - 1), textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 3);
+        RLabel lblPtgravitationintSet = new RLabel("Particle Gravitation - set: 0 - " + (GravitationMode.values().length - 1), textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 3);
         panel.add(lblPtgravitationintSet, lblPtgravitationintSet.gridBagConstraints);
 
-        textFields[2] = new CTextField("" + PARTICLE_GRAVITATION_MODE.getValue(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 3});
+        textFields[2] = new CTextField("" + PARTICLE_GRAVITATION_MODE.ordinal(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 3});
         panel.add(textFields[2], textFields[2].gridBagConstraints);
 
         RLabel lblFireworksamountSet = new RLabel("Fireworks Amount - set: 0 - ∞", textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 4);
@@ -118,10 +120,10 @@ public class SettingsEditor {
         textFields[3] = new CTextField("" + FIREWORKS_AMOUNT.value(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 4});
         panel.add(textFields[3], textFields[3].gridBagConstraints);
 
-        RLabel lblParticlemodeSet = new RLabel("Particle Render Mode - set: 0 - " + (EModes.MOLECULE_RENDER_MODES.values().length - 1), textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 5);
+        RLabel lblParticlemodeSet = new RLabel("Particle Render Mode - set: 0 - " + (MoleculeRenderMode.values().length - 1), textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 5);
         panel.add(lblParticlemodeSet, lblParticlemodeSet.gridBagConstraints);
 
-        textFields[4] = new CTextField("" + PARTICLE_RENDER_MODE.getValue(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 5});
+        textFields[4] = new CTextField("" + PARTICLE_RENDER_MODE.ordinal(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 5});
         panel.add(textFields[4], textFields[4].gridBagConstraints);
 
         RLabel lblDragamountSet = new RLabel("Drag Amount - set: 1 - ∞", textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 6);
@@ -136,10 +138,10 @@ public class SettingsEditor {
         textFields[6] = new CTextField("" + PARTICLE_BASE_LIFE.value(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 7});
         panel.add(textFields[6], textFields[6].gridBagConstraints);
 
-        RLabel lblRfparticlemodeSet = new RLabel("Fireworks Render Mode - set: 0 - " + (EModes.MOLECULE_RENDER_MODES.values().length - 1), textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 8);
+        RLabel lblRfparticlemodeSet = new RLabel("Fireworks Render Mode - set: 0 - " + (MoleculeRenderMode.values().length - 1), textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 8);
         panel.add(lblRfparticlemodeSet, lblRfparticlemodeSet.gridBagConstraints);
 
-        textFields[7] = new CTextField("" + FIREWORKS_RENDER_MODE.getValue(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 8});
+        textFields[7] = new CTextField("" + FIREWORKS_RENDER_MODE.ordinal(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 8});
         panel.add(textFields[7], textFields[7].gridBagConstraints);
 
         RLabel lblRflifeSet = new RLabel("Fireworks Life - set: 0 - ∞", textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 9);
@@ -253,7 +255,7 @@ public class SettingsEditor {
         RLabel lblthinkingParticlesSet = new RLabel("Thinking Particles - set: true - false", textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 28);
         panel.add(lblthinkingParticlesSet, lblthinkingParticlesSet.gridBagConstraints);
 
-        textFields[25] = new CTextField(THINKING_PARTICLES.valueS(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 28});
+        textFields[25] = new CTextField(REACTIVE_PARTICLES_ENABLED.valueS(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 28});
         panel.add(textFields[25], textFields[25].gridBagConstraints);
 
         RLabel lblconnectParticlesSet = new RLabel("Connect Particles - set: true - false", textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 29);
@@ -271,7 +273,7 @@ public class SettingsEditor {
         RLabel lblmouseGravitationSet = new RLabel("Mouse Gravitation - set: true - false", textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 31);
         panel.add(lblmouseGravitationSet, lblmouseGravitationSet.gridBagConstraints);
 
-        textFields[28] = new CTextField(MOUSE_GRAVITATION.valueS(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 31});
+        textFields[28] = new CTextField(GRAVITATE_TO_MOUSE.valueS(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 31});
         panel.add(textFields[28], textFields[28].gridBagConstraints);
 
         RLabel lblispausedSet = new RLabel("Pause Simulation - set: true - false", textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 32);
@@ -283,7 +285,7 @@ public class SettingsEditor {
         RLabel lblGDMODEBOOLSet = new RLabel("Toggle GravityPoints Link Render - set: true - false", textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 33);
         panel.add(lblGDMODEBOOLSet, lblGDMODEBOOLSet.gridBagConstraints);
 
-        textFields[30] = new CTextField(TOGGLE_GRAVITYPOINTS_LINK_RENDER.valueS(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 33});
+        textFields[30] = new CTextField(SHOW_GRAVITY_POINTS_LINK.valueS(), textFieldFont, textFieldInsets, GridBagConstraints.HORIZONTAL, new int[]{1, 33});
         panel.add(textFields[30], textFields[30].gridBagConstraints);
 
         RLabel lblduplexModeSwapSet = new RLabel("Toggle Duplex Mode - set: true - false", textFieldFont, GridBagConstraints.WEST, textFieldInsets, 0, 34);
@@ -298,7 +300,8 @@ public class SettingsEditor {
                 textFields[j].setForeground(Color.GREEN.darker().darker());
             else if (textFields[j].getText().equalsIgnoreCase("false"))
                 textFields[j].setForeground(Color.red.darker().darker());
-            textFields[j].addKeyListener(new KAdapter(e -> {
+
+            textFields[j].addKeyListener(new ExtendedKeyAdapter(e -> {
             }, e -> {
                 if (textFields[j].getText().equalsIgnoreCase("true")) {
                     textFields[j].setForeground(Color.GREEN.darker().darker());
@@ -321,14 +324,14 @@ public class SettingsEditor {
 
     private void setSettings() {
         //Ints
-        ENGINE_MODE = EModes.ENGINE_MODES.values()[constrain(0, EModes.ENGINE_MODES.values().length - 1, ENGINE_MODE.getValue(), textFields[0].getText())];
-        PARTICLE_TYPE = EModes.PARTICLE_TYPES.values()[constrain(0, EModes.PARTICLE_TYPES.values().length - 1, PARTICLE_TYPE.getValue(), textFields[1].getText())];
-        PARTICLE_GRAVITATION_MODE = EModes.GRAVITATION_MODES.values()[constrain(0, EModes.GRAVITATION_MODES.values().length - 1, PARTICLE_GRAVITATION_MODE.getValue(), textFields[2].getText())];
+        ENGINE_MODE = EngineMode.values()[constrain(0, EngineMode.values().length - 1, ENGINE_MODE.ordinal(), textFields[0].getText())];
+        PARTICLE_TYPE = ParticleType.values()[constrain(0, ParticleType.values().length - 1, PARTICLE_TYPE.ordinal(), textFields[1].getText())];
+        PARTICLE_GRAVITATION_MODE = GravitationMode.values()[constrain(0, GravitationMode.values().length - 1, PARTICLE_GRAVITATION_MODE.ordinal(), textFields[2].getText())];
         FIREWORKS_AMOUNT.setValue(intTextfieldGuardDefault(0, FIREWORKS_AMOUNT.value(), textFields[3].getText()));
-        PARTICLE_RENDER_MODE = EModes.MOLECULE_RENDER_MODES.values()[constrain(0, EModes.MOLECULE_RENDER_MODES.values().length - 1, PARTICLE_RENDER_MODE.getValue(), textFields[4].getText())];
+        PARTICLE_RENDER_MODE = MoleculeRenderMode.values()[constrain(0, MoleculeRenderMode.values().length - 1, PARTICLE_RENDER_MODE.ordinal(), textFields[4].getText())];
         PARTICLE_DRAG_AMOUNT.setValue(intTextfieldGuardDefault(0, PARTICLE_DRAG_AMOUNT.value(), textFields[5].getText()));
         PARTICLE_BASE_LIFE.setValue(intTextfieldGuardDefault(0, PARTICLE_BASE_LIFE.value(), textFields[6].getText()));
-        FIREWORKS_RENDER_MODE = EModes.MOLECULE_RENDER_MODES.values()[constrain(0, EModes.MOLECULE_RENDER_MODES.values().length - 1, FIREWORKS_RENDER_MODE.getValue(), textFields[7].getText())];
+        FIREWORKS_RENDER_MODE = MoleculeRenderMode.values()[constrain(0, MoleculeRenderMode.values().length - 1, FIREWORKS_RENDER_MODE.ordinal(), textFields[7].getText())];
         FIREWORKS_LIFE.setValue(intTextfieldGuardDefault(0, FIREWORKS_LIFE.value(), textFields[8].getText()));
         FIREWORKS_WIND.setValue(intTextfieldGuardDefault(0, FIREWORKS_WIND.value(), textFields[9].getText()));
         FIREWORKS_JITTER.setValue(intTextfieldGuardDefault(0, FIREWORKS_JITTER.value(), textFields[10].getText()));
@@ -350,19 +353,19 @@ public class SettingsEditor {
         PARTICLE_DRAG_SPEED.setValue(floatTextfieldGuardDefault(0, PARTICLE_DRAG_SPEED.value(), textFields[24].getText()));
 
         //Booleans
-        THINKING_PARTICLES.setValue(getBoolFromString(THINKING_PARTICLES.value(), textFields[25].getText()));
+        REACTIVE_PARTICLES_ENABLED.setValue(getBoolFromString(REACTIVE_PARTICLES_ENABLED.value(), textFields[25].getText()));
         CONNECT_PARTICLES.setValue(getBoolFromString(CONNECT_PARTICLES.value(), textFields[26].getText()));
         PARTICLE_FRICTION.setValue(getBoolFromString(PARTICLE_FRICTION.value(), textFields[27].getText()));
-        MOUSE_GRAVITATION.setValue(getBoolFromString(MOUSE_GRAVITATION.value(), textFields[28].getText()));
+        GRAVITATE_TO_MOUSE.setValue(getBoolFromString(GRAVITATE_TO_MOUSE.value(), textFields[28].getText()));
         ENGINE_IS_PAUSED.setValue(getBoolFromString(ENGINE_IS_PAUSED.value(), textFields[29].getText()));
-        TOGGLE_GRAVITYPOINTS_LINK_RENDER.setValue(getBoolFromString(TOGGLE_GRAVITYPOINTS_LINK_RENDER.value(), textFields[30].getText()));
+        SHOW_GRAVITY_POINTS_LINK.setValue(getBoolFromString(SHOW_GRAVITY_POINTS_LINK.value(), textFields[30].getText()));
         TOGGLE_DUPLEX_MODE.setValue(getBoolFromString(TOGGLE_DUPLEX_MODE.value(), textFields[31].getText()));
     }
 
     private static int constrain(int min, int max, int def, String s) {
         if (!s.isEmpty() && InputGuard.canParseStringInt(s)) {
             int val = Integer.parseInt(s);
-            return EJsonHelpers.constrain(def, val, min, max);
+            return JsonUtil.constrain(def, val, min, max);
         } else return def;
     }
 
@@ -371,19 +374,19 @@ public class SettingsEditor {
     }
 
     private static void refreshUI() {
-        textFields[0].setText(ENGINE_MODE.getValueS());
-        textFields[1].setText(PARTICLE_TYPE.getValueS());
-        textFields[2].setText(PARTICLE_GRAVITATION_MODE.getValueS());
-        textFields[3].setText(FIREWORKS_AMOUNT.getValueS());
-        textFields[4].setText(PARTICLE_RENDER_MODE.getValueS());
-        textFields[5].setText(PARTICLE_DRAG_AMOUNT.getValueS());
-        textFields[6].setText(PARTICLE_BASE_LIFE.getValueS());
-        textFields[7].setText(FIREWORKS_RENDER_MODE.getValueS());
-        textFields[8].setText(FIREWORKS_LIFE.getValueS());
-        textFields[9].setText(FIREWORKS_WIND.getValueS());
-        textFields[10].setText(FIREWORKS_JITTER.getValueS());
-        textFields[11].setText(ENGINE_SAFETY_AMOUNT.getValueS());
-        textFields[12].setText(ENGINE_COLOR_CYCLE_RATE.getValueS());
+        textFields[0].setText(ENGINE_MODE.name());
+        textFields[1].setText(PARTICLE_TYPE.name());
+        textFields[2].setText(PARTICLE_GRAVITATION_MODE.name());
+        textFields[3].setText(FIREWORKS_AMOUNT.name());
+        textFields[4].setText(PARTICLE_RENDER_MODE.name());
+        textFields[5].setText(PARTICLE_DRAG_AMOUNT.name());
+        textFields[6].setText(PARTICLE_BASE_LIFE.name());
+        textFields[7].setText(FIREWORKS_RENDER_MODE.name());
+        textFields[8].setText(FIREWORKS_LIFE.name());
+        textFields[9].setText(FIREWORKS_WIND.name());
+        textFields[10].setText(FIREWORKS_JITTER.name());
+        textFields[11].setText(ENGINE_SAFETY_AMOUNT.name());
+        textFields[12].setText(ENGINE_COLOR_CYCLE_RATE.name());
         textFields[13].setText(SINGLE_CLICK_SIZE_MAX.valueS());
         textFields[14].setText(SINGLE_CLICK_SIZE_MIN.valueS());
         textFields[15].setText(MULTI_CLICK_SIZE_MAX.valueS());
@@ -396,12 +399,12 @@ public class SettingsEditor {
         textFields[22].setText(MULTI_CLICK_SPEED.valueS());
         textFields[23].setText(FIREWORKS_SPEED.valueS());
         textFields[24].setText(PARTICLE_DRAG_SPEED.valueS());
-        textFields[25].setText(THINKING_PARTICLES.valueS());
+        textFields[25].setText(REACTIVE_PARTICLES_ENABLED.valueS());
         textFields[26].setText(CONNECT_PARTICLES.valueS());
         textFields[27].setText(PARTICLE_FRICTION.valueS());
-        textFields[28].setText(MOUSE_GRAVITATION.valueS());
+        textFields[28].setText(GRAVITATE_TO_MOUSE.valueS());
         textFields[29].setText(ENGINE_IS_PAUSED.valueS());
-        textFields[30].setText(TOGGLE_GRAVITYPOINTS_LINK_RENDER.valueS());
+        textFields[30].setText(SHOW_GRAVITY_POINTS_LINK.valueS());
         textFields[31].setText(TOGGLE_DUPLEX_MODE.valueS());
         for (int i = 25; i < textFields.length; i++) {
             if (textFields[i].getText().equalsIgnoreCase("TRUE"))

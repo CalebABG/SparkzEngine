@@ -1,8 +1,7 @@
 package com.engine.GUIWindows;
 
-import com.engine.EngineHelpers.EModes;
 import com.engine.EngineHelpers.EngineMethods;
-import com.engine.J8Helpers.Extensions.WindowClosing;
+import com.engine.InputHandlers.ExtendedWindowAdapter;
 import com.engine.JComponents.CLabel;
 import com.engine.Utilities.Settings;
 import com.engine.Verlet.Vertex;
@@ -18,7 +17,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.engine.EngineHelpers.EConstants.*;
-import static com.engine.EngineHelpers.EINTS.*;
+import static com.engine.EngineHelpers.EINTS.ENGINE_FPS;
+import static com.engine.EngineHelpers.EINTS.PARTICLE_DRAG_AMOUNT;
+import static com.engine.Enums.EngineMode.RAGDOLL;
 
 public class StatsPanel {
     private static StatsPanel statsUI = null;
@@ -42,13 +43,13 @@ public class StatsPanel {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-            EException.append(e);
+            ExceptionLogger.append(e);
         }
         frame = new JFrame("Stats Panel");
         frame.setSize(730, 450);
         frame.setIconImage(Settings.iconImage);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowClosing(windowEvent -> close()));
+        frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
         frame.setLocationRelativeTo(EFrame);
 
         JMenuBar menuBar = new JMenuBar() {
@@ -328,13 +329,13 @@ public class StatsPanel {
         try {
             if (fpsLabel != null) fpsLabel.setText("Frames Per Second: " + framesPerSec);
             if (particleAmount != null) {
-                if (ENGINE_MODE == EModes.ENGINE_MODES.RAGDOLL_MODE)
+                if (ENGINE_MODE == RAGDOLL)
                     particleAmount.setText("Points: " + decimalFormat.format(Vertex.Vertices.size()));
                 else particleAmount.setText("Particles: " + decimalFormat.format(
-                        ParticlesArray.size() + GravityPointsArray.size() + FireworksArray.size() +
-                                EmitterArray.size() + QEDArray.size() + IonArray.size() +
-                                FluxArray.size() + EraserArray.size() + BlackHoleArray.size() +
-                                DuplexArray.size() + PortalArray.size()));
+                        Particles.size() + GravityPoints.size() + Fireworks.size() +
+                                Emitters.size() + QEDs.size() + Ions.size() +
+                                Fluxes.size() + Erasers.size() + BlackHoles.size() +
+                                Duplexes.size() + Portals.size()));
             }
             if (dragamount != null)
                 dragamount.setText("Drag Amount: " + decimalFormat.format(PARTICLE_DRAG_AMOUNT.value()));
@@ -346,7 +347,7 @@ public class StatsPanel {
             if (screenSize != null)
                 screenSize.setText(String.format("Canvas Size: %d x %d", canvas.getWidth(), canvas.getHeight()));
         } catch (Exception ex) {
-            EException.append(ex);
+            ExceptionLogger.append(ex);
         }
     }
 

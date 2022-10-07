@@ -1,11 +1,13 @@
 package com.engine.Utilities;
 
-import com.engine.ParticleTypes.Interfaces.ThinkingColors;
+import com.engine.ThinkingParticles.ReactiveColors;
+
 import javax.swing.*;
 import java.awt.*;
+
 import static com.engine.EngineHelpers.EConstants.*;
-import static com.engine.ParticleTypes.Molecule.plain_color;
-import static org.apache.commons.math3.util.FastMath.*;
+import static com.engine.ParticleTypes.Molecule.PLAIN_COLOR;
+import static org.apache.commons.math3.util.FastMath.round;
 
 public class ColorUtility {
     public static Color fromHex(String hex) {
@@ -23,8 +25,8 @@ public class ColorUtility {
     }
 
     public static void setPlainColor() {
-        Color l = JColorChooser.showDialog(EFrame, "Particle Color", plain_color);
-        plain_color = (l != null) ? l : plain_color;
+        Color l = JColorChooser.showDialog(EFrame, "Particle Color", PLAIN_COLOR);
+        PLAIN_COLOR = (l != null) ? l : PLAIN_COLOR;
     }
 
     //-------------------------- Helper Functions ------------------------------------//
@@ -46,15 +48,12 @@ public class ColorUtility {
 
     public static Color randRGBColor(){return new Color(random.nextInt(0x1000000));}
 
-    public static void setThinkingParticlesColor(Color[] colors) {
-        ThinkingColors.COLORS[0] = colors[0];
-        ThinkingColors.COLORS[1] = colors[1];
-        ThinkingColors.COLORS[2] = colors[2];
-        ThinkingColors.COLORS[3] = colors[3];
-        ThinkingColors.COLORS[4] = colors[4];
+    public static void setReactiveColors(Color[] colors) {
+        for (int i = 0; i < ReactiveColors.getComponents().length; i++)
+            ReactiveColors.setComponent(i, colors[i]);
     }
 
-    public static String getThinkingParticlesStrings(Color[] c) {
+    public static String serializeReactiveColors(Color[] c) {
         return toHex(c[0]) + Settings.spliceChar +
                toHex(c[1]) + Settings.spliceChar +
                toHex(c[2]) + Settings.spliceChar +

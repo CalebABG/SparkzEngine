@@ -1,28 +1,24 @@
 package com.engine.ParticleTypes;
 
-import com.engine.ParticleTypes.Interfaces.ThinkingColors;
-
+import com.engine.ThinkingParticles.ReactiveColors;
 import static com.engine.EngineHelpers.EBOOLS.CONTROL_IS_DOWN;
 import static com.engine.EngineHelpers.EConstants.*;
 import static org.apache.commons.math3.util.FastMath.sqrt;
 
 public class Portal extends Molecule {
-    public Portal() {
-        super();
-    }
     public Portal(float x, float y, float radius) {
         super(x, y, 0, 0, radius);
-        color = ThinkingColors.COLORS[(int) (random.nextFloat() * 4)];
+        color = ReactiveColors.getComponents()[(int) (random.nextFloat() * 4)];
     }
 
     private void movePortal() {
-        for (int i = 0, len = PortalArray.size(); i < len; i++) {
-            Portal portal = PortalArray.get(i);
+        for (int i = 0, len = Portals.size(); i < len; i++) {
+            Portal portal = Portals.get(i);
             float dx = Mouse.x - portal.x;
             float dy = Mouse.y - portal.y;
             float dist = (float) sqrt(dx * dx + dy * dy);
 
-            if (dist < portal.radius && CONTROL_IS_DOWN.value()) {
+            if (CONTROL_IS_DOWN.value() && dist < portal.radius) {
                 portal.x = Mouse.x;
                 portal.y = Mouse.y;
             }
@@ -30,12 +26,12 @@ public class Portal extends Molecule {
     }
 
     private void transferMatter() {
-        if (PortalArray.size() == 2) {
-            Portal p1 = PortalArray.get(0);
-            Portal p2 = PortalArray.get(1);
+        if (Portals.size() == 2) {
+            Portal p1 = Portals.get(0);
+            Portal p2 = Portals.get(1);
 
-            for (int i = 0; i < ParticlesArray.size(); i++) {
-                Particle particles = ParticlesArray.get(i);
+            for (int i = 0; i < Particles.size(); i++) {
+                Particle particles = Particles.get(i);
                 float dx = particles.x - p1.x;
                 float dy = particles.y - p1.y;
                 float dist = (float) sqrt(dx * dx + dy * dy);
@@ -49,9 +45,9 @@ public class Portal extends Molecule {
     }
 
     public void giveStyle() {
+        int size = (int) (2 * radius);
         graphics2D.setColor(color);
-        int lgr = (int) (2 * radius);
-        graphics2D.drawOval((int) (x - radius), (int) (y - radius), lgr, lgr);
+        graphics2D.drawOval((int) (x - radius), (int) (y - radius), size, size);
 
     }
 

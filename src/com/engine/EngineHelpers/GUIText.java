@@ -1,6 +1,6 @@
 package com.engine.EngineHelpers;
 
-import com.engine.GUIWindows.EException;
+import com.engine.GUIWindows.ExceptionLogger;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -22,7 +22,7 @@ public class GUIText {
             while ((line = br.readLine()) != null) lines.append(line);
             return lines.toString();
         } catch (Exception e) {
-            EException.append(e);
+            ExceptionLogger.append(e);
         }
         return null;
     }

@@ -1,16 +1,15 @@
 package com.engine.Main;
 
 import com.engine.EngineHelpers.EINTS;
-import com.engine.EngineHelpers.EngineSplash;
-import com.engine.GUIWindows.EException;
+import com.engine.GUIWindows.ExceptionLogger;
 import com.engine.GUIWindows.QuitWindow;
 import com.engine.GUIWindows.StatsPanel;
-import com.engine.InputHandlers.KHandler;
-import com.engine.InputHandlers.MListener;
-import com.engine.InputHandlers.MMotionListener;
-import com.engine.InputHandlers.MWheelListener;
-import com.engine.J8Helpers.Extensions.UIThread;
-import com.engine.J8Helpers.Extensions.WindowClosing;
+import com.engine.InputHandlers.KeyboardHandler;
+import com.engine.InputHandlers.MouseButtonHandler;
+import com.engine.InputHandlers.MouseMotionHandler;
+import com.engine.InputHandlers.MouseWheelHandler;
+import com.engine.EngineHelpers.BackgroundThread;
+import com.engine.InputHandlers.ExtendedWindowAdapter;
 import com.engine.Utilities.Settings;
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +30,7 @@ import static com.engine.GUIWindows.Notifier.headsUpNotifications;
 
 public class Engine {
     public static void main(String[] args) {
-        new EngineSplash(2000).display();
+//        new EngineSplashScreen(2000).display();
         SwingUtilities.invokeLater(() -> new Engine().start());
     }
 
@@ -50,13 +49,14 @@ public class Engine {
      * as well as loading any saved Engine settings.
      */
     public Engine(){
-        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){EException.append(e);}
+        try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch (Exception e){
+            ExceptionLogger.append(e);}
     	EFrame = new JFrame(title);
         EFrame.setIconImage(Settings.iconImage);
         EFrame.setSize(980,680);
         EFrame.setLocationRelativeTo(null);
         EFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        EFrame.addWindowListener(new WindowClosing(windowEvent -> UIThread.openUI(QuitWindow::getInstance)));
+        EFrame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> BackgroundThread.run(QuitWindow::getInstance)));
 
         // Load Saved Settings
         Settings.loadSettings();
@@ -65,16 +65,16 @@ public class Engine {
         EFrame.setJMenuBar(menuBar);
 
         // Mouse Click Listener
-        canvas.addMouseListener(new MListener());
+        canvas.addMouseListener(new MouseButtonHandler());
 
         // Mouse Move and Drag Listener
-        canvas.addMouseMotionListener(new MMotionListener());
+        canvas.addMouseMotionListener(new MouseMotionHandler());
 
         // Mouse Wheel Listener
-        canvas.addMouseWheelListener(new MWheelListener());
+        canvas.addMouseWheelListener(new MouseWheelHandler());
 
         // Keyboard Listener
-        KHandler handler = new KHandler();
+        KeyboardHandler handler = new KeyboardHandler();
         canvas.addKeyListener(handler);
         EFrame.addKeyListener(handler);
         EFrame.add(canvas);
@@ -105,7 +105,7 @@ public class Engine {
             if (frameCount > Integer.MAX_VALUE - 2) frameCount = 0;
 
             // Keep track of fps
-            fps++;
+            framesPerSecond++;
 
             render();
 
@@ -121,8 +121,8 @@ public class Engine {
 
             int thisSecond = (int) (lastUpdateTime / tB);
             if (thisSecond > lastSecondTime){
-                StatsPanel.framesPerSec = fps;
-                fps = 0;
+                StatsPanel.framesPerSec = framesPerSecond;
+                framesPerSecond = 0;
                 lastSecondTime = thisSecond;
             }
 

@@ -8,7 +8,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import static com.engine.EngineHelpers.EConstants.*;
-import static com.engine.GUIWindows.VPhysicsEditor.selectionshowpoint_checkbox;
+import static com.engine.GUIWindows.VerletPhysicsEditor.selectionshowpoint_checkbox;
 import static com.engine.Verlet.VSim.*;
 import static org.apache.commons.math3.util.FastMath.*;
 
@@ -65,31 +65,30 @@ public class Vertex {
         this.pinned = pinned;
     }
 
-    public void accelerate(){
+    public void accelerate() {
         if (pinned) {
             currX = prevX;
             currY = prevY;
-        }
-        else{
-            gravity = ZERO_GRAVITY ? 0.0f : GConstant;
-
+        } else {
             float tempX = currX, tempY = currY;
+            float gravity = ZERO_GRAVITY ? 0.0f : VSim.gravity;
 
-            currX += (air_viscosity * currX - air_viscosity * prevX) * damping;
-            currY += ((air_viscosity * currY - air_viscosity * prevY) + gravity);
+            currX += ((airViscosity * currX) - (airViscosity * prevX)) * damping;
+            currY += ((airViscosity * currY) - (airViscosity * prevY)) + gravity;
 
             prevX = tempX;
             prevY = tempY;
         }
     }
 
-    public void solveConstraints() {for (int i = 0; i < edges.size(); i++) edges.get(i).solve();}
+    public void solveConstraints() {
+        for (int i = 0; i < edges.size(); i++)
+            edges.get(i).solve();
+    }
 
-    public void solveCollisions (Vertex p2, boolean preserveImpulse) {
+    public void solveCollisions(Vertex vertex, boolean preserveImpulse) {
         float vx = 0;
         float vy = 0;
-        float canvasWidth = canvas.getWidth();
-        float canvasHeight = canvas.getHeight();
 
         if (preserveImpulse) {
             vx = (prevX - currX) * damping;
@@ -97,31 +96,37 @@ public class Vertex {
         }
 
         if (currX - radius < 0) {
-            currX = 2 * (radius) - currX;
-            if (preserveImpulse) prevX = (currX - vx);
-        }
-        if (currX + radius > canvasWidth) {
-            currX = 2 * (canvasWidth - radius) - currX;
-            if (preserveImpulse) prevX = (currX - vx);
-        }
-        if (currY - radius < 0) {
-            currY = 2 * (radius) - currY;
-            if (preserveImpulse) prevY = (currY - vy);
-        }
-        if (currY + radius > canvasHeight) {
-            currY = 2 * (canvasHeight - radius) - currY;
-            if (preserveImpulse) prevY = (currY - vy);
+            currX = 2 * radius - currX;
+            if (preserveImpulse) prevX = currX - vx;
         }
 
-        if (COLLISION_DETECTION) if (collidable) collide(p2);
+        if (currX + radius > canvas.getWidth()) {
+            currX = 2 * (canvas.getWidth() - radius) - currX;
+            if (preserveImpulse) prevX = currX - vx;
+        }
+
+        if (currY - radius < 0) {
+            currY = 2 * radius - currY;
+            if (preserveImpulse) prevY = currY - vy;
+        }
+
+        if (currY + radius > canvas.getHeight()) {
+            currY = 2 * (canvas.getHeight() - radius) - currY;
+            if (preserveImpulse) prevY = currY - vy;
+        }
+
+        if (COLLISION_DETECTION)
+            if (collidable) collide(vertex);
     }
 
-    public void collide(Vertex p2) {
-        if (p2 != this) {
-            float dampening = .97f;
-            float radii = radius + p2.radius;
-            float diffX = currX - p2.currX;
-            float diffY = currY - p2.currY;
+    public void collide(Vertex vertex) {
+        if (vertex != this) {
+            float collisionDampening = .97f;
+
+            float radii = radius + vertex.radius;
+            float diffX = currX - vertex.currX;
+            float diffY = currY - vertex.currY;
+
             float lenDiff = (float) sqrt(diffX * diffX + diffY * diffY);
 
             // first make sure they're intersecting
@@ -130,29 +135,34 @@ public class Vertex {
                 float d = lenDiff;
 
                 // minimum translation distance to push balls apart after intersecting
-                if (d <= 0) d = radius / 2 + p2.radius / 2;
+                if (d <= 0) {
+                    d = radius / 2 + vertex.radius / 2;
+                }
 
                 // find the difference, or the ratio of how far along the restingDistance the actual distance is.
                 float difference = (radii - d) / d;
 
                 // Inverse the mass quantities
                 float im1 = 1 / mass;
-                float im2 = 1 / p2.mass;
+                float im2 = 1 / vertex.mass;
                 float scalarP1 = (im1 / (im1 + im2)) * stiffness;
                 float scalarP2 = stiffness - scalarP1;
 
                 // Push/pull based on mass
                 // heavier objects will be pushed/pulled less than attached light objects
-                currX += (diffX * scalarP1 * difference) * dampening;
-                currY += (diffY * scalarP1 * difference) * dampening;
-                p2.currX -= (diffX * scalarP2 * difference) * dampening;
-                p2.currY -= (diffY * scalarP2 * difference) * dampening;
+                currX += (diffX * scalarP1 * difference) * collisionDampening;
+                currY += (diffY * scalarP1 * difference) * collisionDampening;
+                vertex.currX -= (diffX * scalarP2 * difference) * collisionDampening;
+                vertex.currY -= (diffY * scalarP2 * difference) * collisionDampening;
             }
         }
     }
 
     public void draw() {
-        if (!edges.isEmpty()) {for (int i = 0; i < edges.size(); i++) edges.get(i).draw();}
+        if (!edges.isEmpty()) {
+            for (int i = 0; i < edges.size(); ++i)
+                edges.get(i).draw();
+        }
 
         if (this == dragVertex) {
             graphics2D.setColor(color);

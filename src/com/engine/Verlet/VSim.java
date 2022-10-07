@@ -8,22 +8,23 @@ import static org.apache.commons.math3.util.FastMath.*;
 
 public class VSim {
     private static final Font renderFont = new Font(Font.SERIF, Font.PLAIN, 14);
-    public static Vertex dragVertex;
-    public static Vertex selectedVertex;
+    public static final int MAX_COLLISIONS              = 1000;
     public static boolean ZERO_GRAVITY                  = false;
     public static boolean DEBUG_MODE                    = false;
     public static boolean COLLISION_DETECTION           = true;
-    public static int mouseTearSize                     = (int) pow(3, 2);
-    public static float gravity                         = 0.0f;
-    public static float air_viscosity                   = 1.0f;
-    public static float GConstant                       = 0.251f;
-    public static float dragForce                       = 5; // The lower the stronger
     public static int SIM_ACCURACY                      = 12; // The higher = better accuracy but slightly slower render
-    public static final int MAX_COLLISIONS              = 1000;
+    public static Vertex dragVertex;
+    public static Vertex selectedVertex;
+    public static int mouseTearSize                     = (int) pow(3, 2);
+    public static float gravity                         = 0.251f;
+    public static float airViscosity                    = 1.0f;
+    public static float dragForce                       = 5; // The lower the stronger
 
     public static void toggleCollisions() {COLLISION_DETECTION = Vertices.size() <= MAX_COLLISIONS && toggle(COLLISION_DETECTION);}
     public static void toggleGravity() {ZERO_GRAVITY = toggle(ZERO_GRAVITY);}
     public static void toggleDebug() {DEBUG_MODE = toggle(DEBUG_MODE);}
+    public static void resetDragVertex() { dragVertex = null; }
+    public static void resetSelectedVertex() { selectedVertex = null; }
 
     public static void debugPhysics(){
         graphics2D.setFont(renderFont);

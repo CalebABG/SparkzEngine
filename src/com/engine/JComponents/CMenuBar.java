@@ -1,9 +1,9 @@
 package com.engine.JComponents;
 
-import com.engine.EngineHelpers.EModes;
 import com.engine.EngineHelpers.EngineMethods;
+import com.engine.Enums.*;
 import com.engine.GUIWindows.*;
-import com.engine.J8Helpers.Extensions.UIThread;
+import com.engine.EngineHelpers.BackgroundThread;
 import com.engine.Utilities.Settings;
 
 import javax.swing.*;
@@ -11,7 +11,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.engine.EngineHelpers.EBOOLS.ENGINE_IS_PAUSED;
+import static com.engine.EngineHelpers.EBOOLS.*;
 import static com.engine.EngineHelpers.EConstants.*;
 import static com.engine.EngineHelpers.EngineMethods.createEngineInstructionsWindow;
 import static com.engine.EngineHelpers.EngineMethods.createGraphInstructionsWindow;
@@ -33,7 +33,7 @@ public class CMenuBar extends JMenuBar {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-            EException.append(e);
+            ExceptionLogger.append(e);
         }
         this.setBorder(BorderFactory.createLineBorder(bgColor, 1, false));
         this.add(Box.createHorizontalStrut(11));
@@ -49,7 +49,7 @@ public class CMenuBar extends JMenuBar {
 
         JMenuItem exit = new JMenuItem("Exit");
         exit.setFont(font1);
-        exit.addActionListener(e -> UIThread.openUI(QuitWindow::getInstance));
+        exit.addActionListener(e -> BackgroundThread.run(QuitWindow::getInstance));
         mnFile.add(exit);
         menuItems.add(exit);
 
@@ -73,65 +73,65 @@ public class CMenuBar extends JMenuBar {
 
         this.add(Box.createHorizontalStrut(11));
 
-        //ShortCuts Begin
-        JMenu mnUIWindows = new JMenu("Short-Cuts");
+        //Windows Begin
+        JMenu mnUIWindows = new JMenu("Windows");
         mnUIWindows.setForeground(Color.white);
         mnUIWindows.setFont(font1);
         this.add(mnUIWindows);
         menus.add(mnUIWindows);
 
         JMenuItem optionsMenu = new JMenuItem("Options Menu");
-        optionsMenu.addActionListener(e -> UIThread.openUI(OptionsMenu::getInstance));
+        optionsMenu.addActionListener(e -> BackgroundThread.run(OptionsMenu::getInstance));
         mnUIWindows.add(optionsMenu);
         menuItems.add(optionsMenu);
 
         JMenuItem stats_panel = new JMenuItem("Stats Panel");
-        stats_panel.addActionListener(e -> UIThread.openUI(StatsPanel::getInstance));
+        stats_panel.addActionListener(e -> BackgroundThread.run(StatsPanel::getInstance));
         mnUIWindows.add(stats_panel);
         menuItems.add(stats_panel);
 
         JMenuItem sliderUI = new JMenuItem("Slide Editor");
-        sliderUI.addActionListener(e -> UIThread.openUI(SlideEditor::getInstance));
+        sliderUI.addActionListener(e -> BackgroundThread.run(ParticleSlideEditor::getInstance));
         mnUIWindows.add(sliderUI);
         menuItems.add(sliderUI);
 
         JMenuItem exceptionUI = new JMenuItem("Exception Log");
-        exceptionUI.addActionListener(e -> UIThread.openUI(EException::getInstance));
+        exceptionUI.addActionListener(e -> BackgroundThread.run(ExceptionLogger::getInstance));
         mnUIWindows.add(exceptionUI);
         menuItems.add(exceptionUI);
 
         JMenuItem thinkingParticlesUI = new JMenuItem("Color Editor");
-        thinkingParticlesUI.addActionListener(e -> UIThread.openUI(ColorEditor::getInstance));
+        thinkingParticlesUI.addActionListener(e -> BackgroundThread.run(ReactiveColorsEditor::getInstance));
         mnUIWindows.add(thinkingParticlesUI);
         menuItems.add(thinkingParticlesUI);
 
         JMenuItem particleGraphUI = new JMenuItem("Graph Editor");
-        particleGraphUI.addActionListener(e -> UIThread.openUI(ParticleGraph::getInstance));
+        particleGraphUI.addActionListener(e -> BackgroundThread.run(ParticleGrapher::getInstance));
         mnUIWindows.add(particleGraphUI);
         menuItems.add(particleGraphUI);
 
-        JMenuItem vphysicseditor = new JMenuItem("VPhysics Editor");
-        vphysicseditor.addActionListener(e -> UIThread.openUI(() -> VPhysicsEditor.getInstance(EFrame)));
+        JMenuItem vphysicseditor = new JMenuItem("Physics Editor");
+        vphysicseditor.addActionListener(e -> BackgroundThread.run(() -> VerletPhysicsEditor.getInstance(EFrame)));
         mnUIWindows.add(vphysicseditor);
         menuItems.add(vphysicseditor);
 
         JMenuItem timemachine = new JMenuItem("Color Time Machine");
-        timemachine.addActionListener(e -> UIThread.openUI(ColorTimeMachine::getInstance));
+        timemachine.addActionListener(e -> BackgroundThread.run(ReactiveColorsTimeMachine::getInstance));
         mnUIWindows.add(timemachine);
         menuItems.add(timemachine);
 
         this.add(Box.createHorizontalStrut(11));
 
         JMenuItem customForces = new JMenuItem("Organic Forces Editor");
-        customForces.addActionListener(e -> UIThread.openUI(() -> OrganicForces.getInstance(EFrame)));
+        customForces.addActionListener(e -> BackgroundThread.run(() -> OrganicForcesEditor.getInstance(EFrame)));
         mnUIWindows.add(customForces);
         menuItems.add(customForces);
 
         JMenuItem flowfieldUI = new JMenuItem("Flow Field Editor");
-        flowfieldUI.addActionListener(e -> UIThread.openUI(() -> FlowFieldUI.getInstance(EFrame)));
+        flowfieldUI.addActionListener(e -> BackgroundThread.run(() -> FlowFieldEditor.getInstance(EFrame)));
         mnUIWindows.add(flowfieldUI);
         menuItems.add(flowfieldUI);
-        //ShortCuts End
+        //Windows End
 
         setUpModes();
         menuItems.addAll(Arrays.asList(pGravModes));
@@ -166,7 +166,7 @@ public class CMenuBar extends JMenuBar {
         menuItems.add(settingsLoad);
 
         JMenuItem settingsUI = new JMenuItem("Settings Editor");
-        settingsUI.addActionListener(e -> UIThread.openUI(SettingsEditor::getInstance));
+        settingsUI.addActionListener(e -> BackgroundThread.run(SettingsEditor::getInstance));
         mnSettings.add(settingsUI);
         menuItems.add(settingsUI);
 
@@ -261,7 +261,7 @@ public class CMenuBar extends JMenuBar {
                 try {
                     Runtime.getRuntime().exec("cmd /c osk");
                 } catch (Exception f) {
-                    EException.append(f);
+                    ExceptionLogger.append(f);
                 }
             });
             mnHelp.add(accessibility);
@@ -328,13 +328,13 @@ public class CMenuBar extends JMenuBar {
         particleModes.add(pModes[4]);
 
         for (JRadioButtonMenuItem b : pModes) {
-            if (Integer.parseInt(b.getActionCommand()) == ENGINE_MODE.getValue()) {
+            if (Integer.parseInt(b.getActionCommand()) == ENGINE_MODE.ordinal()) {
                 b.setSelected(true);
                 break;
             }
         }
         for (JRadioButtonMenuItem b : pModes) {
-            b.addActionListener(e -> ENGINE_MODE = EModes.ENGINE_MODES.values()[Integer.parseInt(particleModesGroup.getSelection().getActionCommand())]);
+            b.addActionListener(e -> ENGINE_MODE = EngineMode.values()[Integer.parseInt(particleModesGroup.getSelection().getActionCommand())]);
         }
 
         modes.add(particleModes);
@@ -395,13 +395,13 @@ public class CMenuBar extends JMenuBar {
         particleTypes.add(pTypes[8]);
 
         for (JRadioButtonMenuItem b : pTypes) {
-            if (Integer.parseInt(b.getActionCommand()) == PARTICLE_TYPE.getValue()) {
+            if (Integer.parseInt(b.getActionCommand()) == PARTICLE_TYPE.ordinal()) {
                 b.setSelected(true);
                 break;
             }
         }
         for (JRadioButtonMenuItem b : pTypes) {
-            b.addActionListener(e -> PARTICLE_TYPE = EModes.PARTICLE_TYPES.values()[Integer.parseInt(particleTypesGroup.getSelection().getActionCommand())]);
+            b.addActionListener(e -> PARTICLE_TYPE = ParticleType.values()[Integer.parseInt(particleTypesGroup.getSelection().getActionCommand())]);
         }
 
         modes.add(particleTypes);
@@ -462,13 +462,13 @@ public class CMenuBar extends JMenuBar {
         gravitationModes.add(pGravModes[8]);
 
         for (JRadioButtonMenuItem b : pGravModes) {
-            if (Integer.parseInt(b.getActionCommand()) == PARTICLE_GRAVITATION_MODE.getValue()) {
+            if (Integer.parseInt(b.getActionCommand()) == PARTICLE_GRAVITATION_MODE.ordinal()) {
                 b.setSelected(true);
                 break;
             }
         }
         for (JRadioButtonMenuItem b : pGravModes) {
-            b.addActionListener(e -> PARTICLE_GRAVITATION_MODE = EModes.GRAVITATION_MODES.values()[Integer.parseInt(particleGravitationGroup.getSelection().getActionCommand())]);
+            b.addActionListener(e -> PARTICLE_GRAVITATION_MODE = GravitationMode.values()[Integer.parseInt(particleGravitationGroup.getSelection().getActionCommand())]);
         }
 
         modes.add(gravitationModes);
@@ -477,7 +477,7 @@ public class CMenuBar extends JMenuBar {
 
     public static void updateParticleModesRadios() {
         for (JRadioButtonMenuItem b : pModes) {
-            if (Integer.parseInt(b.getActionCommand()) == ENGINE_MODE.getValue()) {
+            if (Integer.parseInt(b.getActionCommand()) == ENGINE_MODE.ordinal()) {
                 b.setSelected(true);
                 break;
             }
@@ -486,7 +486,7 @@ public class CMenuBar extends JMenuBar {
 
     public static void updateParticleTypesRadios() {
         for (JRadioButtonMenuItem b : pTypes) {
-            if (Integer.parseInt(b.getActionCommand()) == PARTICLE_TYPE.getValue()) {
+            if (Integer.parseInt(b.getActionCommand()) == PARTICLE_TYPE.ordinal()) {
                 b.setSelected(true);
                 break;
             }
@@ -495,7 +495,7 @@ public class CMenuBar extends JMenuBar {
 
     public static void updateGravitationModesRadios() {
         for (JRadioButtonMenuItem b : pGravModes) {
-            if (Integer.parseInt(b.getActionCommand()) == PARTICLE_GRAVITATION_MODE.getValue()) {
+            if (Integer.parseInt(b.getActionCommand()) == PARTICLE_GRAVITATION_MODE.ordinal()) {
                 b.setSelected(true);
                 break;
             }

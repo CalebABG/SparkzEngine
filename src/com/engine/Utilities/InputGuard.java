@@ -1,8 +1,8 @@
 package com.engine.Utilities;
 
-import com.engine.GUIWindows.EException;
+import com.engine.GUIWindows.ExceptionLogger;
 import com.engine.GUIWindows.OptionsMenu;
-import com.engine.GUIWindows.ParticleTypeUI;
+import com.engine.GUIWindows.ParticleTypePicker;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 import javax.swing.undo.UndoManager;
@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import static com.engine.Utilities.H5Util.H;
+import static com.engine.Utilities.HTMLUtil.HeadingTag;
 
 public class InputGuard {
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -26,7 +26,7 @@ public class InputGuard {
         float newAmount = (amount != null && amount.length() > 0 && canParseStringFloat(amount)) ? Float.parseFloat(amount) : default_val;
         if (newAmount < min) {
             while (newAmount < min) {
-                amount = JOptionPane.showInputDialog(OptionsMenu.frame, H(3, "Not Allowed, Enter an Amount > " + min));
+                amount = JOptionPane.showInputDialog(OptionsMenu.frame, HeadingTag(3, "Not Allowed, Enter an Amount > " + min));
                 newAmount = (amount != null && amount.length() > 0) ? Float.parseFloat(amount) : default_val;
             }
         }
@@ -41,14 +41,14 @@ public class InputGuard {
         float newAmount = (amount != null && amount.length() > 0 && canParseStringFloat(amount)) ? Float.parseFloat(amount) : default_val;
         if (newAmount < min) {
             while (newAmount < min) {
-                amount = JOptionPane.showInputDialog(parent, H(3, "Not Allowed, Enter an Amount > " + min));
+                amount = JOptionPane.showInputDialog(parent, HeadingTag(3, "Not Allowed, Enter an Amount > " + min));
                 newAmount = (amount != null && amount.length() > 0) ? Float.parseFloat(amount) : default_val;
             }
         }
         return newAmount;
     }
 
-    public static String valueGuardString(int mode, ParticleTypeUI ui, String default_val, String promptText) {
+    public static String valueGuardString(int mode, ParticleTypePicker ui, String default_val, String promptText) {
         if (mode == 0) {return default_val;}
         else {
             String amount = JOptionPane.showInputDialog(ui.frame, promptText, null, JOptionPane.PLAIN_MESSAGE);
@@ -92,7 +92,7 @@ public class InputGuard {
                 try {
                     if (undoMgr.canUndo()) undoMgr.undo();
                 } catch (Exception e) {
-                    EException.append(e);}
+                    ExceptionLogger.append(e);}
             }
         });
 
@@ -100,7 +100,8 @@ public class InputGuard {
             public void actionPerformed(ActionEvent evt) {
                 try {
                     if (undoMgr.canRedo()) undoMgr.redo();
-                } catch (Exception e) {EException.append(e);}
+                } catch (Exception e) {
+                    ExceptionLogger.append(e);}
             }
         });
 

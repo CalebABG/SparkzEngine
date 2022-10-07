@@ -1,7 +1,7 @@
 package com.engine.GUIWindows;
 
-import com.engine.J8Helpers.Extensions.KAdapter;
-import com.engine.J8Helpers.Extensions.WindowClosing;
+import com.engine.InputHandlers.ExtendedKeyAdapter;
+import com.engine.InputHandlers.ExtendedWindowAdapter;
 import com.engine.Utilities.Settings;
 
 import javax.swing.*;
@@ -28,13 +28,13 @@ public class SampleFunctions {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-            EException.append(e);
+            ExceptionLogger.append(e);
         }
         frame = new JFrame();
         frame.setIconImage(Settings.iconImage);
         frame.setSize(444, 322);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowClosing(windowEvent -> close()));
+        frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
         frame.setLocationRelativeTo(parent);
 
         JPanel panel = new JPanel();
@@ -52,7 +52,7 @@ public class SampleFunctions {
             br.close();
             fin.close();
         } catch (Exception e) {
-            EException.append(e);
+            ExceptionLogger.append(e);
         }
 
         frame.setTitle("Sample Functions - " + listModel.size());
@@ -62,7 +62,7 @@ public class SampleFunctions {
         list.setLayoutOrientation(JList.VERTICAL);
         list.setVisibleRowCount(-1);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        list.addKeyListener(new KAdapter.KeyReleased(e -> {
+        list.addKeyListener(new ExtendedKeyAdapter.KeyReleased(e -> {
             {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) graphSelectedSample(list);
             }
@@ -85,8 +85,8 @@ public class SampleFunctions {
 
     private void graphSelectedSample(JList<String> list) {
         String selectedSampleFunction = list.getSelectedValue();
-        ParticleGraph.textFields[0].setText(selectedSampleFunction);
-        ParticleGraph.threadGraph(selectedSampleFunction);
+        ParticleGrapher.textFields[0].setText(selectedSampleFunction);
+        ParticleGrapher.threadGraph(selectedSampleFunction);
     }
 
     private void close() {

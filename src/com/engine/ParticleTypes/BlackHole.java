@@ -1,14 +1,14 @@
 package com.engine.ParticleTypes;
 
 import com.engine.ParticleHelpers.ParticleModes;
+
 import java.awt.*;
 
 import static com.engine.EngineHelpers.EConstants.*;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public class BlackHole extends Molecule {
-    private Color midColor = new Color(20, 25, 30);
-    public BlackHole() {super();}
+    private static final Color centerColor = new Color(20, 25, 30);
 
     public BlackHole(float x, float y, float radius, float speed, float direction) {
         super(x, y, radius, speed, direction, 0);
@@ -16,21 +16,22 @@ public class BlackHole extends Molecule {
     }
 
     private void open() {
-        for (int i = 0; i < ParticlesArray.size(); i++) {
-            Particle p = ParticlesArray.get(i);
+        for (int i = Particles.size() - 1; i >= 0; i--) {
+            Particle p = Particles.get(i);
+
             float dx = p.x - x;
             float dy = p.y - y;
             float bigR = 4 * radius;
             float dist = (float) sqrt(dx * dx + dy * dy);
 
             if (dist < bigR) {
-                float n = 0.37f;
-                p.vx *= n;
-                p.vy *= n;
-                p.gravitate(this, 1);
+                final float dampening = 0.37f;
+                p.vx *= dampening;
+                p.vy *= dampening;
+                p.gravitateToMolecule(this, 1);
             }
 
-            if (dist < radius) ParticlesArray.remove(i);
+            if (dist < radius) Particles.remove(i);
         }
     }
 
@@ -41,19 +42,20 @@ public class BlackHole extends Molecule {
         graphics2D.setColor(color);
         graphics2D.fillOval((int) x - smallR, (int) y - smallR, 2 * smallR, 2 * smallR);
 
-        graphics2D.setColor(midColor);
+        graphics2D.setColor(centerColor);
         graphics2D.drawOval((int) x - bigR, (int) y - bigR, 2 * bigR, 2 * bigR);
     }
 
     public void render() {
         giveStyle();
     }
+
     public void update() {
         open();
         boundsCheck();
         if (radius < 0) {
             ParticleModes.fireworksMode(x, y, 6, 4, 320);
-            BlackHoleArray.remove(this);
+            BlackHoles.remove(this);
         }
         radius -= 0.015;
     }

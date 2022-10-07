@@ -7,30 +7,31 @@ import static com.engine.EngineHelpers.EConstants.*;
 import static org.apache.commons.math3.util.FastMath.sqrt;
 
 public class Ion extends Molecule {
-    private static Color hover = new Color(65, 106, 236);
+    private static final Color hoverColor = new Color(65, 106, 236);
 
-    public Ion() {super();}
     public Ion(float x, float y, float radius, float speed, float direction) {
         super(x, y, radius, speed, direction, 0);
     }
 
     private void coagulate() {
-        for (int i = 0; i < IonArray.size(); i++) {
-            Ion ion = IonArray.get(i);
+        for (int i = 0; i < Ions.size(); i++) {
+            Ion ion = Ions.get(i);
 
             float dx = Mouse.x - ion.x;
             float dy = Mouse.y - ion.y;
             float dist = (float) sqrt(dx * dx + dy * dy);
-            boolean isMouseOver = dist < ion.radius;
 
-            if (isMouseOver) {
-                ion.color = hover;
+            boolean mouseIsOver = dist < ion.radius;
+
+            if (mouseIsOver) {
+                ion.color = hoverColor;
                 graphics2D.setColor(Color.orange);
                 graphics2D.drawLine((int) ion.x, (int) ion.y, (int) x, (int) y);
+            } else {
+                ion.color = Color.white;
             }
-            else ion.color = Color.white;
 
-            if (CONTROL_IS_DOWN.value() && isMouseOver) {
+            if (CONTROL_IS_DOWN.value() && mouseIsOver) {
                 ion.x = Mouse.x;
                 ion.y = Mouse.y;
             }
@@ -38,9 +39,9 @@ public class Ion extends Molecule {
     }
 
     public void giveStyle() {
+        int size = (int) (2 * radius);
         graphics2D.setColor(color);
-        int lgr = (int) (2 * radius);
-        graphics2D.drawOval((int) (x - radius), (int) (y - radius), lgr, lgr);
+        graphics2D.drawOval((int) (x - radius), (int) (y - radius), size, size);
     }
 
     public void render() {

@@ -1,7 +1,7 @@
 package com.engine.GUIWindows;
 
-import com.engine.J8Helpers.Extensions.KAdapter;
-import com.engine.J8Helpers.Extensions.WindowClosing;
+import com.engine.InputHandlers.ExtendedKeyAdapter;
+import com.engine.InputHandlers.ExtendedWindowAdapter;
 import com.engine.Utilities.Settings;
 
 import javax.swing.*;
@@ -25,16 +25,16 @@ public class InstructionsWindow {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-            EException.append(e);
+            ExceptionLogger.append(e);
         }
 
         frame = new JFrame(title);
         frame.setIconImage(Settings.iconImage);
         frame.setSize(w, h);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowClosing(windowEvent -> close()));
+        frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
         frame.setLocationRelativeTo(parent);
-        frame.addKeyListener(new KAdapter.KeyReleased(this::close));
+        frame.addKeyListener(new ExtendedKeyAdapter.KeyReleased(this::close));
 
         index = type;
 

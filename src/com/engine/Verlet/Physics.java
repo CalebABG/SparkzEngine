@@ -1,14 +1,12 @@
 package com.engine.Verlet;
 
-import com.engine.GUIWindows.VPhysicsEditor;
+import com.engine.GUIWindows.VerletPhysicsEditor;
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
 import java.util.List;
 
 import static com.engine.EngineHelpers.EBOOLS.*;
 import static com.engine.EngineHelpers.EConstants.*;
-import static com.engine.GUIWindows.VPhysicsEditor.showselectionconstraint_checkbox;
+import static com.engine.GUIWindows.VerletPhysicsEditor.showselectionconstraint_checkbox;
 import static com.engine.Verlet.Vertex.Vertices;
 import static com.engine.Verlet.VSim.*;
 
@@ -37,8 +35,8 @@ public class Physics {
     public static void render() {
         for (int i = 0; i < Vertices.size(); i++) Vertices.get(i).draw();
 
-        if (VPhysicsEditor.vPhysicsEditorInstance != null && selectedVertex != null) {
-            List<Integer> selectedPointConstraintList = VPhysicsEditor.constraintJlist.getSelectedValuesList();
+        if (VerletPhysicsEditor.vVerletPhysicsEditorInstance != null && selectedVertex != null) {
+            List<Integer> selectedPointConstraintList = VerletPhysicsEditor.constraintsList.getSelectedValuesList();
 
             // Check whether the list of constraints is empty; check if the point has any constrains (if the first index in the array
             // is not -1; and check whether to show the constraint at all (checkbox)
@@ -51,11 +49,13 @@ public class Physics {
 
                     float scale = 3.0f;
                     graphics2D.setColor(Color.red);
-                    graphics2D.drawOval(
-                            (int) (constraintPoint.currX - ((scale / 2) * constraintPoint.radius)),
-                            (int) (constraintPoint.currY - ((scale / 2) * constraintPoint.radius)),
-                            (int) (scale * constraintPoint.radius),
-                            (int) (scale * constraintPoint.radius));
+                    graphics2D.drawOval
+                    (
+                         (int) (constraintPoint.currX - ((scale / 2) * constraintPoint.radius)),
+                         (int) (constraintPoint.currY - ((scale / 2) * constraintPoint.radius)),
+                         (int) (scale * constraintPoint.radius),
+                         (int) (scale * constraintPoint.radius)
+                    );
                 }
             }
         }
@@ -76,7 +76,7 @@ public class Physics {
      * Handles the interaction between the mouse pointer and Verlet physics objects
      */
     private static void handleMouseInteraction() {
-        if (VPhysicsEditor.EDITOR_MODE == VModes.EditorModes.Drag) {
+        if (VerletPhysicsEditor.EDITOR_MODE == VModes.EditorModes.Drag) {
             //  Handle if the Left mouse button is held down in drag mode
             if (LEFT_MOUSE_IS_DOWN.value()) {
                 //  If the the point we want to drag isn't null and if the engine isn't paused move it around
@@ -98,8 +98,8 @@ public class Physics {
                         if (searchVertex.contains(Mouse.x, Mouse.y)) {
                             dragVertex = searchVertex;
                             selectedVertex = searchVertex;
-                            VPhysicsEditor.setObjectPropertiesOnSelect(selectedVertex);
-                            VPhysicsEditor.updateJListConstraints(selectedVertex.edges);
+                            VerletPhysicsEditor.setObjectPropertiesOnSelect(selectedVertex);
+                            VerletPhysicsEditor.updateConstraintsList(selectedVertex.edges);
                             found = true;
                         }
                     }
@@ -117,7 +117,7 @@ public class Physics {
                     if (tear_distance < mouseTearSize) {
                         if (searchVertex == selectedVertex) {
                             searchVertex.edges.clear();
-                            VPhysicsEditor.updateJListConstraints(selectedVertex.edges);
+                            VerletPhysicsEditor.updateConstraintsList(selectedVertex.edges);
                         }
                         else searchVertex.edges.clear();
                     }

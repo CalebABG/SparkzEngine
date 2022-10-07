@@ -1,20 +1,20 @@
 package com.engine.ParticleHelpers;
 
 import static com.engine.EngineHelpers.EConstants.*;
-import static com.engine.EngineHelpers.EModes.MOLECULE_RENDER_MODES.*;
-import static com.engine.GUIWindows.ParticleTypeUI.particleTypeUIs;
-import static com.engine.Utilities.H5Util.H;
+import static com.engine.Enums.MoleculeRenderMode.*;
+import static com.engine.GUIWindows.ParticleTypePicker.particleTypeUIs;
+import static com.engine.Utilities.HTMLUtil.HeadingTag;
 import static com.engine.Utilities.InputGuard.valueGuardString;
 
 public class ParticleTypeOptions {
     public static void baseParticleOptions(int x) {
         switch (x) {
-            case 0: PARTICLE_RENDER_MODE = RECTANGLE_NOFILL; break;
-            case 1: PARTICLE_RENDER_MODE = CIRCLE_NOFILL; break;
-            case 2: PARTICLE_RENDER_MODE = RECTANGLE3D_NOFILL; break;
+            case 0: PARTICLE_RENDER_MODE = RECTANGLE_NO_FILL; break;
+            case 1: PARTICLE_RENDER_MODE = CIRCLE_NO_FILL; break;
+            case 2: PARTICLE_RENDER_MODE = RECTANGLE3D_NO_FILL; break;
             case 3: PARTICLE_RENDER_MODE = NUMBERS; break;
             case 4: PARTICLE_RENDER_MODE = CUSTOM_TEXT;
-            baseParticleText = valueGuardString(1, particleTypeUIs[0], baseParticleText, H(3,"Enter Custom Text")); break;
+            baseParticleText = valueGuardString(1, particleTypeUIs[0], baseParticleText, HeadingTag(3,"Enter Custom Text")); break;
             case 5: PARTICLE_RENDER_MODE = RECTANGLE3D_FILL; break;
             case 6: PARTICLE_RENDER_MODE = CIRCLE_FILL; break;
             case 7: PARTICLE_RENDER_MODE = SMILEY_FACE; break;
@@ -35,12 +35,12 @@ public class ParticleTypeOptions {
 
     public static void realFireworksOptions(int x) {
         switch (x) {
-            case 0: FIREWORKS_RENDER_MODE = RECTANGLE_NOFILL; break;
-            case 1: FIREWORKS_RENDER_MODE = CIRCLE_NOFILL; break;
-            case 2: FIREWORKS_RENDER_MODE = RECTANGLE3D_NOFILL; break;
+            case 0: FIREWORKS_RENDER_MODE = RECTANGLE_NO_FILL; break;
+            case 1: FIREWORKS_RENDER_MODE = CIRCLE_NO_FILL; break;
+            case 2: FIREWORKS_RENDER_MODE = RECTANGLE3D_NO_FILL; break;
             case 3: FIREWORKS_RENDER_MODE = NUMBERS; break;
             case 4: FIREWORKS_RENDER_MODE = CUSTOM_TEXT;
-            fireworksParticleText = valueGuardString(1, particleTypeUIs[1], fireworksParticleText, H(3,"Enter Custom Text")); break;
+            fireworksParticleText = valueGuardString(1, particleTypeUIs[1], fireworksParticleText, HeadingTag(3,"Enter Custom Text")); break;
             case 5: FIREWORKS_RENDER_MODE = RECTANGLE3D_FILL; break;
             case 6: FIREWORKS_RENDER_MODE = CIRCLE_FILL; break;
             case 7: FIREWORKS_RENDER_MODE = SMILEY_FACE; break;

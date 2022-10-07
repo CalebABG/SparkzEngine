@@ -1,18 +1,20 @@
 package com.engine.ParticleTypes;
 
-import com.engine.ParticleTypes.Interfaces.ThinkingColors;
+import java.awt.*;
 
+import com.engine.ThinkingParticles.ReactiveColors;
+
+import static com.engine.EngineHelpers.EBOOLS.REACTIVE_PARTICLES_ENABLED;
+import static com.engine.EngineHelpers.EConstants.Fireworks;
 import static com.engine.EngineHelpers.EConstants.*;
-import static com.engine.EngineHelpers.EBOOLS.THINKING_PARTICLES;
-import static com.engine.ParticleHelpers.DrawModes.giveStyle;
 import static com.engine.EngineHelpers.EINTS.*;
+import static com.engine.ParticleHelpers.DrawingUtil.giveStyle;
 
-public class Fireworks extends Molecule implements ThinkingColors {
+public class Fireworks extends Molecule {
     private int life = (int) ((random.nextFloat() * FIREWORKS_LIFE.value()) + 3);
     private int wind = FIREWORKS_WIND.value();
     private int jitter = FIREWORKS_JITTER.value();
 
-    public Fireworks(){super();}
     public Fireworks(float x, float y, float radius, float speed, float direction) {
         super(x, y, radius, speed, direction, 0);
     }
@@ -23,25 +25,25 @@ public class Fireworks extends Molecule implements ThinkingColors {
     }
 
     public void render() {
-        if (THINKING_PARTICLES.value()) color = getSelfColor(velocity());
-        else color = plain_color;
+        Color color;
+        if (REACTIVE_PARTICLES_ENABLED.value()) color = ReactiveColors.getReactiveComponent(velocity());
+        else color = PLAIN_COLOR;
 
         giveStyle(x - radius, y - radius, 2 * radius, color, FIREWORKS_RENDER_MODE, fireworksParticleText);
     }
 
-    public void update () {
-        ax += (random.nextFloat() * wind - (wind / 2)) / jitter;
-        ay += (random.nextFloat() * wind - (wind / 2)) / jitter;
+    public void update() {
+        ax += (random.nextFloat() * wind - (wind / 2f)) / jitter;
+        ay += (random.nextFloat() * wind - (wind / 2f)) / jitter;
 
         accelerate();
 
-        float n = 0.9793f;
-        vx *= n;
-        vy *= n;
+        final float dampening = 0.9793f;
+        vx *= dampening;
+        vy *= dampening;
 
         boundsCheck();
 
-        if (life < 0) FireworksArray.remove(this);
-        life -= 1;
+        if (--life < 0) Fireworks.remove(this);
     }
 }

@@ -2,8 +2,8 @@ package com.engine.GUIWindows;
 
 import com.engine.EngineHelpers.EngineMethods;
 import com.engine.EngineHelpers.GUIText;
-import com.engine.J8Helpers.Extensions.KAdapter;
-import com.engine.J8Helpers.Extensions.WindowClosing;
+import com.engine.InputHandlers.ExtendedKeyAdapter;
+import com.engine.InputHandlers.ExtendedWindowAdapter;
 import com.engine.Utilities.InputGuard;
 import com.engine.Utilities.Settings;
 
@@ -17,7 +17,6 @@ public class OptionsMenu {
     private static OptionsMenu optionsMenu = null;
     public static JFrame frame;
     private static JTextField textField;
-    //public static void main(String[] args) {getInstance();}
 
     public static void getInstance() {
         if (optionsMenu == null) optionsMenu = new OptionsMenu();
@@ -28,13 +27,13 @@ public class OptionsMenu {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-            EException.append(e);
+            ExceptionLogger.append(e);
         }
         frame = new JFrame("Options Menu");
         frame.setIconImage(Settings.iconImage);
         frame.setSize(495, 480);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowClosing(windowEvent -> close()));
+        frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
         frame.setLocationRelativeTo(EFrame);
 
         JScrollPane jScrollPane1 = new JScrollPane();
@@ -46,7 +45,7 @@ public class OptionsMenu {
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setFont(new Font(Font.SERIF, Font.PLAIN, 17));
         //Needs to be keyPressed() handler - keyReleased() will cause windows to display twice
-        textField.addKeyListener(new KAdapter.KeyPressed(e -> {
+        textField.addKeyListener(new ExtendedKeyAdapter.KeyPressed(e -> {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) getOption();
         }));
         jPanel1.add(textField, BorderLayout.CENTER);

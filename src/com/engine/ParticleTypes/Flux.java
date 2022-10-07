@@ -1,14 +1,13 @@
 package com.engine.ParticleTypes;
 
-import com.engine.ParticleHelpers.ParticleModes;
 import java.awt.*;
+import com.engine.ParticleHelpers.ParticleModes;
 import static com.engine.EngineHelpers.EConstants.*;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public class Flux extends Molecule {
     public int life = (int) ((random.nextFloat() * 400) + 100);
 
-    public Flux(){super();}
     public Flux(float x, float y, float radius, float speed, float direction) {
         super(x, y, radius, speed, direction, 0);
     }
@@ -23,8 +22,11 @@ public class Flux extends Molecule {
         graphics2D.draw(poly);
     }
 
-    public void render() {giveStyle();}
-    public void update () {
+    public void render() {
+        giveStyle();
+    }
+
+    public void update() {
         accelerate();
         boundsCheck();
 
@@ -32,15 +34,11 @@ public class Flux extends Molecule {
         if (life % 40 == 1) color = Color.red;
         else color = Color.white;
 
-        if (life < 0) {
-            if (ParticlesArray.size() < 13_000) {
-                ParticleModes.createEraser(x, y, 3);
-                FluxArray.remove(this);
-            }
-            else FluxArray.remove(this);
+        if (--life < 0) {
+            if (Particles.size() < 13_000) ParticleModes.createEraser(x, y, 3);
+            Fluxes.remove(this);
         }
 
-        life -= 1;
         radius -= 0.08;
     }
 }
