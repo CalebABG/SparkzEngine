@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-import static com.cabg.utilities.InputGuard.floatTextfieldGuardDefault;
+import static com.cabg.utilities.InputGuard.floatTextFieldGuardDefault;
 
 public class FlowFieldEditor {
     public static FlowFieldEditor flowFieldUI = null;
@@ -246,14 +246,14 @@ public class FlowFieldEditor {
     }
 
     private void setFlow() {
-        noiseX = floatTextfieldGuardDefault(-(Float.MIN_VALUE + 1), noiseX, fields[0].getText());
-        noiseY = floatTextfieldGuardDefault(-(Float.MIN_VALUE + 1), noiseY, fields[1].getText());
-        noiseZ = floatTextfieldGuardDefault(-(Float.MIN_VALUE + 1), noiseZ, fields[2].getText());
-        scaleC1 = floatTextfieldGuardDefault(-(Float.MIN_VALUE + 1), scaleC1, fields[3].getText());
-        scaleC2 = floatTextfieldGuardDefault(-(Float.MIN_VALUE + 1), scaleC2, fields[4].getText());
-        startAngle = floatTextfieldGuardDefault(-(Float.MIN_VALUE + 1), startAngle, fields[5].getText());
-        velocityLimit = floatTextfieldGuardDefault(-(Float.MIN_VALUE + 1), velocityLimit, fields[6].getText());
-        velocityMagnitude = floatTextfieldGuardDefault(-(Float.MIN_VALUE + 1), velocityMagnitude, fields[7].getText());
+        noiseX = floatTextFieldGuardDefault(-(Float.MIN_VALUE + 1), noiseX, fields[0].getText());
+        noiseY = floatTextFieldGuardDefault(-(Float.MIN_VALUE + 1), noiseY, fields[1].getText());
+        noiseZ = floatTextFieldGuardDefault(-(Float.MIN_VALUE + 1), noiseZ, fields[2].getText());
+        scaleC1 = floatTextFieldGuardDefault(-(Float.MIN_VALUE + 1), scaleC1, fields[3].getText());
+        scaleC2 = floatTextFieldGuardDefault(-(Float.MIN_VALUE + 1), scaleC2, fields[4].getText());
+        startAngle = floatTextFieldGuardDefault(-(Float.MIN_VALUE + 1), startAngle, fields[5].getText());
+        velocityLimit = floatTextFieldGuardDefault(-(Float.MIN_VALUE + 1), velocityLimit, fields[6].getText());
+        velocityMagnitude = floatTextFieldGuardDefault(-(Float.MIN_VALUE + 1), velocityMagnitude, fields[7].getText());
     }
 
     private void close() {

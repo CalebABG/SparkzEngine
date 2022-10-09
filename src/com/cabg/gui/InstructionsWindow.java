@@ -9,11 +9,10 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class InstructionsWindow {
-    private static InstructionsWindow[] windows = new InstructionsWindow[2];
-    private int index;
+    private static final InstructionsWindow[] windows = new InstructionsWindow[2];
+    private final int index;
     public JFrame frame;
 
-    //Make sure type and int given when getInstance is called are the same! If values differ will cause indexOutOfBounds Error
     public static void getInstance(int type, JFrame parent, int w, int h, String title, String instructions) {
         if (windows[type] == null)
             windows[type] = new InstructionsWindow(type, parent, w, h, title, instructions);

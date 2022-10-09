@@ -19,6 +19,7 @@ public class ExceptionLogger {
 
     public static JFrame frame;
     private static final JTextArea textArea = new JTextArea();
+    private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("h:mm:ss a");
 
     public static void getInstance() {
         if (logger == null) logger = new ExceptionLogger();
@@ -41,7 +42,7 @@ public class ExceptionLogger {
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE) close();
             if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_C) textArea.setText("");
             if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_P)
-                textArea.append("Project Development: " + Settings.getProjectTimespan() + "\n");
+                textArea.append("Project Development: " + Settings.getProjectTimeSpan() + "\n");
         }));
 
         JPanel panel = new JPanel();
@@ -70,7 +71,7 @@ public class ExceptionLogger {
     }
 
     public static void append(Exception e) {
-        textArea.append(new SimpleDateFormat("h:mm:ss a").format(new Date()) + " - " + logException(e) + "\n");
+        textArea.append(dateFormatter.format(new Date()) + " - " + logException(e) + "\n");
     }
 
     public static void append(String text) {

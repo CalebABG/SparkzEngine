@@ -33,10 +33,10 @@ public class PhysicsEditor {
 
     public static DefaultListModel<Integer> listModel = new DefaultListModel<>();
     public static JCheckBox showSelectionConstraintCheckbox = new JCheckBox("Show Constraint"),
-            constraintdrawlink_checkbox = new JCheckBox("Draw Link"),
-            constrainttearable_checkbox = new JCheckBox("Tearable"),
-            selectionshowpoint_checkbox = new JCheckBox("Show Point"),
-            selectioncollidable_checkbox = new JCheckBox("Collidable");
+            constraintDrawLinkCheckbox = new JCheckBox("Draw Link"),
+            constraintSeverableCheckbox = new JCheckBox("Severable"),
+            selectionShowPointCheckbox = new JCheckBox("Show Point"),
+            selectionCollidableCheckbox = new JCheckBox("Collidable");
 
     public static JList<Integer> constraintsList = new JList<>(listModel);
     public static JComboBox<PhysicsEditorMode> editorModesJComboBox = new JComboBox<>();
@@ -70,7 +70,7 @@ public class PhysicsEditor {
         } catch (Exception e) {
             ExceptionLogger.append(e);
         }
-        frame = new JFrame("Verlet Physics Editor");
+        frame = new JFrame("Physics Editor");
         frame.setIconImage(Settings.iconImage);
         frame.setSize(568, 610);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -276,15 +276,15 @@ public class PhysicsEditor {
         gbl_addmode_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         addmode_panel.setLayout(gbl_addmode_panel);
 
-        JLabel addmode_label = new JLabel("Add Mode (availability based on mode)");
-        addmode_label.setFont(font);
+        JLabel creationModeLabel = new JLabel("Creation Mode");
+        creationModeLabel.setFont(font);
         GridBagConstraints gbc_addmode_label = new GridBagConstraints();
         gbc_addmode_label.fill = GridBagConstraints.VERTICAL;
         gbc_addmode_label.insets = new Insets(5, 0, 5, 0);
         gbc_addmode_label.gridwidth = 4;
         gbc_addmode_label.gridx = 0;
         gbc_addmode_label.gridy = 0;
-        addmode_panel.add(addmode_label, gbc_addmode_label);
+        addmode_panel.add(creationModeLabel, gbc_addmode_label);
 
         creationModesJComboBox.setModel(new DefaultComboBoxModel<>(PhysicsCreationMode.values()));
         creationModesJComboBox.setSelectedItem(CREATION_MODE);
@@ -332,15 +332,15 @@ public class PhysicsEditor {
         gbc_drawlinks_checkbox.gridy = 2;
         addmode_panel.add(drawlinks_checkbox, gbc_drawlinks_checkbox);
 
-        JCheckBox istearable_checkbox = new JCheckBox("Is Tearable");
-        istearable_checkbox.setSelected(true);
-        istearable_checkbox.setFont(font);
-        GridBagConstraints gbc_istearable_checkbox = new GridBagConstraints();
-        gbc_istearable_checkbox.fill = GridBagConstraints.VERTICAL;
-        gbc_istearable_checkbox.insets = new Insets(0, 0, 5, 0);
-        gbc_istearable_checkbox.gridx = 3;
-        gbc_istearable_checkbox.gridy = 2;
-        addmode_panel.add(istearable_checkbox, gbc_istearable_checkbox);
+        JCheckBox isSeverableCheckbox = new JCheckBox("Is Severable");
+        isSeverableCheckbox.setSelected(true);
+        isSeverableCheckbox.setFont(font);
+        GridBagConstraints gbc_isSeverableCheckbox = new GridBagConstraints();
+        gbc_isSeverableCheckbox.fill = GridBagConstraints.VERTICAL;
+        gbc_isSeverableCheckbox.insets = new Insets(0, 0, 5, 0);
+        gbc_isSeverableCheckbox.gridx = 3;
+        gbc_isSeverableCheckbox.gridy = 2;
+        addmode_panel.add(isSeverableCheckbox, gbc_isSeverableCheckbox);
 
         JLabel objectsize_label = new JLabel("Size");
         objectsize_label.setFont(font);
@@ -523,23 +523,23 @@ public class PhysicsEditor {
         gbc_selectionobjectproperties_label.gridy = 0;
         selection_panel.add(selectionobjectproperties_label, gbc_selectionobjectproperties_label);
 
-        selectionshowpoint_checkbox.setSelected(false);
-        selectionshowpoint_checkbox.setFont(font);
+        selectionShowPointCheckbox.setSelected(false);
+        selectionShowPointCheckbox.setFont(font);
         GridBagConstraints gbc_pinned_checkbox = new GridBagConstraints();
         gbc_pinned_checkbox.anchor = GridBagConstraints.WEST;
         gbc_pinned_checkbox.insets = new Insets(0, 5, 5, 5);
         gbc_pinned_checkbox.gridx = 0;
         gbc_pinned_checkbox.gridy = 1;
-        selection_panel.add(selectionshowpoint_checkbox, gbc_pinned_checkbox);
+        selection_panel.add(selectionShowPointCheckbox, gbc_pinned_checkbox);
 
-        selectioncollidable_checkbox.setSelected(true);
-        selectioncollidable_checkbox.setFont(font);
+        selectionCollidableCheckbox.setSelected(true);
+        selectionCollidableCheckbox.setFont(font);
         GridBagConstraints gbc_collidable_checkbox = new GridBagConstraints();
         gbc_collidable_checkbox.anchor = GridBagConstraints.WEST;
         gbc_collidable_checkbox.insets = new Insets(0, 0, 5, 5);
         gbc_collidable_checkbox.gridx = 1;
         gbc_collidable_checkbox.gridy = 1;
-        selection_panel.add(selectioncollidable_checkbox, gbc_collidable_checkbox);
+        selection_panel.add(selectionCollidableCheckbox, gbc_collidable_checkbox);
 
         JLabel objectcolor_label = new JLabel("Selection Color(Click to Change)");
         objectcolor_label.setFont(font);
@@ -721,18 +721,18 @@ public class PhysicsEditor {
         gbc_checkBox.gridy = 1;
         panel.add(showSelectionConstraintCheckbox, gbc_checkBox);
 
-        constraintdrawlink_checkbox.setSelected(true);
-        constraintdrawlink_checkbox.setFont(font);
+        constraintDrawLinkCheckbox.setSelected(true);
+        constraintDrawLinkCheckbox.setFont(font);
         GridBagConstraints gbc_checkBox_1 = new GridBagConstraints();
         gbc_checkBox_1.fill = GridBagConstraints.VERTICAL;
         gbc_checkBox_1.anchor = GridBagConstraints.WEST;
         gbc_checkBox_1.insets = new Insets(0, 0, 5, 5);
         gbc_checkBox_1.gridx = 2;
         gbc_checkBox_1.gridy = 1;
-        panel.add(constraintdrawlink_checkbox, gbc_checkBox_1);
+        panel.add(constraintDrawLinkCheckbox, gbc_checkBox_1);
 
-        constrainttearable_checkbox.setSelected(true);
-        constrainttearable_checkbox.setFont(font);
+        constraintSeverableCheckbox.setSelected(true);
+        constraintSeverableCheckbox.setFont(font);
         GridBagConstraints gbc_checkBox_2 = new GridBagConstraints();
         gbc_checkBox_2.fill = GridBagConstraints.VERTICAL;
         gbc_checkBox_2.anchor = GridBagConstraints.WEST;
@@ -740,7 +740,7 @@ public class PhysicsEditor {
         gbc_checkBox_2.insets = new Insets(0, 0, 5, 0);
         gbc_checkBox_2.gridx = 3;
         gbc_checkBox_2.gridy = 1;
-        panel.add(constrainttearable_checkbox, gbc_checkBox_2);
+        panel.add(constraintSeverableCheckbox, gbc_checkBox_2);
 
         JLabel constraint_stiffness_label = new JLabel("Stiffness");
         constraint_stiffness_label.setFont(font);
@@ -828,7 +828,7 @@ public class PhysicsEditor {
             String dampening = selectiondampening_field.getText();
             String stiffness = selectionstiffness_field.getText();
 
-            selectedVertex.collidable = selectioncollidable_checkbox.isSelected();
+            selectedVertex.collidable = selectionCollidableCheckbox.isSelected();
             selectedVertex.color = lblSelectionColor.getBackground();
 
             if (InputGuard.canParseStringFloat(rad)) selectedVertex.radius = Float.parseFloat(rad);
@@ -849,11 +849,11 @@ public class PhysicsEditor {
                 for (int i = 0; i < selectedValues.size(); i++) {
                     Edge edge = selectedVertex.edges.get(selectedValues.get(i));
 
-                    edge.render = constraintdrawlink_checkbox.isSelected();
-                    edge.tearable = constrainttearable_checkbox.isSelected();
+                    edge.render = constraintDrawLinkCheckbox.isSelected();
+                    edge.severable = constraintSeverableCheckbox.isSelected();
                     edge.color = lblConstraintLink.getBackground();
-                    edge.stiffness = InputGuard.floatTextfieldGuardDefault(0.0f, edge.stiffness, cStiffness);
-                    edge.tearSensitivity = InputGuard.floatTextfieldGuardDefault(0.0f, edge.tearSensitivity, cTeardist);
+                    edge.stiffness = InputGuard.floatTextFieldGuardDefault(0.0f, edge.stiffness, cStiffness);
+                    edge.tearDistance = InputGuard.floatTextFieldGuardDefault(0.0f, edge.tearDistance, cTeardist);
                 }
             }
         }
@@ -871,7 +871,7 @@ public class PhysicsEditor {
     public static void setObjectPropertiesOnSelect(Vertex v) {
         if (physicsEditor != null) {
             lblSelectionColor.setBackground(v.color);
-            selectioncollidable_checkbox.setSelected(v.collidable);
+            selectionCollidableCheckbox.setSelected(v.collidable);
             selectiondampening_field.setText("" + v.damping);
             selectionmass_field.setText("" + v.mass);
             selectionradius_field.setText("" + v.radius);
@@ -884,10 +884,10 @@ public class PhysicsEditor {
         String simacc = simacc_field.getText(), dragforce = dragforce_field.getText(),
                 grav = gravity_field.getText(), airvis = airviscosity_field.getText();
 
-        PhysicsHandler.SIM_ACCURACY = InputGuard.intTextfieldGuardDefault(1, PhysicsHandler.SIM_ACCURACY, simacc);
-        PhysicsHandler.dragForce = InputGuard.floatTextfieldGuardDefault(0.0f, PhysicsHandler.dragForce, dragforce);
+        PhysicsHandler.SIM_ACCURACY = InputGuard.intTextFieldGuardDefault(1, PhysicsHandler.SIM_ACCURACY, simacc);
+        PhysicsHandler.dragForce = InputGuard.floatTextFieldGuardDefault(0.0f, PhysicsHandler.dragForce, dragforce);
         PhysicsHandler.gravity = guardFloat(PhysicsHandler.gravity, grav);
-        PhysicsHandler.airViscosity = InputGuard.floatTextfieldGuardDefault(0.0f, PhysicsHandler.airViscosity, airvis);
+        PhysicsHandler.airViscosity = InputGuard.floatTextFieldGuardDefault(0.0f, PhysicsHandler.airViscosity, airvis);
     }
 
     private float guardFloat(float default_, String value) {

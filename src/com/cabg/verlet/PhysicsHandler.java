@@ -24,7 +24,7 @@ public class PhysicsHandler {
     public static float STIFFNESS = 0.0444f;
     public static float TEAR_DISTANCE = 80;
     public static boolean DRAW_LINKS = true;
-    public static boolean TEARABLE = false;
+    public static boolean SEVERABLE = false;
     public static final int MAX_COLLISIONS = 1000;
     public static boolean ZERO_GRAVITY = false;
     public static boolean DEBUG_MODE = false;
@@ -60,19 +60,19 @@ public class PhysicsHandler {
                     createPoint(e, randHSLColor(1000, 7000, 0.8f), 25, 100);
                     break;
                 case Stick:
-                    createStick(e, LCOLOR, PCOLOR, 50, 10, 10, 1, 30, STIFFNESS, TEAR_DISTANCE, DRAW_LINKS, TEARABLE);
+                    createStick(e, LCOLOR, PCOLOR, 50, 10, 10, 1, 30, STIFFNESS, TEAR_DISTANCE, DRAW_LINKS, SEVERABLE);
                     break;
                 case IKChain:
-                    createIKChain(e, NUM_POINTS, SPACING, RADIUS, 1, TEAR_DISTANCE, DRAW_LINKS, TEARABLE, Color.red, Color.orange);
+                    createIKChain(e, NUM_POINTS, SPACING, RADIUS, 1, TEAR_DISTANCE, DRAW_LINKS, SEVERABLE, Color.red, Color.orange);
                     break;
                 case Box:
-                    singleBox(e, Color.blue, Color.cyan, 30, 8, 0.4f, TEAR_DISTANCE, DRAW_LINKS, TEARABLE);
+                    singleBox(e, Color.blue, Color.cyan, 30, 8, 0.4f, TEAR_DISTANCE, DRAW_LINKS, SEVERABLE);
                     break;
                 case SolidMesh:
-                    singleSolidMesh(e, 15, SIZE, 10, 0.1f, TEAR_DISTANCE, true, TEARABLE, Color.blue, Color.cyan);
+                    singleSolidMesh(e, 15, SIZE, 10, 0.1f, TEAR_DISTANCE, true, SEVERABLE, Color.blue, Color.cyan);
                     break;
                 case ElasticMesh:
-                    singleElasticMesh(e, 5, SIZE, 17, 0.4f, TEAR_DISTANCE, DRAW_LINKS, TEARABLE, Color.blue, Color.cyan);
+                    singleElasticMesh(e, 5, SIZE, 17, 0.4f, TEAR_DISTANCE, DRAW_LINKS, SEVERABLE, Color.blue, Color.cyan);
                     break;
                 case Cloth:
                     createCloth(e.getX(), e.getY(), 10, 10, 15);

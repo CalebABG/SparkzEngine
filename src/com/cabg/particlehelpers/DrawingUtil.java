@@ -10,7 +10,6 @@ import static com.cabg.core.EngineVariables.engineSettings;
 import static com.cabg.core.EngineVariables.graphics2D;
 
 public class DrawingUtil {
-
     private static void drawRect(float x, float y, float width, float height) {
         graphics2D.drawRect((int) x, (int) y, (int) width, (int) height);
     }
@@ -38,7 +37,7 @@ public class DrawingUtil {
 
     private static void drawNumbers(float x, float y, float radius) {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
-        graphics2D.drawString(""+radius, x, y);
+        graphics2D.drawString("" + radius, x, y);
     }
 
     private static void drawSmileyFace(float x, float y, float radius) {
@@ -105,8 +104,8 @@ public class DrawingUtil {
         graphics2D.setColor(c);
 
         switch (particleMode) {
-            case CIRCLE_NO_FILL:         drawCircle(x, y, radius, radius);      break;
-            case RECTANGLE3D_NO_FILL:    draw3DRect(x, y, radius, radius);      break;
+            case CIRCLE_NO_FILL:        drawCircle(x, y, radius, radius);       break;
+            case RECTANGLE3D_NO_FILL:   draw3DRect(x, y, radius, radius);       break;
             case NUMBERS:               drawNumbers(x, y, radius);              break;
             case CUSTOM_TEXT:           drawCustomText(txt, x, y, radius);      break;
             case RECTANGLE3D_FILL:      fill3DRect(x, y, radius, radius);       break;

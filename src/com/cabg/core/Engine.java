@@ -92,7 +92,7 @@ public class Engine {
             if (++frameCount > Integer.MAX_VALUE - 1) frameCount = 0;
 
             // Keep track of fps
-            framesPerSecond++;
+            ++framesPerSecond;
 
             render();
 
@@ -106,7 +106,7 @@ public class Engine {
 
             int thisSecond = (int) (lastUpdateTime / tB);
             if (thisSecond > lastSecondTime) {
-                StatsPanel.framesPerSec = framesPerSecond;
+                StatsPanel.fps = framesPerSecond;
                 framesPerSecond = 0;
                 lastSecondTime = thisSecond;
             }
@@ -119,7 +119,7 @@ public class Engine {
      * Synchronized start of the program; Creates and then starts the programs Thread.
      */
     private synchronized void start() {
-        renderer.scheduleAtFixedRate(new TimerTask() {
+        simTimer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 simulationLoop();
             }

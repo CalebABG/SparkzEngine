@@ -10,6 +10,7 @@ import com.cabg.inputhandlers.MouseMotionHandler;
 import com.cabg.particletypes.Particle;
 import com.cabg.reactivecolors.ReactiveColorsRandomizer;
 import com.cabg.utilities.ColorUtility;
+import com.cabg.utilities.HTMLUtil;
 import com.cabg.utilities.InputGuard;
 import com.cabg.verlet.Physics;
 import com.cabg.verlet.PhysicsHandler;
@@ -332,16 +333,16 @@ public class EngineMethods {
      * Determines which gravitation mode to use for particles in the Particles List.
      */
     private static void gravitationOptions() {
-        int gravityMode = (int) minValueGuard(0, engineSettings.gravitationMode.ordinal(), GUIText.ParticleGravitationOptions);
+        int gravityMode = (int) minValueGuard(0, engineSettings.gravitationMode.ordinal(), HTMLUtil.ParticleGravitationOptions);
         if (gravityMode < GravitationMode.values().length) engineSettings.gravitationMode = GravitationMode.values()[gravityMode];
-        updateGravitationModesRadios();
+        updateGravitationModeRadios();
     }
 
     /**
      * Dialog window for adjusting the fireworks options (Wind, Life, Jitter)
      */
     private static void realFireworks() {
-        String input = JOptionPane.showInputDialog(OptionsMenu.frame, HeadingTag(3, GUIText.FireworksOptions), null, JOptionPane.PLAIN_MESSAGE);
+        String input = JOptionPane.showInputDialog(OptionsMenu.frame, HeadingTag(3, HTMLUtil.FireworksOptions), null, JOptionPane.PLAIN_MESSAGE);
         int rfoInt = (InputGuard.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
         switch (rfoInt) {
             case 1: fireworksWindAmount(); break;
@@ -355,7 +356,7 @@ public class EngineMethods {
      * while upon drag creation.
      */
     private static void particleSizeSeedOptions() {
-        String input = JOptionPane.showInputDialog(OptionsMenu.frame, GUIText.ParticleSizeSeedOptions, null, JOptionPane.PLAIN_MESSAGE);
+        String input = JOptionPane.showInputDialog(OptionsMenu.frame, HTMLUtil.ParticleSizeSeedOptions, null, JOptionPane.PLAIN_MESSAGE);
         int seedOpt = (InputGuard.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
 
         switch (seedOpt) {
@@ -370,7 +371,7 @@ public class EngineMethods {
      * while upon drag creation.
      */
     private static void particleSpeedSeedOptions() {
-        String input = JOptionPane.showInputDialog(OptionsMenu.frame, GUIText.ParticleSpeedSeedOptions, null, JOptionPane.PLAIN_MESSAGE);
+        String input = JOptionPane.showInputDialog(OptionsMenu.frame, HTMLUtil.ParticleSpeedSeedOptions, null, JOptionPane.PLAIN_MESSAGE);
         int seedOpt = (InputGuard.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
         switch (seedOpt) {
             case 1: ParticleSpeedEditor.getInstance(0); break;
@@ -484,14 +485,14 @@ public class EngineMethods {
         Dimension d = toolkit.getScreenSize();
         InstructionsWindow.getInstance(0, parent,
                 (int) (d.width * .44), (int) (d.height * .55),
-                "Particle Engine Instructions", GUIText.EngineInstructions);
+                "Particle Engine Instructions", HTMLUtil.EngineInstructions);
     }
 
     public static void createGraphInstructionsWindow(JFrame parent) {
         Dimension d = toolkit.getScreenSize();
         InstructionsWindow.getInstance(1, parent,
                 (int) (d.width * .37), (int) (d.height * .55),
-                "Particle Graph Instructions", GUIText.ParticleGraphInstructions);
+                "Particle Graph Instructions", HTMLUtil.ParticleGraphInstructions);
     }
 
     /**
@@ -516,7 +517,7 @@ public class EngineMethods {
             case 2: particleDrag(); break;
             case 3: particleFireworks(); break;
             case 4: ParticleTypePicker.getInstance(0, "Particle Type Options"); break;
-            case 5: ColorUtility.setPlainColor(); break;
+            case 5: ColorUtility.setParticlePlainColor(); break;
             case 6: gravitationOptions(); break;
             case 7: particleSizeSeedOptions(); break;
             case 8: particleSpeedSeedOptions(); break;
@@ -534,7 +535,7 @@ public class EngineMethods {
         if (!Notifier.drawingNotification) {
             engineSettings.changeEngineMode(true);
             displayEngineMode();
-            updateParticleModesRadios();
+            updateEngineModeRadios();
         }
     }
 
@@ -568,7 +569,7 @@ public class EngineMethods {
             if (!Notifier.drawingNotification) {
                 engineSettings.changeParticleType(false);
                 displayParticleType();
-                updateParticleTypesRadios();
+                updateParticleTypeRadios();
             }
         }
     }
@@ -589,7 +590,7 @@ public class EngineMethods {
             if (!Notifier.drawingNotification) {
                 engineSettings.changeParticleType(true);
                 displayParticleType();
-                updateParticleTypesRadios();
+                updateParticleTypeRadios();
             }
         }
     }
@@ -739,7 +740,6 @@ public class EngineMethods {
         return "Particle Mode: " + engineSettings.engineMode.name();
     }
 
-    //Updates all particles in the Engines ArrayLists
     //---------------------------------------------------------------------------------------------------------------------------------------//
     private static void updateParticles() {for (int i = 0; i < Particles.size(); i++) Particles.get(i).update();}
     private static void updateGravityPoints() {for (int i = 0; i < GravityPoints.size(); i++) GravityPoints.get(i).update();}
@@ -753,7 +753,6 @@ public class EngineMethods {
     private static void updateDuplexes() {for (int i = 0; i < Duplexes.size(); i++) Duplexes.get(i).update();}
     private static void updatePortals() {for (int i = 0; i < Portals.size(); i++) Portals.get(i).update();}
 
-    //Renders all particles in the Engines ArrayLists
     //--------------------------------------------------------------------------------------------------------------------------------------//
     private static void renderParticles() {for (int i = 0; i < Particles.size(); i++) Particles.get(i).render();}
     private static void renderGravityPoints() {for (int i = 0; i < GravityPoints.size(); i++) GravityPoints.get(i).render();}

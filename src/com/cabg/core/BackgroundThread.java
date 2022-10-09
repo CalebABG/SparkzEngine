@@ -4,8 +4,8 @@ import javax.swing.*;
 
 public class BackgroundThread {
     public static void run(final Runnable runnable) {
-        SwingWorker s = new SwingWorker() {
-            protected Object doInBackground() {
+        SwingWorker<Void, Object> s = new SwingWorker<>() {
+            protected Void doInBackground() {
                 runnable.run();
                 return null;
             }

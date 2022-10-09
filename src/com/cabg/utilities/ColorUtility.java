@@ -1,13 +1,10 @@
 package com.cabg.utilities;
 
-import com.cabg.reactivecolors.ReactiveColors;
-
 import javax.swing.*;
 import java.awt.*;
 
 import static com.cabg.core.EngineVariables.*;
 import static com.cabg.particletypes.Molecule.PLAIN_COLOR;
-import static org.apache.commons.math3.util.FastMath.round;
 
 public class ColorUtility {
     public static Color fromHex(String hex) {
@@ -24,12 +21,11 @@ public class ColorUtility {
                 String.format("%02X", color.getBlue()).toLowerCase();
     }
 
-    public static void setPlainColor() {
+    public static void setParticlePlainColor() {
         Color l = JColorChooser.showDialog(EFrame, "Particle Color", PLAIN_COLOR);
         PLAIN_COLOR = (l != null) ? l : PLAIN_COLOR;
     }
 
-    //-------------------------- Helper Functions ------------------------------------//
     public static void setEngineBackgroundColor() {
         Color f = JColorChooser.showDialog(EFrame, "Background Color", null);
         backgroundColor = (f != null) ? f : backgroundColor;
@@ -48,11 +44,6 @@ public class ColorUtility {
 
     public static Color randRGBColor(){return new Color(random.nextInt(0x1000000));}
 
-    public static void setReactiveColors(Color[] colors) {
-        for (int i = 0; i < ReactiveColors.getComponents().length; i++)
-            ReactiveColors.setComponent(i, colors[i]);
-    }
-
     public static String serializeReactiveColors(Color[] c) {
         return toHex(c[0]) + Settings.spliceChar +
                toHex(c[1]) + Settings.spliceChar +
@@ -61,11 +52,9 @@ public class ColorUtility {
                toHex(c[4]);
     }
 
-    ///////////////////////////////////////////////////////
-    //  Helper Color Functions
-    //  Cred: Jacob Dreyer - mailto:jacob.dreyer@geosoft.no
     /**
      * Blend two colors.
+     * Cred: Jacob Dreyer - mailto:jacob.dreyer@geosoft.no
      *
      * @param color1 First color to blend.
      * @param color2 Second color to blend.
@@ -76,8 +65,8 @@ public class ColorUtility {
     public static Color blend(Color color1, Color color2, float ratio) {
         float ir = (float) 1.0 - ratio;
 
-        float rgb1[] = new float[3];
-        float rgb2[] = new float[3];
+        float[] rgb1 = new float[3];
+        float[] rgb2 = new float[3];
 
         color1.getColorComponents(rgb1);
         color2.getColorComponents(rgb2);
@@ -85,64 +74,5 @@ public class ColorUtility {
         return new Color(rgb1[0] * ratio + rgb2[0] * ir,
                 rgb1[1] * ratio + rgb2[1] * ir,
                 rgb1[2] * ratio + rgb2[2] * ir);
-    }
-
-    /**
-     * Make an even blend between two colors.
-     *
-     * @param color1 First color to blend.
-     * @param color2 Second color to blend.
-     * @return Blended color.
-     */
-    public static Color blend(Color color1, Color color2) {
-        return blend(color1, color2, 0.5f);
-    }
-
-    /**
-     * Make a color darker.
-     *
-     * @param color    Color to make darker.
-     * @param fraction Darkness fraction.
-     * @return Darker color.
-     */
-    public static Color darker(Color color, float fraction) {
-        int red = (int) round(color.getRed() * (1.0 - fraction));
-        int green = (int) round(color.getGreen() * (1.0 - fraction));
-        int blue = (int) round(color.getBlue() * (1.0 - fraction));
-
-        if (red < 0) red = 0;
-        else if (red > 255) red = 255;
-        if (green < 0) green = 0;
-        else if (green > 255) green = 255;
-        if (blue < 0) blue = 0;
-        else if (blue > 255) blue = 255;
-
-        int alpha = color.getAlpha();
-
-        return new Color(red, green, blue, alpha);
-    }
-
-    /**
-     * Make a color lighter.
-     *
-     * @param color    Color to make lighter.
-     * @param fraction Darkness fraction.
-     * @return Lighter color.
-     */
-    public static Color lighter(Color color, float fraction) {
-        int red = (int) round(color.getRed() * (1.0 + fraction));
-        int green = (int) round(color.getGreen() * (1.0 + fraction));
-        int blue = (int) round(color.getBlue() * (1.0 + fraction));
-
-        if (red < 0) red = 0;
-        else if (red > 255) red = 255;
-        if (green < 0) green = 0;
-        else if (green > 255) green = 255;
-        if (blue < 0) blue = 0;
-        else if (blue > 255) blue = 255;
-
-        int alpha = color.getAlpha();
-
-        return new Color(red, green, blue, alpha);
     }
 }

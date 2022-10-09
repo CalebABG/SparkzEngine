@@ -10,7 +10,7 @@ import static com.cabg.core.EngineMethods.updateMouse;
 public class MouseMotionHandler implements MouseMotionListener {
     public void mouseDragged(MouseEvent e) {
         updateMouse(e);
-        ParticleModes.dragMode(e);
+        ParticleModes.handleDrag(e);
     }
 
     public void mouseMoved(MouseEvent e) {

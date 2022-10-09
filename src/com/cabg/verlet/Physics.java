@@ -35,7 +35,9 @@ public class Physics {
      * @see Edge
      */
     public static void render() {
-        for (int i = 0; i < Vertices.size(); i++) Vertices.get(i).draw();
+        for (int i = 0; i < Vertices.size(); i++) {
+            Vertices.get(i).draw();
+        }
 
         if (PhysicsEditor.physicsEditor != null && selectedVertex != null) {
             List<Integer> selectedPointConstraintList = PhysicsEditor.constraintsList.getSelectedValuesList();
@@ -43,7 +45,7 @@ public class Physics {
             // Check whether the list of constraints is empty; check if the point has any constrains and check whether to show the constraint at all (checkbox)
             if (!selectedPointConstraintList.isEmpty() && showSelectionConstraintCheckbox.isSelected()) {
                 for (int i = 0; i < selectedPointConstraintList.size(); i++) {
-                    Vertex constraintPoint = selectedVertex.edges.get(selectedPointConstraintList.get(i)).p2;
+                    Vertex constraintPoint = selectedVertex.edges.get(selectedPointConstraintList.get(i)).v2;
 
                     graphics2D.setColor(Color.red);
                     graphics2D.drawLine((int) selectedVertex.currX, (int) selectedVertex.currY, (int) constraintPoint.currX, (int) constraintPoint.currY);
@@ -87,12 +89,7 @@ public class Physics {
                         dragVertex.currX += (Mouse.x - dragVertex.currX) / s;
                         dragVertex.currY += (Mouse.y - dragVertex.currY) / s;
                     }
-                }
-
-                //  Else, if the point we want to drag is null, then search through the list of points we have so far
-                //  Check the distance between a given point in the list and the mouse. If the mouse point (x, y) is within the radius
-                //  of the given point in the list, then we've found a point to drag. Set the dragPoint variable to that point and break out of searching
-                else {
+                } else {
                     for (int i = 0; i < Vertices.size(); i++) {
                         Vertex searchVertex = Vertices.get(i);
 
@@ -106,10 +103,6 @@ public class Physics {
                     }
                 }
             }
-
-            // Else, if the right mouse button is held down,
-            // search to see if the mouse is within the bounds of a verlet physics object.
-            // If that's the case, then remove that objects constraints.
             else if (engineSettings.rightMouseButtonIsDown) {
                 for (int i = 0; i < Vertices.size(); i++) {
                     Vertex searchVertex = Vertices.get(i);

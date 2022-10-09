@@ -5,16 +5,15 @@ import javax.swing.border.CompoundBorder;
 import java.awt.*;
 
 public class CSlider extends JSlider {
-
-    public CSlider(int min, int max, int init_val, Rectangle bounds,
-                   int minor_tick_spacing, int major_tick_spacing,
-                   boolean paint_ticks, boolean paint_labels, boolean set_border) {
-        super(min, max, init_val);
+    public CSlider(int min, int max, int initVal, Rectangle bounds,
+                   int minorTickSpacing, int majorTickSpacing,
+                   boolean showTickMarks, boolean showLabels, boolean showBorder) {
+        super(min, max, initVal);
         setBounds(bounds);
-        setMinorTickSpacing(minor_tick_spacing);
-        setMajorTickSpacing(major_tick_spacing);
-        setPaintTicks(paint_ticks);
-        setPaintLabels(paint_labels);
-        if (set_border) setBorder(new CompoundBorder());
+        setMinorTickSpacing(minorTickSpacing);
+        setMajorTickSpacing(majorTickSpacing);
+        setPaintTicks(showTickMarks);
+        setPaintLabels(showLabels);
+        if (showBorder) setBorder(new CompoundBorder());
     }
 }

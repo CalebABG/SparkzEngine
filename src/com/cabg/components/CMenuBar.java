@@ -22,16 +22,13 @@ import static com.cabg.core.EngineVariables.engineSettings;
 public class CMenuBar extends JMenuBar {
     public Color bgColor = new Color(20, 23, 25).brighter();
     private static JMenuItem enginePauseMenuItem;
-
     private static final Font font1 = new Font(Font.SERIF, Font.PLAIN, 21);
     public static Font menuItemFont = new Font(Font.SERIF, Font.PLAIN, 18);
     public static ArrayList<JMenu> menus = new ArrayList<>();
     public static ArrayList<JMenuItem> menuItems = new ArrayList<>();
-
-    public static JRadioButtonMenuItem[] pModes, pTypes, pGravModes;
+    public static JRadioButtonMenuItem[] engineModesMenuItems, particleTypesMenuItems, gravitationModesMenuItems;
     public static ButtonGroup particleModesGroup, particleTypesGroup, particleGravitationGroup;
 
-    /*Note: Check that accelerators don't affect changing variables*/
     public CMenuBar() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -137,9 +134,9 @@ public class CMenuBar extends JMenuBar {
         //Windows End
 
         setUpModes();
-        menuItems.addAll(Arrays.asList(pGravModes));
-        menuItems.addAll(Arrays.asList(pModes));
-        menuItems.addAll(Arrays.asList(pTypes));
+        menuItems.addAll(Arrays.asList(gravitationModesMenuItems));
+        menuItems.addAll(Arrays.asList(engineModesMenuItems));
+        menuItems.addAll(Arrays.asList(particleTypesMenuItems));
 
         this.add(Box.createHorizontalStrut(11));
 
@@ -298,46 +295,45 @@ public class CMenuBar extends JMenuBar {
 
         particleModesGroup = new ButtonGroup();
 
-        pModes = new JRadioButtonMenuItem[5];
+        engineModesMenuItems = new JRadioButtonMenuItem[5];
 
-        pModes[0] = new JRadioButtonMenuItem("Normal Mode");
-        pModes[0].setActionCommand("0");
-        particleModesGroup.add(pModes[0]);
-        particleModes.add(pModes[0]);
+        engineModesMenuItems[0] = new JRadioButtonMenuItem("Normal Mode");
+        engineModesMenuItems[0].setActionCommand("0");
+        particleModesGroup.add(engineModesMenuItems[0]);
+        particleModes.add(engineModesMenuItems[0]);
 
-        pModes[1] = new JRadioButtonMenuItem("Multi Mode");
-        pModes[1].setActionCommand("1");
-        particleModesGroup.add(pModes[1]);
-        particleModes.add(pModes[1]);
+        engineModesMenuItems[1] = new JRadioButtonMenuItem("Multi Mode");
+        engineModesMenuItems[1].setActionCommand("1");
+        particleModesGroup.add(engineModesMenuItems[1]);
+        particleModes.add(engineModesMenuItems[1]);
 
-        pModes[2] = new JRadioButtonMenuItem("Fireworks Mode");
-        pModes[2].setActionCommand("2");
-        particleModesGroup.add(pModes[2]);
-        particleModes.add(pModes[2]);
+        engineModesMenuItems[2] = new JRadioButtonMenuItem("Fireworks Mode");
+        engineModesMenuItems[2].setActionCommand("2");
+        particleModesGroup.add(engineModesMenuItems[2]);
+        particleModes.add(engineModesMenuItems[2]);
 
-        pModes[3] = new JRadioButtonMenuItem("Graph Mode");
-        pModes[3].setActionCommand("3");
-        particleModesGroup.add(pModes[3]);
-        particleModes.add(pModes[3]);
+        engineModesMenuItems[3] = new JRadioButtonMenuItem("Graph Mode");
+        engineModesMenuItems[3].setActionCommand("3");
+        particleModesGroup.add(engineModesMenuItems[3]);
+        particleModes.add(engineModesMenuItems[3]);
 
-        pModes[4] = new JRadioButtonMenuItem("Ragdoll Mode");
-        pModes[4].setActionCommand("4");
-        particleModesGroup.add(pModes[4]);
-        particleModes.add(pModes[4]);
+        engineModesMenuItems[4] = new JRadioButtonMenuItem("Ragdoll Mode");
+        engineModesMenuItems[4].setActionCommand("4");
+        particleModesGroup.add(engineModesMenuItems[4]);
+        particleModes.add(engineModesMenuItems[4]);
 
-        for (JRadioButtonMenuItem b : pModes) {
+        for (JRadioButtonMenuItem b : engineModesMenuItems) {
             if (Integer.parseInt(b.getActionCommand()) == engineSettings.engineMode.ordinal()) {
                 b.setSelected(true);
                 break;
             }
         }
-        for (JRadioButtonMenuItem b : pModes) {
+        for (JRadioButtonMenuItem b : engineModesMenuItems) {
             b.addActionListener(e -> engineSettings.engineMode = EngineMode.values()[Integer.parseInt(particleModesGroup.getSelection().getActionCommand())]);
         }
 
         modes.add(particleModes);
 
-        ////
         JMenu particleTypes = new JMenu("Particle Types");
         particleTypes.getPopupMenu().setBorder(BorderFactory.createLineBorder(bgColor.darker()));
         particleTypes.setOpaque(true); //Have to set opaque inside another menu
@@ -345,66 +341,65 @@ public class CMenuBar extends JMenuBar {
 
         particleTypesGroup = new ButtonGroup();
 
-        pTypes = new JRadioButtonMenuItem[9];
+        particleTypesMenuItems = new JRadioButtonMenuItem[9];
 
-        pTypes[0] = new JRadioButtonMenuItem("Particle");
-        pTypes[0].setActionCommand("0");
-        particleTypesGroup.add(pTypes[0]);
-        particleTypes.add(pTypes[0]);
+        particleTypesMenuItems[0] = new JRadioButtonMenuItem("Particle");
+        particleTypesMenuItems[0].setActionCommand("0");
+        particleTypesGroup.add(particleTypesMenuItems[0]);
+        particleTypes.add(particleTypesMenuItems[0]);
 
-        pTypes[1] = new JRadioButtonMenuItem("Gravity Point");
-        pTypes[1].setActionCommand("1");
-        particleTypesGroup.add(pTypes[1]);
-        particleTypes.add(pTypes[1]);
+        particleTypesMenuItems[1] = new JRadioButtonMenuItem("Gravity Point");
+        particleTypesMenuItems[1].setActionCommand("1");
+        particleTypesGroup.add(particleTypesMenuItems[1]);
+        particleTypes.add(particleTypesMenuItems[1]);
 
-        pTypes[2] = new JRadioButtonMenuItem("Emitter");
-        pTypes[2].setActionCommand("2");
-        particleTypesGroup.add(pTypes[2]);
-        particleTypes.add(pTypes[2]);
+        particleTypesMenuItems[2] = new JRadioButtonMenuItem("Emitter");
+        particleTypesMenuItems[2].setActionCommand("2");
+        particleTypesGroup.add(particleTypesMenuItems[2]);
+        particleTypes.add(particleTypesMenuItems[2]);
 
-        pTypes[3] = new JRadioButtonMenuItem("Flux");
-        pTypes[3].setActionCommand("3");
-        particleTypesGroup.add(pTypes[3]);
-        particleTypes.add(pTypes[3]);
+        particleTypesMenuItems[3] = new JRadioButtonMenuItem("Flux");
+        particleTypesMenuItems[3].setActionCommand("3");
+        particleTypesGroup.add(particleTypesMenuItems[3]);
+        particleTypes.add(particleTypesMenuItems[3]);
 
-        pTypes[4] = new JRadioButtonMenuItem("Q.E.D");
-        pTypes[4].setActionCommand("4");
-        particleTypesGroup.add(pTypes[4]);
-        particleTypes.add(pTypes[4]);
+        particleTypesMenuItems[4] = new JRadioButtonMenuItem("Q.E.D");
+        particleTypesMenuItems[4].setActionCommand("4");
+        particleTypesGroup.add(particleTypesMenuItems[4]);
+        particleTypes.add(particleTypesMenuItems[4]);
 
-        pTypes[5] = new JRadioButtonMenuItem("Ion");
-        pTypes[5].setActionCommand("5");
-        particleTypesGroup.add(pTypes[5]);
-        particleTypes.add(pTypes[5]);
+        particleTypesMenuItems[5] = new JRadioButtonMenuItem("Ion");
+        particleTypesMenuItems[5].setActionCommand("5");
+        particleTypesGroup.add(particleTypesMenuItems[5]);
+        particleTypes.add(particleTypesMenuItems[5]);
 
-        pTypes[6] = new JRadioButtonMenuItem("Black Hole");
-        pTypes[6].setActionCommand("6");
-        particleTypesGroup.add(pTypes[6]);
-        particleTypes.add(pTypes[6]);
+        particleTypesMenuItems[6] = new JRadioButtonMenuItem("Black Hole");
+        particleTypesMenuItems[6].setActionCommand("6");
+        particleTypesGroup.add(particleTypesMenuItems[6]);
+        particleTypes.add(particleTypesMenuItems[6]);
 
-        pTypes[7] = new JRadioButtonMenuItem("Duplex");
-        pTypes[7].setActionCommand("7");
-        particleTypesGroup.add(pTypes[7]);
-        particleTypes.add(pTypes[7]);
+        particleTypesMenuItems[7] = new JRadioButtonMenuItem("Duplex");
+        particleTypesMenuItems[7].setActionCommand("7");
+        particleTypesGroup.add(particleTypesMenuItems[7]);
+        particleTypes.add(particleTypesMenuItems[7]);
 
-        pTypes[8] = new JRadioButtonMenuItem("Portal");
-        pTypes[8].setActionCommand("8");
-        particleTypesGroup.add(pTypes[8]);
-        particleTypes.add(pTypes[8]);
+        particleTypesMenuItems[8] = new JRadioButtonMenuItem("Portal");
+        particleTypesMenuItems[8].setActionCommand("8");
+        particleTypesGroup.add(particleTypesMenuItems[8]);
+        particleTypes.add(particleTypesMenuItems[8]);
 
-        for (JRadioButtonMenuItem b : pTypes) {
+        for (JRadioButtonMenuItem b : particleTypesMenuItems) {
             if (Integer.parseInt(b.getActionCommand()) == engineSettings.particleType.ordinal()) {
                 b.setSelected(true);
                 break;
             }
         }
-        for (JRadioButtonMenuItem b : pTypes) {
+        for (JRadioButtonMenuItem b : particleTypesMenuItems) {
             b.addActionListener(e -> engineSettings.particleType = ParticleType.values()[Integer.parseInt(particleTypesGroup.getSelection().getActionCommand())]);
         }
 
         modes.add(particleTypes);
 
-        ///
         JMenu gravitationModes = new JMenu("Gravitation Modes");
         gravitationModes.getPopupMenu().setBorder(BorderFactory.createLineBorder(bgColor.darker()));
         gravitationModes.setOpaque(true); //Have to set opaque inside another menu
@@ -412,60 +407,60 @@ public class CMenuBar extends JMenuBar {
 
         particleGravitationGroup = new ButtonGroup();
 
-        pGravModes = new JRadioButtonMenuItem[9];
+        gravitationModesMenuItems = new JRadioButtonMenuItem[9];
 
-        pGravModes[0] = new JRadioButtonMenuItem("Default Force");
-        pGravModes[0].setActionCommand("0");
-        particleGravitationGroup.add(pGravModes[0]);
-        gravitationModes.add(pGravModes[0]);
+        gravitationModesMenuItems[0] = new JRadioButtonMenuItem("Default Force");
+        gravitationModesMenuItems[0].setActionCommand("0");
+        particleGravitationGroup.add(gravitationModesMenuItems[0]);
+        gravitationModes.add(gravitationModesMenuItems[0]);
 
-        pGravModes[1] = new JRadioButtonMenuItem("Cosine and Sine");
-        pGravModes[1].setActionCommand("1");
-        particleGravitationGroup.add(pGravModes[1]);
-        gravitationModes.add(pGravModes[1]);
+        gravitationModesMenuItems[1] = new JRadioButtonMenuItem("Cosine and Sine");
+        gravitationModesMenuItems[1].setActionCommand("1");
+        particleGravitationGroup.add(gravitationModesMenuItems[1]);
+        gravitationModes.add(gravitationModesMenuItems[1]);
 
-        pGravModes[2] = new JRadioButtonMenuItem("Arc Tangent");
-        pGravModes[2].setActionCommand("2");
-        particleGravitationGroup.add(pGravModes[2]);
-        gravitationModes.add(pGravModes[2]);
+        gravitationModesMenuItems[2] = new JRadioButtonMenuItem("Arc Tangent");
+        gravitationModesMenuItems[2].setActionCommand("2");
+        particleGravitationGroup.add(gravitationModesMenuItems[2]);
+        gravitationModes.add(gravitationModesMenuItems[2]);
 
-        pGravModes[3] = new JRadioButtonMenuItem("Horizontal Wave");
-        pGravModes[3].setActionCommand("3");
-        particleGravitationGroup.add(pGravModes[3]);
-        gravitationModes.add(pGravModes[3]);
+        gravitationModesMenuItems[3] = new JRadioButtonMenuItem("Horizontal Wave");
+        gravitationModesMenuItems[3].setActionCommand("3");
+        particleGravitationGroup.add(gravitationModesMenuItems[3]);
+        gravitationModes.add(gravitationModesMenuItems[3]);
 
-        pGravModes[4] = new JRadioButtonMenuItem("Vertical Wave");
-        pGravModes[4].setActionCommand("4");
-        particleGravitationGroup.add(pGravModes[4]);
-        gravitationModes.add(pGravModes[4]);
+        gravitationModesMenuItems[4] = new JRadioButtonMenuItem("Vertical Wave");
+        gravitationModesMenuItems[4].setActionCommand("4");
+        particleGravitationGroup.add(gravitationModesMenuItems[4]);
+        gravitationModes.add(gravitationModesMenuItems[4]);
 
-        pGravModes[5] = new JRadioButtonMenuItem("Spirals");
-        pGravModes[5].setActionCommand("5");
-        particleGravitationGroup.add(pGravModes[5]);
-        gravitationModes.add(pGravModes[5]);
+        gravitationModesMenuItems[5] = new JRadioButtonMenuItem("Spirals");
+        gravitationModesMenuItems[5].setActionCommand("5");
+        particleGravitationGroup.add(gravitationModesMenuItems[5]);
+        gravitationModes.add(gravitationModesMenuItems[5]);
 
-        pGravModes[6] = new JRadioButtonMenuItem("Repellent");
-        pGravModes[6].setActionCommand("6");
-        particleGravitationGroup.add(pGravModes[6]);
-        gravitationModes.add(pGravModes[6]);
+        gravitationModesMenuItems[6] = new JRadioButtonMenuItem("Repellent");
+        gravitationModesMenuItems[6].setActionCommand("6");
+        particleGravitationGroup.add(gravitationModesMenuItems[6]);
+        gravitationModes.add(gravitationModesMenuItems[6]);
 
-        pGravModes[7] = new JRadioButtonMenuItem("Organic");
-        pGravModes[7].setActionCommand("7");
-        particleGravitationGroup.add(pGravModes[7]);
-        gravitationModes.add(pGravModes[7]);
+        gravitationModesMenuItems[7] = new JRadioButtonMenuItem("Organic");
+        gravitationModesMenuItems[7].setActionCommand("7");
+        particleGravitationGroup.add(gravitationModesMenuItems[7]);
+        gravitationModes.add(gravitationModesMenuItems[7]);
 
-        pGravModes[8] = new JRadioButtonMenuItem("Flow Field");
-        pGravModes[8].setActionCommand("8");
-        particleGravitationGroup.add(pGravModes[8]);
-        gravitationModes.add(pGravModes[8]);
+        gravitationModesMenuItems[8] = new JRadioButtonMenuItem("Flow Field");
+        gravitationModesMenuItems[8].setActionCommand("8");
+        particleGravitationGroup.add(gravitationModesMenuItems[8]);
+        gravitationModes.add(gravitationModesMenuItems[8]);
 
-        for (JRadioButtonMenuItem b : pGravModes) {
+        for (JRadioButtonMenuItem b : gravitationModesMenuItems) {
             if (Integer.parseInt(b.getActionCommand()) == engineSettings.gravitationMode.ordinal()) {
                 b.setSelected(true);
                 break;
             }
         }
-        for (JRadioButtonMenuItem b : pGravModes) {
+        for (JRadioButtonMenuItem b : gravitationModesMenuItems) {
             b.addActionListener(e -> engineSettings.gravitationMode = GravitationMode.values()[Integer.parseInt(particleGravitationGroup.getSelection().getActionCommand())]);
         }
 
@@ -473,27 +468,21 @@ public class CMenuBar extends JMenuBar {
         this.add(modes);
     }
 
-    public static void updateParticleModesRadios() {
-        for (JRadioButtonMenuItem b : pModes) {
-            if (Integer.parseInt(b.getActionCommand()) == engineSettings.engineMode.ordinal()) {
-                b.setSelected(true);
-                break;
-            }
-        }
+    public static void updateEngineModeRadios() {
+        updateRadios(engineModesMenuItems, engineSettings.engineMode.ordinal());
     }
 
-    public static void updateParticleTypesRadios() {
-        for (JRadioButtonMenuItem b : pTypes) {
-            if (Integer.parseInt(b.getActionCommand()) == engineSettings.particleType.ordinal()) {
-                b.setSelected(true);
-                break;
-            }
-        }
+    public static void updateParticleTypeRadios() {
+        updateRadios(particleTypesMenuItems, engineSettings.particleType.ordinal());
     }
 
-    public static void updateGravitationModesRadios() {
-        for (JRadioButtonMenuItem b : pGravModes) {
-            if (Integer.parseInt(b.getActionCommand()) == engineSettings.gravitationMode.ordinal()) {
+    public static void updateGravitationModeRadios() {
+        updateRadios(gravitationModesMenuItems, engineSettings.gravitationMode.ordinal());
+    }
+
+    public static void updateRadios(JRadioButtonMenuItem[] radioButtonMenuItems, int enumPos) {
+        for (JRadioButtonMenuItem b : radioButtonMenuItems) {
+            if (Integer.parseInt(b.getActionCommand()) == enumPos) {
                 b.setSelected(true);
                 break;
             }
@@ -501,10 +490,10 @@ public class CMenuBar extends JMenuBar {
     }
 
     public static void updateAllRadios() {
-        updateParticleModesRadios();
-        updateParticleTypesRadios();
-        updateGravitationModesRadios();
         updateState();
+        updateEngineModeRadios();
+        updateParticleTypeRadios();
+        updateGravitationModeRadios();
     }
 
     private static String isPaused() {

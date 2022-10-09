@@ -1,13 +1,12 @@
 package com.cabg.gui;
 
-import com.cabg.core.EngineMethods;
-import com.cabg.inputhandlers.ExtendedKeyAdapter;
-import com.cabg.inputhandlers.ExtendedWindowAdapter;
 import com.cabg.components.CTextField;
 import com.cabg.components.RButton;
 import com.cabg.components.RLabel;
+import com.cabg.core.EngineMethods;
+import com.cabg.inputhandlers.ExtendedKeyAdapter;
+import com.cabg.inputhandlers.ExtendedWindowAdapter;
 import com.cabg.particletypes.Particle;
-import com.cabg.utilities.InputGuard;
 import com.cabg.utilities.Settings;
 import org.fife.ui.autocomplete.AutoCompletion;
 import org.fife.ui.autocomplete.BasicCompletion;
@@ -17,10 +16,10 @@ import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
+import javax.swing.undo.UndoManager;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -124,7 +123,7 @@ public class ParticleGrapher {
         ac.setListCellRenderer(cellRenderer);
         ac.install(textFields[0]);
 
-        InputGuard.addUndoFunctionality(textFields[0]);
+        addUndoFunctionality(textFields[0]);
         panel.add(textFields[0], textFields[0].gridBagConstraints);
 
         JPopupMenu popupMenu = new JPopupMenu();
@@ -265,6 +264,37 @@ public class ParticleGrapher {
                 if (e.isPopupTrigger()) showMenu(e, p);
             }
         });
+    }
+
+    // Credit for Undo functionality: http://stackoverflow.com/questions/10532286/how-to-use-ctrlz-and-ctrly-with-all-text-components
+    private static void addUndoFunctionality(JTextComponent pTextComponent) {
+        final UndoManager undoMgr = new UndoManager();
+
+        // Add listener for undoable events
+        pTextComponent.getDocument().addUndoableEditListener(evt -> undoMgr.addEdit(evt.getEdit()));
+
+        // Add undo/redo actions
+        pTextComponent.getActionMap().put("undoKeystroke", new AbstractAction("undoKeystroke") {
+            public void actionPerformed(ActionEvent evt) {
+                try {
+                    if (undoMgr.canUndo()) undoMgr.undo();
+                } catch (Exception e) {
+                    ExceptionLogger.append(e);}
+            }
+        });
+
+        pTextComponent.getActionMap().put("redoKeystroke", new AbstractAction("redoKeystroke") {
+            public void actionPerformed(ActionEvent evt) {
+                try {
+                    if (undoMgr.canRedo()) undoMgr.redo();
+                } catch (Exception e) {
+                    ExceptionLogger.append(e);}
+            }
+        });
+
+        // Create keyboard accelerators for undo/redo actions (Ctrl+Z/Ctrl+Y)
+        pTextComponent.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK), "undoKeystroke");
+        pTextComponent.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK), "redoKeystroke");
     }
 
     /**

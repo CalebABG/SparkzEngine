@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import static com.cabg.core.EngineVariables.engineSettings;
-import static com.cabg.utilities.InputGuard.stringNotNull;
+import static com.cabg.utilities.InputGuard.stringNotNullOrEmpty;
 
 public class ParticleSpeedEditor {
     private static ParticleSpeedEditor particleSpeedEditor = null;
@@ -76,17 +76,17 @@ public class ParticleSpeedEditor {
         try {
             switch (type) {
                 case 0:
-                    engineSettings.singleClickSpeed = stringNotNull(speedTextField.getText())
+                    engineSettings.singleClickSpeed = stringNotNullOrEmpty(speedTextField.getText())
                             ? Float.parseFloat(speedTextField.getText())
                             : engineSettings.singleClickSpeed;
                     break;
                 case 1:
-                    engineSettings.fireworksSpeed = stringNotNull(speedTextField.getText())
+                    engineSettings.fireworksSpeed = stringNotNullOrEmpty(speedTextField.getText())
                             ? Float.parseFloat(speedTextField.getText())
                             : engineSettings.fireworksSpeed;
                     break;
                 case 2:
-                    engineSettings.particleDragSpeed = stringNotNull(speedTextField.getText())
+                    engineSettings.particleDragSpeed = stringNotNullOrEmpty(speedTextField.getText())
                             ? Float.parseFloat(speedTextField.getText())
                             : engineSettings.particleDragSpeed;
                     break;

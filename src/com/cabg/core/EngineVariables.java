@@ -50,6 +50,6 @@ public class EngineVariables {
     public static BufferStrategy buff;
     public static Graphics2D graphics2D;
     public static Canvas canvas                                     = new Canvas();
-    public static Timer renderer                                    = new Timer();
+    public static Timer simTimer                                    = new Timer();
     public static Toolkit toolkit                                   = Toolkit.getDefaultToolkit();
 }

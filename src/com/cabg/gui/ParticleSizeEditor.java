@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import static com.cabg.core.EngineVariables.engineSettings;
-import static com.cabg.utilities.InputGuard.stringNotNull;
+import static com.cabg.utilities.InputGuard.stringNotNullOrEmpty;
 
 public class ParticleSizeEditor {
     private static ParticleSizeEditor particleSizeEditor = null;
@@ -84,29 +84,29 @@ public class ParticleSizeEditor {
         try {
             switch (type) {
                 case 0:
-                    engineSettings.singleClickSizeMin = stringNotNull(minTextField.getText())
+                    engineSettings.singleClickSizeMin = stringNotNullOrEmpty(minTextField.getText())
                             ? Float.parseFloat(minTextField.getText())
                             : engineSettings.singleClickSizeMin;
 
-                    engineSettings.singleClickSizeMax = stringNotNull(maxTextField.getText())
+                    engineSettings.singleClickSizeMax = stringNotNullOrEmpty(maxTextField.getText())
                             ? Float.parseFloat(maxTextField.getText())
                             : engineSettings.singleClickSizeMax;
                     break;
                 case 1:
-                    engineSettings.fireworksSizeMin = stringNotNull(minTextField.getText())
+                    engineSettings.fireworksSizeMin = stringNotNullOrEmpty(minTextField.getText())
                             ? Float.parseFloat(minTextField.getText())
                             : engineSettings.fireworksSizeMin;
 
-                    engineSettings.fireworksSizeMax = stringNotNull(maxTextField.getText())
+                    engineSettings.fireworksSizeMax = stringNotNullOrEmpty(maxTextField.getText())
                             ? Float.parseFloat(maxTextField.getText())
                             : engineSettings.fireworksSizeMax;
                     break;
                 case 2:
-                    engineSettings.particleDragSizeMin = stringNotNull(minTextField.getText())
+                    engineSettings.particleDragSizeMin = stringNotNullOrEmpty(minTextField.getText())
                             ? Float.parseFloat(minTextField.getText())
                             : engineSettings.particleDragSizeMin;
 
-                    engineSettings.particleDragSizeMax = stringNotNull(maxTextField.getText())
+                    engineSettings.particleDragSizeMax = stringNotNullOrEmpty(maxTextField.getText())
                             ? Float.parseFloat(maxTextField.getText())
                             : engineSettings.particleDragSizeMax;
                     break;

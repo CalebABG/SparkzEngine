@@ -1,9 +1,9 @@
 package com.cabg.gui;
 
 import com.cabg.core.EngineMethods;
-import com.cabg.core.GUIText;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
+import com.cabg.utilities.HTMLUtil;
 import com.cabg.utilities.InputGuard;
 import com.cabg.utilities.Settings;
 
@@ -62,7 +62,7 @@ public class OptionsMenu {
 
         frame.add(jPanel1, BorderLayout.PAGE_END);
 
-        JLabel jLabel2 = new JLabel(GUIText.GeneralOptions);
+        JLabel jLabel2 = new JLabel(HTMLUtil.GeneralOptions);
         jLabel2.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
         jLabel2.setHorizontalAlignment(SwingConstants.LEFT);
         jScrollPane1.setViewportView(jLabel2);

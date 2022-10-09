@@ -1,9 +1,9 @@
 package com.cabg.gui;
 
-import com.cabg.core.GUIText;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
 import com.cabg.particlehelpers.ParticleTypeOptions;
+import com.cabg.utilities.HTMLUtil;
 import com.cabg.utilities.InputGuard;
 import com.cabg.utilities.Settings;
 
@@ -17,7 +17,6 @@ public class ParticleTypePicker {
     public JFrame frame;
     public JTextField textField;
 
-    //Make sure type and int given when getInstance is called are the same! If values differ will cause indexOutOfBounds Error
     public static void getInstance(int type, String title) {
         if (particleTypeUIs[type] == null) particleTypeUIs[type] = new ParticleTypePicker(type, title);
         particleTypeUIs[type].frame.toFront();
@@ -57,7 +56,7 @@ public class ParticleTypePicker {
 
         frame.add(jPanel1, BorderLayout.PAGE_END);
 
-        JLabel jLabel2 = new JLabel(GUIText.ParticleDrawOptions);
+        JLabel jLabel2 = new JLabel(HTMLUtil.ParticleDrawOptions);
         jLabel2.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
         jLabel2.setHorizontalAlignment(SwingConstants.LEFT);
         jScrollPane1.setViewportView(jLabel2);

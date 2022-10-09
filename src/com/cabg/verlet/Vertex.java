@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.List;
 
 import static com.cabg.core.EngineVariables.*;
-import static com.cabg.gui.PhysicsEditor.selectionshowpoint_checkbox;
+import static com.cabg.gui.PhysicsEditor.selectionShowPointCheckbox;
 import static com.cabg.verlet.PhysicsHandler.*;
 import static org.apache.commons.math3.util.FastMath.*;
 
@@ -170,7 +170,7 @@ public class Vertex {
             graphics2D.fill(new Ellipse2D.Float(currX - radius, currY - radius, 2 * radius, 2 * radius));
         }
 
-        if (this == selectedVertex && (selectionshowpoint_checkbox != null && selectionshowpoint_checkbox.isSelected())) {
+        if (this == selectedVertex && (selectionShowPointCheckbox != null && selectionShowPointCheckbox.isSelected())) {
             graphics2D.setColor(color);
             graphics2D.fill(new Ellipse2D.Float(currX - radius, currY - radius, 2 * radius, 2 * radius));
             graphics2D.setColor(Color.green);
@@ -221,8 +221,8 @@ public class Vertex {
         edges.add(lnk);
     }
 
-    public void attachTo(Vertex P, float restingDist, float stiff, float tearSensitivity, boolean drawLink, boolean tearable, Color c) {
-        Edge lnk = new Edge(this, P, restingDist, stiff, tearSensitivity, drawLink, tearable, c);
+    public void attachTo(Vertex P, float restingDist, float stiff, float tearSensitivity, boolean drawLink, boolean severable, Color c) {
+        Edge lnk = new Edge(this, P, restingDist, stiff, tearSensitivity, drawLink, severable, c);
         edges.add(lnk);
     }
 

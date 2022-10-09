@@ -23,14 +23,12 @@ public class StatsPanel {
     private static StatsPanel statsUI = null;
     private static JFrame frame;
     private static Timer timer;
-    public static int framesPerSec = 0;
+    public static int fps = 0;
     public JPanel panel;
     public Color bgColor = new Color(20, 23, 25).brighter();
     public Font font = new Font(Font.SERIF, Font.PLAIN, 25);
-    private static CLabel particleAmount, dragamount, ptMode, smartPt, connect, atm, ptFriction, fpsLabel, screenSize;
-    private static DecimalFormat decimalFormat = new DecimalFormat("#,###");
-
-    //public static void main(String[] args) {getInstance();}
+    private static CLabel particleAmount, dragAmount, ptMode, smartPt, connect, atm, ptFriction, fpsLabel, screenSize;
+    private static final DecimalFormat decimalFormat = new DecimalFormat("#,###");
 
     public static void getInstance() {
         if (statsUI == null) statsUI = new StatsPanel();
@@ -139,7 +137,7 @@ public class StatsPanel {
         gbc_label.gridy = 0;
         stats_panel.add(particleAmount, gbc_label);
 
-        dragamount = new CLabel("Drag Amount: ", font, Color.white, bgColor);
+        dragAmount = new CLabel("Drag Amount: ", font, Color.white, bgColor);
         GridBagConstraints gbc_label_1 = new GridBagConstraints();
         gbc_label_1.insets = new Insets(0, 0, 5, 0);
         gbc_label_1.weighty = 1.0;
@@ -148,7 +146,7 @@ public class StatsPanel {
         gbc_label_1.ipady = 10;
         gbc_label_1.gridx = 0;
         gbc_label_1.gridy = 1;
-        stats_panel.add(dragamount, gbc_label_1);
+        stats_panel.add(dragAmount, gbc_label_1);
 
         fpsLabel = new CLabel("Frames Per Second: " + engineSettings.desiredFramesPerSecond, font, Color.white, bgColor);
         GridBagConstraints gbc_label_2 = new GridBagConstraints();
@@ -325,7 +323,7 @@ public class StatsPanel {
 
     public void update() {
         try {
-            if (fpsLabel != null) fpsLabel.setText("Frames Per Second: " + framesPerSec);
+            if (fpsLabel != null) fpsLabel.setText("Frames Per Second: " + fps);
             if (particleAmount != null) {
                 if (engineSettings.engineMode == RAGDOLL) {
                     particleAmount.setText("Points: " + decimalFormat.format(Vertex.Vertices.size()));
@@ -338,8 +336,8 @@ public class StatsPanel {
                                     Duplexes.size() + Portals.size()));
                 }
             }
-            if (dragamount != null)
-                dragamount.setText("Drag Amount: " + decimalFormat.format(engineSettings.particleDragAmount));
+            if (dragAmount != null)
+                dragAmount.setText("Drag Amount: " + decimalFormat.format(engineSettings.particleDragAmount));
             if (ptMode != null) ptMode.setText(EngineMethods.getModeText());
             if (smartPt != null) smartPt.setText(EngineMethods.getReactiveColorsStatus());
             if (connect != null) connect.setText("Link Mode: " + EngineMethods.getConnectText());

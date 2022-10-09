@@ -7,10 +7,7 @@ import static org.apache.commons.math3.util.FastMath.*;
 public class Vec2 {
     public float x, y;
 
-    public Vec2() {
-        x = 0;
-        y = 0;
-    }
+    public Vec2() {}
 
     public Vec2(float x, float y) {
         this.x = x;
@@ -20,12 +17,6 @@ public class Vec2 {
     public void set(float x, float y) {
         this.x = x;
         this.y = y;
-    }
-
-    public Vec2 set(float x, float y, int dummy) {
-        this.x = x;
-        this.y = y;
-        return this;
     }
 
     public void set(Vec2 v) {
@@ -38,7 +29,7 @@ public class Vec2 {
         this.y = source[1];
     }
 
-    public static Vec2 randomVec2() {
+    public static Vec2 random() {
         return new Vec2(random.nextFloat() * TWO_PI, random.nextFloat() * TWO_PI);
     }
 
@@ -155,7 +146,7 @@ public class Vec2 {
 
     public static float distSq(Vec2 v1, Vec2 v2) {
         float dx = v1.x - v2.x, dy = v1.y - v2.y;
-        return (dx * dx + dy * dy);
+        return dx * dx + dy * dy;
     }
 
     public float dot(Vec2 v) {

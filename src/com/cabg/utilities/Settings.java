@@ -21,17 +21,17 @@ public class Settings {
     public static Image iconImage = toolkit.getImage(Settings.class.getResource("/EngineLogo.png"));
     public static Image splashImage = toolkit.getImage(Settings.class.getResource("/EngineSplash.png"));
 
-    public static String folder_name = "SparkzEngineSettings";
-    public static String settings_file_name = "EngineSettings.json";
-    public static String colors_file_name = "SavedColors.txt";
+    public static String folderName = "SparkzEngineSettings";
+    public static String settingsFileName = "EngineSettings.json";
+    public static String colorsFileName = "SavedColors.txt";
     public static String spliceChar = ";";
-    public static String engine_settings_folder_path = "." + Paths.get("/" + folder_name);
-    public static String settingsFilePath = engine_settings_folder_path + "/" + settings_file_name;
-    public static String colorsFilePath = engine_settings_folder_path + "/" + colors_file_name;
+    public static String engine_settings_folder_path = "." + Paths.get("/" + folderName);
+    public static String settingsFilePath = engine_settings_folder_path + "/" + settingsFileName;
+    public static String colorsFilePath = engine_settings_folder_path + "/" + colorsFileName;
 
     public static final List<String> userSavedColors = new ArrayList<>(1000);
 
-    public static String getProjectTimespan() {
+    public static String getProjectTimeSpan() {
         return Period.between(LocalDate.now(), LocalDate.of(2015, Month.NOVEMBER, 22)).toString();
     }
 
@@ -63,7 +63,7 @@ public class Settings {
      */
     public static void saveColors(String colorsString) {
         try (Writer writer = new OutputStreamWriter(new FileOutputStream(colorsFilePath, true), StandardCharsets.UTF_8)) {
-            new File("./" + folder_name).mkdir();
+            new File("./" + folderName).mkdir();
             if (colorsString != null) writer.write(colorsString + '\n');
             else writer.write(ColorUtility.serializeReactiveColors(ReactiveColors.getComponents()) + '\n');
         } catch (Exception e) {
@@ -86,7 +86,7 @@ public class Settings {
     }
 
     public static void saveSettings() {
-        new File("./" + folder_name).mkdir();
+        new File("./" + folderName).mkdir();
         JsonUtil.writeEngineSettingsJson();
     }
 

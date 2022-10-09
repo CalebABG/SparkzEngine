@@ -196,7 +196,7 @@ public class ReactiveColorsTimeMachine {
             Color lableBGColor = label.getBackground();
             String labelBGText = label.getBGColorText();
 
-            if (isDark(lableBGColor) >= 55) {
+            if (isDark(lableBGColor) >= 50) {
                 label.setText(labelBGText);
                 label.setForeground(Color.black);
             } else {

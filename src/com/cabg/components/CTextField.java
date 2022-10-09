@@ -4,15 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CTextField extends JTextField {
-    public String text;
-    public Font font;
     public GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
-    public CTextField(String text, Font font, int gridWidth, int fill, int gridX, int gridY, int ipadX, int ipadY, float weightX, float weightY) {
+    public CTextField(String text, Font font, int gridWidth, int fill,
+                      int gridX, int gridY, int ipadX, int ipadY, float weightX, float weightY) {
         super(text);
-        this.text = super.getText();
-        this.font = font;
-        this.setFont(this.font);
+        this.setFont(font);
         this.setColumns(10);
         gridBagConstraints.gridwidth = gridWidth;
         gridBagConstraints.fill = fill;
@@ -26,9 +23,7 @@ public class CTextField extends JTextField {
 
     public CTextField(String text, Font font, Insets insets, int fill, int[] gridXY) {
         super(text);
-        this.text = super.getText();
-        this.font = font;
-        this.setFont(this.font);
+        this.setFont(font);
         this.setColumns(10);
         gridBagConstraints.fill = fill;
         gridBagConstraints.insets = insets;

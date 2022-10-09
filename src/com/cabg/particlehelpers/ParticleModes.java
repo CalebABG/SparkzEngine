@@ -197,7 +197,7 @@ public class ParticleModes {
     /**
      * Creates multiple particle objects while dragging mpt (from Engine drag amount) at the coords of the event x and y.
      */
-    public static void dragMode(MouseEvent e) {
+    public static void handleDrag(MouseEvent e) {
         switch (engineSettings.engineMode) {
             case RAGDOLL:
                 if (engineSettings.leftMouseButtonIsDown && engineSettings.controlKeyIsDown) {
