@@ -5,7 +5,7 @@ import com.cabg.utilities.ColorUtility;
 
 import java.awt.*;
 
-import static com.cabg.verlet.Vect2.clamp;
+import static com.cabg.verlet.Vec2.clamp;
 
 public class ReactiveColors {
     private static Color[] components = defaultColor();

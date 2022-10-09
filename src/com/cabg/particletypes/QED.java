@@ -1,6 +1,6 @@
 package com.cabg.particletypes;
 
-import com.cabg.ParticleHelpers.ParticleModes;
+import com.cabg.particlehelpers.ParticleModes;
 import com.cabg.reactivecolors.ReactiveColors;
 
 import java.awt.*;
@@ -21,7 +21,7 @@ public class QED extends Molecule {
     private void quantumEntanglement(int ptType) {
         switch (ptType) {
             case 0: ParticleModes.singleParticle((int) x, (int) y); break;
-            case 1: ParticleModes.singleSemtex(x, y); break;
+            case 1: ParticleModes.singleFlux(x, y); break;
             case 2: ParticleModes.singleEmitter(x, y); break;
             case 3: ParticleModes.singleGravityPoint(x, y); break;
             case 4: ParticleModes.singleIon(x, y); break;

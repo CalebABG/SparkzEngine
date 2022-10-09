@@ -6,16 +6,16 @@ The Sparkz Engine is a one of a kind particle engine written in Java; a program 
 It has many features which encourage exploration and experimentation. With five distinct modes: ```Normal, Multi, Fireworks, Graph, and Ragdoll```, just when you think you've discovered everything it just keeps on giving! Its features include ```particle flow visualization, fireworks simulation, equation visualization + graphing, organic motion visualization with the use of flow-x and flow-y expressions, and Verlet physics```.
 
 ### Normal Mode
-Lets you create thousands of colorful particles! Each particle has the ability to think, to determine its color based on its velocity. The particles can have up to 5 colors for which they can change their color to based on their velocity. You can also spawn up to 9 different particle types: ```Particle, Gravity Point, Emitter, Flux, Q.E.D, Ion, Black Hole, Duplex, and Portal```, which can interact with each other depending on particle type.
+Lets you create thousands of colorful particles! Each particle has the ability to be reactive, to determine its color based on its velocity. The particles can have up to 5 colors for which they can change their color to based on their velocity. You can also spawn up to 9 different particle types: ```Particle, Gravity Point, Emitter, Flux, Q.E.D, Ion, Black Hole, Duplex, and Portal```, which can interact with each other depending on particle type.
 
 ### Multi Mode
 A pretty simplistic mode, it lets you spawn multiples of certain particle types at a time.
 
 ### Fireworks Mode
-Lets you create realistic fireworks. Clicking at a certain point on the screen will launch a particle at an ```(x, y)``` coordinate, where x is half of the width of the screen and y being the height of the screen, and accelerating in the direction of the angle between the ```(x, y)``` coordinate and the position of the mouse cursor. In this mode, each particle has a life amount which determines when it should explode to create the fireworks effect. Just as in the regular mode, each particle has thinking colors, and in this mode that feature is extended. The launch particle has thinking colors and in addition the fireworks from the particle have thinking colors as well, which you can customize! You're also able to control many other features of how the fireworks work, altering the ```Size, Speed, Jitter, Wind, and Type``` of the fireworks.
+Lets you create realistic fireworks. Clicking at a certain point on the screen will launch a particle at an ```(x, y)``` coordinate, where x is half of the width of the screen and y being the height of the screen, and accelerating in the direction of the angle between the ```(x, y)``` coordinate and the position of the mouse cursor. In this mode, each particle has a life amount which determines when it should explode to create the fireworks effect. Just as in the regular mode, each particle has reactive colors, and in this mode that feature is extended. The launch particle has reactive colors and in addition the fireworks from the particle have reactive colors as well, which you can customize! You're also able to control many other features of how the fireworks work, altering the ```Size, Speed, Jitter, Wind, and Type``` of the fireworks.
 
 ### Graph Mode
-Built for visualizing equations or functions :D, a very handy feature, one which I personally use to help understand exactly what's going on in a particular function. In this mode, the equation/function parser is powered by Java's JavaScript Script Engine. You are able to enter virtually any function (as long as it's in terms of x, ex. y = sin(x) + cos(x)) and be able to graph it. It has many handy functions such as: ```Sin, Cos, Tan, Asin, Acos, Atan, Log, Sqrt(square root), Abs(absolute value)```; just to name a few.
+Built for visualizing equations or functions, a very handy feature, one which I personally use to help understand exactly what's going on in a particular function. In this mode, the equation/function parser is powered by Java's JavaScript Script Engine. You are able to enter virtually any function (as long as it's in terms of x, ex. y = sin(x) + cos(x)) and be able to graph it. It has many handy functions such as: ```Sin, Cos, Tan, Asin, Acos, Atan, Log, Sqrt(square root), Abs(absolute value)```; just to name a few.
 
 ### Ragdoll Mode
 Designed for simulating realistic physics using [Verlet Integration](https://en.wikipedia.org/wiki/Verlet_integration). In this mode, you're able to create different elements which model real life objects that are affected by real world forces, such as gravity and friction. The elements are: ```Points, Sticks, IK Chains, Boxes, Elastic Meshes, Solid Meshes and Cloth```.
@@ -43,7 +43,7 @@ Any text editor or IDE of your choice
 
 ## Getting Started
 
-These instructions will help you prepare your machine for development and testing purposes! :D
+These instructions will help you prepare your machine for development and testing purposes!
 
 ### Checking for Java Installation
 
@@ -71,7 +71,7 @@ In the Command Prompt or Terminal window, enter this command: ```java -version``
 If you get output from the window displaying something along the lines of: ```java version "1.x.x_xxx"```,
 where the x's are the specific versions of the Java SE Runtime Environment.
 
-If your version of the JRE is greater than or equal to ```version "1.8.0"``` then you're done :D, you can skip step 3.
+If your version of the JRE is greater than or equal to ```version "1.8.0"``` then you're done, you can skip step 3.
 
 
 ### Step 3:
@@ -110,7 +110,7 @@ If you get an output that looks like this: ```x86_64``` then you've got a 64 bit
 
 ### Installing Needed Software
 
-If you needed to download the JDK then you'll need to now install it :D
+If you needed to download the JDK then you'll need to now install it.
 
 ### Windows
 Navigate to the folder where you saved the downloaded Java JDK. Then you'll want to find the JDK installer and double click it to start the installer. Proceed through the steps provided by the installer to complete your installation.

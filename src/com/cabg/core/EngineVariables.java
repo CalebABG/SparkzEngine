@@ -2,7 +2,7 @@ package com.cabg.core;
 
 import com.cabg.components.CMenuBar;
 import com.cabg.particletypes.*;
-import com.cabg.verlet.Vect2;
+import com.cabg.verlet.Vec2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +31,7 @@ public class EngineVariables {
     public static Color backgroundColor                             = Color.black;
 
 
-    public static final Vect2 Mouse                                 = new Vect2();
+    public static final Vec2 Mouse                                 = new Vec2();
 
     public static final List<Particle> Particles                    = new ArrayList<>(125_000);
     public static final List<Fireworks> Fireworks                   = new ArrayList<>(55_000);

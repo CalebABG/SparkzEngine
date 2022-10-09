@@ -13,7 +13,7 @@ import java.util.TimerTask;
 
 import static com.cabg.core.EngineMethods.*;
 import static com.cabg.core.EngineVariables.*;
-import static com.cabg.gui.Notifier.headsUpNotifications;
+import static com.cabg.gui.Notifier.handleNotifications;
 
 public class Engine {
     public static void main(String[] args) {
@@ -139,10 +139,7 @@ public class Engine {
 
         graphics2D = (Graphics2D) buff.getDrawGraphics();
 
-        handleGraphicsSmoothing();
-        safetyBooleanChecks();
         draw();
-        headsUpNotifications();
 
         if (graphics2D != null) graphics2D.dispose();
         buff.show();
@@ -153,6 +150,8 @@ public class Engine {
      * This method actively draws to the canvas of the program. It is used within the programs render method.
      */
     private void draw() {
+        handleGraphicsSmoothing();
         handleRenders();
+        handleNotifications();
     }
 }

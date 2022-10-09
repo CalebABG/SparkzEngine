@@ -172,7 +172,7 @@ public class StatsPanel {
         gbc_label_3.gridy = 3;
         stats_panel.add(ptMode, gbc_label_3);
 
-        smartPt = new CLabel("Thinking Particles: ", font, Color.white, bgColor);
+        smartPt = new CLabel("Reactive Colors: ", font, Color.white, bgColor);
         GridBagConstraints gbc_label_4 = new GridBagConstraints();
         gbc_label_4.insets = new Insets(0, 0, 5, 0);
         gbc_label_4.weighty = 1.0;
@@ -341,7 +341,7 @@ public class StatsPanel {
             if (dragamount != null)
                 dragamount.setText("Drag Amount: " + decimalFormat.format(engineSettings.particleDragAmount));
             if (ptMode != null) ptMode.setText(EngineMethods.getModeText());
-            if (smartPt != null) smartPt.setText(EngineMethods.getThinkingText());
+            if (smartPt != null) smartPt.setText(EngineMethods.getReactiveColorsStatus());
             if (connect != null) connect.setText("Link Mode: " + EngineMethods.getConnectText());
             if (atm != null) atm.setText(EngineMethods.getMouseAttraction());
             if (ptFriction != null) ptFriction.setText(EngineMethods.getFrictionText());

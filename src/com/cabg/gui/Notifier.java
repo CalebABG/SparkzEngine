@@ -8,7 +8,7 @@ import static com.cabg.enums.EngineMode.GRAPH;
 public class Notifier {
     private static final Font renderFont = new Font(Font.SERIF, Font.PLAIN, 54);
     public static boolean drawingNotification = false;
-    public static int defaultTimeout = 45;
+    public static int defaultTimeout = 35;
     public static int timeout = defaultTimeout;
     public static String text = "";
 
@@ -32,7 +32,7 @@ public class Notifier {
         if (timeout < 0) drawingNotification = false;
     }
 
-    public static void headsUpNotifications() {
+    public static void handleNotifications() {
         if (drawingNotification) renderNotification();
     }
 }

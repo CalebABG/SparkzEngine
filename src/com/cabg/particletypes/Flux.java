@@ -1,7 +1,7 @@
 package com.cabg.particletypes;
 
 import java.awt.*;
-import com.cabg.ParticleHelpers.ParticleModes;
+import com.cabg.particlehelpers.ParticleModes;
 import static com.cabg.core.EngineVariables.*;
 import static org.apache.commons.math3.util.FastMath.*;
 

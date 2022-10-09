@@ -37,7 +37,7 @@ public class ReactiveColorsLoader {
 
         Settings.loadColors();
         ReactiveColors.setPresetColors(Settings.convertColors(lastIndex, Settings.userSavedColors));
-        frame.setTitle("You have " + Settings.userSavedColors.size() + " Saved Colors :D");
+        frame.setTitle("You have " + Settings.userSavedColors.size() + " Saved Colors!");
 
         int offsetX = 69;
         Color fgColor = Color.white;
@@ -79,7 +79,7 @@ public class ReactiveColorsLoader {
     private void refreshButton() {
         Settings.loadColors();
         colorSlider.setMaximum(Settings.userSavedColors.size() - 1);
-        frame.setTitle("You have " + Settings.userSavedColors.size() + " Saved Colors :D");
+        frame.setTitle("You have " + Settings.userSavedColors.size() + " Saved Colors!");
     }
 
     private static void setLabelColors(Color[] colors) {

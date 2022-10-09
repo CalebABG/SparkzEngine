@@ -1,4 +1,4 @@
-package com.cabg.ParticleHelpers;
+package com.cabg.particlehelpers;
 
 import com.cabg.enums.MoleculeRenderMode;
 import com.cabg.particletypes.GravityPoint;

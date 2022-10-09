@@ -8,16 +8,16 @@ import com.flowpowered.noise.NoiseQuality;
 
 import java.awt.*;
 
-import static com.cabg.ParticleHelpers.DrawingUtil.giveStyle;
-import static com.cabg.ParticleHelpers.ParticleModes.fireworksMode;
+import static com.cabg.particlehelpers.DrawingUtil.giveStyle;
+import static com.cabg.particlehelpers.ParticleModes.fireworksMode;
 import static com.cabg.core.EngineVariables.PI;
 import static com.cabg.core.EngineVariables.*;
 import static com.cabg.enums.EngineMode.FIREWORKS;
 import static com.cabg.enums.EngineMode.GRAPH;
 import static com.cabg.enums.GravitationMode.*;
 import static com.cabg.gui.OrganicForcesEditor.*;
-import static com.cabg.verlet.Vect2.clamp;
-import static com.cabg.verlet.Vect2.map;
+import static com.cabg.verlet.Vec2.clamp;
+import static com.cabg.verlet.Vec2.map;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public class Particle extends Molecule {

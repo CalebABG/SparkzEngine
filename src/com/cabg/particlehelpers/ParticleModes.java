@@ -1,16 +1,14 @@
-package com.cabg.ParticleHelpers;
+package com.cabg.particlehelpers;
 
 import com.cabg.core.Engine;
 import com.cabg.particletypes.Fireworks;
 import com.cabg.particletypes.*;
-import com.cabg.verlet.VPHandler;
-import com.cabg.verlet.Vect2;
+import com.cabg.verlet.PhysicsUtil;
+import com.cabg.verlet.Vec2;
 
 import java.awt.event.MouseEvent;
 
 import static com.cabg.core.EngineVariables.*;
-import static com.cabg.enums.EngineMode.GRAPH;
-import static com.cabg.enums.EngineMode.RAGDOLL;
 
 public class ParticleModes {
     /**
@@ -112,12 +110,12 @@ public class ParticleModes {
         Emitters.add(g);
     }
 
-    public static void singleSemtex(MouseEvent e) {
+    public static void singleFlux(MouseEvent e) {
         Flux g = new Flux(e.getX(), e.getY(), 12, random.nextFloat() * 6.53f, random.nextFloat() * 361);
         Fluxes.add(g);
     }
 
-    public static void singleSemtex(float x, float y) {
+    public static void singleFlux(float x, float y) {
         Flux g = new Flux(x, y, 12, random.nextFloat() * 6.53f, random.nextFloat() * 361);
         Fluxes.add(g);
     }
@@ -184,8 +182,8 @@ public class ParticleModes {
         for (int i = 0; i < amount; i++) singleGravityPoint(e);
     }
 
-    public static void multiSemtex(MouseEvent e, int amount) {
-        for (int i = 0; i < amount; i++) singleSemtex(e);
+    public static void multiFlux(MouseEvent e, int amount) {
+        for (int i = 0; i < amount; i++) singleFlux(e);
     }
 
     public static void multiQED(MouseEvent e, int amount) {
@@ -203,15 +201,15 @@ public class ParticleModes {
         switch (engineSettings.engineMode) {
             case RAGDOLL:
                 if (engineSettings.leftMouseButtonIsDown && engineSettings.controlKeyIsDown) {
-                    VPHandler.dragMode(e);
+                    PhysicsUtil.handleDrag(e);
                 }
                 break;
             case GRAPH:
                 if (engineSettings.leftMouseButtonIsDown) {
                     for (int i = 0; i < engineSettings.particleDragAmount; i++) {
-                        float mouseX = Vect2.map(Mouse.x, 0, canvas.getWidth(), -canvas.getWidth() / 2.0f, canvas.getWidth() / 2.0f);
+                        float mouseX = Vec2.map(Mouse.x, 0, canvas.getWidth(), -canvas.getWidth() / 2.0f, canvas.getWidth() / 2.0f);
 
-                        float mouseY = Vect2.map(Mouse.y, 0, canvas.getHeight(), -canvas.getHeight() / 2.0f, canvas.getHeight() / 2.0f);
+                        float mouseY = Vec2.map(Mouse.y, 0, canvas.getHeight(), -canvas.getHeight() / 2.0f, canvas.getHeight() / 2.0f);
 
                         singleParticle(mouseX, mouseY, engineSettings.particleDragSizeMax, engineSettings.particleDragSizeMin, engineSettings.particleDragSpeed);
                     }

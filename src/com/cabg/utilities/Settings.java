@@ -58,7 +58,7 @@ public class Settings {
     }
 
     /**
-     * This method gets the 5 thinking colors for the particles, converts them to RGB format
+     * This method gets the reactive colors for the particles, converts them to RGB format
      * and then appends them into a txt document.
      */
     public static void saveColors(String colorsString) {

@@ -6,7 +6,7 @@ import java.awt.*;
 
 import static com.cabg.core.EngineVariables.canvas;
 import static com.cabg.core.EngineVariables.random;
-import static com.cabg.verlet.Vect2.clamp;
+import static com.cabg.verlet.Vec2.clamp;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public abstract class Molecule implements EngineEntity {

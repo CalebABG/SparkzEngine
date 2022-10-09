@@ -1,8 +1,9 @@
 package com.cabg.core;
 
-import com.cabg.ParticleHelpers.ParticleModes;
+import com.cabg.particlehelpers.ParticleModes;
 import com.cabg.components.CMenuBar;
 import com.cabg.enums.GravitationMode;
+import com.cabg.enums.PhysicsEditorMode;
 import com.cabg.gui.*;
 import com.cabg.inputhandlers.KeyboardHandler;
 import com.cabg.inputhandlers.MouseMotionHandler;
@@ -11,9 +12,7 @@ import com.cabg.reactivecolors.ReactiveColorsRandomizer;
 import com.cabg.utilities.ColorUtility;
 import com.cabg.utilities.InputGuard;
 import com.cabg.verlet.Physics;
-import com.cabg.verlet.VModes;
-import com.cabg.verlet.VPHandler;
-import com.cabg.verlet.VSim;
+import com.cabg.verlet.PhysicsHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,7 +40,7 @@ public class EngineMethods {
                     case PARTICLE: ParticleModes.singleParticle(e); break;
                     case GRAVITY_POINT: ParticleModes.singleGravityPoint(e); break;
                     case EMITTER: ParticleModes.singleEmitter(e); break;
-                    case FLUX: ParticleModes.singleSemtex(e); break;
+                    case FLUX: ParticleModes.singleFlux(e); break;
                     case QED: ParticleModes.singleQED(e); break;
                     case ION: ParticleModes.singleIon(e); break;
                     case BLACK_HOLE: ParticleModes.singleBlackHole(e); break;
@@ -54,7 +53,7 @@ public class EngineMethods {
                     case PARTICLE: ParticleModes.multiParticle(e); break;
                     case GRAVITY_POINT: ParticleModes.multiGravityPoint(e, 4); break;
                     case EMITTER: ParticleModes.singleEmitter(e); break;
-                    case FLUX: ParticleModes.multiSemtex(e, 4); break;
+                    case FLUX: ParticleModes.multiFlux(e, 4); break;
                     case QED: ParticleModes.multiQED(e, 4); break;
                     case ION: ParticleModes.multiIon(e, 10); break;
                     case BLACK_HOLE: ParticleModes.singleBlackHole(e); break;
@@ -67,15 +66,15 @@ public class EngineMethods {
                 ParticleModes.fireworksTarget(e);
                 break;
             case RAGDOLL:
-                VPHandler.handleRagdollClickEvent(e);
+                PhysicsHandler.handleRagdollClickEvent(e);
                 break;
         }
     }
 
     /**
-     * Iterates through the ParticlesArray.
+     * Iterates through the Particles list.
      *
-     * @param size sets each particles radius to the specified size
+     * @param size sets each particle's radius to the specified size
      * @see ParticleSlideEditor
      */
     public static void setParticleSize(int size) {
@@ -171,7 +170,7 @@ public class EngineMethods {
      * @see com.cabg.components.CMenuBar
      * @see KeyboardHandler
      * @see ReactiveColorsEditor
-     * @see com.cabg.verlet.VSim
+     * @see PhysicsHandler
      */
     public static boolean toggle(boolean bool) {
         return !bool;
@@ -411,7 +410,7 @@ public class EngineMethods {
     }
 
     /**
-     * Dialog window to set the radius of all particles in the ParticlesArray.
+     * Dialog window to set the radius of all particles in the Particles list.
      */
     private static void particleSize() {
         float r = minValueGuard(0, .95f, HeadingTag(3, "Enter Particle Size"), OptionsMenu.frame);
@@ -545,10 +544,10 @@ public class EngineMethods {
         else return values[(values.length + (enumType.ordinal() - 1)) % values.length];
     }
 
-    public static void changeVPhysicsEditorMode(VModes.EditorModes editorMode){
+    public static void changePhysicsEditorMode(PhysicsEditorMode editorMode){
         if (engineSettings.engineMode == RAGDOLL && !Notifier.drawingNotification){
-            VerletPhysicsEditor.EDITOR_MODE = editorMode;
-            VerletPhysicsEditor.editorModesJComboBox.setSelectedItem(editorMode);
+            PhysicsEditor.EDITOR_MODE = editorMode;
+            PhysicsEditor.editorModesJComboBox.setSelectedItem(editorMode);
             Notifier.pushNotification(editorMode.name());
         }
     }
@@ -561,8 +560,8 @@ public class EngineMethods {
     public static void leftArrowFunction() {
         if (engineSettings.engineMode == RAGDOLL) {
             if (!Notifier.drawingNotification) {
-                VerletPhysicsEditor.CREATION_MODE = VModes.getMode(VerletPhysicsEditor.CREATION_MODE, -1);
-                VerletPhysicsEditor.creationModesJComboBox.setSelectedItem(VerletPhysicsEditor.CREATION_MODE);
+                PhysicsEditor.CREATION_MODE = getMode(PhysicsEditor.CREATION_MODE, false);
+                PhysicsEditor.creationModesJComboBox.setSelectedItem(PhysicsEditor.CREATION_MODE);
                 displayParticleType();
             }
         } else {
@@ -582,8 +581,8 @@ public class EngineMethods {
     public static void rightArrowFunction() {
         if (engineSettings.engineMode == RAGDOLL) {
             if (!Notifier.drawingNotification) {
-                VerletPhysicsEditor.CREATION_MODE = VModes.getMode(VerletPhysicsEditor.CREATION_MODE, 1);
-                VerletPhysicsEditor.creationModesJComboBox.setSelectedItem(VerletPhysicsEditor.CREATION_MODE);
+                PhysicsEditor.CREATION_MODE = getMode(PhysicsEditor.CREATION_MODE, true);
+                PhysicsEditor.creationModesJComboBox.setSelectedItem(PhysicsEditor.CREATION_MODE);
                 displayParticleType();
             }
         } else {
@@ -623,9 +622,9 @@ public class EngineMethods {
      * @see KeyboardHandler
      * @see CMenuBar
      */
-    public static void clearParticleArrays() {
+    public static void clearAllMoleculeLists() {
         if (engineSettings.engineMode == RAGDOLL) {
-            VSim.resetSelectedVertex();
+            PhysicsHandler.resetSelectedVertex();
             if (Vertices.size() > 0) Vertices.clear();
         } else {
             if (Particles.size() > 0) Particles.clear();
@@ -643,12 +642,12 @@ public class EngineMethods {
     }
 
     /**
-     * Slices all Molecule(base class) ArrayList's sizes.
+     * Slices all Molecule list sizes.
      *
      * @see KeyboardHandler
      * @see CMenuBar
      */
-    public static void trimParticleArrays() {
+    public static void trimMoleculeLists() {
         int t = 3;
         if (Particles.size() > 0) for (int i = (Particles.size() - 1) / t; i >= 0; i--) Particles.remove(i);
         if (GravityPoints.size() > 0) for (int i = (GravityPoints.size() - 1) / t; i >= 0; i--) GravityPoints.remove(i);
@@ -679,7 +678,7 @@ public class EngineMethods {
      * @see CMenuBar
      */
     public static void displayParticleType() {
-        if (engineSettings.engineMode == RAGDOLL) Notifier.pushNotification(VerletPhysicsEditor.CREATION_MODE.name());
+        if (engineSettings.engineMode == RAGDOLL) Notifier.pushNotification(PhysicsEditor.CREATION_MODE.name());
         else Notifier.pushNotification(engineSettings.particleType.name());
     }
 
@@ -695,11 +694,11 @@ public class EngineMethods {
     }
 
     /**
-     * Returns whether the Engines thinking particles boolean is true or false.
+     * Returns whether the Engines reactive colors boolean is true or false.
      *
      * @see StatsPanel
      */
-    public static String getThinkingText() {
+    public static String getReactiveColorsStatus() {
         return "Reactive Colors: " + (engineSettings.reactiveColorsEnabled ? "On" : "Off");
     }
 
@@ -722,7 +721,7 @@ public class EngineMethods {
     }
 
     /**
-     * Returns whether the Engines connect particles boolean is true or false and whether the ParticlesArray ArrayList.size() is
+     * Returns whether the Engines connect particles boolean is true or false and whether the Particles list size is
      * less than or equal to 100.
      *
      * @see StatsPanel
@@ -767,16 +766,6 @@ public class EngineMethods {
     private static void renderBlackHoles() {for (int i = 0; i < BlackHoles.size(); i++) BlackHoles.get(i).render();}
     private static void renderDuplexes() {for (int i = 0; i < Duplexes.size(); i++) Duplexes.get(i).render();}
     private static void renderPortals() {for (int i = 0; i < Portals.size(); i++) Portals.get(i).render();}
-    //---------------------------------------------------------------------------------------------------------------------------------------//
-
-    /**
-     * Makes sure that the Engines fireworks mode does not cause an exception due to too many particle explosions
-     * and makes sure that Ragdoll collisions stay under or equal to 285.
-     */
-    public static void safetyBooleanChecks() {
-        if (VSim.COLLISION_DETECTION) VSim.COLLISION_DETECTION = Vertices.size() <= VSim.MAX_COLLISIONS;
-    }
-    //---------------------------------------------------------------------------------------------------------------------------------------//
 
     /**
      * Updates all the particles in their respective ArrayLists.
@@ -795,6 +784,9 @@ public class EngineMethods {
                 updateBlackHoles();
                 updateDuplexes();
                 updatePortals();
+            }
+            else {
+                PhysicsHandler.COLLISION_DETECTION = Vertices.size() <= PhysicsHandler.MAX_COLLISIONS;
             }
         } catch (Exception e) {
             ExceptionLogger.append(e);
@@ -818,7 +810,7 @@ public class EngineMethods {
                     renderParticles();
                     break;
                 case RAGDOLL:
-                    VSim.debugPhysics();
+                    PhysicsHandler.debugPhysics();
                     Physics.update();
                     Physics.render();
                     break;

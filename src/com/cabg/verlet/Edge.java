@@ -1,10 +1,12 @@
 package com.cabg.verlet;
 
-import com.cabg.gui.VerletPhysicsEditor;
+import com.cabg.gui.PhysicsEditor;
+
 import java.awt.*;
 import java.awt.geom.Line2D;
+
 import static com.cabg.core.EngineVariables.graphics2D;
-import static com.cabg.verlet.VSim.selectedVertex;
+import static com.cabg.verlet.PhysicsHandler.selectedVertex;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public class Edge {
@@ -13,25 +15,25 @@ public class Edge {
     public float tearSensitivity;
     public Color color = Color.white;
     public Vertex p1, p2;
-    public boolean drawThis = true;
+    public boolean render;
     public boolean tearable = true;
 
-    Edge(Vertex link1, Vertex link2, float restingDist, float stiff, float tearSensitivity, boolean drawMe) {
+    Edge(Vertex link1, Vertex link2, float restingDist, float stiff, float tearSensitivity, boolean render) {
         p1 = link1;
         p2 = link2;
         restingDistance = restingDist;
         stiffness = stiff;
-        drawThis = drawMe;
+        this.render = render;
         this.tearSensitivity = tearSensitivity;
     }
 
-    Edge(Vertex link1, Vertex link2, float restingDist, float stiff, float tearSensitivity, boolean drawMe, Color c) {
-        this(link1, link2, restingDist, stiff, tearSensitivity, drawMe);
+    Edge(Vertex link1, Vertex link2, float restingDist, float stiff, float tearSensitivity, boolean render, Color c) {
+        this(link1, link2, restingDist, stiff, tearSensitivity, render);
         color = c;
     }
 
-    Edge(Vertex link1, Vertex link2, float restingDist, float stiff, float tearSensitivity, boolean drawMe, boolean tearable, Color c) {
-        this(link1, link2, restingDist, stiff, tearSensitivity, drawMe, c);
+    Edge(Vertex link1, Vertex link2, float restingDist, float stiff, float tearSensitivity, boolean render, boolean tearable, Color c) {
+        this(link1, link2, restingDist, stiff, tearSensitivity, render, c);
         this.tearable = tearable;
     }
 
@@ -44,11 +46,13 @@ public class Edge {
         // find the difference, or the ratio of how far along the restingDistance the actual distance is.
         float delta = (restingDistance / (dist + restingDistance)) - 0.5f;
 
-        if (tearable) if (dist > tearSensitivity) {
-            p1.removeLink(this);
+        if (tearable) {
+            if (dist > tearSensitivity) {
+                p1.removeLink(this);
 
-            if (p1 == selectedVertex || p2 == selectedVertex)
-                VerletPhysicsEditor.updateConstraintsList(selectedVertex.edges);
+                if (p1 == selectedVertex || p2 == selectedVertex)
+                    PhysicsEditor.updateConstraintsList(selectedVertex.edges);
+            }
         }
         //if (tearable) if (d > tearSensitivity) p2.removeLink(this);
 
@@ -70,7 +74,7 @@ public class Edge {
     }
 
     public void draw() {
-        if (drawThis) {
+        if (render) {
             graphics2D.setColor(color);
             graphics2D.draw(new Line2D.Float(p1.currX, p1.currY, p2.currX, p2.currY));
         }

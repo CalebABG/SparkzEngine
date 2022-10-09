@@ -63,9 +63,7 @@ public class SampleFunctions {
         list.setVisibleRowCount(-1);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.addKeyListener(new ExtendedKeyAdapter.KeyReleased(e -> {
-            {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) graphSelectedSample(list);
-            }
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) graphSelectedSample(list);
         }));
         if (listModel.size() > 0) {
             list.setSelectedIndex((int) (Math.random() * listModel.size()));
@@ -76,7 +74,7 @@ public class SampleFunctions {
         listScroller.setAlignmentX(LEFT_ALIGNMENT);
         panel.add(listScroller);
 
-        JButton graph = new JButton("Graph Selection :D");
+        JButton graph = new JButton("Graph Selection");
         graph.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
         graph.addActionListener(e -> graphSelectedSample(list));
         panel.add(graph, BorderLayout.SOUTH);

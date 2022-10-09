@@ -13,14 +13,14 @@ import static com.cabg.core.EngineVariables.EFrame;
 import static com.cabg.core.EngineVariables.engineSettings;
 
 public class ReactiveColorsEditor {
-    private static ReactiveColorsEditor thinkingParticlesUI = null;
+    private static ReactiveColorsEditor reactiveColorsEditor = null;
     public static JFrame frame;
     public Font font = new Font(Font.SERIF, Font.PLAIN, 18);
     public Font uiFont = new Font(Font.SERIF, Font.BOLD, 16);
     public static CLabel[] labels = new CLabel[5];
 
     public static void getInstance() {
-        if (thinkingParticlesUI == null) thinkingParticlesUI = new ReactiveColorsEditor();
+        if (reactiveColorsEditor == null) reactiveColorsEditor = new ReactiveColorsEditor();
         frame.toFront();
     }
 
@@ -30,7 +30,7 @@ public class ReactiveColorsEditor {
         } catch (Exception e) {
             ExceptionLogger.append(e);
         }
-        frame = new JFrame("Thinking Particles Color Changer");
+        frame = new JFrame("Reactive Colors Editor");
         frame.setIconImage(Settings.iconImage);
         frame.setSize(950, 250);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -52,27 +52,27 @@ public class ReactiveColorsEditor {
         presets.addActionListener(e -> ReactiveColorsPresets.getInstance());
         buttons_panel.add(presets);
 
-        JButton random_colors = new JButton("Random Colors");
+        JButton random_colors = new JButton("Random");
         random_colors.setFont(uiFont);
         random_colors.addActionListener(e -> setRandomColors());
         buttons_panel.add(random_colors);
 
-        JButton default_colors = new JButton("Default Colors");
+        JButton default_colors = new JButton("Default");
         default_colors.setFont(uiFont);
         default_colors.addActionListener(e -> ReactiveColors.setPresetColors(ReactiveColors.defaultColor()));
         buttons_panel.add(default_colors);
 
-        JButton cycle_colors = new JButton("Cycle Colors: " + (engineSettings.cycleReactiveColors ? "On" : "Off"));
+        JButton cycle_colors = new JButton("Cycle: " + (engineSettings.cycleReactiveColors ? "On" : "Off"));
         cycle_colors.setFont(uiFont);
         cycle_colors.addActionListener(e -> handleColorCycle(cycle_colors));
         buttons_panel.add(cycle_colors);
 
-        JButton save_colors = new JButton("Save Colors");
+        JButton save_colors = new JButton("Save");
         save_colors.setFont(uiFont);
         save_colors.addActionListener(e -> Settings.saveColors(null));
         buttons_panel.add(save_colors);
 
-        JButton load_colors = new JButton("Load Colors");
+        JButton load_colors = new JButton("Load");
         load_colors.setFont(uiFont);
         load_colors.addActionListener(e -> loadColors());
         buttons_panel.add(load_colors);
@@ -215,14 +215,14 @@ public class ReactiveColorsEditor {
     }
 
     public void handleColorCycle(JButton btnCycleColors) {
-        engineSettings.toggleReactiveColors();
+        engineSettings.toggleCycleReactiveColors();
 
-        if (engineSettings.reactiveColorsEnabled) {
+        if (engineSettings.cycleReactiveColors) {
             ReactiveColorsRandomizer.startCycle();
-            btnCycleColors.setText("Cycle Colors: On");
+            btnCycleColors.setText("Cycle: On");
         } else {
             ReactiveColorsRandomizer.stopCycle();
-            btnCycleColors.setText("Cycle Colors: Off");
+            btnCycleColors.setText("Cycle: Off");
         }
     }
 
@@ -240,6 +240,6 @@ public class ReactiveColorsEditor {
 
     public void close() {
         frame.dispose();
-        thinkingParticlesUI = null;
+        reactiveColorsEditor = null;
     }
 }

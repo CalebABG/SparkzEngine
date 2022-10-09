@@ -1,13 +1,13 @@
 package com.cabg.inputhandlers;
 
-import com.cabg.ParticleHelpers.ParticleModes;
+import com.cabg.particlehelpers.ParticleModes;
 import com.cabg.core.BackgroundThread;
 import com.cabg.core.EngineMethods;
+import com.cabg.enums.PhysicsEditorMode;
 import com.cabg.gui.*;
 import com.cabg.utilities.ColorUtility;
 import com.cabg.utilities.Settings;
-import com.cabg.verlet.VModes;
-import com.cabg.verlet.VSim;
+import com.cabg.verlet.PhysicsHandler;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -46,7 +46,7 @@ public class KeyboardHandler extends KeyAdapter {
 
         //Keyboard button: 3
         if (key == KeyEvent.VK_3 || key == KeyEvent.VK_NUMPAD3) {
-            EngineMethods.trimParticleArrays();
+            EngineMethods.trimMoleculeLists();
         }
 
         //Keyboard button: CTRL
@@ -114,16 +114,16 @@ public class KeyboardHandler extends KeyAdapter {
         }
 
         if (key == KeyEvent.VK_A) {
-            EngineMethods.changeVPhysicsEditorMode(VModes.EditorModes.Add);
+            EngineMethods.changePhysicsEditorMode(PhysicsEditorMode.Add);
         }
 
         if (key == KeyEvent.VK_D) {
-            EngineMethods.changeVPhysicsEditorMode(VModes.EditorModes.Drag);
+            EngineMethods.changePhysicsEditorMode(PhysicsEditorMode.Drag);
         }
 
         //Keyboard button: S
         if (key == KeyEvent.VK_S) {
-            EngineMethods.changeVPhysicsEditorMode(VModes.EditorModes.Select);
+            EngineMethods.changePhysicsEditorMode(PhysicsEditorMode.Select);
         }
 
         //Keyboard button: W
@@ -131,28 +131,23 @@ public class KeyboardHandler extends KeyAdapter {
             BackgroundThread.run(ReactiveColorsEditor::getInstance);
         }
 
-        //Keyboard button: K
-        if (key == KeyEvent.VK_K) {
-            VSim.toggleCollisions();
-        }
-
         //Keyboard button: M
         if (key == KeyEvent.VK_M) {
-            VSim.toggleGravity();
+            PhysicsHandler.toggleGravity();
         }
 
         //Keyboard button: N
         if (key == KeyEvent.VK_N) {
-            VSim.toggleDebug();
+            PhysicsHandler.toggleDebug();
         }
 
         if (key == KeyEvent.VK_P) {
-            VSim.pinSelectedPoint();
+            PhysicsHandler.pinSelectedPoint();
         }
 
         //Keyboard button: C
         if (key == KeyEvent.VK_C) {
-            EngineMethods.clearParticleArrays();
+            EngineMethods.clearAllMoleculeLists();
         }
 
         //Keyboard button: Left Arrow

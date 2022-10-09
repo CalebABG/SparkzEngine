@@ -1,7 +1,7 @@
 package com.cabg.inputhandlers;
 
 import com.cabg.core.EngineMethods;
-import com.cabg.verlet.VSim;
+import com.cabg.verlet.PhysicsHandler;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -28,7 +28,7 @@ public class MouseButtonHandler extends MouseAdapter {
             case MouseEvent.BUTTON1: engineSettings.leftMouseButtonIsDown = false; break;
             case MouseEvent.BUTTON3: engineSettings.rightMouseButtonIsDown = false; break;
         }
-        VSim.resetDragVertex();
+        PhysicsHandler.resetDragVertex();
     }
 
     public void mouseClicked(MouseEvent e) {

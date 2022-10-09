@@ -3,7 +3,7 @@ package com.cabg.gui;
 import com.cabg.core.GUIText;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
-import com.cabg.ParticleHelpers.ParticleTypeOptions;
+import com.cabg.particlehelpers.ParticleTypeOptions;
 import com.cabg.utilities.InputGuard;
 import com.cabg.utilities.Settings;
 

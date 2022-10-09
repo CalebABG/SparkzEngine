@@ -2,12 +2,13 @@ package com.cabg.gui;
 
 import com.cabg.components.CLabel;
 import com.cabg.core.EngineMethods;
+import com.cabg.enums.PhysicsCreationMode;
+import com.cabg.enums.PhysicsEditorMode;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
 import com.cabg.utilities.InputGuard;
 import com.cabg.utilities.Settings;
 import com.cabg.verlet.Edge;
-import com.cabg.verlet.VModes;
-import com.cabg.verlet.VSim;
+import com.cabg.verlet.PhysicsHandler;
 import com.cabg.verlet.Vertex;
 
 import javax.swing.*;
@@ -17,33 +18,29 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import static com.cabg.core.EngineVariables.engineSettings;
-import static com.cabg.verlet.VSim.selectedVertex;
+import static com.cabg.verlet.PhysicsHandler.selectedVertex;
 
-public class VerletPhysicsEditor {
-    public static VerletPhysicsEditor vVerletPhysicsEditorInstance = null;
+public class PhysicsEditor {
+    public static PhysicsEditor physicsEditor = null;
     public static JFrame frame;
 
-    public static VModes.EditorModes EDITOR_MODE = VModes.EditorModes.Add;
-    public static VModes.CreationModes CREATION_MODE = VModes.CreationModes.Point;
+    public static PhysicsEditorMode EDITOR_MODE = PhysicsEditorMode.Add;
+    public static PhysicsCreationMode CREATION_MODE = PhysicsCreationMode.Point;
 
     private static final Font font = new Font(Font.SERIF, Font.PLAIN, 14);
     public static JButton btnSetSimulationProperties, btnSetProperties, btnSetConstraints;
     public static CLabel pointColorPanel, linkColorPanel, lblSelectionColor, lblConstraintLink;
 
     public static DefaultListModel<Integer> listModel = new DefaultListModel<>();
-    public static JCheckBox showselectionconstraint_checkbox = new JCheckBox("Show Constraint"),
+    public static JCheckBox showSelectionConstraintCheckbox = new JCheckBox("Show Constraint"),
             constraintdrawlink_checkbox = new JCheckBox("Draw Link"),
             constrainttearable_checkbox = new JCheckBox("Tearable"),
             selectionshowpoint_checkbox = new JCheckBox("Show Point"),
             selectioncollidable_checkbox = new JCheckBox("Collidable");
 
-    static {
-        listModel.addElement(-1);
-    }
-
     public static JList<Integer> constraintsList = new JList<>(listModel);
-    public static JComboBox<VModes.EditorModes> editorModesJComboBox = new JComboBox<>();
-    public static JComboBox<VModes.CreationModes> creationModesJComboBox = new JComboBox<>();
+    public static JComboBox<PhysicsEditorMode> editorModesJComboBox = new JComboBox<>();
+    public static JComboBox<PhysicsCreationMode> creationModesJComboBox = new JComboBox<>();
     public static JTextField simacc_field = new JTextField(10),
             dragforce_field = new JTextField(10),
             gravity_field = new JTextField(10),
@@ -63,11 +60,11 @@ public class VerletPhysicsEditor {
             constraintTearDistanceField = new JTextField(10);
 
     public static void getInstance(JFrame p) {
-        if (vVerletPhysicsEditorInstance == null) vVerletPhysicsEditorInstance = new VerletPhysicsEditor(p);
+        if (physicsEditor == null) physicsEditor = new PhysicsEditor(p);
         frame.toFront();
     }
 
-    public VerletPhysicsEditor(JFrame parent) {
+    public PhysicsEditor(JFrame parent) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
@@ -105,11 +102,11 @@ public class VerletPhysicsEditor {
         editormode_label.setFont(font);
         editormode_label.setIconTextGap(5);
 
-        editorModesJComboBox.setModel(new DefaultComboBoxModel<>(VModes.EditorModes.values()));
+        editorModesJComboBox.setModel(new DefaultComboBoxModel<>(PhysicsEditorMode.values()));
         editorModesJComboBox.setSelectedItem(EDITOR_MODE);
         editorModesJComboBox.setFont(font);
         editorModesJComboBox.addActionListener(e -> {
-            VModes.EditorModes selectedMode = (VModes.EditorModes) editorModesJComboBox.getSelectedItem();
+            PhysicsEditorMode selectedMode = (PhysicsEditorMode) editorModesJComboBox.getSelectedItem();
             if (selectedMode != EDITOR_MODE) EDITOR_MODE = selectedMode;
         });
         GridBagConstraints gbc_editormode_combobox = new GridBagConstraints();
@@ -120,8 +117,8 @@ public class VerletPhysicsEditor {
         toolbarpanel.add(editorModesJComboBox, gbc_editormode_combobox);
 
         JCheckBox gravitycheckbox = new JCheckBox("Zero Gravity");
-        gravitycheckbox.setSelected(VSim.ZERO_GRAVITY);
-        gravitycheckbox.addActionListener(e -> VSim.toggleGravity());
+        gravitycheckbox.setSelected(PhysicsHandler.ZERO_GRAVITY);
+        gravitycheckbox.addActionListener(e -> PhysicsHandler.toggleGravity());
         gravitycheckbox.setToolTipText("Toggles Gravity on or off(default is on)");
         gravitycheckbox.setFont(font);
         GridBagConstraints gbc_gravitycheckbox = new GridBagConstraints();
@@ -131,8 +128,8 @@ public class VerletPhysicsEditor {
         toolbarpanel.add(gravitycheckbox, gbc_gravitycheckbox);
 
         JCheckBox debugcheckbox = new JCheckBox("Debug");
-        debugcheckbox.setSelected(VSim.DEBUG_MODE);
-        debugcheckbox.addActionListener(e -> VSim.toggleDebug());
+        debugcheckbox.setSelected(PhysicsHandler.DEBUG_MODE);
+        debugcheckbox.addActionListener(e -> PhysicsHandler.toggleDebug());
         debugcheckbox.setToolTipText("Toggles Debug Mode(default is off)");
         debugcheckbox.setFont(font);
         GridBagConstraints gbc_debugcheckbox = new GridBagConstraints();
@@ -141,25 +138,13 @@ public class VerletPhysicsEditor {
         gbc_debugcheckbox.gridy = 0;
         toolbarpanel.add(debugcheckbox, gbc_debugcheckbox);
 
-        JCheckBox collisionscheckbox = new JCheckBox("Collisions");
-        collisionscheckbox.setSelected(VSim.COLLISION_DETECTION);
-        collisionscheckbox.addActionListener(e -> VSim.toggleCollisions());
-        collisionscheckbox.setToolTipText("Toggles Collision Detection");
-        collisionscheckbox.setFont(font);
-        GridBagConstraints gbc_collisionscheckbox = new GridBagConstraints();
-        gbc_collisionscheckbox.insets = new Insets(0, 0, 0, 5);
-        gbc_collisionscheckbox.anchor = GridBagConstraints.EAST;
-        gbc_collisionscheckbox.gridx = 4;
-        gbc_collisionscheckbox.gridy = 0;
-        toolbarpanel.add(collisionscheckbox, gbc_collisionscheckbox);
-
         JCheckBox chckbxSmoothing = new JCheckBox("Smoothing");
         chckbxSmoothing.setSelected(engineSettings.smoothRenderingEnabled);
         chckbxSmoothing.addActionListener(e -> EngineMethods.toggleGraphicsSmoothing());
         chckbxSmoothing.setToolTipText("Toggles Graphics Smoothing (default: off)");
         chckbxSmoothing.setFont(font);
         GridBagConstraints gbc_chckbxSmoothing = new GridBagConstraints();
-        gbc_chckbxSmoothing.gridx = 5;
+        gbc_chckbxSmoothing.gridx = 4;
         gbc_chckbxSmoothing.gridy = 0;
         toolbarpanel.add(chckbxSmoothing, gbc_chckbxSmoothing);
 
@@ -188,7 +173,7 @@ public class VerletPhysicsEditor {
         gbc_simacc_label.gridy = 0;
         simproperties_panel.add(simacc_label, gbc_simacc_label);
 
-        simacc_field.setText("" + VSim.SIM_ACCURACY);
+        simacc_field.setText("" + PhysicsHandler.SIM_ACCURACY);
         simacc_field.setHorizontalAlignment(SwingConstants.CENTER);
         simacc_field.setFont(font);
         GridBagConstraints gbc_simacc_field = new GridBagConstraints();
@@ -210,7 +195,7 @@ public class VerletPhysicsEditor {
         gbc_dragforce_label.gridy = 2;
         simproperties_panel.add(dragforce_label, gbc_dragforce_label);
 
-        dragforce_field.setText("" + VSim.dragForce);
+        dragforce_field.setText("" + PhysicsHandler.dragForce);
         dragforce_field.setHorizontalAlignment(SwingConstants.CENTER);
         dragforce_field.setFont(font);
 
@@ -232,7 +217,7 @@ public class VerletPhysicsEditor {
         gbc_gravity_label.gridy = 4;
         simproperties_panel.add(gravity_label, gbc_gravity_label);
 
-        gravity_field.setText("" + VSim.gravity);
+        gravity_field.setText("" + PhysicsHandler.gravity);
         gravity_field.setHorizontalAlignment(SwingConstants.CENTER);
         gravity_field.setFont(font);
 
@@ -254,7 +239,7 @@ public class VerletPhysicsEditor {
         gbc_airviscosity_label.gridy = 6;
         simproperties_panel.add(airviscosity_label, gbc_airviscosity_label);
 
-        airviscosity_field.setText("" + VSim.airViscosity);
+        airviscosity_field.setText("" + PhysicsHandler.airViscosity);
         airviscosity_field.setHorizontalAlignment(SwingConstants.CENTER);
         airviscosity_field.setFont(font);
 
@@ -291,7 +276,7 @@ public class VerletPhysicsEditor {
         gbl_addmode_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         addmode_panel.setLayout(gbl_addmode_panel);
 
-        JLabel addmode_label = new JLabel("Add Mode(availability based on mode)");
+        JLabel addmode_label = new JLabel("Add Mode (availability based on mode)");
         addmode_label.setFont(font);
         GridBagConstraints gbc_addmode_label = new GridBagConstraints();
         gbc_addmode_label.fill = GridBagConstraints.VERTICAL;
@@ -301,11 +286,11 @@ public class VerletPhysicsEditor {
         gbc_addmode_label.gridy = 0;
         addmode_panel.add(addmode_label, gbc_addmode_label);
 
-        creationModesJComboBox.setModel(new DefaultComboBoxModel<>(VModes.CreationModes.values()));
+        creationModesJComboBox.setModel(new DefaultComboBoxModel<>(PhysicsCreationMode.values()));
         creationModesJComboBox.setSelectedItem(CREATION_MODE);
         creationModesJComboBox.setFont(font);
         creationModesJComboBox.addActionListener(e -> {
-            VModes.CreationModes selectedMode = (VModes.CreationModes) creationModesJComboBox.getSelectedItem();
+            PhysicsCreationMode selectedMode = (PhysicsCreationMode) creationModesJComboBox.getSelectedItem();
             if (selectedMode != CREATION_MODE) CREATION_MODE = selectedMode;
 
         });
@@ -726,15 +711,15 @@ public class VerletPhysicsEditor {
         gbc_label.gridy = 0;
         panel.add(label, gbc_label);
 
-        showselectionconstraint_checkbox.setSelected(false);
-        showselectionconstraint_checkbox.setFont(font);
+        showSelectionConstraintCheckbox.setSelected(false);
+        showSelectionConstraintCheckbox.setFont(font);
         GridBagConstraints gbc_checkBox = new GridBagConstraints();
         gbc_checkBox.fill = GridBagConstraints.VERTICAL;
         gbc_checkBox.anchor = GridBagConstraints.WEST;
         gbc_checkBox.insets = new Insets(0, 0, 5, 5);
         gbc_checkBox.gridx = 1;
         gbc_checkBox.gridy = 1;
-        panel.add(showselectionconstraint_checkbox, gbc_checkBox);
+        panel.add(showSelectionConstraintCheckbox, gbc_checkBox);
 
         constraintdrawlink_checkbox.setSelected(true);
         constraintdrawlink_checkbox.setFont(font);
@@ -864,7 +849,7 @@ public class VerletPhysicsEditor {
                 for (int i = 0; i < selectedValues.size(); i++) {
                     Edge edge = selectedVertex.edges.get(selectedValues.get(i));
 
-                    edge.drawThis = constraintdrawlink_checkbox.isSelected();
+                    edge.render = constraintdrawlink_checkbox.isSelected();
                     edge.tearable = constrainttearable_checkbox.isSelected();
                     edge.color = lblConstraintLink.getBackground();
                     edge.stiffness = InputGuard.floatTextfieldGuardDefault(0.0f, edge.stiffness, cStiffness);
@@ -875,7 +860,7 @@ public class VerletPhysicsEditor {
     }
 
     public static void unsetObjectPropertiesOnDeselect() {
-        if (vVerletPhysicsEditorInstance != null) {
+        if (physicsEditor != null) {
             selectiondampening_field.setText("");
             selectionmass_field.setText("");
             selectionradius_field.setText("");
@@ -884,7 +869,7 @@ public class VerletPhysicsEditor {
     }
 
     public static void setObjectPropertiesOnSelect(Vertex v) {
-        if (vVerletPhysicsEditorInstance != null) {
+        if (physicsEditor != null) {
             lblSelectionColor.setBackground(v.color);
             selectioncollidable_checkbox.setSelected(v.collidable);
             selectiondampening_field.setText("" + v.damping);
@@ -899,10 +884,10 @@ public class VerletPhysicsEditor {
         String simacc = simacc_field.getText(), dragforce = dragforce_field.getText(),
                 grav = gravity_field.getText(), airvis = airviscosity_field.getText();
 
-        VSim.SIM_ACCURACY = InputGuard.intTextfieldGuardDefault(1, VSim.SIM_ACCURACY, simacc);
-        VSim.dragForce = InputGuard.floatTextfieldGuardDefault(0.0f, VSim.dragForce, dragforce);
-        VSim.gravity = guardFloat(VSim.gravity, grav);
-        VSim.airViscosity = InputGuard.floatTextfieldGuardDefault(0.0f, VSim.airViscosity, airvis);
+        PhysicsHandler.SIM_ACCURACY = InputGuard.intTextfieldGuardDefault(1, PhysicsHandler.SIM_ACCURACY, simacc);
+        PhysicsHandler.dragForce = InputGuard.floatTextfieldGuardDefault(0.0f, PhysicsHandler.dragForce, dragforce);
+        PhysicsHandler.gravity = guardFloat(PhysicsHandler.gravity, grav);
+        PhysicsHandler.airViscosity = InputGuard.floatTextfieldGuardDefault(0.0f, PhysicsHandler.airViscosity, airvis);
     }
 
     private float guardFloat(float default_, String value) {
@@ -912,16 +897,13 @@ public class VerletPhysicsEditor {
 
     private void close() {
         frame.dispose();
-        vVerletPhysicsEditorInstance = null;
+        physicsEditor = null;
     }
 
     public static void updateConstraintsList(List<Edge> edgeList) {
-        if (vVerletPhysicsEditorInstance != null) {
+        if (physicsEditor != null) {
             listModel.clear();
-            if (edgeList == null || edgeList.isEmpty()) {
-                listModel.addElement(-1);
-            }
-            else {
+            if (edgeList != null && !edgeList.isEmpty()) {
                 for (int i = 0; i < edgeList.size(); i++) {
                     listModel.addElement(i);
                 }

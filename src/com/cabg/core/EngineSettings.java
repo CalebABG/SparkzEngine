@@ -81,6 +81,10 @@ public class EngineSettings {
         reactiveColorsEnabled = !reactiveColorsEnabled;
     }
 
+    public void toggleCycleReactiveColors() {
+        cycleReactiveColors = !cycleReactiveColors;
+    }
+
     public void toggleParticleBoundsChecking() {
         particleBoundless = !particleBoundless;
     }

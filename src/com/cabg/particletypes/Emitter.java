@@ -1,6 +1,6 @@
 package com.cabg.particletypes;
 
-import com.cabg.ParticleHelpers.ParticleModes;
+import com.cabg.particlehelpers.ParticleModes;
 
 import static com.cabg.core.EngineVariables.*;
 

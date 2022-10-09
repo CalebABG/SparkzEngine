@@ -1,13 +1,14 @@
 package com.cabg.verlet;
 
-import com.cabg.gui.VerletPhysicsEditor;
+import com.cabg.enums.PhysicsEditorMode;
+import com.cabg.gui.PhysicsEditor;
 
 import java.awt.*;
 import java.util.List;
 
 import static com.cabg.core.EngineVariables.*;
-import static com.cabg.gui.VerletPhysicsEditor.showselectionconstraint_checkbox;
-import static com.cabg.verlet.VSim.*;
+import static com.cabg.gui.PhysicsEditor.showSelectionConstraintCheckbox;
+import static com.cabg.verlet.PhysicsHandler.*;
 import static com.cabg.verlet.Vertex.Vertices;
 
 public class Physics {
@@ -21,13 +22,14 @@ public class Physics {
             solveConstraints();
             handleMouseInteraction();
             integrate();
-            collisionsNoVelPres(); // TODO: Why both?
-            collisionsWithVelPres();
-        } else handleMouseInteraction();
+            collisionsNoVelPres();
+        } else {
+            handleMouseInteraction();
+        }
     }
 
     /**
-     * Renders all of the Vertex objects, and also shows their constraints if selected
+     * Renders all the Vertex objects, and also shows their constraints if selected
      *
      * @see Vertex
      * @see Edge
@@ -35,12 +37,11 @@ public class Physics {
     public static void render() {
         for (int i = 0; i < Vertices.size(); i++) Vertices.get(i).draw();
 
-        if (VerletPhysicsEditor.vVerletPhysicsEditorInstance != null && selectedVertex != null) {
-            List<Integer> selectedPointConstraintList = VerletPhysicsEditor.constraintsList.getSelectedValuesList();
+        if (PhysicsEditor.physicsEditor != null && selectedVertex != null) {
+            List<Integer> selectedPointConstraintList = PhysicsEditor.constraintsList.getSelectedValuesList();
 
-            // Check whether the list of constraints is empty; check if the point has any constrains (if the first index in the array
-            // is not -1; and check whether to show the constraint at all (checkbox)
-            if (!selectedPointConstraintList.isEmpty() && (selectedPointConstraintList.get(0) != -1) && showselectionconstraint_checkbox.isSelected()) {
+            // Check whether the list of constraints is empty; check if the point has any constrains and check whether to show the constraint at all (checkbox)
+            if (!selectedPointConstraintList.isEmpty() && showSelectionConstraintCheckbox.isSelected()) {
                 for (int i = 0; i < selectedPointConstraintList.size(); i++) {
                     Vertex constraintPoint = selectedVertex.edges.get(selectedPointConstraintList.get(i)).p2;
 
@@ -76,10 +77,10 @@ public class Physics {
      * Handles the interaction between the mouse pointer and Verlet physics objects
      */
     private static void handleMouseInteraction() {
-        if (VerletPhysicsEditor.EDITOR_MODE == VModes.EditorModes.Drag) {
+        if (PhysicsEditor.EDITOR_MODE == PhysicsEditorMode.Drag) {
             //  Handle if the Left mouse button is held down in drag mode
             if (engineSettings.leftMouseButtonIsDown) {
-                //  If the the point we want to drag isn't null and if the engine isn't paused move it around
+                //  If the point we want to drag isn't null and if the engine isn't paused move it around
                 if (dragVertex != null) {
                     if (!engineSettings.paused) {
                         float s = dragVertex.mass * dragForce;
@@ -92,15 +93,15 @@ public class Physics {
                 //  Check the distance between a given point in the list and the mouse. If the mouse point (x, y) is within the radius
                 //  of the given point in the list, then we've found a point to drag. Set the dragPoint variable to that point and break out of searching
                 else {
-                    boolean found = false;
-                    for (int i = 0; i < Vertices.size() && !found; i++) {
+                    for (int i = 0; i < Vertices.size(); i++) {
                         Vertex searchVertex = Vertices.get(i);
+
                         if (searchVertex.contains(Mouse.x, Mouse.y)) {
                             dragVertex = searchVertex;
                             selectedVertex = searchVertex;
-                            VerletPhysicsEditor.setObjectPropertiesOnSelect(selectedVertex);
-                            VerletPhysicsEditor.updateConstraintsList(selectedVertex.edges);
-                            found = true;
+                            PhysicsEditor.setObjectPropertiesOnSelect(selectedVertex);
+                            PhysicsEditor.updateConstraintsList(selectedVertex.edges);
+                            break;
                         }
                     }
                 }
@@ -117,7 +118,7 @@ public class Physics {
                     if (tearDistance < mouseTearSize) {
                         if (searchVertex == selectedVertex) {
                             searchVertex.edges.clear();
-                            VerletPhysicsEditor.updateConstraintsList(selectedVertex.edges);
+                            PhysicsEditor.updateConstraintsList(selectedVertex.edges);
                         } else {
                             searchVertex.edges.clear();
                         }
@@ -131,14 +132,6 @@ public class Physics {
         for (int i = 0; i < Vertices.size(); i++) {
             for (int j = 0; j < Vertices.size(); j++) {
                 Vertices.get(i).solveCollisions(Vertices.get(j), false);
-            }
-        }
-    }
-
-    private static void collisionsWithVelPres() {
-        for (int i = 0; i < Vertices.size(); i++) {
-            for (int j = 0; j < Vertices.size(); j++) {
-                Vertices.get(i).solveCollisions(Vertices.get(j), true);
             }
         }
     }

@@ -1,6 +1,6 @@
 package com.cabg.inputhandlers;
 
-import com.cabg.ParticleHelpers.ParticleModes;
+import com.cabg.particlehelpers.ParticleModes;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;

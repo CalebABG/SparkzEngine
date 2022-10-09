@@ -63,15 +63,15 @@ public class CMenuBar extends JMenuBar {
         this.add(mnEdit);
         menus.add(mnEdit);
 
-        JMenuItem trimParticleArrays = new JMenuItem("Trim Particle Lists");
-        trimParticleArrays.addActionListener(e -> EngineMethods.trimParticleArrays());
-        mnEdit.add(trimParticleArrays);
-        menuItems.add(trimParticleArrays);
+        JMenuItem trimMoleculeListsMenuItem = new JMenuItem("Trim Molecule Lists");
+        trimMoleculeListsMenuItem.addActionListener(e -> EngineMethods.trimMoleculeLists());
+        mnEdit.add(trimMoleculeListsMenuItem);
+        menuItems.add(trimMoleculeListsMenuItem);
 
-        JMenuItem clearParticleArrays = new JMenuItem("Clear All Lists");
-        clearParticleArrays.addActionListener(e -> EngineMethods.clearParticleArrays());
-        mnEdit.add(clearParticleArrays);
-        menuItems.add(clearParticleArrays);
+        JMenuItem clearAllMoleculesMenuItem = new JMenuItem("Clear All Molecules");
+        clearAllMoleculesMenuItem.addActionListener(e -> EngineMethods.clearAllMoleculeLists());
+        mnEdit.add(clearAllMoleculesMenuItem);
+        menuItems.add(clearAllMoleculesMenuItem);
         //Edit End
 
         this.add(Box.createHorizontalStrut(11));
@@ -103,10 +103,10 @@ public class CMenuBar extends JMenuBar {
         mnUIWindows.add(exceptionUI);
         menuItems.add(exceptionUI);
 
-        JMenuItem thinkingParticlesUI = new JMenuItem("Color Editor");
-        thinkingParticlesUI.addActionListener(e -> BackgroundThread.run(ReactiveColorsEditor::getInstance));
-        mnUIWindows.add(thinkingParticlesUI);
-        menuItems.add(thinkingParticlesUI);
+        JMenuItem colorEditor = new JMenuItem("Color Editor");
+        colorEditor.addActionListener(e -> BackgroundThread.run(ReactiveColorsEditor::getInstance));
+        mnUIWindows.add(colorEditor);
+        menuItems.add(colorEditor);
 
         JMenuItem particleGraphUI = new JMenuItem("Graph Editor");
         particleGraphUI.addActionListener(e -> BackgroundThread.run(ParticleGrapher::getInstance));
@@ -114,7 +114,7 @@ public class CMenuBar extends JMenuBar {
         menuItems.add(particleGraphUI);
 
         JMenuItem vphysicseditor = new JMenuItem("Physics Editor");
-        vphysicseditor.addActionListener(e -> BackgroundThread.run(() -> VerletPhysicsEditor.getInstance(EFrame)));
+        vphysicseditor.addActionListener(e -> BackgroundThread.run(() -> PhysicsEditor.getInstance(EFrame)));
         mnUIWindows.add(vphysicseditor);
         menuItems.add(vphysicseditor);
 

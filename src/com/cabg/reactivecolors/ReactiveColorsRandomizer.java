@@ -11,14 +11,15 @@ import static com.cabg.core.EngineVariables.engineSettings;
 import static com.cabg.core.EngineVariables.random;
 
 public class ReactiveColorsRandomizer {
-    private static Timer time;
+    private static Timer timer;
 
     public synchronized static void startCycle() {
         if (Settings.colorsFileExists()) {
             Settings.loadColors();
-        } // Needs Exception handling
-        time = new Timer();
-        time.scheduleAtFixedRate(new TimerTask() {
+        }
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 cycleColors();
             }
@@ -26,16 +27,18 @@ public class ReactiveColorsRandomizer {
     }
 
     public static void cycleColors() {
-        if (!Settings.colorsFileExists()) {
+        if (Settings.colorsFileExists()) {
+            regularCycle();
+        } else {
             Color[] randColors = ReactiveColors.randomColor();
             ReactiveColors.setPresetColors(randColors);
             ReactiveColorsTimeMachine.addColor(randColors);
-        } else regularCycle();
+        }
     }
 
     public static void stopCycle() {
-        time.cancel();
-        time.purge();
+        timer.cancel();
+        timer.purge();
     }
 
     public static void regularCycle() {
