@@ -15,21 +15,13 @@ import static com.cabg.core.EngineMethods.*;
 import static com.cabg.core.EngineVariables.*;
 import static com.cabg.gui.Notifier.headsUpNotifications;
 
-// Project started on: 11/22/2015 :D -- REQUIRES Java version 1.8 (lambda functions used) or higher to edit
-// TODO: 2/23/2017 Create new SlideEditor
-// TODO: 2/26/2017 Refactor Variables with "Good" naming schemes
-// TODO: 3/31/2017 Add Selective Adding(Adding children of Molecule class and Physics objects depending on mode)
-// TODO: 7/3/2017 GO BACK TO: CMenbar, KHandler, Settings, SettingsEditor
-// Notes:
-// "./" for File, FileChooser, or File operations refers to the current working directory the program started from.
-
 public class Engine {
     public static void main(String[] args) {
         new SplashScreen(2000).display();
         SwingUtilities.invokeLater(() -> new Engine().start());
     }
 
-    //Adding slight performance boost + UI properties
+    // Adding slight performance boost + UI properties
     static {
         //Uncomment for slight performance kick: will cause gui tearing
         //System.setProperty("sun.java2d.opengl", "True");
@@ -75,6 +67,8 @@ public class Engine {
         KeyboardHandler handler = new KeyboardHandler();
         canvas.addKeyListener(handler);
         EFrame.addKeyListener(handler);
+
+        // Canvas
         EFrame.add(canvas);
 
         // Display Sparkz Engine

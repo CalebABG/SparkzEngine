@@ -10,7 +10,7 @@ import static com.cabg.verlet.Vect2.clamp;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public abstract class Molecule implements EngineEntity {
-    public static Color DEFAULT_COLOR = Color.white;
+    public final static Color DEFAULT_COLOR = Color.white;
     public static Color PLAIN_COLOR = new Color(63, 138, 242);
     public static final float MAX_SPEED = 180.0f;
 
