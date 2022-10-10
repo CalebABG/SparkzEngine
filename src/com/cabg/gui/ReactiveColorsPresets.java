@@ -1,7 +1,7 @@
 package com.cabg.gui;
 
+import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
-import com.cabg.utilities.Settings;
 
 import javax.swing.*;
 
@@ -24,7 +24,7 @@ public class ReactiveColorsPresets {
             ExceptionLogger.append(e);
         }
         frame = new JFrame("ReactiveColor Presets");
-        frame.setIconImage(Settings.iconImage);
+        frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(323, 290);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

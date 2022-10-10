@@ -1,8 +1,8 @@
 package com.cabg.gui;
 
+import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
-import com.cabg.utilities.Settings;
 import org.fife.ui.autocomplete.AutoCompletion;
 
 import javax.swing.*;
@@ -30,7 +30,7 @@ public class OrganicForcesEditor {
             ExceptionLogger.append(e);
         }
         frame = new JFrame("Organic Forces");
-        frame.setIconImage(Settings.iconImage);
+        frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(335, 354);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));

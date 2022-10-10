@@ -1,11 +1,11 @@
-package com.cabg.gui;
+package com.cabg.utilities;
 
 import java.awt.*;
 
 import static com.cabg.core.EngineVariables.*;
 import static com.cabg.enums.EngineMode.GRAPH;
 
-public class Notifier {
+public class NotificationUtil {
     private static final Font renderFont = new Font(Font.SERIF, Font.PLAIN, 54);
     public static boolean drawingNotification = false;
     public static int defaultTimeout = 35;

@@ -1,17 +1,18 @@
 package com.cabg.core;
 
-import com.cabg.particlehelpers.ParticleModes;
+import com.cabg.moleculehelpers.MoleculeFactory;
 import com.cabg.components.CMenuBar;
 import com.cabg.enums.GravitationMode;
 import com.cabg.enums.PhysicsEditorMode;
 import com.cabg.gui.*;
 import com.cabg.inputhandlers.KeyboardHandler;
 import com.cabg.inputhandlers.MouseMotionHandler;
-import com.cabg.particletypes.Particle;
+import com.cabg.moleculetypes.Particle;
 import com.cabg.reactivecolors.ReactiveColorsRandomizer;
-import com.cabg.utilities.ColorUtility;
+import com.cabg.utilities.ColorUtil;
 import com.cabg.utilities.HTMLUtil;
-import com.cabg.utilities.InputGuard;
+import com.cabg.utilities.InputUtil;
+import com.cabg.utilities.NotificationUtil;
 import com.cabg.verlet.Physics;
 import com.cabg.verlet.PhysicsHandler;
 
@@ -24,7 +25,7 @@ import static com.cabg.core.EngineVariables.*;
 import static com.cabg.enums.EngineMode.*;
 import static com.cabg.enums.ParticleType.*;
 import static com.cabg.utilities.HTMLUtil.HeadingTag;
-import static com.cabg.utilities.InputGuard.minValueGuard;
+import static com.cabg.utilities.InputUtil.minValueGuard;
 import static com.cabg.verlet.Vertex.Vertices;
 
 public class EngineMethods {
@@ -38,33 +39,33 @@ public class EngineMethods {
         switch (engineSettings.engineMode) {
             case NORMAL:
                 switch (engineSettings.particleType) {
-                    case PARTICLE: ParticleModes.singleParticle(e); break;
-                    case GRAVITY_POINT: ParticleModes.singleGravityPoint(e); break;
-                    case EMITTER: ParticleModes.singleEmitter(e); break;
-                    case FLUX: ParticleModes.singleFlux(e); break;
-                    case QED: ParticleModes.singleQED(e); break;
-                    case ION: ParticleModes.singleIon(e); break;
-                    case BLACK_HOLE: ParticleModes.singleBlackHole(e); break;
-                    case DUPLEX: ParticleModes.singleDuplex(e); break;
-                    case PORTAL: ParticleModes.singlePortal(e); break;
+                    case PARTICLE: MoleculeFactory.singleParticle(e); break;
+                    case GRAVITY_POINT: MoleculeFactory.singleGravityPoint(e); break;
+                    case EMITTER: MoleculeFactory.singleEmitter(e); break;
+                    case FLUX: MoleculeFactory.singleFlux(e); break;
+                    case QED: MoleculeFactory.singleQED(e); break;
+                    case ION: MoleculeFactory.singleIon(e); break;
+                    case BLACK_HOLE: MoleculeFactory.singleBlackHole(e); break;
+                    case DUPLEX: MoleculeFactory.singleDuplex(e); break;
+                    case PORTAL: MoleculeFactory.singlePortal(e); break;
                 }
                 break;
             case MULTI:
                 switch (engineSettings.particleType) {
-                    case PARTICLE: ParticleModes.multiParticle(e); break;
-                    case GRAVITY_POINT: ParticleModes.multiGravityPoint(e, 4); break;
-                    case EMITTER: ParticleModes.singleEmitter(e); break;
-                    case FLUX: ParticleModes.multiFlux(e, 4); break;
-                    case QED: ParticleModes.multiQED(e, 4); break;
-                    case ION: ParticleModes.multiIon(e, 10); break;
-                    case BLACK_HOLE: ParticleModes.singleBlackHole(e); break;
-                    case DUPLEX: ParticleModes.singleDuplex(e); break;
-                    case PORTAL: ParticleModes.singlePortal(e); break;
+                    case PARTICLE: MoleculeFactory.multiParticle(e); break;
+                    case GRAVITY_POINT: MoleculeFactory.multiGravityPoint(e, 4); break;
+                    case EMITTER: MoleculeFactory.singleEmitter(e); break;
+                    case FLUX: MoleculeFactory.multiFlux(e, 4); break;
+                    case QED: MoleculeFactory.multiQED(e, 4); break;
+                    case ION: MoleculeFactory.multiIon(e, 10); break;
+                    case BLACK_HOLE: MoleculeFactory.singleBlackHole(e); break;
+                    case DUPLEX: MoleculeFactory.singleDuplex(e); break;
+                    case PORTAL: MoleculeFactory.singlePortal(e); break;
                 }
                 break;
             case FIREWORKS:
                 engineSettings.particlesGravitateToMouse = false;
-                ParticleModes.fireworksTarget(e);
+                MoleculeFactory.fireworksTarget(e);
                 break;
             case RAGDOLL:
                 PhysicsHandler.handleRagdollClickEvent(e);
@@ -343,7 +344,7 @@ public class EngineMethods {
      */
     private static void realFireworks() {
         String input = JOptionPane.showInputDialog(OptionsMenu.frame, HeadingTag(3, HTMLUtil.FireworksOptions), null, JOptionPane.PLAIN_MESSAGE);
-        int rfoInt = (InputGuard.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
+        int rfoInt = (InputUtil.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
         switch (rfoInt) {
             case 1: fireworksWindAmount(); break;
             case 2: particleLifeAmount(); break;
@@ -357,7 +358,7 @@ public class EngineMethods {
      */
     private static void particleSizeSeedOptions() {
         String input = JOptionPane.showInputDialog(OptionsMenu.frame, HTMLUtil.ParticleSizeSeedOptions, null, JOptionPane.PLAIN_MESSAGE);
-        int seedOpt = (InputGuard.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
+        int seedOpt = (InputUtil.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
 
         switch (seedOpt) {
             case 1: ParticleSizeEditor.getInstance(0); break;
@@ -372,7 +373,7 @@ public class EngineMethods {
      */
     private static void particleSpeedSeedOptions() {
         String input = JOptionPane.showInputDialog(OptionsMenu.frame, HTMLUtil.ParticleSpeedSeedOptions, null, JOptionPane.PLAIN_MESSAGE);
-        int seedOpt = (InputGuard.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
+        int seedOpt = (InputUtil.canParseStringInt(input)) ? Integer.parseInt(input) : -1;
         switch (seedOpt) {
             case 1: ParticleSpeedEditor.getInstance(0); break;
             case 2: ParticleSpeedEditor.getInstance(1); break;
@@ -517,7 +518,7 @@ public class EngineMethods {
             case 2: particleDrag(); break;
             case 3: particleFireworks(); break;
             case 4: ParticleTypePicker.getInstance(0, "Particle Type Options"); break;
-            case 5: ColorUtility.setParticlePlainColor(); break;
+            case 5: ColorUtil.setParticlePlainColor(); break;
             case 6: gravitationOptions(); break;
             case 7: particleSizeSeedOptions(); break;
             case 8: particleSpeedSeedOptions(); break;
@@ -532,7 +533,7 @@ public class EngineMethods {
     public static void updateEngineMode() {
         // Check whether a notification is being requested already
         // If it is then don't update or display until it's finished
-        if (!Notifier.drawingNotification) {
+        if (!NotificationUtil.drawingNotification) {
             engineSettings.changeEngineMode(true);
             displayEngineMode();
             updateEngineModeRadios();
@@ -546,10 +547,10 @@ public class EngineMethods {
     }
 
     public static void changePhysicsEditorMode(PhysicsEditorMode editorMode){
-        if (engineSettings.engineMode == RAGDOLL && !Notifier.drawingNotification){
+        if (engineSettings.engineMode == RAGDOLL && !NotificationUtil.drawingNotification){
             PhysicsEditor.EDITOR_MODE = editorMode;
             PhysicsEditor.editorModesJComboBox.setSelectedItem(editorMode);
-            Notifier.pushNotification(editorMode.name());
+            NotificationUtil.pushNotification(editorMode.name());
         }
     }
 
@@ -560,13 +561,13 @@ public class EngineMethods {
      */
     public static void leftArrowFunction() {
         if (engineSettings.engineMode == RAGDOLL) {
-            if (!Notifier.drawingNotification) {
-                PhysicsEditor.CREATION_MODE = getMode(PhysicsEditor.CREATION_MODE, false);
-                PhysicsEditor.creationModesJComboBox.setSelectedItem(PhysicsEditor.CREATION_MODE);
+            if (!NotificationUtil.drawingNotification) {
+                PhysicsEditor.ITEM_TYPE = getMode(PhysicsEditor.ITEM_TYPE, false);
+                PhysicsEditor.creationModesJComboBox.setSelectedItem(PhysicsEditor.ITEM_TYPE);
                 displayParticleType();
             }
         } else {
-            if (!Notifier.drawingNotification) {
+            if (!NotificationUtil.drawingNotification) {
                 engineSettings.changeParticleType(false);
                 displayParticleType();
                 updateParticleTypeRadios();
@@ -581,13 +582,13 @@ public class EngineMethods {
      */
     public static void rightArrowFunction() {
         if (engineSettings.engineMode == RAGDOLL) {
-            if (!Notifier.drawingNotification) {
-                PhysicsEditor.CREATION_MODE = getMode(PhysicsEditor.CREATION_MODE, true);
-                PhysicsEditor.creationModesJComboBox.setSelectedItem(PhysicsEditor.CREATION_MODE);
+            if (!NotificationUtil.drawingNotification) {
+                PhysicsEditor.ITEM_TYPE = getMode(PhysicsEditor.ITEM_TYPE, true);
+                PhysicsEditor.creationModesJComboBox.setSelectedItem(PhysicsEditor.ITEM_TYPE);
                 displayParticleType();
             }
         } else {
-            if (!Notifier.drawingNotification) {
+            if (!NotificationUtil.drawingNotification) {
                 engineSettings.changeParticleType(true);
                 displayParticleType();
                 updateParticleTypeRadios();
@@ -602,10 +603,10 @@ public class EngineMethods {
      */
     public static void upArrowFunction() {
         if (engineSettings.particleType == DUPLEX) {
-            if (!Notifier.drawingNotification) {
+            if (!NotificationUtil.drawingNotification) {
                 engineSettings.toggleDuplexMode();
-                if (engineSettings.duplexContain) Notifier.pushNotification("Contain Mode");
-                else Notifier.pushNotification("Repel Mode");
+                if (engineSettings.duplexContain) NotificationUtil.pushNotification("Contain Mode");
+                else NotificationUtil.pushNotification("Repel Mode");
             }
         } else {
             ++engineSettings.particleDragAmount;
@@ -670,7 +671,7 @@ public class EngineMethods {
      * @see KeyboardHandler
      */
     public static void displayEngineMode() {
-        Notifier.pushNotification(engineSettings.engineMode.name());
+        NotificationUtil.pushNotification(engineSettings.engineMode.name());
     }
 
     /**
@@ -679,8 +680,8 @@ public class EngineMethods {
      * @see CMenuBar
      */
     public static void displayParticleType() {
-        if (engineSettings.engineMode == RAGDOLL) Notifier.pushNotification(PhysicsEditor.CREATION_MODE.name());
-        else Notifier.pushNotification(engineSettings.particleType.name());
+        if (engineSettings.engineMode == RAGDOLL) NotificationUtil.pushNotification(PhysicsEditor.ITEM_TYPE.name());
+        else NotificationUtil.pushNotification(engineSettings.particleType.name());
     }
 
     /**

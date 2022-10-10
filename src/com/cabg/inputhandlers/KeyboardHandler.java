@@ -1,12 +1,12 @@
 package com.cabg.inputhandlers;
 
-import com.cabg.particlehelpers.ParticleModes;
+import com.cabg.core.EngineSettings;
+import com.cabg.moleculehelpers.MoleculeFactory;
 import com.cabg.core.BackgroundThread;
 import com.cabg.core.EngineMethods;
 import com.cabg.enums.PhysicsEditorMode;
 import com.cabg.gui.*;
-import com.cabg.utilities.ColorUtility;
-import com.cabg.utilities.Settings;
+import com.cabg.utilities.ColorUtil;
 import com.cabg.verlet.PhysicsHandler;
 
 import java.awt.event.KeyAdapter;
@@ -21,7 +21,7 @@ public class KeyboardHandler extends KeyAdapter {
 
         //Keyboard button: SPACE-BAR
         if (key == KeyEvent.VK_SPACE) {
-            ParticleModes.singleGravityPoint(random.nextFloat() * canvas.getWidth(), random.nextFloat() * canvas.getHeight());
+            MoleculeFactory.singleGravityPoint(random.nextFloat() * canvas.getWidth(), random.nextFloat() * canvas.getHeight());
         }
 
         //Keyboard button: UP
@@ -167,7 +167,7 @@ public class KeyboardHandler extends KeyAdapter {
 
         //Keyboard button: R
         if (key == KeyEvent.VK_R) {
-            ColorUtility.setEngineBackgroundColor();
+            ColorUtil.setEngineBackgroundColor();
         }
 
         //Keyboard button: T
@@ -189,7 +189,7 @@ public class KeyboardHandler extends KeyAdapter {
 
         //Load in saved or default settings
         if (e.isShiftDown() && (key == KeyEvent.VK_Z)) {
-            Settings.loadSettings();
+            EngineSettings.loadSettings();
         }
 
         //Keyboard button: Escape

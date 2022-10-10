@@ -1,16 +1,16 @@
-package com.cabg.particlehelpers;
+package com.cabg.moleculehelpers;
 
 import com.cabg.core.Engine;
-import com.cabg.particletypes.Fireworks;
-import com.cabg.particletypes.*;
-import com.cabg.verlet.PhysicsUtil;
+import com.cabg.moleculetypes.Fireworks;
+import com.cabg.moleculetypes.*;
+import com.cabg.utilities.PhysicsUtil;
 import com.cabg.verlet.Vec2;
 
 import java.awt.event.MouseEvent;
 
 import static com.cabg.core.EngineVariables.*;
 
-public class ParticleModes {
+public class MoleculeFactory {
     /**
      * Creates a particle object at the currposition of the passed in x and y.
      *

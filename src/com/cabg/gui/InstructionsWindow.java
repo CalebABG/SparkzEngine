@@ -1,8 +1,8 @@
 package com.cabg.gui;
 
+import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
-import com.cabg.utilities.Settings;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +28,7 @@ public class InstructionsWindow {
         }
 
         frame = new JFrame(title);
-        frame.setIconImage(Settings.iconImage);
+        frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(w, h);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));

@@ -1,4 +1,6 @@
-package com.cabg.verlet;
+package com.cabg.utilities;
+
+import com.cabg.verlet.Vertex;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -6,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.cabg.core.EngineVariables.random;
-import static com.cabg.utilities.ColorUtility.randHSLColor;
+import static com.cabg.utilities.ColorUtil.randHSLColor;
 import static com.cabg.verlet.PhysicsHandler.LCOLOR;
 import static com.cabg.verlet.PhysicsHandler.PCOLOR;
 import static com.cabg.verlet.Vertex.Vertices;

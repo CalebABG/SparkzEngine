@@ -2,8 +2,8 @@ package com.cabg.gui;
 
 import com.cabg.components.CLabel;
 import com.cabg.core.EngineMethods;
+import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
-import com.cabg.utilities.Settings;
 import com.cabg.verlet.Vertex;
 
 import javax.swing.*;
@@ -43,7 +43,7 @@ public class StatsPanel {
         }
         frame = new JFrame("Stats Panel");
         frame.setSize(730, 450);
-        frame.setIconImage(Settings.iconImage);
+        frame.setIconImage(EngineVariables.iconImage);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
         frame.setLocationRelativeTo(EFrame);

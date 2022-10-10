@@ -1,6 +1,6 @@
-package com.cabg.particletypes;
+package com.cabg.moleculetypes;
 
-import com.cabg.particlehelpers.ParticleModes;
+import com.cabg.moleculehelpers.MoleculeFactory;
 
 import static com.cabg.core.EngineVariables.*;
 
@@ -12,7 +12,7 @@ public class Emitter extends Molecule {
     }
 
     private void emitAtPoint() {
-        ParticleModes.fireworksMode(x, y, engineSettings.fireworksWind, engineSettings.fireworksSpeed, engineSettings.fireworksAmount);
+        MoleculeFactory.fireworksMode(x, y, engineSettings.fireworksWind, engineSettings.fireworksSpeed, engineSettings.fireworksAmount);
     }
 
     public void render() {

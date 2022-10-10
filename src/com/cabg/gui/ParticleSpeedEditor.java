@@ -3,14 +3,14 @@ package com.cabg.gui;
 import com.cabg.components.CTextField;
 import com.cabg.components.RButton;
 import com.cabg.components.RLabel;
+import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
-import com.cabg.utilities.Settings;
 
 import javax.swing.*;
 import java.awt.*;
 
 import static com.cabg.core.EngineVariables.engineSettings;
-import static com.cabg.utilities.InputGuard.stringNotNullOrEmpty;
+import static com.cabg.utilities.InputUtil.stringNotNullOrEmpty;
 
 public class ParticleSpeedEditor {
     private static ParticleSpeedEditor particleSpeedEditor = null;
@@ -29,7 +29,7 @@ public class ParticleSpeedEditor {
             ExceptionLogger.append(e);
         }
         frame = new JFrame(setTitle(type));
-        frame.setIconImage(Settings.iconImage);
+        frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(402, 145);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(e -> close()));

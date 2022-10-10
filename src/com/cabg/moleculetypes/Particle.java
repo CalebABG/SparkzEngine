@@ -1,4 +1,4 @@
-package com.cabg.particletypes;
+package com.cabg.moleculetypes;
 
 import com.cabg.gui.FlowFieldEditor;
 import com.cabg.gui.ParticleGrapher;
@@ -8,8 +8,8 @@ import com.flowpowered.noise.NoiseQuality;
 
 import java.awt.*;
 
-import static com.cabg.particlehelpers.DrawingUtil.giveStyle;
-import static com.cabg.particlehelpers.ParticleModes.fireworksMode;
+import static com.cabg.utilities.DrawingUtil.giveStyle;
+import static com.cabg.moleculehelpers.MoleculeFactory.fireworksMode;
 import static com.cabg.core.EngineVariables.PI;
 import static com.cabg.core.EngineVariables.*;
 import static com.cabg.enums.EngineMode.FIREWORKS;

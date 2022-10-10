@@ -8,8 +8,8 @@ import java.awt.event.MouseEvent;
 
 import static com.cabg.core.EngineVariables.*;
 import static com.cabg.core.EngineMethods.toggle;
-import static com.cabg.utilities.ColorUtility.randHSLColor;
-import static com.cabg.verlet.PhysicsUtil.*;
+import static com.cabg.utilities.ColorUtil.randHSLColor;
+import static com.cabg.utilities.PhysicsUtil.*;
 import static com.cabg.verlet.Vertex.Vertices;
 import static org.apache.commons.math3.util.FastMath.*;
 
@@ -55,7 +55,7 @@ public class PhysicsHandler {
 
     public static void handleRagdollClickEvent(MouseEvent e) {
         if (PhysicsEditor.EDITOR_MODE == PhysicsEditorMode.Add) {
-            switch (PhysicsEditor.CREATION_MODE) {
+            switch (PhysicsEditor.ITEM_TYPE) {
                 case Point:
                     createPoint(e, randHSLColor(1000, 7000, 0.8f), 25, 100);
                     break;

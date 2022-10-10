@@ -1,8 +1,8 @@
 package com.cabg.gui;
 
-import com.cabg.inputhandlers.ExtendedWindowAdapter;
 import com.cabg.components.CLabel;
-import com.cabg.utilities.Settings;
+import com.cabg.core.EngineVariables;
+import com.cabg.inputhandlers.ExtendedWindowAdapter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +25,7 @@ public class QuitWindow {
 
     private QuitWindow() {
         frame = new JFrame("Exit");
-        frame.setIconImage(Settings.iconImage);
+        frame.setIconImage(EngineVariables.iconImage);
         frame.setUndecorated(true);
         frame.setResizable(false);
         frame.setSize(350, 80);

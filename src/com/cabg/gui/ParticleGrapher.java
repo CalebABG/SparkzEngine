@@ -4,10 +4,10 @@ import com.cabg.components.CTextField;
 import com.cabg.components.RButton;
 import com.cabg.components.RLabel;
 import com.cabg.core.EngineMethods;
+import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
-import com.cabg.particletypes.Particle;
-import com.cabg.utilities.Settings;
+import com.cabg.moleculetypes.Particle;
 import org.fife.ui.autocomplete.AutoCompletion;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
@@ -74,7 +74,7 @@ public class ParticleGrapher {
             ExceptionLogger.append(e);
         }
         frame = new JFrame("Particle Graph Editor");
-        frame.setIconImage(Settings.iconImage);
+        frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(460, 280);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(e -> close()));

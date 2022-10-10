@@ -2,12 +2,12 @@ package com.cabg.components;
 
 import com.cabg.core.BackgroundThread;
 import com.cabg.core.EngineMethods;
+import com.cabg.core.EngineSettings;
 import com.cabg.core.EngineThemes;
 import com.cabg.enums.EngineMode;
 import com.cabg.enums.GravitationMode;
 import com.cabg.enums.ParticleType;
 import com.cabg.gui.*;
-import com.cabg.utilities.Settings;
 
 import javax.swing.*;
 import java.awt.*;
@@ -156,12 +156,12 @@ public class CMenuBar extends JMenuBar {
         menuItems.add(enginePauseMenuItem);
 
         JMenuItem settingsSave = new JMenuItem("Save Settings");
-        settingsSave.addActionListener(e -> Settings.saveSettings());
+        settingsSave.addActionListener(e -> EngineSettings.saveSettings());
         mnSettings.add(settingsSave);
         menuItems.add(settingsSave);
 
         JMenuItem settingsLoad = new JMenuItem("Load Settings");
-        settingsLoad.addActionListener(e -> Settings.loadSettings());
+        settingsLoad.addActionListener(e -> EngineSettings.loadSettings());
         mnSettings.add(settingsLoad);
         menuItems.add(settingsLoad);
 

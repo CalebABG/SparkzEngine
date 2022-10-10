@@ -1,7 +1,8 @@
 package com.cabg.reactivecolors;
 
+import com.cabg.core.EngineSettings;
 import com.cabg.gui.ReactiveColorsTimeMachine;
-import com.cabg.utilities.Settings;
+import com.cabg.utilities.ColorUtil;
 
 import java.awt.*;
 import java.util.Timer;
@@ -14,8 +15,8 @@ public class ReactiveColorsRandomizer {
     private static Timer timer;
 
     public synchronized static void startCycle() {
-        if (Settings.colorsFileExists()) {
-            Settings.loadColors();
+        if (EngineSettings.colorsFileExists()) {
+            EngineSettings.loadColors();
         }
 
         timer = new Timer();
@@ -27,7 +28,7 @@ public class ReactiveColorsRandomizer {
     }
 
     public static void cycleColors() {
-        if (Settings.colorsFileExists()) {
+        if (EngineSettings.colorsFileExists()) {
             regularCycle();
         } else {
             Color[] randColors = ReactiveColors.randomColor();
@@ -42,7 +43,7 @@ public class ReactiveColorsRandomizer {
     }
 
     public static void regularCycle() {
-        int index = random.nextInt(Settings.userSavedColors.size());
-        ReactiveColors.setPresetColors(Settings.convertColors(index, Settings.userSavedColors), ReactiveColors.getComponents());
+        int index = random.nextInt(EngineSettings.savedReactiveColors.size());
+        ReactiveColors.setPresetColors(ColorUtil.convertColors(index, EngineSettings.savedReactiveColors), ReactiveColors.getComponents());
     }
 }

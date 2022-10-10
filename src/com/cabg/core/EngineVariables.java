@@ -1,7 +1,7 @@
 package com.cabg.core;
 
 import com.cabg.components.CMenuBar;
-import com.cabg.particletypes.*;
+import com.cabg.moleculetypes.*;
 import com.cabg.verlet.Vec2;
 
 import javax.swing.*;
@@ -52,4 +52,6 @@ public class EngineVariables {
     public static Canvas canvas                                     = new Canvas();
     public static Timer simTimer                                    = new Timer();
     public static Toolkit toolkit                                   = Toolkit.getDefaultToolkit();
+    public static Image iconImage                                   = toolkit.getImage(EngineSettings.class.getResource("/EngineLogo.png"));
+    public static Image splashImage                                 = toolkit.getImage(EngineSettings.class.getResource("/EngineSplash.png"));
 }

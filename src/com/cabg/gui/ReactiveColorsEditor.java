@@ -1,10 +1,11 @@
 package com.cabg.gui;
 
 import com.cabg.components.CLabel;
+import com.cabg.core.EngineSettings;
+import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
 import com.cabg.reactivecolors.ReactiveColors;
 import com.cabg.reactivecolors.ReactiveColorsRandomizer;
-import com.cabg.utilities.Settings;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +32,7 @@ public class ReactiveColorsEditor {
             ExceptionLogger.append(e);
         }
         frame = new JFrame("Reactive Colors Editor");
-        frame.setIconImage(Settings.iconImage);
+        frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(950, 250);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
@@ -69,7 +70,7 @@ public class ReactiveColorsEditor {
 
         JButton save_colors = new JButton("Save");
         save_colors.setFont(uiFont);
-        save_colors.addActionListener(e -> Settings.saveColors(null));
+        save_colors.addActionListener(e -> EngineSettings.saveColors(null));
         buttons_panel.add(save_colors);
 
         JButton load_colors = new JButton("Load");
@@ -197,7 +198,7 @@ public class ReactiveColorsEditor {
     }
 
     private void loadColors() {
-        if (Settings.colorsFileExists()) {
+        if (EngineSettings.colorsFileExists()) {
             ReactiveColorsLoader.getInstance();
         } else {
             JOptionPane.showConfirmDialog(frame, "<html><h3>Save a Color First</h3></html>", "No Colors Saved", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);

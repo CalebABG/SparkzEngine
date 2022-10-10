@@ -1,8 +1,8 @@
-package com.cabg.particletypes;
+package com.cabg.moleculetypes;
 
 import java.awt.*;
 
-import com.cabg.particlehelpers.ParticleModes;
+import com.cabg.moleculehelpers.MoleculeFactory;
 
 import static org.apache.commons.math3.util.FastMath.*;
 import static com.cabg.core.EngineVariables.*;
@@ -39,7 +39,7 @@ public class Eraser extends Molecule {
         boundsCheck();
         destroy();
         if (--life < 0) {
-            ParticleModes.fireworksMode(x, y, 2, 5, 30);
+            MoleculeFactory.fireworksMode(x, y, 2, 5, 30);
             Erasers.remove(this);
         }
     }

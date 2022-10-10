@@ -1,9 +1,11 @@
 package com.cabg.gui;
 
+import com.cabg.core.EngineSettings;
+import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
 import com.cabg.components.CLabel;
 import com.cabg.reactivecolors.ReactiveColors;
-import com.cabg.utilities.Settings;
+import com.cabg.utilities.ColorUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +29,7 @@ public class ReactiveColorsLoader {
             ExceptionLogger.append(e);
         }
         frame = new JFrame();
-        frame.setIconImage(Settings.iconImage);
+        frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(523, 155);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -35,9 +37,9 @@ public class ReactiveColorsLoader {
         frame.getContentPane().setLayout(null);
         frame.setLocationRelativeTo(ReactiveColorsEditor.frame);
 
-        Settings.loadColors();
-        ReactiveColors.setPresetColors(Settings.convertColors(lastIndex, Settings.userSavedColors));
-        frame.setTitle("You have " + Settings.userSavedColors.size() + " Saved Colors!");
+        EngineSettings.loadColors();
+        ReactiveColors.setPresetColors(ColorUtil.convertColors(lastIndex, EngineSettings.savedReactiveColors));
+        frame.setTitle("You have " + EngineSettings.savedReactiveColors.size() + " Saved Colors!");
 
         int offsetX = 69;
         Color fgColor = Color.white;
@@ -55,7 +57,7 @@ public class ReactiveColorsLoader {
         button.addActionListener(e -> refreshButton());
         frame.add(button);
 
-        colorSlider = new JSlider(0, Settings.userSavedColors.size() - 1, lastIndex);
+        colorSlider = new JSlider(0, EngineSettings.savedReactiveColors.size() - 1, lastIndex);
         colorSlider.setPaintTicks(true);
         colorSlider.setPaintLabels(true);
         colorSlider.setMinorTickSpacing(setMinorTicks());
@@ -71,15 +73,15 @@ public class ReactiveColorsLoader {
         int sliderIndex = colorSlider.getValue();
         lastIndex = sliderIndex;
 
-        Color[] selectedColors = Settings.convertColors(sliderIndex, Settings.userSavedColors);
+        Color[] selectedColors = ColorUtil.convertColors(sliderIndex, EngineSettings.savedReactiveColors);
         ReactiveColors.setPresetColors(selectedColors, selectedColors);
         setLabelColors(selectedColors);
     }
 
     private void refreshButton() {
-        Settings.loadColors();
-        colorSlider.setMaximum(Settings.userSavedColors.size() - 1);
-        frame.setTitle("You have " + Settings.userSavedColors.size() + " Saved Colors!");
+        EngineSettings.loadColors();
+        colorSlider.setMaximum(EngineSettings.savedReactiveColors.size() - 1);
+        frame.setTitle("You have " + EngineSettings.savedReactiveColors.size() + " Saved Colors!");
     }
 
     private static void setLabelColors(Color[] colors) {
@@ -91,14 +93,14 @@ public class ReactiveColorsLoader {
     }
 
     private int setMinorTicks() {
-        if (Settings.userSavedColors.size() < 25) return 1;
-        else if (Settings.userSavedColors.size() % 15 == 0) {
-            return Settings.userSavedColors.size() / 15;
-        } else return Settings.userSavedColors.size() / 25;
+        if (EngineSettings.savedReactiveColors.size() < 25) return 1;
+        else if (EngineSettings.savedReactiveColors.size() % 15 == 0) {
+            return EngineSettings.savedReactiveColors.size() / 15;
+        } else return EngineSettings.savedReactiveColors.size() / 25;
     }
 
     private int setMajorTicks() {
-        if (Settings.userSavedColors.size() >= 25) return Settings.userSavedColors.size() / 5;
+        if (EngineSettings.savedReactiveColors.size() >= 25) return EngineSettings.savedReactiveColors.size() / 5;
         return 1;
     }
 

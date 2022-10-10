@@ -4,13 +4,39 @@ import com.cabg.enums.EngineMode;
 import com.cabg.enums.GravitationMode;
 import com.cabg.enums.MoleculeRenderMode;
 import com.cabg.enums.ParticleType;
+import com.cabg.gui.ExceptionLogger;
+import com.cabg.reactivecolors.ReactiveColors;
+import com.cabg.utilities.JsonUtil;
 
+import java.awt.*;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.cabg.core.EngineVariables.toolkit;
 import static com.cabg.enums.EngineMode.NORMAL;
 import static com.cabg.enums.GravitationMode.DEFAULT;
 import static com.cabg.enums.MoleculeRenderMode.RECTANGLE_NO_FILL;
 import static com.cabg.enums.ParticleType.PARTICLE;
+import static com.cabg.utilities.ColorUtil.fromHex;
+import static com.cabg.utilities.ColorUtil.toHex;
 
 public class EngineSettings {
+    public static String folderName = "SparkzEngineSettings";
+    public static String settingsFileName = "EngineSettings.json";
+    public static String colorsFileName = "SavedColors.txt";
+    public static String colorsSpliceChar = ";";
+    public static String engineSettingsFolderPath = "." + Paths.get("/" + folderName);
+    public static String settingsFilePath = engineSettingsFolderPath + "/" + settingsFileName;
+    public static String colorsFilePath = engineSettingsFolderPath + "/" + colorsFileName;
+    public static final List<String> savedReactiveColors = new ArrayList<>(125);
+
     public transient boolean
             running,
             controlKeyIsDown,
@@ -111,6 +137,56 @@ public class EngineSettings {
 
     public void changeParticleType(boolean advance) {
         particleType = EngineMethods.getMode(particleType, advance);
+    }
+
+    public static String getProjectTimeSpan() {
+        return Period.between(LocalDate.now(), LocalDate.of(2015, Month.NOVEMBER, 22)).toString();
+    }
+
+    public static boolean settingsFileExists() {
+        return Files.exists(Paths.get(settingsFilePath));
+    }
+
+    public static boolean colorsFileExists() {
+        return Files.exists(Paths.get(colorsFilePath));
+    }
+
+    public static String serializeColors(Color[] c) {
+        return toHex(c[0]) + colorsSpliceChar +
+                toHex(c[1]) + colorsSpliceChar +
+                toHex(c[2]) + colorsSpliceChar +
+                toHex(c[3]) + colorsSpliceChar +
+                toHex(c[4]);
+    }
+
+    public static void saveColors(String colorsString) {
+        try (Writer writer = new OutputStreamWriter(new FileOutputStream(colorsFilePath, true), StandardCharsets.UTF_8)) {
+            new File("./" + folderName).mkdir();
+            if (colorsString != null) writer.write(colorsString + '\n');
+            else writer.write(serializeColors(ReactiveColors.getComponents()) + '\n');
+        } catch (Exception e) {
+            ExceptionLogger.append(e);
+        }
+    }
+
+    public static void loadColors() {
+        savedReactiveColors.clear();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(colorsFilePath)))) {
+            String line;
+            while ((line = br.readLine()) != null) savedReactiveColors.add(line);
+        } catch (Exception e) {
+            ExceptionLogger.append(e);
+        }
+    }
+
+    public static void saveSettings() {
+        new File("./" + folderName).mkdir();
+        JsonUtil.writeEngineSettingsJson();
+    }
+
+    public static void loadSettings() {
+        if (settingsFileExists()) JsonUtil.loadEngineSettingsJson();
+        else saveSettings();
     }
 
 }

@@ -16,7 +16,7 @@ public class JsonUtil {
     public static void writeEngineSettingsJson() {
         String settings = getEngineSettingsJson();
 
-        try (FileOutputStream out = new FileOutputStream(Settings.settingsFilePath, false);
+        try (FileOutputStream out = new FileOutputStream(EngineSettings.settingsFilePath, false);
              Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8)) {
             writer.write(settings);
         } catch (Exception e) {
@@ -31,7 +31,7 @@ public class JsonUtil {
 
     public static void loadEngineSettingsJson() {
         //  Try Parsing and setting engine properties
-        try (FileInputStream fin = new FileInputStream(Settings.settingsFilePath);
+        try (FileInputStream fin = new FileInputStream(EngineSettings.settingsFilePath);
              BufferedReader br = new BufferedReader(new InputStreamReader(fin))) {
             engineSettings = new Gson().fromJson(br, EngineSettings.class);
         } catch (Exception e) {

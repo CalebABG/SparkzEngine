@@ -1,11 +1,11 @@
 package com.cabg.gui;
 
 import com.cabg.core.EngineMethods;
+import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
 import com.cabg.utilities.HTMLUtil;
-import com.cabg.utilities.InputGuard;
-import com.cabg.utilities.Settings;
+import com.cabg.utilities.InputUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +30,7 @@ public class OptionsMenu {
             ExceptionLogger.append(e);
         }
         frame = new JFrame("Options Menu");
-        frame.setIconImage(Settings.iconImage);
+        frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(495, 480);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
@@ -74,7 +74,7 @@ public class OptionsMenu {
     private void getOption() {
         String text = textField.getText();
         if (text != null)
-            if (InputGuard.canParseStringInt(text)) EngineMethods.getOptions(Integer.parseInt(text));
+            if (InputUtil.canParseStringInt(text)) EngineMethods.getOptions(Integer.parseInt(text));
     }
 
     private void close() {

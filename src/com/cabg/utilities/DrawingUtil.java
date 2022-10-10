@@ -1,7 +1,7 @@
-package com.cabg.particlehelpers;
+package com.cabg.utilities;
 
 import com.cabg.enums.MoleculeRenderMode;
-import com.cabg.particletypes.GravityPoint;
+import com.cabg.moleculetypes.GravityPoint;
 
 import java.awt.*;
 import java.awt.geom.QuadCurve2D;

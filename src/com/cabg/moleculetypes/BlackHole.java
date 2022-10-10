@@ -1,6 +1,6 @@
-package com.cabg.particletypes;
+package com.cabg.moleculetypes;
 
-import com.cabg.particlehelpers.ParticleModes;
+import com.cabg.moleculehelpers.MoleculeFactory;
 
 import java.awt.*;
 
@@ -54,7 +54,7 @@ public class BlackHole extends Molecule {
         open();
         boundsCheck();
         if (radius < 0) {
-            ParticleModes.fireworksMode(x, y, 6, 4, 320);
+            MoleculeFactory.fireworksMode(x, y, 6, 4, 320);
             BlackHoles.remove(this);
         }
         radius -= 0.015;

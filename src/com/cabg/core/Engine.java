@@ -4,7 +4,6 @@ import com.cabg.gui.ExceptionLogger;
 import com.cabg.gui.QuitWindow;
 import com.cabg.gui.StatsPanel;
 import com.cabg.inputhandlers.*;
-import com.cabg.utilities.Settings;
 import com.cabg.gui.SplashScreen;
 
 import javax.swing.*;
@@ -13,7 +12,7 @@ import java.util.TimerTask;
 
 import static com.cabg.core.EngineMethods.*;
 import static com.cabg.core.EngineVariables.*;
-import static com.cabg.gui.Notifier.handleNotifications;
+import static com.cabg.utilities.NotificationUtil.handleNotifications;
 
 public class Engine {
     public static void main(String[] args) {
@@ -42,14 +41,14 @@ public class Engine {
             ExceptionLogger.append(e);
         }
         EFrame = new JFrame(title);
-        EFrame.setIconImage(Settings.iconImage);
+        EFrame.setIconImage(EngineVariables.iconImage);
         EFrame.setSize(980, 680);
         EFrame.setLocationRelativeTo(null);
         EFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         EFrame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> BackgroundThread.run(QuitWindow::getInstance)));
 
         // Load Saved Settings
-        Settings.loadSettings();
+        EngineSettings.loadSettings();
 
         // Setup Menu-bar
         EFrame.setJMenuBar(menuBar);

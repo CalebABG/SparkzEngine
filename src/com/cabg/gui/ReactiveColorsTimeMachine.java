@@ -1,10 +1,11 @@
 package com.cabg.gui;
 
+import com.cabg.core.EngineSettings;
+import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
 import com.cabg.components.CLabel;
 import com.cabg.reactivecolors.ReactiveColors;
-import com.cabg.utilities.ColorUtility;
-import com.cabg.utilities.Settings;
+import com.cabg.utilities.ColorUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,6 @@ import java.util.List;
 
 import static com.cabg.core.EngineVariables.EFrame;
 import static com.cabg.utilities.HTMLUtil.HeadingWithStyleCenteredTag;
-import static com.cabg.utilities.Settings.convertColors;
 
 public class ReactiveColorsTimeMachine {
     public static ReactiveColorsTimeMachine timeMachine = null;
@@ -24,8 +24,6 @@ public class ReactiveColorsTimeMachine {
     public static CLabel[] labels = new CLabel[5];
     public static JToggleButton colors_info;
     public static List<String> colorList = new ArrayList<>();
-
-    //public static void main(String[] args) {getInstance();}
 
     public static void getInstance() {
         if (timeMachine == null) timeMachine = new ReactiveColorsTimeMachine();
@@ -39,7 +37,7 @@ public class ReactiveColorsTimeMachine {
             ExceptionLogger.append(e);
         }
         frame = new JFrame(title + " - Colors Seen: " + colorList.size());
-        frame.setIconImage(Settings.iconImage);
+        frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(688, 206);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
@@ -71,13 +69,13 @@ public class ReactiveColorsTimeMachine {
         buttons_panel.add(colors_info);
 
         JButton last = new JButton("Last Color");
-        last.addActionListener(e -> colorPager(0));
+        last.addActionListener(e -> colorPager(false));
         last.setFont(font);
         buttons_panel.add(last);
 
         JButton next = new JButton("Next Color");
         next.setFont(font);
-        next.addActionListener(e -> colorPager(1));
+        next.addActionListener(e -> colorPager(true));
         buttons_panel.add(next);
 
         JButton clear = new JButton("Clear Colors");
@@ -155,11 +153,11 @@ public class ReactiveColorsTimeMachine {
     }
 
     private void setColors() {
-        if (colorList.size() > 0) ReactiveColors.setPresetColors(convertColors(index, colorList));
+        if (colorList.size() > 0) ReactiveColors.setPresetColors(ColorUtil.convertColors(index, colorList));
     }
 
-    private void colorPager(int dir) {
-        handleButtons(dir);
+    private void colorPager(boolean advance) {
+        handleButtons(advance);
         if (colors_info.isSelected()) updateColorValues();
     }
 
@@ -182,21 +180,16 @@ public class ReactiveColorsTimeMachine {
     }
 
     private void saveColors() {
-        if (colorList == null || colorList.size() < 1) Settings.saveColors(null);
-        else Settings.saveColors(ColorUtility.serializeReactiveColors(convertColors(index, colorList)));
-    }
-
-    //Resource: http://www.nbdtech.com/Blog/archive/2008/04/27/Calculating-the-Perceived-Brightness-of-a-Color.aspx
-    public static int isDark(Color c) {
-        return ((c.getRed() << 5) + (c.getGreen() << 6) + (c.getBlue() << 2)) / 100;
+        if (colorList == null || colorList.size() < 1) EngineSettings.saveColors(null);
+        else EngineSettings.saveColors(EngineSettings.serializeColors(ColorUtil.convertColors(index, colorList)));
     }
 
     public static void updateColorValues() {
         for (CLabel label : labels) {
-            Color lableBGColor = label.getBackground();
+            Color labelBGColor = label.getBackground();
             String labelBGText = label.getBGColorText();
 
-            if (isDark(lableBGColor) >= 50) {
+            if (ColorUtil.isDark(labelBGColor) >= 50) {
                 label.setText(labelBGText);
                 label.setForeground(Color.black);
             } else {
@@ -206,29 +199,22 @@ public class ReactiveColorsTimeMachine {
         }
     }
 
-    private static void handleButtons(int dir) {
-        //Last color
-        if (dir == 0) {
-            if (colorList.size() > 0) {
-                index--;
-                if (index <= 0) index = 0;
-                frame.setTitle(title + " - Colors Seen: " + colorList.size() + " - Index: " + index);
-                setLabelsBackgroundColor(convertColors(index, colorList));
+    private static void handleButtons(boolean advance) {
+        if (colorList.size() > 0) {
+            if (advance) {
+                if (++index >= colorList.size()) index = colorList.size() - 1;
             }
-        }
-        //Next color
-        else {
-            if (colorList.size() > 0) {
-                index++;
-                if (index >= colorList.size()) index = colorList.size() - 1;
-                frame.setTitle(title + " - Colors Seen: " + colorList.size() + " - Index: " + index);
-                setLabelsBackgroundColor(convertColors(index, colorList));
+            else {
+                if (--index <= 0) index = 0;
             }
+
+            frame.setTitle(title + " - Colors Seen: " + colorList.size() + " - Index: " + index);
+            setLabelsBackgroundColor(ColorUtil.convertColors(index, colorList));
         }
     }
 
     public static void addColor(Color[] colors) {
-        colorList.add(ColorUtility.serializeReactiveColors(colors));
+        colorList.add(EngineSettings.serializeColors(colors));
         index = colorList.size() - 1;
         if (timeMachine != null && labels != null) {
             updateLabelsBackgroundColors();
@@ -245,7 +231,7 @@ public class ReactiveColorsTimeMachine {
     }
 
     private static void updateLabelsBackgroundColors() {
-        if (colorList.size() > 0) setLabelsBackgroundColor(convertColors(index, colorList));
+        if (colorList.size() > 0) setLabelsBackgroundColor(ColorUtil.convertColors(index, colorList));
         else setLabelsBackgroundColor(ReactiveColors.getComponents());
     }
 

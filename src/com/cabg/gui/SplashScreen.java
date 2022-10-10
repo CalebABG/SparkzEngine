@@ -1,6 +1,6 @@
 package com.cabg.gui;
 
-import com.cabg.utilities.Settings;
+import com.cabg.core.EngineVariables;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,8 +49,8 @@ public class SplashScreen extends JWindow {
     static class SplashPanel extends JPanel {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            if (Settings.splashImage != null)
-                g.drawImage(Settings.splashImage, 0, 0, getWidth(), getHeight(), this);
+            if (EngineVariables.splashImage != null)
+                g.drawImage(EngineVariables.splashImage, 0, 0, getWidth(), getHeight(), this);
         }
     }
 }

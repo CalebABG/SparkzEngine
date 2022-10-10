@@ -8,7 +8,7 @@ import java.awt.*;
 
 import static com.cabg.utilities.HTMLUtil.HeadingTag;
 
-public class InputGuard {
+public class InputUtil {
     public static boolean canParseStringInt(String input) {
         try {
             Integer.parseInt(input);
@@ -27,62 +27,65 @@ public class InputGuard {
         }
     }
 
-    public static float minValueGuard(float min, float default_val, String promptText) {
+    public static float minValueGuard(float min, float defaultVal, String promptText) {
         JLabel label = new JLabel(promptText);
         label.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
 
         String amount = JOptionPane.showInputDialog(OptionsMenu.frame, label, null, JOptionPane.PLAIN_MESSAGE);
-        float newAmount = (amount != null && amount.length() > 0 && canParseStringFloat(amount)) ? Float.parseFloat(amount) : default_val;
+        float newAmount = (amount != null && amount.length() > 0 && canParseStringFloat(amount)) ? Float.parseFloat(amount) : defaultVal;
         if (newAmount < min) {
             while (newAmount < min) {
                 amount = JOptionPane.showInputDialog(OptionsMenu.frame, HeadingTag(3, "Not Allowed, Enter an Amount > " + min));
-                newAmount = (amount != null && amount.length() > 0) ? Float.parseFloat(amount) : default_val;
+                newAmount = (amount != null && amount.length() > 0) ? Float.parseFloat(amount) : defaultVal;
             }
         }
         return newAmount;
     }
 
-    public static float minValueGuard(float min, float default_val, String promptText, JFrame parent) {
+    public static float minValueGuard(float min, float defaultVal, String promptText, JFrame parent) {
         JLabel label = new JLabel(promptText);
         label.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
 
         String amount = JOptionPane.showInputDialog(parent, label, null, JOptionPane.PLAIN_MESSAGE);
-        float newAmount = (amount != null && amount.length() > 0 && canParseStringFloat(amount)) ? Float.parseFloat(amount) : default_val;
+        float newAmount = (amount != null && amount.length() > 0 && canParseStringFloat(amount)) ? Float.parseFloat(amount) : defaultVal;
         if (newAmount < min) {
             while (newAmount < min) {
                 amount = JOptionPane.showInputDialog(parent, HeadingTag(3, "Not Allowed, Enter an Amount > " + min));
-                newAmount = (amount != null && amount.length() > 0) ? Float.parseFloat(amount) : default_val;
+                newAmount = (amount != null && amount.length() > 0) ? Float.parseFloat(amount) : defaultVal;
             }
         }
         return newAmount;
     }
 
-    public static String valueGuardString(int mode, ParticleTypePicker ui, String default_val, String promptText) {
+    public static String valueGuardString(int mode, ParticleTypePicker ui, String defaultVal, String promptText) {
         if (mode == 0) {
-            return default_val;
+            return defaultVal;
         } else {
             String amount = JOptionPane.showInputDialog(ui.frame, promptText, null, JOptionPane.PLAIN_MESSAGE);
-            return (amount != null && amount.length() > 0) ? amount : default_val;
+            return (amount != null && amount.length() > 0) ? amount : defaultVal;
         }
     }
 
-    public static int intTextFieldGuardDefault(int min, int default_val, String input) {
-        if (input == null || input.isEmpty()) return default_val;
-        else {
+    public static int intTextFieldGuardDefault(int min, int defaultVal, String input) {
+        if (input == null || input.isEmpty()) {
+            return defaultVal;
+        } else {
             if (canParseStringInt(input)) {
                 if (Integer.parseInt(input) >= min) return Integer.parseInt(input);
-                else return default_val;
-            } else return default_val;
+                else return defaultVal;
+            } else return defaultVal;
         }
     }
 
-    public static float floatTextFieldGuardDefault(float min, float default_val, String input) {
-        if (input == null || input.isEmpty()) return default_val;
-        else {
+    public static float floatTextFieldGuardDefault(float min, float defaultVal, String input) {
+        if (input == null || input.isEmpty()) {
+            return defaultVal;
+        } else {
             if (canParseStringFloat(input)) {
-                if (Float.parseFloat(input) >= min) return Float.parseFloat(input);
-                else return default_val;
-            } else return default_val;
+                return (Float.parseFloat(input) >= min) ? Float.parseFloat(input) : defaultVal;
+            } else {
+                return defaultVal;
+            }
         }
     }
 

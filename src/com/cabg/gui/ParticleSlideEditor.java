@@ -2,8 +2,8 @@ package com.cabg.gui;
 
 import com.cabg.components.CSlider;
 import com.cabg.core.EngineMethods;
+import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
-import com.cabg.utilities.Settings;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +43,7 @@ public class ParticleSlideEditor {
             ExceptionLogger.append(e);
         }
         frame = new JFrame("Particle Slide Editor");
-        frame.setIconImage(Settings.iconImage);
+        frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(489, 690);
         frame.setResizable(false);
         frame.setLayout(null);

@@ -1,11 +1,11 @@
 package com.cabg.gui;
 
+import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
-import com.cabg.particlehelpers.ParticleTypeOptions;
+import com.cabg.moleculehelpers.MoleculeRenderOptions;
 import com.cabg.utilities.HTMLUtil;
-import com.cabg.utilities.InputGuard;
-import com.cabg.utilities.Settings;
+import com.cabg.utilities.InputUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +29,7 @@ public class ParticleTypePicker {
             ExceptionLogger.append(e);
         }
         frame = new JFrame(title);
-        frame.setIconImage(Settings.iconImage);
+        frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(320, 520);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(e -> close(type)));
@@ -69,12 +69,12 @@ public class ParticleTypePicker {
         if (!textField.getText().isEmpty()) {
             try {
                 if (type == 0) {
-                    if (InputGuard.canParseStringInt(textField.getText())) {
-                        ParticleTypeOptions.baseParticleOptions(Integer.parseInt(textField.getText()));
+                    if (InputUtil.canParseStringInt(textField.getText())) {
+                        MoleculeRenderOptions.particleOptions(Integer.parseInt(textField.getText()));
                     }
                 } else if (type == 1) {
-                    if (InputGuard.canParseStringInt(textField.getText())) {
-                        ParticleTypeOptions.realFireworksOptions(Integer.parseInt(textField.getText()));
+                    if (InputUtil.canParseStringInt(textField.getText())) {
+                        MoleculeRenderOptions.fireworksOptions(Integer.parseInt(textField.getText()));
                     }
                 }
             } catch (Exception ex) {

@@ -1,10 +1,10 @@
-package com.cabg.particletypes;
+package com.cabg.moleculetypes;
 
 import com.cabg.reactivecolors.ReactiveColors;
 
 import java.awt.*;
 
-import static com.cabg.particlehelpers.DrawingUtil.giveStyle;
+import static com.cabg.utilities.DrawingUtil.giveStyle;
 import static com.cabg.core.EngineVariables.Fireworks;
 import static com.cabg.core.EngineVariables.*;
 

@@ -1,4 +1,4 @@
-package com.cabg.particletypes;
+package com.cabg.moleculetypes;
 
 import com.cabg.reactivecolors.ReactiveColors;
 

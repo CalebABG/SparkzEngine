@@ -1,7 +1,7 @@
-package com.cabg.particletypes;
+package com.cabg.moleculetypes;
 
 import java.awt.*;
-import com.cabg.particlehelpers.ParticleModes;
+import com.cabg.moleculehelpers.MoleculeFactory;
 import static com.cabg.core.EngineVariables.*;
 import static org.apache.commons.math3.util.FastMath.*;
 
@@ -35,7 +35,7 @@ public class Flux extends Molecule {
         else color = Color.white;
 
         if (--life < 0) {
-            if (Particles.size() < 13_000) ParticleModes.createEraser(x, y, 3);
+            if (Particles.size() < 13_000) MoleculeFactory.createEraser(x, y, 3);
             Fluxes.remove(this);
         }
 

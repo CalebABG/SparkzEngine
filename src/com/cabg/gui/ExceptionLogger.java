@@ -1,8 +1,9 @@
 package com.cabg.gui;
 
+import com.cabg.core.EngineSettings;
+import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
-import com.cabg.utilities.Settings;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +34,7 @@ public class ExceptionLogger {
             ExceptionLogger.append(e);
         }
         frame = new JFrame("Exception Log");
-        frame.setIconImage(Settings.iconImage);
+        frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(430, 260);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
@@ -42,7 +43,7 @@ public class ExceptionLogger {
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE) close();
             if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_C) textArea.setText("");
             if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_P)
-                textArea.append("Project Development: " + Settings.getProjectTimeSpan() + "\n");
+                textArea.append("Project Development: " + EngineSettings.getProjectTimeSpan() + "\n");
         }));
 
         JPanel panel = new JPanel();

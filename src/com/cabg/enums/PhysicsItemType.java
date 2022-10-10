@@ -1,6 +1,6 @@
 package com.cabg.enums;
 
-public enum PhysicsCreationMode {
+public enum PhysicsItemType {
     Point,
     Stick,
     IKChain,

@@ -1,6 +1,6 @@
-package com.cabg.particletypes;
+package com.cabg.moleculetypes;
 
-import com.cabg.particlehelpers.ParticleModes;
+import com.cabg.moleculehelpers.MoleculeFactory;
 import com.cabg.reactivecolors.ReactiveColors;
 
 import java.awt.*;
@@ -20,15 +20,15 @@ public class QED extends Molecule {
 
     private void quantumEntanglement(int ptType) {
         switch (ptType) {
-            case 0: ParticleModes.singleParticle((int) x, (int) y); break;
-            case 1: ParticleModes.singleFlux(x, y); break;
-            case 2: ParticleModes.singleEmitter(x, y); break;
-            case 3: ParticleModes.singleGravityPoint(x, y); break;
-            case 4: ParticleModes.singleIon(x, y); break;
-            case 5: ParticleModes.createEraser(x, y, 2); break;
-            case 6: ParticleModes.singleBlackHole(x, y); break;
-            case 7: ParticleModes.singleDuplex(x, y); break;
-            case 9: ParticleModes.singleQED(x, y); break;
+            case 0: MoleculeFactory.singleParticle((int) x, (int) y); break;
+            case 1: MoleculeFactory.singleFlux(x, y); break;
+            case 2: MoleculeFactory.singleEmitter(x, y); break;
+            case 3: MoleculeFactory.singleGravityPoint(x, y); break;
+            case 4: MoleculeFactory.singleIon(x, y); break;
+            case 5: MoleculeFactory.createEraser(x, y, 2); break;
+            case 6: MoleculeFactory.singleBlackHole(x, y); break;
+            case 7: MoleculeFactory.singleDuplex(x, y); break;
+            case 9: MoleculeFactory.singleQED(x, y); break;
             default: break;
         }
     }
@@ -56,7 +56,7 @@ public class QED extends Molecule {
         boundsCheck();
         particleType = (int) (random.nextFloat() * 11);
         if (--life < 0) {
-            ParticleModes.fireworksMode(x, y, 2, 2, 30);
+            MoleculeFactory.fireworksMode(x, y, 2, 2, 30);
             quantumEntanglement(particleType);
             QEDs.remove(this);
         }
