@@ -14,8 +14,7 @@ public abstract class Molecule implements EngineEntity {
     public static Color PLAIN_COLOR = new Color(63, 138, 242);
     public static final float MAX_SPEED = 180.0f;
 
-    public float x, y, radius, vx, vy;
-    public float ax, ay;
+    public float radius, x, y, vx, vy, ax, ay;
 
     public Color color = DEFAULT_COLOR;
 
@@ -96,7 +95,6 @@ public abstract class Molecule implements EngineEntity {
         ay = forceY;
     }
 
-    // Helper Functions
     public float length() {
         return (float) sqrt(x * x + y * y);
     }
