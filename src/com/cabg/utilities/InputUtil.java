@@ -1,7 +1,6 @@
 package com.cabg.utilities;
 
 import com.cabg.gui.OptionsMenu;
-import com.cabg.gui.ParticleTypePicker;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,11 +56,11 @@ public class InputUtil {
         return newAmount;
     }
 
-    public static String valueGuardString(int mode, ParticleTypePicker ui, String defaultVal, String promptText) {
+    public static String valueGuardString(int mode, JFrame frame, String defaultVal, String promptText) {
         if (mode == 0) {
             return defaultVal;
         } else {
-            String amount = JOptionPane.showInputDialog(ui.frame, promptText, null, JOptionPane.PLAIN_MESSAGE);
+            String amount = JOptionPane.showInputDialog(frame, promptText, null, JOptionPane.PLAIN_MESSAGE);
             return (amount != null && amount.length() > 0) ? amount : defaultVal;
         }
     }

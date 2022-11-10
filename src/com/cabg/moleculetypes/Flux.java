@@ -28,7 +28,7 @@ public class Flux extends Molecule {
 
     public void update() {
         accelerate();
-        boundsCheck();
+        checkBounds();
 
         if (life % 140 == 0) radius += 10;
         if (life % 40 == 1) color = Color.red;

@@ -3,10 +3,10 @@ package com.cabg.enums;
 public enum MoleculeRenderMode {
     RECTANGLE_NO_FILL,
     CIRCLE_NO_FILL,
-    RECTANGLE3D_NO_FILL,
+    RECTANGLE_3D_NO_FILL,
     NUMBERS,
     CUSTOM_TEXT,
-    RECTANGLE3D_FILL,
+    RECTANGLE_3D_FILL,
     CIRCLE_FILL,
     SMILEY_FACE,
     MUSIC_NOTE_1,

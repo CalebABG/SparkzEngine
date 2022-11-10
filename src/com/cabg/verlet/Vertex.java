@@ -1,64 +1,55 @@
 package com.cabg.verlet;
 
-import com.cabg.core.EngineMethods;
-
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.text.DecimalFormat;
-import java.util.*;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Objects;
 
 import static com.cabg.core.EngineVariables.*;
 import static com.cabg.gui.PhysicsEditor.selectionShowPointCheckbox;
-import static com.cabg.verlet.PhysicsHandler.*;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public class Vertex {
     public static final DecimalFormat dcFormat = new DecimalFormat("0.000");
-    public static final List<Vertex> Vertices = new ArrayList<>(1000);
-    public float currX, currY;
-    public float prevX, prevY;
-    public float radius = 10.0f;
-    public float mass = 1.0f;
-    public float damping = 0.997f;
-    public float stiffness = 1.0f;
-    public boolean pinned = false;
-    public boolean collidable = true;
+    public float currX, currY, prevX, prevY;
+    public float radius = 10.0f, mass = 1.0f, damping = 0.997f, stiffness = 1.0f;
+    public boolean pinned = false, collidable = true;
 
     public Color color = Color.white;
-    public final ArrayList<Edge> edges = new ArrayList<>(25);
+    public ArrayList<Edge> edges = new ArrayList<>(30);
 
-    public Vertex(float xPos, float yPos) {
-        currX = xPos;
-        currY = yPos;
+    public Vertex(float x, float y) {
+        currX = x;
+        currY = y;
         prevX = currX;
         prevY = currY;
-        Vertices.add(this);
     }
 
-    public Vertex(float xPos, float yPos, Color c) {
-        this(xPos, yPos);
-        color = c;
+    public Vertex(float x, float y, Color color) {
+        this(x, y);
+        this.color = color;
     }
 
-    public Vertex(float xPos, float yPos, float radius, Color c) {
-        this(xPos, yPos, c);
+    public Vertex(float x, float y, float radius, Color color) {
+        this(x, y, color);
         this.radius = radius;
     }
 
-    public Vertex(float xPos, float yPos, float radius, float mass, Color c) {
-        this(xPos, yPos, radius, c);
+    public Vertex(float x, float y, float radius, float mass, Color color) {
+        this(x, y, radius, color);
         this.mass = mass;
     }
 
-    public Vertex(float xPos, float yPos, float radius, float mass, float stiffness, Color c) {
-        this(xPos, yPos, radius, mass, c);
+    public Vertex(float x, float y, float radius, float mass, float stiffness, Color color) {
+        this(x, y, radius, mass, color);
         this.stiffness = stiffness;
     }
 
-    public Vertex(float xPos, float yPos, float radius, float mass, float stiffness, float damping, boolean collidable, boolean pinned, Color c) {
-        this(xPos, yPos, radius, mass, stiffness, c);
+    public Vertex(float x, float y, float radius, float mass, float stiffness,
+                  float damping, boolean collidable, boolean pinned, Color color) {
+        this(x, y, radius, mass, stiffness, color);
         this.damping = damping;
         this.collidable = collidable;
         this.pinned = pinned;
@@ -70,10 +61,10 @@ public class Vertex {
             currY = prevY;
         } else {
             float tempX = currX, tempY = currY;
-            float gravity = ZERO_GRAVITY ? 0.0f : PhysicsHandler.gravity;
+            float gravity = Physics.ZERO_GRAVITY ? 0.0f : Physics.GRAVITY;
 
-            currX += ((airViscosity * currX) - (airViscosity * prevX)) * damping;
-            currY += ((airViscosity * currY) - (airViscosity * prevY)) + gravity;
+            currX += ((Physics.AIR_VISCOSITY * currX) - (Physics.AIR_VISCOSITY * prevX)) * damping;
+            currY += ((Physics.AIR_VISCOSITY * currY) - (Physics.AIR_VISCOSITY * prevY)) + gravity;
 
             prevX = tempX;
             prevY = tempY;
@@ -85,77 +76,64 @@ public class Vertex {
             edges.get(i).solve();
     }
 
-    public void solveCollisions(Vertex vertex, boolean preserveImpulse) {
-        float vx = 0;
-        float vy = 0;
-
-        if (preserveImpulse) {
-            vx = (prevX - currX) * damping;
-            vy = (prevY - currY) * damping;
-        }
-
+    public void solveCollisions(Vertex vertex) {
         if (currX - radius < 0) {
             currX = 2 * radius - currX;
-            if (preserveImpulse) prevX = currX - vx;
         }
 
         if (currX + radius > canvas.getWidth()) {
             currX = 2 * (canvas.getWidth() - radius) - currX;
-            if (preserveImpulse) prevX = currX - vx;
         }
 
         if (currY - radius < 0) {
             currY = 2 * radius - currY;
-            if (preserveImpulse) prevY = currY - vy;
         }
 
         if (currY + radius > canvas.getHeight()) {
             currY = 2 * (canvas.getHeight() - radius) - currY;
-            if (preserveImpulse) prevY = currY - vy;
         }
 
-        if (COLLISION_DETECTION) {
-            if (collidable) collide(vertex);
-        }
+        if (Physics.COLLISION_DETECTION && collidable)
+            collide(vertex);
     }
 
     public void collide(Vertex vertex) {
-        if (vertex != this) {
-            float collisionDampening = .97f;
+        if (vertex == this) return;
 
-            float radii = radius + vertex.radius;
-            float diffX = currX - vertex.currX;
-            float diffY = currY - vertex.currY;
+        float collisionDampening = .97f;
 
-            float lenDiff = (float) sqrt(diffX * diffX + diffY * diffY);
+        float radii = radius + vertex.radius;
+        float diffX = currX - vertex.currX;
+        float diffY = currY - vertex.currY;
 
-            // first make sure they're intersecting
-            if (lenDiff <= radii) {
-                // distance between centers
-                float d = lenDiff;
+        float lenDiff = (float) sqrt(diffX * diffX + diffY * diffY);
 
-                // minimum translation distance to push balls apart after intersecting
-                if (d <= 0) {
-                    d = radius / 2 + vertex.radius / 2;
-                }
+        // First make sure they're intersecting
+        if (!(lenDiff <= radii)) return;
 
-                // find the difference, or the ratio of how far along the restingDistance the actual distance is.
-                float difference = (radii - d) / d;
+        // Distance between centers
+        float d = lenDiff;
 
-                // Inverse the mass quantities
-                float im1 = 1 / mass;
-                float im2 = 1 / vertex.mass;
-                float scalarP1 = (im1 / (im1 + im2)) * stiffness;
-                float scalarP2 = stiffness - scalarP1;
-
-                // Push/pull based on mass
-                // heavier objects will be pushed/pulled less than attached light objects
-                currX += (diffX * scalarP1 * difference) * collisionDampening;
-                currY += (diffY * scalarP1 * difference) * collisionDampening;
-                vertex.currX -= (diffX * scalarP2 * difference) * collisionDampening;
-                vertex.currY -= (diffY * scalarP2 * difference) * collisionDampening;
-            }
+        // Minimum translation distance to push balls apart after intersecting
+        if (d <= 0) {
+            d = radius / 2 + vertex.radius / 2;
         }
+
+        // Find the difference, or the ratio of how far along the restingDistance the actual distance is.
+        float difference = (radii - d) / d;
+
+        // Inverse the mass quantities
+        float im1 = 1 / mass;
+        float im2 = 1 / vertex.mass;
+        float scalarP1 = (im1 / (im1 + im2)) * stiffness;
+        float scalarP2 = stiffness - scalarP1;
+
+        // Push / Pull based on mass
+        // Heavier objects will be pushed/pulled less than attached light objects
+        currX += (diffX * scalarP1 * difference) * collisionDampening;
+        currY += (diffY * scalarP1 * difference) * collisionDampening;
+        vertex.currX -= (diffX * scalarP2 * difference) * collisionDampening;
+        vertex.currY -= (diffY * scalarP2 * difference) * collisionDampening;
     }
 
     public void draw() {
@@ -164,13 +142,13 @@ public class Vertex {
                 edges.get(i).draw();
         }
 
-        if (this == dragVertex) {
+        if (this == Physics.dragVertex) {
             graphics2D.setColor(color);
-            graphics2D.draw(new Line2D.Float(Mouse.x, Mouse.y, currX, currY));
+            graphics2D.draw(new Line2D.Float(MouseVec.x, MouseVec.y, currX, currY));
             graphics2D.fill(new Ellipse2D.Float(currX - radius, currY - radius, 2 * radius, 2 * radius));
         }
 
-        if (this == selectedVertex && (selectionShowPointCheckbox != null && selectionShowPointCheckbox.isSelected())) {
+        if (this == Physics.selectedVertex && (selectionShowPointCheckbox != null && selectionShowPointCheckbox.isSelected())) {
             graphics2D.setColor(color);
             graphics2D.fill(new Ellipse2D.Float(currX - radius, currY - radius, 2 * radius, 2 * radius));
             graphics2D.setColor(Color.green);
@@ -231,15 +209,18 @@ public class Vertex {
     }
 
     public void togglePin() {
-        pinned = EngineMethods.toggle(pinned);
+        pinned = !pinned;
     }
 
-    public void isPinned(boolean pinned) {
+    public void setPinned(boolean pinned) {
         this.pinned = pinned;
     }
 
     public void unPin() {
         pinned = false;
+    }
+    public void pin() {
+        pinned = true;
     }
 
     public String toString() {

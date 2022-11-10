@@ -4,7 +4,6 @@ import com.cabg.components.CLabel;
 import com.cabg.core.EngineMethods;
 import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
-import com.cabg.verlet.Vertex;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -20,15 +19,14 @@ import static com.cabg.core.EngineVariables.*;
 import static com.cabg.enums.EngineMode.RAGDOLL;
 
 public class StatsPanel {
+    private static final DecimalFormat decimalFormat = new DecimalFormat("#,###");
+    public static final Color bgColor = new Color(20, 23, 25).brighter();
+    public static final Font font = new Font(Font.SERIF, Font.PLAIN, 25);
     private static StatsPanel statsUI = null;
     private static JFrame frame;
     private static Timer timer;
     public static int fps = 0;
-    public JPanel panel;
-    public Color bgColor = new Color(20, 23, 25).brighter();
-    public Font font = new Font(Font.SERIF, Font.PLAIN, 25);
-    private static CLabel particleAmount, dragAmount, ptMode, smartPt, connect, atm, ptFriction, fpsLabel, screenSize;
-    private static final DecimalFormat decimalFormat = new DecimalFormat("#,###");
+    private static CLabel particleAmount, dragAmount, engineMode, smartPt, connect, atm, ptFriction, fpsLabel, screenSize;
 
     public static void getInstance() {
         if (statsUI == null) statsUI = new StatsPanel();
@@ -46,7 +44,7 @@ public class StatsPanel {
         frame.setIconImage(EngineVariables.iconImage);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
-        frame.setLocationRelativeTo(EFrame);
+        frame.setLocationRelativeTo(eFrame);
 
         JMenuBar menuBar = new JMenuBar() {
             protected void paintComponent(Graphics g) {
@@ -159,7 +157,7 @@ public class StatsPanel {
         gbc_label_2.gridy = 2;
         stats_panel.add(fpsLabel, gbc_label_2);
 
-        ptMode = new CLabel("Particle Mode: ", font, Color.white, bgColor);
+        engineMode = new CLabel("Engine Mode: ", font, Color.white, bgColor);
         GridBagConstraints gbc_label_3 = new GridBagConstraints();
         gbc_label_3.insets = new Insets(0, 0, 5, 0);
         gbc_label_3.weighty = 1.0;
@@ -168,7 +166,7 @@ public class StatsPanel {
         gbc_label_3.ipady = 10;
         gbc_label_3.gridx = 0;
         gbc_label_3.gridy = 3;
-        stats_panel.add(ptMode, gbc_label_3);
+        stats_panel.add(engineMode, gbc_label_3);
 
         smartPt = new CLabel("Reactive Colors: ", font, Color.white, bgColor);
         GridBagConstraints gbc_label_4 = new GridBagConstraints();
@@ -270,7 +268,7 @@ public class StatsPanel {
         gbc_label_11.gridy = 3;
         instructions_panel.add(c, gbc_label_11);
 
-        CLabel e = new CLabel("W = Particle Color Editor", font, Color.white, bgColor);
+        CLabel e = new CLabel("W = Reactive Colors Editor", font, Color.white, bgColor);
         GridBagConstraints gbc_label_12 = new GridBagConstraints();
         gbc_label_12.weighty = 1.0;
         gbc_label_12.weightx = 1.0;
@@ -325,26 +323,16 @@ public class StatsPanel {
         try {
             if (fpsLabel != null) fpsLabel.setText("Frames Per Second: " + fps);
             if (particleAmount != null) {
-                if (engineSettings.engineMode == RAGDOLL) {
-                    particleAmount.setText("Points: " + decimalFormat.format(Vertex.Vertices.size()));
-                }
-                else {
-                    particleAmount.setText("Particles: " + decimalFormat.format(
-                            Particles.size() + GravityPoints.size() + Fireworks.size() +
-                                    Emitters.size() + QEDs.size() + Ions.size() +
-                                    Fluxes.size() + Erasers.size() + BlackHoles.size() +
-                                    Duplexes.size() + Portals.size()));
-                }
+                if (engineSettings.engineMode == RAGDOLL) particleAmount.setText("Items: " + decimalFormat.format(Vertices.size()));
+                else particleAmount.setText("Particles: " + decimalFormat.format(EngineMethods.getTotalMoleculesCount()));
             }
-            if (dragAmount != null)
-                dragAmount.setText("Drag Amount: " + decimalFormat.format(engineSettings.particleDragAmount));
-            if (ptMode != null) ptMode.setText(EngineMethods.getModeText());
-            if (smartPt != null) smartPt.setText(EngineMethods.getReactiveColorsStatus());
-            if (connect != null) connect.setText("Link Mode: " + EngineMethods.getConnectText());
-            if (atm != null) atm.setText(EngineMethods.getMouseAttraction());
-            if (ptFriction != null) ptFriction.setText(EngineMethods.getFrictionText());
-            if (screenSize != null)
-                screenSize.setText(String.format("Canvas Size: %d x %d", canvas.getWidth(), canvas.getHeight()));
+            if (dragAmount != null) dragAmount.setText("Drag Amount: " + decimalFormat.format(engineSettings.particleDragAmount));
+            if (engineMode != null) engineMode.setText("Engine Mode: " + engineSettings.engineMode.name());
+            if (smartPt != null) smartPt.setText("Reactive Colors: " + (engineSettings.reactiveColorsEnabled ? "On" : "Off"));
+            if (connect != null) connect.setText("Link Mode: " + (engineSettings.connectParticles && Particles.size() < 101 ? "On" : "Off"));
+            if (atm != null) atm.setText("Mouse Attraction: " + (engineSettings.particlesGravitateToMouse ? "On" : "Off"));
+            if (ptFriction != null) ptFriction.setText("Particle Friction: " + (engineSettings.particleFriction ? "On" : "Off"));
+            if (screenSize != null) screenSize.setText(String.format("Canvas Size: %d x %d", canvas.getWidth(), canvas.getHeight()));
         } catch (Exception ex) {
             ExceptionLogger.append(ex);
         }

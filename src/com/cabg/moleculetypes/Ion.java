@@ -16,8 +16,8 @@ public class Ion extends Molecule {
         for (int i = 0; i < Ions.size(); i++) {
             Ion ion = Ions.get(i);
 
-            float dx = Mouse.x - ion.x;
-            float dy = Mouse.y - ion.y;
+            float dx = MouseVec.x - ion.x;
+            float dy = MouseVec.y - ion.y;
             float dist = (float) sqrt(dx * dx + dy * dy);
 
             boolean mouseIsOver = dist < ion.radius;
@@ -31,8 +31,8 @@ public class Ion extends Molecule {
             }
 
             if (engineSettings.controlKeyIsDown && mouseIsOver) {
-                ion.x = Mouse.x;
-                ion.y = Mouse.y;
+                ion.x = MouseVec.x;
+                ion.y = MouseVec.y;
             }
         }
     }
@@ -50,6 +50,6 @@ public class Ion extends Molecule {
 
     public void update() {
         accelerate();
-        boundsCheck();
+        checkBounds();
     }
 }

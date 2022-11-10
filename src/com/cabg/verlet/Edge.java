@@ -6,7 +6,6 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 
 import static com.cabg.core.EngineVariables.graphics2D;
-import static com.cabg.verlet.PhysicsHandler.selectedVertex;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public class Edge {
@@ -15,7 +14,8 @@ public class Edge {
     public float restingDistance, stiffness, tearDistance;
     public boolean render, severable = true;
 
-    Edge(Vertex link1, Vertex link2, float restingDist, float stiff, float tearDistance, boolean render) {
+    Edge(Vertex link1, Vertex link2, float restingDist, float stiff,
+         float tearDistance, boolean render) {
         v1 = link1;
         v2 = link2;
         restingDistance = restingDist;
@@ -24,12 +24,14 @@ public class Edge {
         this.tearDistance = tearDistance;
     }
 
-    Edge(Vertex link1, Vertex link2, float restingDist, float stiff, float tearDistance, boolean render, Color c) {
+    Edge(Vertex link1, Vertex link2, float restingDist, float stiff,
+         float tearDistance, boolean render, Color c) {
         this(link1, link2, restingDist, stiff, tearDistance, render);
         color = c;
     }
 
-    Edge(Vertex link1, Vertex link2, float restingDist, float stiff, float tearDistance, boolean render, boolean severable, Color c) {
+    Edge(Vertex link1, Vertex link2, float restingDist, float stiff,
+         float tearDistance, boolean render, boolean severable, Color c) {
         this(link1, link2, restingDist, stiff, tearDistance, render, c);
         this.severable = severable;
     }
@@ -43,13 +45,11 @@ public class Edge {
         // find the difference, or the ratio of how far along the restingDistance the actual distance is.
         float delta = (restingDistance / (dist + restingDistance)) - 0.5f;
 
-        if (severable) {
-            if (dist > tearDistance) {
-                v1.removeLink(this);
+        if (severable && dist > tearDistance) {
+            v1.removeLink(this);
 
-                if (v1 == selectedVertex || v2 == selectedVertex)
-                    PhysicsEditor.updateConstraintsList(selectedVertex.edges);
-            }
+            if (v1 == Physics.selectedVertex || v2 == Physics.selectedVertex)
+                PhysicsEditor.updateConstraintsList(Physics.selectedVertex.edges);
         }
 
         // Inverse the mass quantities

@@ -11,18 +11,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-public class ParticleTypePicker {
-    public static ParticleTypePicker[] particleTypeUIs = new ParticleTypePicker[2];
+public class MoleculeTypePicker {
+    public static MoleculeTypePicker[] moleculeTypePickers = new MoleculeTypePicker[2];
 
     public JFrame frame;
     public JTextField textField;
 
     public static void getInstance(int type, String title) {
-        if (particleTypeUIs[type] == null) particleTypeUIs[type] = new ParticleTypePicker(type, title);
-        particleTypeUIs[type].frame.toFront();
+        if (moleculeTypePickers[type] == null) moleculeTypePickers[type] = new MoleculeTypePicker(type, title);
+        moleculeTypePickers[type].frame.toFront();
     }
 
-    private ParticleTypePicker(int type, String title) {
+    private MoleculeTypePicker(int type, String title) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
@@ -85,6 +85,6 @@ public class ParticleTypePicker {
 
     private void close(int index) {
         frame.dispose();
-        particleTypeUIs[index] = null;
+        moleculeTypePickers[index] = null;
     }
 }

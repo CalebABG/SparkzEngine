@@ -10,7 +10,7 @@ import com.cabg.reactivecolors.ReactiveColorsRandomizer;
 import javax.swing.*;
 import java.awt.*;
 
-import static com.cabg.core.EngineVariables.EFrame;
+import static com.cabg.core.EngineVariables.eFrame;
 import static com.cabg.core.EngineVariables.engineSettings;
 
 public class ReactiveColorsEditor {
@@ -36,7 +36,7 @@ public class ReactiveColorsEditor {
         frame.setSize(950, 250);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
-        frame.setLocationRelativeTo(EFrame);
+        frame.setLocationRelativeTo(eFrame);
 
         JScrollPane scrollPane = new JScrollPane();
         frame.getContentPane().add(scrollPane, BorderLayout.CENTER);

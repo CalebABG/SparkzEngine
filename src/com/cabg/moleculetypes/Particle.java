@@ -2,25 +2,24 @@ package com.cabg.moleculetypes;
 
 import com.cabg.gui.FlowFieldEditor;
 import com.cabg.gui.ParticleGrapher;
-import com.cabg.reactivecolors.ReactiveColors;
 import com.flowpowered.noise.Noise;
 import com.flowpowered.noise.NoiseQuality;
 
-import java.awt.*;
-
-import static com.cabg.utilities.DrawingUtil.giveStyle;
-import static com.cabg.moleculehelpers.MoleculeFactory.fireworksMode;
 import static com.cabg.core.EngineVariables.PI;
 import static com.cabg.core.EngineVariables.*;
 import static com.cabg.enums.EngineMode.FIREWORKS;
 import static com.cabg.enums.EngineMode.GRAPH;
-import static com.cabg.enums.GravitationMode.*;
+import static com.cabg.enums.GravitationMode.FLOW_FIELD;
+import static com.cabg.enums.GravitationMode.ORGANIC;
 import static com.cabg.gui.OrganicForcesEditor.*;
-import static com.cabg.verlet.Vec2.clamp;
-import static com.cabg.verlet.Vec2.map;
+import static com.cabg.moleculehelpers.MoleculeFactory.fireworksMode;
+import static com.cabg.utilities.DrawingUtil.giveStyle;
+import static com.cabg.utilities.MathUtil.clamp;
+import static com.cabg.utilities.MathUtil.map;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public class Particle extends Molecule {
+    final float dampening = 0.9993f;
     public int life = engineSettings.particleLife;
     public float angle = 0.0f;
 
@@ -36,13 +35,6 @@ public class Particle extends Molecule {
         super(x, y, (float) cos(atan2(toRadians(tY - pY), toRadians(tX - pX))) * speed,
                 (float) sin(atan2(toRadians(tY - pY), toRadians(tX - pX))) * speed, radius);
     }
-
-    /**
-     * The organic gravitation mode uses a profuse amount of memory, for some reason the JavaScript (Nashorn)
-     * engine has a terrible memory usage problem with the eval method
-     * If The object of type Molecule is not null, gravitation will be based on the molecule. * Also means that the object for type Point must be null,
-     * and vice versa.
-     */
 
     public void gravitateToPosition(float px, float py) {
         float dx = px - x;
@@ -151,7 +143,7 @@ public class Particle extends Molecule {
         graphics2D.drawLine((int) p2.x, (int) p2.y, (int) x, (int) y);
     }
 
-    public void boundsCheck() {
+    public void checkBounds() {
         float cw = canvas.getWidth();
         float ch = canvas.getHeight();
 
@@ -166,21 +158,17 @@ public class Particle extends Molecule {
             if (y > ch + radius) y = -radius;
             if (y < -radius) y = ch + radius;
         } else {
-            super.boundsCheck();
+            super.checkBounds();
         }
     }
 
     public void render() {
-        Color color;
-        if (engineSettings.reactiveColorsEnabled) color = ReactiveColors.getReactiveComponent(velocity());
-        else color = PLAIN_COLOR;
-
         if (engineSettings.connectParticles) {
             if (engineSettings.showParticlesLink) connectSequential();
             else if (Particles.size() < 101) connectAll();
         }
 
-        giveStyle(x - radius, y - radius, 2 * radius, color, engineSettings.particleRenderMode, baseParticleText);
+        giveStyle(x - radius, y - radius, 2 * radius, getReactiveColor(), engineSettings.particleRenderMode, baseParticleText);
     }
 
     public void update() {
@@ -189,8 +177,8 @@ public class Particle extends Molecule {
                 int cw = canvas.getWidth();
                 int ch = canvas.getHeight();
 
-                int mx = (int) map(Mouse.x, 0, cw, -cw / 2f, cw / 2f);
-                int my = (int) map(Mouse.y, 0, ch, -ch / 2f, ch / 2f);
+                int mx = (int) map(MouseVec.x, 0, cw, -cw / 2f, cw / 2f);
+                int my = (int) map(MouseVec.y, 0, ch, -ch / 2f, ch / 2f);
 
                 gravitateToPosition(mx, my);
             } else {
@@ -199,7 +187,7 @@ public class Particle extends Molecule {
                 } else if (engineSettings.gravitationMode == FLOW_FIELD) {
                     handleFlowField();
                 } else {
-                    gravitateToPosition(Mouse.x, Mouse.y);
+                    gravitateToPosition(MouseVec.x, MouseVec.y);
                 }
             }
         }
@@ -207,15 +195,15 @@ public class Particle extends Molecule {
         accelerate();
 
         if (engineSettings.particleFriction) {
-            final float dampening = 0.9993f;
             vx *= dampening;
             vy *= dampening;
         }
 
-        boundsCheck();
+        checkBounds();
 
-        if (engineSettings.engineMode == FIREWORKS && --life < 0) {
-            if (Particles.size() < engineSettings.fireworksParticleSafetyAmount) fireworksMode(x, y);
+        if (engineSettings.engineMode == FIREWORKS && --life < 1) {
+            if (Particles.size() < engineSettings.fireworksParticleSafetyAmount)
+                fireworksMode(x, y);
             Particles.remove(this);
         }
     }

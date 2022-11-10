@@ -8,7 +8,7 @@ import static com.cabg.enums.EngineMode.GRAPH;
 public class NotificationUtil {
     private static final Font renderFont = new Font(Font.SERIF, Font.PLAIN, 54);
     public static boolean drawingNotification = false;
-    public static int defaultTimeout = 35;
+    public static int defaultTimeout = 35; // Todo: Make value based off of engine FPS?
     public static int timeout = defaultTimeout;
     public static String text = "";
 
@@ -33,6 +33,7 @@ public class NotificationUtil {
     }
 
     public static void handleNotifications() {
-        if (drawingNotification) renderNotification();
+        if (drawingNotification)
+            renderNotification();
     }
 }

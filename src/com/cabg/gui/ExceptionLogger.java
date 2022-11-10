@@ -38,7 +38,7 @@ public class ExceptionLogger {
         frame.setSize(430, 260);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
-        frame.setLocationRelativeTo(EFrame);
+        frame.setLocationRelativeTo(eFrame);
         frame.addKeyListener(new ExtendedKeyAdapter.KeyReleased(e -> {
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE) close();
             if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_C) textArea.setText("");

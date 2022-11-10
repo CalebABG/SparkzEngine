@@ -51,7 +51,7 @@ public class EngineThemes {
     }
 
     public static void setTheme(Color backgroundColor, Color foregroundColor) {
-        menuBar.bgColor = backgroundColor;
+        CMenuBar.bgColor = backgroundColor;
         menuBar.setBorder(BorderFactory.createLineBorder(backgroundColor, 1, false));
 
         Color borderColor = backgroundColor.darker();

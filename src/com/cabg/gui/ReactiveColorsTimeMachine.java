@@ -12,7 +12,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.cabg.core.EngineVariables.EFrame;
+import static com.cabg.core.EngineVariables.eFrame;
 import static com.cabg.utilities.HTMLUtil.HeadingWithStyleCenteredTag;
 
 public class ReactiveColorsTimeMachine {
@@ -41,7 +41,7 @@ public class ReactiveColorsTimeMachine {
         frame.setSize(688, 206);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
-        frame.setLocationRelativeTo(ReactiveColorsEditor.frame == null ? EFrame : ReactiveColorsEditor.frame);
+        frame.setLocationRelativeTo(ReactiveColorsEditor.frame == null ? eFrame : ReactiveColorsEditor.frame);
 
         JScrollPane scrollPane = new JScrollPane();
         frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -181,7 +181,7 @@ public class ReactiveColorsTimeMachine {
 
     private void saveColors() {
         if (colorList == null || colorList.size() < 1) EngineSettings.saveColors(null);
-        else EngineSettings.saveColors(EngineSettings.serializeColors(ColorUtil.convertColors(index, colorList)));
+        else EngineSettings.saveColors(ColorUtil.serializeColors(ColorUtil.convertColors(index, colorList)));
     }
 
     public static void updateColorValues() {
@@ -214,7 +214,7 @@ public class ReactiveColorsTimeMachine {
     }
 
     public static void addColor(Color[] colors) {
-        colorList.add(EngineSettings.serializeColors(colors));
+        colorList.add(ColorUtil.serializeColors(colors));
         index = colorList.size() - 1;
         if (timeMachine != null && labels != null) {
             updateLabelsBackgroundColors();

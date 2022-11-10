@@ -105,10 +105,10 @@ public class DrawingUtil {
 
         switch (particleMode) {
             case CIRCLE_NO_FILL:        drawCircle(x, y, radius, radius);       break;
-            case RECTANGLE3D_NO_FILL:   draw3DRect(x, y, radius, radius);       break;
+            case RECTANGLE_3D_NO_FILL:   draw3DRect(x, y, radius, radius);       break;
             case NUMBERS:               drawNumbers(x, y, radius);              break;
             case CUSTOM_TEXT:           drawCustomText(txt, x, y, radius);      break;
-            case RECTANGLE3D_FILL:      fill3DRect(x, y, radius, radius);       break;
+            case RECTANGLE_3D_FILL:      fill3DRect(x, y, radius, radius);       break;
             case CIRCLE_FILL:           fillCircle(x, y, radius, radius);       break;
             case SMILEY_FACE:           drawSmileyFace(x, y, radius);           break;
             case MUSIC_NOTE_1:          drawMusicNote1(x, y, radius);           break;

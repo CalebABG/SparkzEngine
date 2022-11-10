@@ -11,7 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-import static com.cabg.core.EngineVariables.EFrame;
+import static com.cabg.core.EngineVariables.eFrame;
 
 public class OptionsMenu {
     private static OptionsMenu optionsMenu = null;
@@ -34,7 +34,7 @@ public class OptionsMenu {
         frame.setSize(495, 480);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
-        frame.setLocationRelativeTo(EFrame);
+        frame.setLocationRelativeTo(eFrame);
 
         JScrollPane jScrollPane1 = new JScrollPane();
 
@@ -74,7 +74,7 @@ public class OptionsMenu {
     private void getOption() {
         String text = textField.getText();
         if (text != null)
-            if (InputUtil.canParseStringInt(text)) EngineMethods.getOptions(Integer.parseInt(text));
+            if (InputUtil.canParseStringInt(text)) EngineMethods.handleMenuOptionsSelection(Integer.parseInt(text));
     }
 
     private void close() {

@@ -3,12 +3,12 @@ package com.cabg.core;
 import com.cabg.enums.EngineMode;
 import com.cabg.enums.GravitationMode;
 import com.cabg.enums.MoleculeRenderMode;
-import com.cabg.enums.ParticleType;
+import com.cabg.enums.MoleculeType;
 import com.cabg.gui.ExceptionLogger;
 import com.cabg.reactivecolors.ReactiveColors;
+import com.cabg.utilities.ColorUtil;
 import com.cabg.utilities.JsonUtil;
 
-import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -19,13 +19,10 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.cabg.core.EngineVariables.toolkit;
 import static com.cabg.enums.EngineMode.NORMAL;
 import static com.cabg.enums.GravitationMode.DEFAULT;
 import static com.cabg.enums.MoleculeRenderMode.RECTANGLE_NO_FILL;
-import static com.cabg.enums.ParticleType.PARTICLE;
-import static com.cabg.utilities.ColorUtil.fromHex;
-import static com.cabg.utilities.ColorUtil.toHex;
+import static com.cabg.enums.MoleculeType.PARTICLE;
 
 public class EngineSettings {
     public static String folderName = "SparkzEngineSettings";
@@ -82,7 +79,7 @@ public class EngineSettings {
             particleDragSpeed = 1.25f;
 
     public EngineMode engineMode = NORMAL;
-    public ParticleType particleType = PARTICLE;
+    public MoleculeType moleculeType = PARTICLE;
     public GravitationMode gravitationMode = DEFAULT;
     public MoleculeRenderMode particleRenderMode = RECTANGLE_NO_FILL;
     public MoleculeRenderMode fireworksRenderMode = RECTANGLE_NO_FILL;
@@ -136,7 +133,7 @@ public class EngineSettings {
     }
 
     public void changeParticleType(boolean advance) {
-        particleType = EngineMethods.getMode(particleType, advance);
+        moleculeType = EngineMethods.getMode(moleculeType, advance);
     }
 
     public static String getProjectTimeSpan() {
@@ -151,19 +148,11 @@ public class EngineSettings {
         return Files.exists(Paths.get(colorsFilePath));
     }
 
-    public static String serializeColors(Color[] c) {
-        return toHex(c[0]) + colorsSpliceChar +
-                toHex(c[1]) + colorsSpliceChar +
-                toHex(c[2]) + colorsSpliceChar +
-                toHex(c[3]) + colorsSpliceChar +
-                toHex(c[4]);
-    }
-
     public static void saveColors(String colorsString) {
         try (Writer writer = new OutputStreamWriter(new FileOutputStream(colorsFilePath, true), StandardCharsets.UTF_8)) {
             new File("./" + folderName).mkdir();
             if (colorsString != null) writer.write(colorsString + '\n');
-            else writer.write(serializeColors(ReactiveColors.getComponents()) + '\n');
+            else writer.write(ColorUtil.serializeColors(ReactiveColors.getComponents()) + '\n');
         } catch (Exception e) {
             ExceptionLogger.append(e);
         }

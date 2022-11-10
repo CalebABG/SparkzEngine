@@ -1,33 +1,24 @@
 package com.cabg.moleculetypes;
 
-import com.cabg.reactivecolors.ReactiveColors;
-
-import java.awt.*;
-
-import static com.cabg.utilities.DrawingUtil.giveStyle;
-import static com.cabg.core.EngineVariables.Fireworks;
 import static com.cabg.core.EngineVariables.*;
+import static com.cabg.utilities.DrawingUtil.giveStyle;
 
-public class Fireworks extends Molecule {
+public class Firework extends Molecule {
     private int life = (int) ((random.nextFloat() * engineSettings.fireworksLife) + 3);
     private int wind = engineSettings.fireworksWind;
     private int jitter = engineSettings.fireworksJitter;
 
-    public Fireworks(float x, float y, float radius, float speed, float direction) {
+    public Firework(float x, float y, float radius, float speed, float direction) {
         super(x, y, radius, speed, direction, 0);
     }
 
-    public Fireworks(float x, float y, float radius, float speed, float direction, int wind) {
+    public Firework(float x, float y, float radius, float speed, float direction, int wind) {
         super(x, y, radius, speed, direction, 0);
         this.wind = wind;
     }
 
     public void render() {
-        Color color;
-        if (engineSettings.reactiveColorsEnabled) color = ReactiveColors.getReactiveComponent(velocity());
-        else color = PLAIN_COLOR;
-
-        giveStyle(x - radius, y - radius, 2 * radius, color, engineSettings.fireworksRenderMode, fireworksParticleText);
+        giveStyle(x - radius, y - radius, 2 * radius, getReactiveColor(), engineSettings.fireworksRenderMode, fireworksParticleText);
     }
 
     public void update() {
@@ -40,7 +31,7 @@ public class Fireworks extends Molecule {
         vx *= dampening;
         vy *= dampening;
 
-        boundsCheck();
+        checkBounds();
 
         if (--life < 0) Fireworks.remove(this);
     }

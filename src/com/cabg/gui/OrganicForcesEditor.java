@@ -9,8 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
+import static com.cabg.core.EngineVariables.eFrame;
+
 public class OrganicForcesEditor {
-    private static OrganicForcesEditor customForces = null;
+    private static OrganicForcesEditor instance = null;
     private static final Font font = new Font(Font.SERIF, Font.PLAIN, 18);
     public static float angleIncrement = 0.05f;
     public static String expressionForceX = "cos(x)", expressionForceY = "sin(x)";
@@ -18,9 +20,9 @@ public class OrganicForcesEditor {
     private final JFrame frame;
     private final JTextField forceXTextField, forceYTextField, angleIncrementTextField;
 
-    public static void getInstance(JFrame parent) {
-        if (customForces == null) customForces = new OrganicForcesEditor(parent);
-        customForces.frame.toFront();
+    public static void getInstance() {
+        if (instance == null) instance = new OrganicForcesEditor(eFrame);
+        instance.frame.toFront();
     }
 
     private OrganicForcesEditor(JFrame parent) {
@@ -190,6 +192,6 @@ public class OrganicForcesEditor {
 
     private void close() {
         frame.dispose();
-        customForces = null;
+        instance = null;
     }
 }

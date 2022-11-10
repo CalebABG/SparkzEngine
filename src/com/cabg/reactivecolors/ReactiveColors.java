@@ -5,7 +5,7 @@ import com.cabg.utilities.ColorUtil;
 
 import java.awt.*;
 
-import static com.cabg.verlet.Vec2.clamp;
+import static com.cabg.utilities.MathUtil.clamp;
 
 public class ReactiveColors {
     private static Color[] components = defaultColor();
@@ -13,7 +13,7 @@ public class ReactiveColors {
     private ReactiveColors() {}
 
     public static Color getReactiveComponent(float velocity) {
-        return components[(int) clamp(velocity / 1.5f, 0, components.length - 1)];
+        return components[(int) clamp(velocity / 2.0f, 0, components.length - 1)];
     }
 
     public static Color[] getComponents() {

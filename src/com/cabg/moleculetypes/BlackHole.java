@@ -52,7 +52,7 @@ public class BlackHole extends Molecule {
 
     public void update() {
         open();
-        boundsCheck();
+        checkBounds();
         if (radius < 0) {
             MoleculeFactory.fireworksMode(x, y, 6, 4, 320);
             BlackHoles.remove(this);

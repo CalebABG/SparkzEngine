@@ -1,7 +1,7 @@
 package com.cabg.inputhandlers;
 
 import com.cabg.core.EngineMethods;
-import com.cabg.verlet.PhysicsHandler;
+import com.cabg.verlet.Physics;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -9,10 +9,9 @@ import java.awt.event.MouseEvent;
 import static com.cabg.core.EngineVariables.engineSettings;
 
 /*
- * Button Click Hints
- * Left click: (button 1)
- * Mid click: (button 2)
- * Right click: (button 3)
+ * Button 1: Left Click
+ * Button 2: Middle Click
+ * Button 3: Right Click
  */
 
 public class MouseButtonHandler extends MouseAdapter {
@@ -28,12 +27,11 @@ public class MouseButtonHandler extends MouseAdapter {
             case MouseEvent.BUTTON1: engineSettings.leftMouseButtonIsDown = false; break;
             case MouseEvent.BUTTON3: engineSettings.rightMouseButtonIsDown = false; break;
         }
-        PhysicsHandler.resetDragVertex();
+        Physics.resetDragVertex();
     }
 
     public void mouseClicked(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1) {
-            EngineMethods.switchClickMode(e);
-        }
+        if (e.getButton() == MouseEvent.BUTTON1)
+            EngineMethods.handleLeftClick(e);
     }
 }

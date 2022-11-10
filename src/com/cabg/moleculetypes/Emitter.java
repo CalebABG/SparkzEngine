@@ -21,7 +21,7 @@ public class Emitter extends Molecule {
 
     public void update() {
         emitAtPoint();
-        boundsCheck();
+        checkBounds();
         if (--life < 0) Emitters.remove(this);
     }
 }

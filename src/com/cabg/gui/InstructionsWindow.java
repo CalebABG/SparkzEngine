@@ -3,10 +3,13 @@ package com.cabg.gui;
 import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
+import com.cabg.utilities.HTMLUtil;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+
+import static com.cabg.core.EngineVariables.toolkit;
 
 public class InstructionsWindow {
     private static final InstructionsWindow[] windows = new InstructionsWindow[2];
@@ -18,6 +21,18 @@ public class InstructionsWindow {
             windows[type] = new InstructionsWindow(type, parent, w, h, title, instructions);
 
         windows[type].frame.toFront();
+    }
+
+    public static void createEngineInstructionsWindow(JFrame parent) {
+        Dimension d = toolkit.getScreenSize();
+        InstructionsWindow.getInstance(0, parent, (int) (d.width * .44), (int) (d.height * .55),
+                "Particle Engine Instructions", HTMLUtil.EngineInstructions);
+    }
+
+    public static void createGraphInstructionsWindow(JFrame parent) {
+        Dimension d = toolkit.getScreenSize();
+        InstructionsWindow.getInstance(1, parent, (int) (d.width * .37), (int) (d.height * .55),
+                "Particle Graph Instructions", HTMLUtil.ParticleGraphInstructions);
     }
 
     private InstructionsWindow(int type, JFrame parent, int w, int h, String title, String instructions) {

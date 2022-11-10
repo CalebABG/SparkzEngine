@@ -8,26 +8,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
+import static com.cabg.core.EngineVariables.eFrame;
 import static com.cabg.utilities.InputUtil.floatTextFieldGuardDefault;
 
 public class FlowFieldEditor {
-    public static FlowFieldEditor flowFieldUI = null;
-    public static JFrame frame;
-    public static final JTextField[] fields = new JTextField[8];
+    public static FlowFieldEditor instance = null;
     private static final Font font = new Font(Font.SERIF, Font.PLAIN, 18);
 
-    public static float noiseX = 0.008f;
-    public static float noiseY = 0.004f;
-    public static float noiseZ = 0.002f;
-    public static float scaleC1 = 5.0f;
-    public static float scaleC2 = 0.6f;
-    public static float startAngle = 0.0f;
-    public static float velocityLimit = 4.3f;
-    public static float velocityMagnitude = 0.2f;
+    public static float noiseX = 0.008f, noiseY = 0.004f, noiseZ = 0.002f;
+    public static float scaleC1 = 5.0f, scaleC2 = 0.6f;
+    public static float startAngle = 0.0f, velocityLimit = 4.3f, velocityMagnitude = 0.2f;
 
-    public static void getInstance(JFrame p) {
-        if (flowFieldUI == null) flowFieldUI = new FlowFieldEditor(p);
-        frame.toFront();
+    private final JFrame frame;
+    private final JTextField[] fields = new JTextField[8];
+
+    public static void getInstance() {
+        if (instance == null) instance = new FlowFieldEditor(eFrame);
+        instance.frame.toFront();
     }
 
     private FlowFieldEditor(JFrame parent) {
@@ -258,6 +255,6 @@ public class FlowFieldEditor {
 
     private void close() {
         frame.dispose();
-        flowFieldUI = null;
+        instance = null;
     }
 }

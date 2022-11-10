@@ -27,7 +27,7 @@ public class GravityPoint extends Molecule {
 
     public void update() {
         accelerate();
-        boundsCheck();
+        checkBounds();
         attract();
     }
 }

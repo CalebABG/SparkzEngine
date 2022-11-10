@@ -66,7 +66,7 @@ public class Duplex extends Molecule {
 
     public void update() {
         deter();
-        boundsCheck();
+        checkBounds();
         if (radius < 0) Duplexes.remove(this);
         radius -= 0.012;
     }

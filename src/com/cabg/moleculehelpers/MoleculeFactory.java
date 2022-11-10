@@ -1,33 +1,20 @@
 package com.cabg.moleculehelpers;
 
-import com.cabg.core.Engine;
-import com.cabg.moleculetypes.Fireworks;
 import com.cabg.moleculetypes.*;
-import com.cabg.utilities.PhysicsUtil;
-import com.cabg.verlet.Vec2;
+import com.cabg.verlet.PhysicsFactory;
 
 import java.awt.event.MouseEvent;
 
 import static com.cabg.core.EngineVariables.*;
+import static com.cabg.utilities.MathUtil.map;
 
 public class MoleculeFactory {
-    /**
-     * Creates a particle object at the currposition of the passed in x and y.
-     *
-     * @param x X currposition.
-     * @param y Y currposition.
-     */
     public static void singleParticle(int x, int y) {
         Particle p = new Particle(x, y, (random.nextFloat() * engineSettings.singleClickSizeMax) + engineSettings.singleClickSizeMin,
                 random.nextFloat() * engineSettings.singleClickSpeed, random.nextFloat() * 361);
         Particles.add(p);
     }
 
-    /**
-     * Creates a particle objects at the coords of the event x and y.
-     *
-     * @param e Mouse Event.
-     */
     public static void singleParticle(MouseEvent e) {
         float randRadius = (random.nextFloat() * engineSettings.singleClickSizeMax) + engineSettings.singleClickSizeMin;
         Particle p = new Particle((e.getX() - randRadius / 2), (e.getY() - randRadius / 2), randRadius,
@@ -49,26 +36,15 @@ public class MoleculeFactory {
         Particles.add(p);
     }
 
-    /**
-     * Creates multiple particle objects (from Engine fireworks amount) at the coords of the event x and y.
-     *
-     * @param e Mouse Event.
-     */
     public static void multiParticle(MouseEvent e) {
         for (int i = 0; i < engineSettings.fireworksAmount; i++) {
             singleParticle(e, engineSettings.multiClickSizeMax, engineSettings.multiClickSizeMin, engineSettings.multiClickSpeed);
         }
     }
 
-    /**
-     * Creates multiple particle objects (from Engine fireworks amount) at the currposition of the passed in x and y.
-     *
-     * @param x X currposition.
-     * @param y Y currposition.
-     */
     public static void fireworksMode(float x, float y) {
         for (int i = 0; i < engineSettings.fireworksAmount; i++) {
-            Fireworks z = new Fireworks(x, y, (random.nextFloat() * engineSettings.fireworksSizeMax) + engineSettings.fireworksSizeMin,
+            Firework z = new Firework(x, y, (random.nextFloat() * engineSettings.fireworksSizeMax) + engineSettings.fireworksSizeMin,
                     random.nextFloat() * engineSettings.fireworksSpeed, random.nextFloat() * 361);
             Fireworks.add(z);
         }
@@ -76,7 +52,7 @@ public class MoleculeFactory {
 
     public static void fireworksMode(float x, float y, int wind, int speed) {
         for (int i = 0; i < engineSettings.fireworksAmount; i++) {
-            Fireworks z = new Fireworks(x, y, (random.nextFloat() * engineSettings.fireworksSizeMax) + engineSettings.fireworksSizeMin,
+            Firework z = new Firework(x, y, (random.nextFloat() * engineSettings.fireworksSizeMax) + engineSettings.fireworksSizeMin,
                     random.nextFloat() * speed, random.nextFloat() * 361, wind);
             Fireworks.add(z);
         }
@@ -84,7 +60,7 @@ public class MoleculeFactory {
 
     public static void fireworksMode(float x, float y, int wind, float speed, int amount) {
         for (int i = 0; i < amount; i++) {
-            Fireworks z = new Fireworks(x, y, (random.nextFloat() * engineSettings.fireworksSizeMax) + engineSettings.fireworksSizeMin,
+            Firework z = new Firework(x, y, (random.nextFloat() * engineSettings.fireworksSizeMax) + engineSettings.fireworksSizeMin,
                     random.nextFloat() * speed, random.nextFloat() * 361, wind);
             Fireworks.add(z);
         }
@@ -194,47 +170,64 @@ public class MoleculeFactory {
         for (int i = 0; i < amount; i++) singleIon(e);
     }
 
-    /**
-     * Creates multiple particle objects while dragging mpt (from Engine drag amount) at the coords of the event x and y.
-     */
+    public static void handleLeftClickFireworksTarget(MouseEvent e) {
+        // Disable gravitation to mouse for fireworks
+        engineSettings.particlesGravitateToMouse = false;
+
+        int w = canvas.getWidth(), h = canvas.getHeight();
+        Particles.add(new Particle((w / 2f), (h - 1),
+                (random.nextFloat() * engineSettings.singleClickSizeMax) + engineSettings.singleClickSizeMin,
+                (random.nextFloat() * engineSettings.singleClickSpeed) + 3, (w / 2), (h - 1), e.getX(), e.getY()));
+    }
+
     public static void handleDrag(MouseEvent e) {
         switch (engineSettings.engineMode) {
             case RAGDOLL:
-                if (engineSettings.leftMouseButtonIsDown && engineSettings.controlKeyIsDown) {
-                    PhysicsUtil.handleDrag(e);
-                }
+                if (engineSettings.leftMouseButtonIsDown && engineSettings.controlKeyIsDown)
+                    PhysicsFactory.handleDrag(e);
                 break;
             case GRAPH:
                 if (engineSettings.leftMouseButtonIsDown) {
                     for (int i = 0; i < engineSettings.particleDragAmount; i++) {
-                        float mouseX = Vec2.map(Mouse.x, 0, canvas.getWidth(), -canvas.getWidth() / 2.0f, canvas.getWidth() / 2.0f);
-
-                        float mouseY = Vec2.map(Mouse.y, 0, canvas.getHeight(), -canvas.getHeight() / 2.0f, canvas.getHeight() / 2.0f);
+                        float mouseX = map(MouseVec.x, 0, canvas.getWidth(), -canvas.getWidth() / 2.0f, canvas.getWidth() / 2.0f);
+                        float mouseY = map(MouseVec.y, 0, canvas.getHeight(), -canvas.getHeight() / 2.0f, canvas.getHeight() / 2.0f);
 
                         singleParticle(mouseX, mouseY, engineSettings.particleDragSizeMax, engineSettings.particleDragSizeMin, engineSettings.particleDragSpeed);
                     }
                 }
                 break;
             default:
-                for (int i = 0; i < engineSettings.particleDragAmount; i++) {
+                for (int i = 0; i < engineSettings.particleDragAmount; i++)
                     singleParticle(e, engineSettings.particleDragSizeMax, engineSettings.particleDragSizeMin, engineSettings.particleDragSpeed);
-                }
                 break;
         }
     }
 
-    /**
-     * This method spawns a particle from half the screen width and the screen height-1 dimension.
-     * <p>
-     * The particle accelerates in the direction (angle) calculated between the bottom of the screen and the location of the
-     * mpt at the given moment.
-     *
-     * @see Engine
-     */
-    public static void fireworksTarget(MouseEvent e) {
-        int w = canvas.getWidth(), h = canvas.getHeight();
-        Particles.add(new Particle((w / 2f), (h - 1),
-                (random.nextFloat() * engineSettings.singleClickSizeMax) + engineSettings.singleClickSizeMin,
-                (random.nextFloat() * engineSettings.singleClickSpeed) + 3, (w / 2), (h - 1), e.getX(), e.getY()));
+    public static void handleLeftClickNormal(MouseEvent e) {
+        switch (engineSettings.moleculeType) {
+            case PARTICLE: MoleculeFactory.singleParticle(e); break;
+            case GRAVITY_POINT: MoleculeFactory.singleGravityPoint(e); break;
+            case EMITTER: MoleculeFactory.singleEmitter(e); break;
+            case FLUX: MoleculeFactory.singleFlux(e); break;
+            case QED: MoleculeFactory.singleQED(e); break;
+            case ION: MoleculeFactory.singleIon(e); break;
+            case BLACK_HOLE: MoleculeFactory.singleBlackHole(e); break;
+            case DUPLEX: MoleculeFactory.singleDuplex(e); break;
+            case PORTAL: MoleculeFactory.singlePortal(e); break;
+        }
+    }
+
+    public static void handleLeftClickMulti(MouseEvent e) {
+        switch (engineSettings.moleculeType) {
+            case PARTICLE: MoleculeFactory.multiParticle(e); break;
+            case GRAVITY_POINT: MoleculeFactory.multiGravityPoint(e, 4); break;
+            case EMITTER: MoleculeFactory.singleEmitter(e); break;
+            case FLUX: MoleculeFactory.multiFlux(e, 4); break;
+            case QED: MoleculeFactory.multiQED(e, 4); break;
+            case ION: MoleculeFactory.multiIon(e, 10); break;
+            case BLACK_HOLE: MoleculeFactory.singleBlackHole(e); break;
+            case DUPLEX: MoleculeFactory.singleDuplex(e); break;
+            case PORTAL: MoleculeFactory.singlePortal(e); break;
+        }
     }
 }

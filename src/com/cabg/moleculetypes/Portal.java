@@ -14,13 +14,13 @@ public class Portal extends Molecule {
     private void movePortal() {
         for (int i = 0, len = Portals.size(); i < len; i++) {
             Portal portal = Portals.get(i);
-            float dx = Mouse.x - portal.x;
-            float dy = Mouse.y - portal.y;
+            float dx = MouseVec.x - portal.x;
+            float dy = MouseVec.y - portal.y;
             float dist = (float) sqrt(dx * dx + dy * dy);
 
             if (engineSettings.controlKeyIsDown && dist < portal.radius) {
-                portal.x = Mouse.x;
-                portal.y = Mouse.y;
+                portal.x = MouseVec.x;
+                portal.y = MouseVec.y;
             }
         }
     }
@@ -57,7 +57,7 @@ public class Portal extends Molecule {
 
     public void update() {
         movePortal();
-        boundsCheck();
+        checkBounds();
         transferMatter();
     }
 }

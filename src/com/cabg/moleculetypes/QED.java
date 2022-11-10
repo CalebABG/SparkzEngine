@@ -53,7 +53,7 @@ public class QED extends Molecule {
 
     public void update() {
         accelerate();
-        boundsCheck();
+        checkBounds();
         particleType = (int) (random.nextFloat() * 11);
         if (--life < 0) {
             MoleculeFactory.fireworksMode(x, y, 2, 2, 30);

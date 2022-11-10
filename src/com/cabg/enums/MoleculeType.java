@@ -1,6 +1,6 @@
 package com.cabg.enums;
 
-public enum ParticleType {
+public enum MoleculeType {
     PARTICLE,
     GRAVITY_POINT,
     EMITTER,

@@ -6,7 +6,7 @@ import com.cabg.core.EngineSettings;
 import com.cabg.core.EngineThemes;
 import com.cabg.enums.EngineMode;
 import com.cabg.enums.GravitationMode;
-import com.cabg.enums.ParticleType;
+import com.cabg.enums.MoleculeType;
 import com.cabg.gui.*;
 
 import javax.swing.*;
@@ -14,20 +14,18 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.cabg.core.EngineMethods.createEngineInstructionsWindow;
-import static com.cabg.core.EngineMethods.createGraphInstructionsWindow;
-import static com.cabg.core.EngineVariables.EFrame;
+import static com.cabg.core.EngineVariables.eFrame;
 import static com.cabg.core.EngineVariables.engineSettings;
 
 public class CMenuBar extends JMenuBar {
-    public Color bgColor = new Color(20, 23, 25).brighter();
+    public static Color bgColor = new Color(20, 23, 25).brighter();
     private static JMenuItem enginePauseMenuItem;
     private static final Font font1 = new Font(Font.SERIF, Font.PLAIN, 21);
     public static Font menuItemFont = new Font(Font.SERIF, Font.PLAIN, 18);
     public static ArrayList<JMenu> menus = new ArrayList<>();
     public static ArrayList<JMenuItem> menuItems = new ArrayList<>();
-    public static JRadioButtonMenuItem[] engineModesMenuItems, particleTypesMenuItems, gravitationModesMenuItems;
-    public static ButtonGroup particleModesGroup, particleTypesGroup, particleGravitationGroup;
+    public static JRadioButtonMenuItem[] engineModesMenuItems, moleculeTypesMenuItems, gravitationModesMenuItems;
+    public static ButtonGroup engineModesGroup, moleculeTypesGroup, particleGravitationGroup;
 
     public CMenuBar() {
         try {
@@ -111,7 +109,7 @@ public class CMenuBar extends JMenuBar {
         menuItems.add(particleGraphUI);
 
         JMenuItem vphysicseditor = new JMenuItem("Physics Editor");
-        vphysicseditor.addActionListener(e -> BackgroundThread.run(() -> PhysicsEditor.getInstance(EFrame)));
+        vphysicseditor.addActionListener(e -> BackgroundThread.run(PhysicsEditor::getInstance));
         mnUIWindows.add(vphysicseditor);
         menuItems.add(vphysicseditor);
 
@@ -123,12 +121,12 @@ public class CMenuBar extends JMenuBar {
         this.add(Box.createHorizontalStrut(11));
 
         JMenuItem customForces = new JMenuItem("Organic Forces Editor");
-        customForces.addActionListener(e -> BackgroundThread.run(() -> OrganicForcesEditor.getInstance(EFrame)));
+        customForces.addActionListener(e -> BackgroundThread.run(OrganicForcesEditor::getInstance));
         mnUIWindows.add(customForces);
         menuItems.add(customForces);
 
         JMenuItem flowfieldUI = new JMenuItem("Flow Field Editor");
-        flowfieldUI.addActionListener(e -> BackgroundThread.run(() -> FlowFieldEditor.getInstance(EFrame)));
+        flowfieldUI.addActionListener(e -> BackgroundThread.run(FlowFieldEditor::getInstance));
         mnUIWindows.add(flowfieldUI);
         menuItems.add(flowfieldUI);
         //Windows End
@@ -136,7 +134,7 @@ public class CMenuBar extends JMenuBar {
         setUpModes();
         menuItems.addAll(Arrays.asList(gravitationModesMenuItems));
         menuItems.addAll(Arrays.asList(engineModesMenuItems));
-        menuItems.addAll(Arrays.asList(particleTypesMenuItems));
+        menuItems.addAll(Arrays.asList(moleculeTypesMenuItems));
 
         this.add(Box.createHorizontalStrut(11));
 
@@ -146,10 +144,10 @@ public class CMenuBar extends JMenuBar {
         this.add(mnSettings);
         menus.add(mnSettings);
 
-        enginePauseMenuItem = new JMenuItem(isPaused());
+        enginePauseMenuItem = new JMenuItem(enginePauseStatus());
         enginePauseMenuItem.addActionListener(e -> {
             engineSettings.togglePause();
-            enginePauseMenuItem.setText(isPaused());
+            enginePauseMenuItem.setText(enginePauseStatus());
             EngineMethods.setEngineTitle();
         });
         mnSettings.add(enginePauseMenuItem);
@@ -240,12 +238,12 @@ public class CMenuBar extends JMenuBar {
         menus.add(mnHelp);
 
         JMenuItem helpInstructions = new JMenuItem("Engine Instructions");
-        helpInstructions.addActionListener(e -> createEngineInstructionsWindow(EFrame));
+        helpInstructions.addActionListener(e -> InstructionsWindow.createEngineInstructionsWindow(eFrame));
         mnHelp.add(helpInstructions);
         menuItems.add(helpInstructions);
 
         JMenuItem helpGraphInstructions = new JMenuItem("Graph Instructions");
-        helpGraphInstructions.addActionListener(e -> createGraphInstructionsWindow(EFrame));
+        helpGraphInstructions.addActionListener(e -> InstructionsWindow.createGraphInstructionsWindow(eFrame));
         mnHelp.add(helpGraphInstructions);
         this.add(mnHelp);
         menuItems.add(helpGraphInstructions);
@@ -288,39 +286,39 @@ public class CMenuBar extends JMenuBar {
         this.add(modes);
         menus.add(modes);
 
-        JMenu particleModes = new JMenu("Particle Modes");
-        particleModes.getPopupMenu().setBorder(BorderFactory.createLineBorder(bgColor.darker()));
-        particleModes.setOpaque(true); //Have to set opaque inside another menu
-        menuItems.add(particleModes);
+        JMenu engineModes = new JMenu("Engine Modes");
+        engineModes.getPopupMenu().setBorder(BorderFactory.createLineBorder(bgColor.darker()));
+        engineModes.setOpaque(true); //Have to set opaque inside another menu
+        menuItems.add(engineModes);
 
-        particleModesGroup = new ButtonGroup();
+        engineModesGroup = new ButtonGroup();
 
         engineModesMenuItems = new JRadioButtonMenuItem[5];
 
         engineModesMenuItems[0] = new JRadioButtonMenuItem("Normal Mode");
         engineModesMenuItems[0].setActionCommand("0");
-        particleModesGroup.add(engineModesMenuItems[0]);
-        particleModes.add(engineModesMenuItems[0]);
+        engineModesGroup.add(engineModesMenuItems[0]);
+        engineModes.add(engineModesMenuItems[0]);
 
         engineModesMenuItems[1] = new JRadioButtonMenuItem("Multi Mode");
         engineModesMenuItems[1].setActionCommand("1");
-        particleModesGroup.add(engineModesMenuItems[1]);
-        particleModes.add(engineModesMenuItems[1]);
+        engineModesGroup.add(engineModesMenuItems[1]);
+        engineModes.add(engineModesMenuItems[1]);
 
         engineModesMenuItems[2] = new JRadioButtonMenuItem("Fireworks Mode");
         engineModesMenuItems[2].setActionCommand("2");
-        particleModesGroup.add(engineModesMenuItems[2]);
-        particleModes.add(engineModesMenuItems[2]);
+        engineModesGroup.add(engineModesMenuItems[2]);
+        engineModes.add(engineModesMenuItems[2]);
 
         engineModesMenuItems[3] = new JRadioButtonMenuItem("Graph Mode");
         engineModesMenuItems[3].setActionCommand("3");
-        particleModesGroup.add(engineModesMenuItems[3]);
-        particleModes.add(engineModesMenuItems[3]);
+        engineModesGroup.add(engineModesMenuItems[3]);
+        engineModes.add(engineModesMenuItems[3]);
 
         engineModesMenuItems[4] = new JRadioButtonMenuItem("Ragdoll Mode");
         engineModesMenuItems[4].setActionCommand("4");
-        particleModesGroup.add(engineModesMenuItems[4]);
-        particleModes.add(engineModesMenuItems[4]);
+        engineModesGroup.add(engineModesMenuItems[4]);
+        engineModes.add(engineModesMenuItems[4]);
 
         for (JRadioButtonMenuItem b : engineModesMenuItems) {
             if (Integer.parseInt(b.getActionCommand()) == engineSettings.engineMode.ordinal()) {
@@ -329,76 +327,76 @@ public class CMenuBar extends JMenuBar {
             }
         }
         for (JRadioButtonMenuItem b : engineModesMenuItems) {
-            b.addActionListener(e -> engineSettings.engineMode = EngineMode.values()[Integer.parseInt(particleModesGroup.getSelection().getActionCommand())]);
+            b.addActionListener(e -> engineSettings.engineMode = EngineMode.values()[Integer.parseInt(engineModesGroup.getSelection().getActionCommand())]);
         }
 
-        modes.add(particleModes);
+        modes.add(engineModes);
 
-        JMenu particleTypes = new JMenu("Particle Types");
-        particleTypes.getPopupMenu().setBorder(BorderFactory.createLineBorder(bgColor.darker()));
-        particleTypes.setOpaque(true); //Have to set opaque inside another menu
-        menuItems.add(particleTypes);
+        JMenu moleculeTypes = new JMenu("Molecule Types");
+        moleculeTypes.getPopupMenu().setBorder(BorderFactory.createLineBorder(bgColor.darker()));
+        moleculeTypes.setOpaque(true); //Have to set opaque inside another menu
+        menuItems.add(moleculeTypes);
 
-        particleTypesGroup = new ButtonGroup();
+        moleculeTypesGroup = new ButtonGroup();
 
-        particleTypesMenuItems = new JRadioButtonMenuItem[9];
+        moleculeTypesMenuItems = new JRadioButtonMenuItem[9];
 
-        particleTypesMenuItems[0] = new JRadioButtonMenuItem("Particle");
-        particleTypesMenuItems[0].setActionCommand("0");
-        particleTypesGroup.add(particleTypesMenuItems[0]);
-        particleTypes.add(particleTypesMenuItems[0]);
+        moleculeTypesMenuItems[0] = new JRadioButtonMenuItem("Particle");
+        moleculeTypesMenuItems[0].setActionCommand("0");
+        moleculeTypesGroup.add(moleculeTypesMenuItems[0]);
+        moleculeTypes.add(moleculeTypesMenuItems[0]);
 
-        particleTypesMenuItems[1] = new JRadioButtonMenuItem("Gravity Point");
-        particleTypesMenuItems[1].setActionCommand("1");
-        particleTypesGroup.add(particleTypesMenuItems[1]);
-        particleTypes.add(particleTypesMenuItems[1]);
+        moleculeTypesMenuItems[1] = new JRadioButtonMenuItem("Gravity Point");
+        moleculeTypesMenuItems[1].setActionCommand("1");
+        moleculeTypesGroup.add(moleculeTypesMenuItems[1]);
+        moleculeTypes.add(moleculeTypesMenuItems[1]);
 
-        particleTypesMenuItems[2] = new JRadioButtonMenuItem("Emitter");
-        particleTypesMenuItems[2].setActionCommand("2");
-        particleTypesGroup.add(particleTypesMenuItems[2]);
-        particleTypes.add(particleTypesMenuItems[2]);
+        moleculeTypesMenuItems[2] = new JRadioButtonMenuItem("Emitter");
+        moleculeTypesMenuItems[2].setActionCommand("2");
+        moleculeTypesGroup.add(moleculeTypesMenuItems[2]);
+        moleculeTypes.add(moleculeTypesMenuItems[2]);
 
-        particleTypesMenuItems[3] = new JRadioButtonMenuItem("Flux");
-        particleTypesMenuItems[3].setActionCommand("3");
-        particleTypesGroup.add(particleTypesMenuItems[3]);
-        particleTypes.add(particleTypesMenuItems[3]);
+        moleculeTypesMenuItems[3] = new JRadioButtonMenuItem("Flux");
+        moleculeTypesMenuItems[3].setActionCommand("3");
+        moleculeTypesGroup.add(moleculeTypesMenuItems[3]);
+        moleculeTypes.add(moleculeTypesMenuItems[3]);
 
-        particleTypesMenuItems[4] = new JRadioButtonMenuItem("Q.E.D");
-        particleTypesMenuItems[4].setActionCommand("4");
-        particleTypesGroup.add(particleTypesMenuItems[4]);
-        particleTypes.add(particleTypesMenuItems[4]);
+        moleculeTypesMenuItems[4] = new JRadioButtonMenuItem("Q.E.D");
+        moleculeTypesMenuItems[4].setActionCommand("4");
+        moleculeTypesGroup.add(moleculeTypesMenuItems[4]);
+        moleculeTypes.add(moleculeTypesMenuItems[4]);
 
-        particleTypesMenuItems[5] = new JRadioButtonMenuItem("Ion");
-        particleTypesMenuItems[5].setActionCommand("5");
-        particleTypesGroup.add(particleTypesMenuItems[5]);
-        particleTypes.add(particleTypesMenuItems[5]);
+        moleculeTypesMenuItems[5] = new JRadioButtonMenuItem("Ion");
+        moleculeTypesMenuItems[5].setActionCommand("5");
+        moleculeTypesGroup.add(moleculeTypesMenuItems[5]);
+        moleculeTypes.add(moleculeTypesMenuItems[5]);
 
-        particleTypesMenuItems[6] = new JRadioButtonMenuItem("Black Hole");
-        particleTypesMenuItems[6].setActionCommand("6");
-        particleTypesGroup.add(particleTypesMenuItems[6]);
-        particleTypes.add(particleTypesMenuItems[6]);
+        moleculeTypesMenuItems[6] = new JRadioButtonMenuItem("Black Hole");
+        moleculeTypesMenuItems[6].setActionCommand("6");
+        moleculeTypesGroup.add(moleculeTypesMenuItems[6]);
+        moleculeTypes.add(moleculeTypesMenuItems[6]);
 
-        particleTypesMenuItems[7] = new JRadioButtonMenuItem("Duplex");
-        particleTypesMenuItems[7].setActionCommand("7");
-        particleTypesGroup.add(particleTypesMenuItems[7]);
-        particleTypes.add(particleTypesMenuItems[7]);
+        moleculeTypesMenuItems[7] = new JRadioButtonMenuItem("Duplex");
+        moleculeTypesMenuItems[7].setActionCommand("7");
+        moleculeTypesGroup.add(moleculeTypesMenuItems[7]);
+        moleculeTypes.add(moleculeTypesMenuItems[7]);
 
-        particleTypesMenuItems[8] = new JRadioButtonMenuItem("Portal");
-        particleTypesMenuItems[8].setActionCommand("8");
-        particleTypesGroup.add(particleTypesMenuItems[8]);
-        particleTypes.add(particleTypesMenuItems[8]);
+        moleculeTypesMenuItems[8] = new JRadioButtonMenuItem("Portal");
+        moleculeTypesMenuItems[8].setActionCommand("8");
+        moleculeTypesGroup.add(moleculeTypesMenuItems[8]);
+        moleculeTypes.add(moleculeTypesMenuItems[8]);
 
-        for (JRadioButtonMenuItem b : particleTypesMenuItems) {
-            if (Integer.parseInt(b.getActionCommand()) == engineSettings.particleType.ordinal()) {
+        for (JRadioButtonMenuItem b : moleculeTypesMenuItems) {
+            if (Integer.parseInt(b.getActionCommand()) == engineSettings.moleculeType.ordinal()) {
                 b.setSelected(true);
                 break;
             }
         }
-        for (JRadioButtonMenuItem b : particleTypesMenuItems) {
-            b.addActionListener(e -> engineSettings.particleType = ParticleType.values()[Integer.parseInt(particleTypesGroup.getSelection().getActionCommand())]);
+        for (JRadioButtonMenuItem b : moleculeTypesMenuItems) {
+            b.addActionListener(e -> engineSettings.moleculeType = MoleculeType.values()[Integer.parseInt(moleculeTypesGroup.getSelection().getActionCommand())]);
         }
 
-        modes.add(particleTypes);
+        modes.add(moleculeTypes);
 
         JMenu gravitationModes = new JMenu("Gravitation Modes");
         gravitationModes.getPopupMenu().setBorder(BorderFactory.createLineBorder(bgColor.darker()));
@@ -472,8 +470,8 @@ public class CMenuBar extends JMenuBar {
         updateRadios(engineModesMenuItems, engineSettings.engineMode.ordinal());
     }
 
-    public static void updateParticleTypeRadios() {
-        updateRadios(particleTypesMenuItems, engineSettings.particleType.ordinal());
+    public static void updateMoleculeTypeRadios() {
+        updateRadios(moleculeTypesMenuItems, engineSettings.moleculeType.ordinal());
     }
 
     public static void updateGravitationModeRadios() {
@@ -492,16 +490,16 @@ public class CMenuBar extends JMenuBar {
     public static void updateAllRadios() {
         updateState();
         updateEngineModeRadios();
-        updateParticleTypeRadios();
+        updateMoleculeTypeRadios();
         updateGravitationModeRadios();
     }
 
-    private static String isPaused() {
+    private static String enginePauseStatus() {
         return engineSettings.paused ? "Resume Engine" : "Pause Engine";
     }
 
     public static void updateState() {
-        enginePauseMenuItem.setText(isPaused());
+        enginePauseMenuItem.setText(enginePauseStatus());
     }
 
     protected void paintComponent(Graphics g) {

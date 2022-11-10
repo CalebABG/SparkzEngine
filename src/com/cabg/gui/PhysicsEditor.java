@@ -3,12 +3,12 @@ package com.cabg.gui;
 import com.cabg.components.CLabel;
 import com.cabg.core.EngineMethods;
 import com.cabg.core.EngineVariables;
-import com.cabg.enums.PhysicsItemType;
 import com.cabg.enums.PhysicsEditorMode;
+import com.cabg.enums.PhysicsItemType;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
 import com.cabg.utilities.InputUtil;
 import com.cabg.verlet.Edge;
-import com.cabg.verlet.PhysicsHandler;
+import com.cabg.verlet.Physics;
 import com.cabg.verlet.Vertex;
 
 import javax.swing.*;
@@ -17,28 +17,27 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import static com.cabg.core.EngineVariables.eFrame;
 import static com.cabg.core.EngineVariables.engineSettings;
-import static com.cabg.verlet.PhysicsHandler.selectedVertex;
 
 public class PhysicsEditor {
-    public static PhysicsEditor physicsEditor = null;
-    public static JFrame frame;
+    public static PhysicsEditor instance = null;
+    private static JFrame frame;
 
     public static PhysicsEditorMode EDITOR_MODE = PhysicsEditorMode.Add;
     public static PhysicsItemType ITEM_TYPE = PhysicsItemType.Point;
 
     private static final Font font = new Font(Font.SERIF, Font.PLAIN, 14);
-    public static JButton btnSetSimulationProperties, btnSetProperties, btnSetConstraints;
-    public static CLabel pointColorPanel, linkColorPanel, lblSelectionColor, lblConstraintLink;
+    private static CLabel pointColorPanel, linkColorPanel, lblSelectionColor, lblConstraintLink;
 
-    public static DefaultListModel<Integer> listModel = new DefaultListModel<>();
+    private static final DefaultListModel<Integer> constraintsListModel = new DefaultListModel<>();
     public static JCheckBox showSelectionConstraintCheckbox = new JCheckBox("Show Constraint"),
             constraintDrawLinkCheckbox = new JCheckBox("Draw Link"),
             constraintSeverableCheckbox = new JCheckBox("Severable"),
             selectionShowPointCheckbox = new JCheckBox("Show Point"),
             selectionCollidableCheckbox = new JCheckBox("Collidable");
 
-    public static JList<Integer> constraintsList = new JList<>(listModel);
+    public static JList<Integer> constraintsList = new JList<>(constraintsListModel);
     public static JComboBox<PhysicsEditorMode> editorModesJComboBox = new JComboBox<>();
     public static JComboBox<PhysicsItemType> creationModesJComboBox = new JComboBox<>();
     public static JTextField simAccField = new JTextField(10),
@@ -59,12 +58,12 @@ public class PhysicsEditor {
             constraintStiffnessField = new JTextField(10),
             constraintTearDistanceField = new JTextField(10);
 
-    public static void getInstance(JFrame p) {
-        if (physicsEditor == null) physicsEditor = new PhysicsEditor(p);
+    public static void getInstance() {
+        if (instance == null) instance = new PhysicsEditor(eFrame);
         frame.toFront();
     }
 
-    public PhysicsEditor(JFrame parent) {
+    private PhysicsEditor(JFrame parent) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
@@ -117,8 +116,8 @@ public class PhysicsEditor {
         toolbarPanel.add(editorModesJComboBox, gbc_editormode_combobox);
 
         JCheckBox gravitycheckbox = new JCheckBox("Zero Gravity");
-        gravitycheckbox.setSelected(PhysicsHandler.ZERO_GRAVITY);
-        gravitycheckbox.addActionListener(e -> PhysicsHandler.toggleGravity());
+        gravitycheckbox.setSelected(Physics.ZERO_GRAVITY);
+        gravitycheckbox.addActionListener(e -> Physics.toggleGravity());
         gravitycheckbox.setToolTipText("Toggles Gravity");
         gravitycheckbox.setFont(font);
         GridBagConstraints gbc_gravitycheckbox = new GridBagConstraints();
@@ -128,8 +127,8 @@ public class PhysicsEditor {
         toolbarPanel.add(gravitycheckbox, gbc_gravitycheckbox);
 
         JCheckBox debugcheckbox = new JCheckBox("Debug");
-        debugcheckbox.setSelected(PhysicsHandler.DEBUG_MODE);
-        debugcheckbox.addActionListener(e -> PhysicsHandler.toggleDebug());
+        debugcheckbox.setSelected(Physics.DEBUG_MODE);
+        debugcheckbox.addActionListener(e -> Physics.toggleDebug());
         debugcheckbox.setToolTipText("Toggles Debug Mode");
         debugcheckbox.setFont(font);
         GridBagConstraints gbc_debugcheckbox = new GridBagConstraints();
@@ -140,7 +139,7 @@ public class PhysicsEditor {
 
         JCheckBox chckbxSmoothing = new JCheckBox("Smoothing");
         chckbxSmoothing.setSelected(engineSettings.smoothRenderingEnabled);
-        chckbxSmoothing.addActionListener(e -> EngineMethods.toggleGraphicsSmoothing());
+        chckbxSmoothing.addActionListener(e -> engineSettings.toggleGraphicsSmoothing());
         chckbxSmoothing.setToolTipText("Toggles Graphics Smoothing");
         chckbxSmoothing.setFont(font);
         GridBagConstraints gbc_chckbxSmoothing = new GridBagConstraints();
@@ -173,7 +172,7 @@ public class PhysicsEditor {
         gbc_simacc_label.gridy = 0;
         simproperties_panel.add(simacc_label, gbc_simacc_label);
 
-        simAccField.setText("" + PhysicsHandler.SIM_ACCURACY);
+        simAccField.setText("" + Physics.SIM_ACCURACY);
         simAccField.setHorizontalAlignment(SwingConstants.CENTER);
         simAccField.setFont(font);
         GridBagConstraints gbc_simacc_field = new GridBagConstraints();
@@ -195,7 +194,7 @@ public class PhysicsEditor {
         gbc_dragforce_label.gridy = 2;
         simproperties_panel.add(dragforce_label, gbc_dragforce_label);
 
-        dragForceField.setText("" + PhysicsHandler.dragForce);
+        dragForceField.setText("" + Physics.DRAG_FORCE);
         dragForceField.setHorizontalAlignment(SwingConstants.CENTER);
         dragForceField.setFont(font);
 
@@ -217,7 +216,7 @@ public class PhysicsEditor {
         gbc_gravity_label.gridy = 4;
         simproperties_panel.add(gravity_label, gbc_gravity_label);
 
-        gravityField.setText("" + PhysicsHandler.gravity);
+        gravityField.setText("" + Physics.GRAVITY);
         gravityField.setHorizontalAlignment(SwingConstants.CENTER);
         gravityField.setFont(font);
 
@@ -239,7 +238,7 @@ public class PhysicsEditor {
         gbc_airviscosity_label.gridy = 6;
         simproperties_panel.add(airviscosity_label, gbc_airviscosity_label);
 
-        airViscosityField.setText("" + PhysicsHandler.airViscosity);
+        airViscosityField.setText("" + Physics.AIR_VISCOSITY);
         airViscosityField.setHorizontalAlignment(SwingConstants.CENTER);
         airViscosityField.setFont(font);
 
@@ -251,7 +250,7 @@ public class PhysicsEditor {
         gbc_airviscosity_field.gridy = 7;
         simproperties_panel.add(airViscosityField, gbc_airviscosity_field);
 
-        btnSetSimulationProperties = new JButton("Set Simulation Properties");
+        JButton btnSetSimulationProperties = new JButton("Set Simulation Properties");
         btnSetSimulationProperties.addActionListener(e -> setSimulationProperties());
         btnSetSimulationProperties.setFont(font);
         GridBagConstraints gbc_btnSetSimulationProperties = new GridBagConstraints();
@@ -637,7 +636,7 @@ public class PhysicsEditor {
         gbc_objectstiffness_field.gridy = 3;
         selection_panel.add(selectionStiffnessField, gbc_objectstiffness_field);
 
-        btnSetProperties = new JButton("Set Object Properties");
+        JButton btnSetProperties = new JButton("Set Object Properties");
         btnSetProperties.setFont(font);
         btnSetProperties.addActionListener(e -> setObjectProperties());
         GridBagConstraints gbc_objectsetproperties_button = new GridBagConstraints();
@@ -780,7 +779,7 @@ public class PhysicsEditor {
         gbc_textField_1.gridy = 3;
         panel.add(constraintTearDistanceField, gbc_textField_1);
 
-        JLabel constraint_link_color_label = new JLabel("Link Color(Click to Change)");
+        JLabel constraint_link_color_label = new JLabel("Link Color (Click to Change)");
         constraint_link_color_label.setFont(font);
         GridBagConstraints gbc_label_3 = new GridBagConstraints();
         gbc_label_3.fill = GridBagConstraints.VERTICAL;
@@ -806,7 +805,7 @@ public class PhysicsEditor {
         gbc_panel_1.gridy = 4;
         panel.add(lblConstraintLink, gbc_panel_1);
 
-        btnSetConstraints = new JButton("Set Constraint Properties");
+        JButton btnSetConstraints = new JButton("Set Constraint Properties");
         btnSetConstraints.addActionListener(e -> setObjectConstraints());
         btnSetConstraints.setFont(font);
         GridBagConstraints gbc_button = new GridBagConstraints();
@@ -816,67 +815,75 @@ public class PhysicsEditor {
         gbc_button.gridy = 5;
         panel.add(btnSetConstraints, gbc_button);
 
-        if (selectedVertex != null) setObjectPropertiesOnSelect(selectedVertex);
-
         frame.setVisible(true);
     }
 
+    public static void changeItemType(boolean advance) {
+        PhysicsEditor.ITEM_TYPE = EngineMethods.getMode(PhysicsEditor.ITEM_TYPE, advance);
+        PhysicsEditor.creationModesJComboBox.setSelectedItem(PhysicsEditor.ITEM_TYPE);
+    }
+
+    public static void setEditorMode(PhysicsEditorMode editorMode) {
+        PhysicsEditor.EDITOR_MODE = editorMode;
+        PhysicsEditor.editorModesJComboBox.setSelectedItem(editorMode);
+    }
+
     private void setObjectProperties() {
-        if (selectedVertex != null) {
-            String rad = selectionRadiusField.getText();
-            String mass = selectionMassField.getText();
-            String dampening = selectionDampeningField.getText();
-            String stiffness = selectionStiffnessField.getText();
+        if (Physics.selectedVertex == null) return;
 
-            selectedVertex.collidable = selectionCollidableCheckbox.isSelected();
-            selectedVertex.color = lblSelectionColor.getBackground();
+        String rad = selectionRadiusField.getText();
+        String mass = selectionMassField.getText();
+        String dampening = selectionDampeningField.getText();
+        String stiffness = selectionStiffnessField.getText();
 
-            if (InputUtil.canParseStringFloat(rad)) selectedVertex.radius = Float.parseFloat(rad);
-            if (InputUtil.canParseStringFloat(mass)) selectedVertex.mass = Float.parseFloat(mass);
-            if (InputUtil.canParseStringFloat(dampening)) selectedVertex.damping = Float.parseFloat(dampening);
-            if (InputUtil.canParseStringFloat(stiffness)) selectedVertex.stiffness = Float.parseFloat(stiffness);
-        }
+        Physics.selectedVertex.color = lblSelectionColor.getBackground();
+        Physics.selectedVertex.collidable = selectionCollidableCheckbox.isSelected();
+
+        if (InputUtil.canParseStringFloat(rad)) Physics.selectedVertex.radius = Float.parseFloat(rad);
+        if (InputUtil.canParseStringFloat(mass)) Physics.selectedVertex.mass = Float.parseFloat(mass);
+        if (InputUtil.canParseStringFloat(dampening)) Physics.selectedVertex.damping = Float.parseFloat(dampening);
+        if (InputUtil.canParseStringFloat(stiffness)) Physics.selectedVertex.stiffness = Float.parseFloat(stiffness);
     }
 
     private void setObjectConstraints() {
-        if (selectedVertex != null) {
-            String cStiffness = constraintStiffnessField.getText();
-            String cTeardist = constraintTearDistanceField.getText();
+        if (Physics.selectedVertex == null) return;
 
-            List<Integer> selectedValues = constraintsList.getSelectedValuesList();
+        String cStiffness = constraintStiffnessField.getText();
+        String cTeardist = constraintTearDistanceField.getText();
 
-            if (!selectedValues.isEmpty()) {
-                for (int i = 0; i < selectedValues.size(); i++) {
-                    Edge edge = selectedVertex.edges.get(selectedValues.get(i));
+        List<Integer> constraintList = constraintsList.getSelectedValuesList();
 
-                    edge.render = constraintDrawLinkCheckbox.isSelected();
-                    edge.severable = constraintSeverableCheckbox.isSelected();
-                    edge.color = lblConstraintLink.getBackground();
-                    edge.stiffness = InputUtil.floatTextFieldGuardDefault(0.0f, edge.stiffness, cStiffness);
-                    edge.tearDistance = InputUtil.floatTextFieldGuardDefault(0.0f, edge.tearDistance, cTeardist);
-                }
+        if (!constraintList.isEmpty()) {
+            for (int i = 0; i < constraintList.size(); i++) {
+                Edge edge = Physics.selectedVertex.edges.get(constraintList.get(i));
+
+                edge.render = constraintDrawLinkCheckbox.isSelected();
+                edge.severable = constraintSeverableCheckbox.isSelected();
+                edge.color = lblConstraintLink.getBackground();
+                edge.stiffness = InputUtil.floatTextFieldGuardDefault(0.0f, edge.stiffness, cStiffness);
+                edge.tearDistance = InputUtil.floatTextFieldGuardDefault(0.0f, edge.tearDistance, cTeardist);
             }
         }
     }
 
-    public static void unsetObjectPropertiesOnDeselect() {
-        if (physicsEditor != null) {
-            selectionDampeningField.setText("");
-            selectionMassField.setText("");
-            selectionRadiusField.setText("");
-            selectionStiffnessField.setText("");
-        }
+    public static void unsetObjectProperties() {
+        if (instance == null) return;
+
+        selectionDampeningField.setText("");
+        selectionMassField.setText("");
+        selectionRadiusField.setText("");
+        selectionStiffnessField.setText("");
     }
 
-    public static void setObjectPropertiesOnSelect(Vertex v) {
-        if (physicsEditor != null) {
-            lblSelectionColor.setBackground(v.color);
-            selectionCollidableCheckbox.setSelected(v.collidable);
-            selectionDampeningField.setText("" + v.damping);
-            selectionMassField.setText("" + v.mass);
-            selectionRadiusField.setText("" + v.radius);
-            selectionStiffnessField.setText("" + v.stiffness);
-        }
+    public static void setObjectProperties(Vertex v) {
+        if (instance == null) return;
+
+        lblSelectionColor.setBackground(v.color);
+        selectionCollidableCheckbox.setSelected(v.collidable);
+        selectionDampeningField.setText("" + v.damping);
+        selectionMassField.setText("" + v.mass);
+        selectionRadiusField.setText("" + v.radius);
+        selectionStiffnessField.setText("" + v.stiffness);
     }
 
     private void setSimulationProperties() {
@@ -884,31 +891,27 @@ public class PhysicsEditor {
         String simacc = simAccField.getText(), dragforce = dragForceField.getText(),
                 grav = gravityField.getText(), airvis = airViscosityField.getText();
 
-        PhysicsHandler.SIM_ACCURACY = InputUtil.intTextFieldGuardDefault(1, PhysicsHandler.SIM_ACCURACY, simacc);
-        PhysicsHandler.dragForce = InputUtil.floatTextFieldGuardDefault(0.0f, PhysicsHandler.dragForce, dragforce);
-        PhysicsHandler.gravity = guardFloat(PhysicsHandler.gravity, grav);
-        PhysicsHandler.airViscosity = InputUtil.floatTextFieldGuardDefault(0.0f, PhysicsHandler.airViscosity, airvis);
-    }
-
-    private float guardFloat(float default_, String value) {
-        if (value.isEmpty()) return default_;
-        else return Float.parseFloat(value);
+        Physics.SIM_ACCURACY = InputUtil.intTextFieldGuardDefault(1, Physics.SIM_ACCURACY, simacc);
+        Physics.DRAG_FORCE = InputUtil.floatTextFieldGuardDefault(0.0f, Physics.DRAG_FORCE, dragforce);
+        Physics.GRAVITY = InputUtil.floatTextFieldGuardDefault(0.0f, Physics.GRAVITY , grav);
+        Physics.AIR_VISCOSITY = InputUtil.floatTextFieldGuardDefault(0.0f, Physics.AIR_VISCOSITY, airvis);
     }
 
     private void close() {
         frame.dispose();
-        physicsEditor = null;
+        instance = null;
     }
 
     public static void updateConstraintsList(List<Edge> edgeList) {
-        if (physicsEditor != null) {
-            listModel.clear();
-            if (edgeList != null && !edgeList.isEmpty()) {
-                for (int i = 0; i < edgeList.size(); i++) {
-                    listModel.addElement(i);
-                }
-                constraintsList.setSelectedIndex(0);
-            }
-        }
+        if (instance == null) return;
+
+        constraintsListModel.clear();
+
+        if (edgeList == null || edgeList.isEmpty()) return;
+
+        for (int i = 0; i < edgeList.size(); i++)
+            constraintsListModel.addElement(i);
+
+        constraintsList.setSelectedIndex(0);
     }
 }

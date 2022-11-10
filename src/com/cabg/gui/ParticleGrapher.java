@@ -3,7 +3,6 @@ package com.cabg.gui;
 import com.cabg.components.CTextField;
 import com.cabg.components.RButton;
 import com.cabg.components.RLabel;
-import com.cabg.core.EngineMethods;
 import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
@@ -78,7 +77,7 @@ public class ParticleGrapher {
         frame.setSize(460, 280);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(e -> close()));
-        frame.setLocationRelativeTo(EFrame);
+        frame.setLocationRelativeTo(eFrame);
 
         JScrollPane scrollPane = new JScrollPane();
         frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -99,7 +98,7 @@ public class ParticleGrapher {
 
         JButton mnHelp = new JButton("Help");
         mnHelp.setFont(font);
-        mnHelp.addActionListener(e -> EngineMethods.createGraphInstructionsWindow(frame));
+        mnHelp.addActionListener(e -> InstructionsWindow.createGraphInstructionsWindow(frame));
         menuBar.add(mnHelp);
 
         JButton sampleFunctions = new JButton("Samples");

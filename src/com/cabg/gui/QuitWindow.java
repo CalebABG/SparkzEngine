@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static com.cabg.core.EngineVariables.EFrame;
+import static com.cabg.core.EngineVariables.eFrame;
 
 public class QuitWindow {
     private static QuitWindow exitScreen = null;
@@ -31,7 +31,7 @@ public class QuitWindow {
         frame.setSize(350, 80);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
-        frame.setLocationRelativeTo(EFrame);
+        frame.setLocationRelativeTo(eFrame);
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(22, 22, 22));

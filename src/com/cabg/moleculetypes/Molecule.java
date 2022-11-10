@@ -1,12 +1,13 @@
 package com.cabg.moleculetypes;
 
 import com.cabg.core.EngineEntity;
+import com.cabg.reactivecolors.ReactiveColors;
 
 import java.awt.*;
 
-import static com.cabg.core.EngineVariables.canvas;
 import static com.cabg.core.EngineVariables.random;
-import static com.cabg.verlet.Vec2.clamp;
+import static com.cabg.core.EngineVariables.*;
+import static com.cabg.utilities.MathUtil.clamp;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public abstract class Molecule implements EngineEntity {
@@ -62,7 +63,7 @@ public abstract class Molecule implements EngineEntity {
         ay = 0.0f;
     }
 
-    public void boundsCheck() {
+    public void checkBounds() {
         if (x - radius < 0) {
             x = 2 * radius - x;
             vx = -vx;
@@ -93,6 +94,12 @@ public abstract class Molecule implements EngineEntity {
 
         ax = forceX;
         ay = forceY;
+    }
+
+    public Color getReactiveColor() {
+        return engineSettings.reactiveColorsEnabled
+                ? ReactiveColors.getReactiveComponent(velocity())
+                : PLAIN_COLOR;
     }
 
     public float length() {

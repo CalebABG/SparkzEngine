@@ -46,4 +46,9 @@ public class ReactiveColorsRandomizer {
         int index = random.nextInt(EngineSettings.savedReactiveColors.size());
         ReactiveColors.setPresetColors(ColorUtil.convertColors(index, EngineSettings.savedReactiveColors), ReactiveColors.getComponents());
     }
+
+    public static void restartCycle() {
+        stopCycle();
+        startCycle();
+    }
 }

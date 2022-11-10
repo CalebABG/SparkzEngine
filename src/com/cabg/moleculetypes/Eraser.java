@@ -36,7 +36,7 @@ public class Eraser extends Molecule {
 
     public void update() {
         accelerate();
-        boundsCheck();
+        checkBounds();
         destroy();
         if (--life < 0) {
             MoleculeFactory.fireworksMode(x, y, 2, 5, 30);
