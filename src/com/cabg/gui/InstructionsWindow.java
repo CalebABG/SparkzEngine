@@ -1,5 +1,6 @@
 package com.cabg.gui;
 
+import com.cabg.core.EngineThemes;
 import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
@@ -34,11 +35,7 @@ public class InstructionsWindow {
     }
 
     private InstructionsWindow(int type, JFrame parent, int w, int h, String title, String instructions) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            ExceptionLogger.append(e);
-        }
+        EngineThemes.setLookAndFeel();
 
         frame = new JFrame(title);
         frame.setIconImage(EngineVariables.iconImage);

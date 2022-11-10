@@ -1,5 +1,6 @@
 package com.cabg.gui;
 
+import com.cabg.core.EngineThemes;
 import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
@@ -26,11 +27,8 @@ public class OrganicForcesEditor {
     }
 
     private OrganicForcesEditor(JFrame parent) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            ExceptionLogger.append(e);
-        }
+        EngineThemes.setLookAndFeel();
+
         frame = new JFrame("Organic Forces");
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(335, 354);

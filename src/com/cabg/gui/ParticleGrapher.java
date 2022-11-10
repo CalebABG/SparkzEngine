@@ -3,6 +3,7 @@ package com.cabg.gui;
 import com.cabg.components.CTextField;
 import com.cabg.components.RButton;
 import com.cabg.components.RLabel;
+import com.cabg.core.EngineThemes;
 import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
@@ -67,11 +68,8 @@ public class ParticleGrapher {
     }
 
     private ParticleGrapher() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            ExceptionLogger.append(e);
-        }
+        EngineThemes.setLookAndFeel();
+
         frame = new JFrame("Particle Graph Editor");
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(460, 280);

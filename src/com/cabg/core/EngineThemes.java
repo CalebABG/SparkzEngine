@@ -1,6 +1,7 @@
 package com.cabg.core;
 
 import com.cabg.components.CMenuBar;
+import com.cabg.gui.ExceptionLogger;
 import com.cabg.utilities.ColorUtil;
 
 import javax.swing.*;
@@ -64,6 +65,14 @@ public class EngineThemes {
         for (JMenuItem menuItem : CMenuBar.menuItems) {
             menuItem.setBackground(backgroundColor);
             menuItem.setForeground(foregroundColor);
+        }
+    }
+
+    public static void setLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            ExceptionLogger.append(e);
         }
     }
 }

@@ -2,6 +2,7 @@ package com.cabg.gui;
 
 import com.cabg.components.CLabel;
 import com.cabg.core.EngineSettings;
+import com.cabg.core.EngineThemes;
 import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
 import com.cabg.reactivecolors.ReactiveColors;
@@ -26,11 +27,8 @@ public class ReactiveColorsEditor {
     }
 
     private ReactiveColorsEditor() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            ExceptionLogger.append(e);
-        }
+        EngineThemes.setLookAndFeel();
+
         frame = new JFrame("Reactive Colors Editor");
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(950, 250);

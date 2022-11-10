@@ -1,6 +1,7 @@
 package com.cabg.gui;
 
 import com.cabg.core.EngineMethods;
+import com.cabg.core.EngineThemes;
 import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
@@ -24,11 +25,8 @@ public class OptionsMenu {
     }
 
     private OptionsMenu() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            ExceptionLogger.append(e);
-        }
+        EngineThemes.setLookAndFeel();
+
         frame = new JFrame("Options Menu");
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(495, 480);

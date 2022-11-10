@@ -28,11 +28,8 @@ public class CMenuBar extends JMenuBar {
     public static ButtonGroup engineModesGroup, moleculeTypesGroup, particleGravitationGroup;
 
     public CMenuBar() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            ExceptionLogger.append(e);
-        }
+        EngineThemes.setLookAndFeel();
+
         this.setBorder(BorderFactory.createLineBorder(bgColor, 1, false));
         this.add(Box.createHorizontalStrut(11));
 

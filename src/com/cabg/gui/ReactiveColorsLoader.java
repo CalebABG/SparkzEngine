@@ -1,6 +1,7 @@
 package com.cabg.gui;
 
 import com.cabg.core.EngineSettings;
+import com.cabg.core.EngineThemes;
 import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
 import com.cabg.components.CLabel;
@@ -23,11 +24,8 @@ public class ReactiveColorsLoader {
     }
 
     private ReactiveColorsLoader() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            ExceptionLogger.append(e);
-        }
+        EngineThemes.setLookAndFeel();
+
         frame = new JFrame();
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(523, 155);

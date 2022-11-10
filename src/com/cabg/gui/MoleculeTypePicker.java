@@ -1,5 +1,6 @@
 package com.cabg.gui;
 
+import com.cabg.core.EngineThemes;
 import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
@@ -23,11 +24,8 @@ public class MoleculeTypePicker {
     }
 
     private MoleculeTypePicker(int type, String title) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            ExceptionLogger.append(e);
-        }
+        EngineThemes.setLookAndFeel();
+
         frame = new JFrame(title);
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(320, 520);

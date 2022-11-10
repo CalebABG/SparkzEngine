@@ -1,6 +1,7 @@
 package com.cabg.gui;
 
 import com.cabg.components.CLabel;
+import com.cabg.core.EngineThemes;
 import com.cabg.core.EngineVariables;
 import com.cabg.enums.PhysicsEditorMode;
 import com.cabg.enums.PhysicsItemType;
@@ -64,11 +65,8 @@ public class PhysicsEditor {
     }
 
     private PhysicsEditor(JFrame parent) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            ExceptionLogger.append(e);
-        }
+        EngineThemes.setLookAndFeel();
+
         frame = new JFrame("Physics Editor");
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(568, 610);

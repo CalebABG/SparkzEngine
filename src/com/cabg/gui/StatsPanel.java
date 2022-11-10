@@ -2,6 +2,7 @@ package com.cabg.gui;
 
 import com.cabg.components.CLabel;
 import com.cabg.core.EngineMethods;
+import com.cabg.core.EngineThemes;
 import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
 
@@ -34,11 +35,8 @@ public class StatsPanel {
     }
 
     private StatsPanel() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            ExceptionLogger.append(e);
-        }
+        EngineThemes.setLookAndFeel();
+
         frame = new JFrame("Stats Panel");
         frame.setSize(730, 450);
         frame.setIconImage(EngineVariables.iconImage);
