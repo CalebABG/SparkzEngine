@@ -1,7 +1,8 @@
 package com.cabg.inputhandlers;
 
-import com.cabg.core.EngineMethods;
+import com.cabg.moleculehelpers.MoleculeFactory;
 import com.cabg.verlet.Physics;
+import com.cabg.verlet.PhysicsFactory;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -27,11 +28,17 @@ public class MouseButtonHandler extends MouseAdapter {
             case MouseEvent.BUTTON1: engineSettings.leftMouseButtonIsDown = false; break;
             case MouseEvent.BUTTON3: engineSettings.rightMouseButtonIsDown = false; break;
         }
-        Physics.resetDragVertex();
+        Physics.resetSelectedVertex();
     }
 
     public void mouseClicked(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1)
-            EngineMethods.handleLeftClick(e);
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            switch (engineSettings.engineMode) {
+                case NORMAL: MoleculeFactory.handleLeftClickNormal(e); break;
+                case MULTI: MoleculeFactory.handleLeftClickMulti(e); break;
+                case FIREWORKS: MoleculeFactory.handleLeftClickFireworksTarget(e); break;
+                case RAGDOLL: PhysicsFactory.handleLeftClick(e); break;
+            }
+        }
     }
 }

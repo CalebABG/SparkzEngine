@@ -23,10 +23,10 @@ public class Engine {
     static {
         //Uncomment for slight performance kick: will cause gui tearing
         //System.setProperty("sun.java2d.opengl", "True");
-        System.setProperty("sun.java2d.transaccel", "true");
-        System.setProperty("sun.java2d.ddforcevram", "true");
-        System.setProperty("apple.laf.useScreenMenuBar", "true");
-        System.setProperty("com.apple.macos.use-file-dialog-packages", "true");
+        System.setProperty("sun.java2d.transaccel", "True");
+        System.setProperty("sun.java2d.ddforcevram", "True");
+        System.setProperty("apple.laf.useScreenMenuBar", "True");
+        System.setProperty("com.apple.macos.use-file-dialog-packages", "True");
     }
 
     public Engine() {
@@ -37,7 +37,7 @@ public class Engine {
         }
         eFrame = new JFrame(title);
         eFrame.setIconImage(EngineVariables.iconImage);
-        eFrame.setSize(980, 680);
+        eFrame.setSize(736, 553);
         eFrame.setLocationRelativeTo(null);
         eFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         eFrame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> BackgroundThread.run(QuitWindow::getInstance)));

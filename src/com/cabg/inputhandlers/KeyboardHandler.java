@@ -28,7 +28,7 @@ public class KeyboardHandler extends KeyAdapter {
         }
 
         if (key == KeyEvent.VK_3 || key == KeyEvent.VK_NUMPAD3) {
-            EngineMethods.trimMoleculeLists();
+            EngineMethods.trimAllMoleculeLists();
         }
 
         if (key == KeyEvent.VK_SPACE) {
@@ -71,7 +71,7 @@ public class KeyboardHandler extends KeyAdapter {
         }
 
         if (key == KeyEvent.VK_4 || key == KeyEvent.VK_NUMPAD4) {
-            EngineMethods.updateEngineMode();
+            EngineMethods.advanceEngineMode();
         }
 
         if (key == KeyEvent.VK_5 || key == KeyEvent.VK_NUMPAD5) {
@@ -87,7 +87,7 @@ public class KeyboardHandler extends KeyAdapter {
         }
 
         if (key == KeyEvent.VK_8 || key == KeyEvent.VK_NUMPAD8) {
-            EngineMethods.togglePauseSimulation();
+            EngineMethods.togglePauseEngine();
         }
 
         if (key == KeyEvent.VK_9 || key == KeyEvent.VK_NUMPAD9) {
@@ -127,12 +127,8 @@ public class KeyboardHandler extends KeyAdapter {
         }
 
         if (key == KeyEvent.VK_C) {
-            if (engineSettings.engineMode == RAGDOLL) {
-                Physics.resetSelectedVertex();
-                Physics.clearItems();
-            } else {
-                EngineMethods.clearAllMoleculeLists();
-            }
+            if (engineSettings.engineMode == RAGDOLL) Physics.clearAllItems();
+            else EngineMethods.clearAllMoleculeLists();
         }
 
         if (key == KeyEvent.VK_LEFT) {

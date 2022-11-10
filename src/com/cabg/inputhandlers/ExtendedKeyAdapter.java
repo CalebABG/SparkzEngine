@@ -8,10 +8,6 @@ import java.util.function.Consumer;
 public class ExtendedKeyAdapter extends KeyAdapter {
     public Consumer<KeyEvent> releaseFunction, pressedFunction;
 
-    /**
-     * @param pressedFunction Lambda function for key press
-     * @param releaseFunction Lambda function for key release
-     */
     public ExtendedKeyAdapter(Consumer<KeyEvent> pressedFunction, Consumer<KeyEvent> releaseFunction) {
         this.pressedFunction = pressedFunction;
         this.releaseFunction = releaseFunction;
@@ -31,16 +27,13 @@ public class ExtendedKeyAdapter extends KeyAdapter {
         public KeyPressed(Consumer<KeyEvent> pressed) {
             this.pressed = pressed;
         }
-
-        public void keyTyped(KeyEvent e) {
-        }
+        public void keyTyped(KeyEvent e) {}
 
         public void keyPressed(KeyEvent e) {
             pressed.accept(e);
         }
 
-        public void keyReleased(KeyEvent e) {
-        }
+        public void keyReleased(KeyEvent e) {}
     }
 
     public static class KeyReleased implements KeyListener {
@@ -50,11 +43,9 @@ public class ExtendedKeyAdapter extends KeyAdapter {
             this.released = released;
         }
 
-        public void keyTyped(KeyEvent e) {
-        }
+        public void keyTyped(KeyEvent e) {}
 
-        public void keyPressed(KeyEvent e) {
-        }
+        public void keyPressed(KeyEvent e) {}
 
         public void keyReleased(KeyEvent e) {
             released.accept(e);

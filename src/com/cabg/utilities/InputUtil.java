@@ -8,20 +8,20 @@ import java.awt.*;
 import static com.cabg.utilities.HTMLUtil.HeadingTag;
 
 public class InputUtil {
-    public static boolean canParseStringInt(String input) {
+    public static boolean canParseInt(String input) {
         try {
             Integer.parseInt(input);
             return true;
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public static boolean canParseStringFloat(String input) {
+    public static boolean canParseFloat(String input) {
         try {
             Float.parseFloat(input);
             return true;
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -31,7 +31,7 @@ public class InputUtil {
         label.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
 
         String amount = JOptionPane.showInputDialog(OptionsMenu.frame, label, null, JOptionPane.PLAIN_MESSAGE);
-        float newAmount = (amount != null && amount.length() > 0 && canParseStringFloat(amount)) ? Float.parseFloat(amount) : defaultVal;
+        float newAmount = (amount != null && amount.length() > 0 && canParseFloat(amount)) ? Float.parseFloat(amount) : defaultVal;
         if (newAmount < min) {
             while (newAmount < min) {
                 amount = JOptionPane.showInputDialog(OptionsMenu.frame, HeadingTag(3, "Not Allowed, Enter an Amount > " + min));
@@ -46,7 +46,7 @@ public class InputUtil {
         label.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
 
         String amount = JOptionPane.showInputDialog(parent, label, null, JOptionPane.PLAIN_MESSAGE);
-        float newAmount = (amount != null && amount.length() > 0 && canParseStringFloat(amount)) ? Float.parseFloat(amount) : defaultVal;
+        float newAmount = (amount != null && amount.length() > 0 && canParseFloat(amount)) ? Float.parseFloat(amount) : defaultVal;
         if (newAmount < min) {
             while (newAmount < min) {
                 amount = JOptionPane.showInputDialog(parent, HeadingTag(3, "Not Allowed, Enter an Amount > " + min));
@@ -69,7 +69,7 @@ public class InputUtil {
         if (input == null || input.isEmpty()) {
             return defaultVal;
         } else {
-            if (canParseStringInt(input)) {
+            if (canParseInt(input)) {
                 if (Integer.parseInt(input) >= min) return Integer.parseInt(input);
                 else return defaultVal;
             } else return defaultVal;
@@ -80,7 +80,7 @@ public class InputUtil {
         if (input == null || input.isEmpty()) {
             return defaultVal;
         } else {
-            if (canParseStringFloat(input)) {
+            if (canParseFloat(input)) {
                 return (Float.parseFloat(input) >= min) ? Float.parseFloat(input) : defaultVal;
             } else {
                 return defaultVal;

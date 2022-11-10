@@ -69,11 +69,11 @@ public class MoleculeTypePicker {
         if (!textField.getText().isEmpty()) {
             try {
                 if (type == 0) {
-                    if (InputUtil.canParseStringInt(textField.getText())) {
+                    if (InputUtil.canParseInt(textField.getText())) {
                         MoleculeRenderOptions.particleOptions(Integer.parseInt(textField.getText()));
                     }
                 } else if (type == 1) {
-                    if (InputUtil.canParseStringInt(textField.getText())) {
+                    if (InputUtil.canParseInt(textField.getText())) {
                         MoleculeRenderOptions.fireworksOptions(Integer.parseInt(textField.getText()));
                     }
                 }

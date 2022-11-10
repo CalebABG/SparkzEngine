@@ -44,7 +44,6 @@ public class OptionsMenu {
         textField = new JTextField();
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setFont(new Font(Font.SERIF, Font.PLAIN, 17));
-        //Needs to be keyPressed() handler - keyReleased() will cause windows to display twice
         textField.addKeyListener(new ExtendedKeyAdapter.KeyPressed(e -> {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) getOption();
         }));
@@ -54,9 +53,7 @@ public class OptionsMenu {
         jButton1.setFont(new Font(Font.SERIF, Font.BOLD, 14));
         jButton1.setText("Enter");
         jButton1.addActionListener(e -> {
-            if (e.getSource() == jButton1) {
-                getOption();
-            }
+            if (e.getSource() == jButton1) getOption();
         });
         jPanel1.add(jButton1, BorderLayout.LINE_END);
 
@@ -73,8 +70,8 @@ public class OptionsMenu {
 
     private void getOption() {
         String text = textField.getText();
-        if (text != null)
-            if (InputUtil.canParseStringInt(text)) EngineMethods.handleMenuOptionsSelection(Integer.parseInt(text));
+        if (InputUtil.canParseInt(text))
+            EngineMethods.handleMenuOptionsSelection(Integer.parseInt(text));
     }
 
     private void close() {

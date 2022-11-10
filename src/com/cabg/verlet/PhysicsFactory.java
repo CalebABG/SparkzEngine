@@ -54,12 +54,12 @@ public class PhysicsFactory {
                     Vertex vertex = Vertices.get(i);
                     if (vertex.contains(e.getX(), e.getY())) {
                         selectedVertex = vertex;
-                        PhysicsEditor.setObjectProperties(selectedVertex);
+                        PhysicsEditor.setSelectedPhysicsItemUIFields(selectedVertex);
                         PhysicsEditor.updateConstraintsList(selectedVertex.edges);
                         break;
                     } else {
                         Physics.resetSelectedVertex();
-                        PhysicsEditor.unsetObjectProperties();
+                        PhysicsEditor.clearSelectedPhysicsItemUIFields();
                         PhysicsEditor.updateConstraintsList(null);
                     }
                 }
@@ -184,13 +184,13 @@ public class PhysicsFactory {
         for (int i = 0; i < numPoints; i++) {
             if (i == 0) {
                 Vertex p = new Vertex(startX, mY, rad, pc);
-                p.setPinned(true);
+                p.pin();
                 Vertices.add(p);
             } else {
                 Vertex lastVertex = Vertices.get(Vertices.size() - 1);
                 Vertex q = new Vertex(lastVertex.currX + spacing, lastVertex.currY, rad, pc);
                 Vertices.add(q);
-                if (i == numPoints - 1) q.setPinned(true);
+                if (i == numPoints - 1) q.pin();
                 lastVertex.attachTo(q, lastVertex.getDistance(q), stiffness, tearDistance, drawLinks, tear, lc);
             }
         }
@@ -211,7 +211,7 @@ public class PhysicsFactory {
                     p.attachTo(vertexList.get(vertexList.size() - 1), restingDistance, stiffness, tearDistance, drawLinks, tear, LC);
                 }
                 if (y == 0) {
-                    p.setPinned(true);
+                    p.pin();
                     p.color = SPC;
                 }
                 if (y != 0) {

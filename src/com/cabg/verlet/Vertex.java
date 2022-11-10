@@ -138,25 +138,23 @@ public class Vertex {
 
     public void draw() {
         if (!edges.isEmpty()) {
-            for (int i = 0; i < edges.size(); ++i)
+            for (int i = 0; i < edges.size(); i++)
                 edges.get(i).draw();
         }
 
-        if (this == Physics.dragVertex) {
+        if (this == Physics.selectedVertex && engineSettings.leftMouseButtonIsDown) {
             graphics2D.setColor(color);
             graphics2D.draw(new Line2D.Float(MouseVec.x, MouseVec.y, currX, currY));
             graphics2D.fill(new Ellipse2D.Float(currX - radius, currY - radius, 2 * radius, 2 * radius));
         }
 
+        graphics2D.setColor(color);
+        graphics2D.fill(new Ellipse2D.Float(currX - radius, currY - radius, 2 * radius, 2 * radius));
+
         if (this == Physics.selectedVertex && (selectionShowPointCheckbox != null && selectionShowPointCheckbox.isSelected())) {
-            graphics2D.setColor(color);
-            graphics2D.fill(new Ellipse2D.Float(currX - radius, currY - radius, 2 * radius, 2 * radius));
+            final float scale = 3.0f;
             graphics2D.setColor(Color.green);
-            float scale = 3.0f;
             graphics2D.draw(new Ellipse2D.Float(currX - ((scale / 2) * radius), currY - ((scale / 2) * radius), scale * radius, scale * radius));
-        } else {
-            graphics2D.setColor(color);
-            graphics2D.fill(new Ellipse2D.Float(currX - radius, currY - radius, 2 * radius, 2 * radius));
         }
     }
 

@@ -16,11 +16,9 @@ public class InstructionsWindow {
     private final int index;
     public JFrame frame;
 
-    public static void getInstance(int type, JFrame parent, int w, int h, String title, String instructions) {
-        if (windows[type] == null)
-            windows[type] = new InstructionsWindow(type, parent, w, h, title, instructions);
-
-        windows[type].frame.toFront();
+    private static void getInstance(int index, JFrame parent, int w, int h, String title, String instructions) {
+        if (windows[index] == null) windows[index] = new InstructionsWindow(index, parent, w, h, title, instructions);
+        windows[index].frame.toFront();
     }
 
     public static void createEngineInstructionsWindow(JFrame parent) {

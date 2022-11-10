@@ -4,7 +4,6 @@ import com.cabg.components.CMenuBar;
 import com.cabg.enums.GravitationMode;
 import com.cabg.enums.PhysicsEditorMode;
 import com.cabg.gui.*;
-import com.cabg.moleculehelpers.MoleculeFactory;
 import com.cabg.moleculetypes.Molecule;
 import com.cabg.moleculetypes.Particle;
 import com.cabg.reactivecolors.ReactiveColorsRandomizer;
@@ -13,11 +12,9 @@ import com.cabg.utilities.HTMLUtil;
 import com.cabg.utilities.InputUtil;
 import com.cabg.utilities.NotificationUtil;
 import com.cabg.verlet.Physics;
-import com.cabg.verlet.PhysicsFactory;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.util.List;
 
 import static com.cabg.core.EngineVariables.*;
@@ -27,15 +24,7 @@ import static com.cabg.utilities.HTMLUtil.HeadingTag;
 import static com.cabg.utilities.InputUtil.minValueGuard;
 
 public class EngineMethods {
-    public static void handleLeftClick(MouseEvent e) {
-        switch (engineSettings.engineMode) {
-            case NORMAL: MoleculeFactory.handleLeftClickNormal(e); break;
-            case MULTI: MoleculeFactory.handleLeftClickMulti(e); break;
-            case FIREWORKS: MoleculeFactory.handleLeftClickFireworksTarget(e); break;
-            case RAGDOLL: PhysicsFactory.handleLeftClick(e); break;
-        }
-    }
-
+    // Molecule Methods
     public static void setParticleSize(int size) {
         for (int i = 0; i < Particles.size(); i++)
             if (size > -1) Particles.get(i).radius = size;
@@ -73,13 +62,6 @@ public class EngineMethods {
         }
     }
 
-    public static void handleGraphicsSmoothing() {
-        if (engineSettings.engineMode == RAGDOLL && engineSettings.smoothRenderingEnabled) {
-            graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
-            graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-    }
-
     private static void showGravitationOptions() {
         int gravityMode = (int) minValueGuard(0, engineSettings.gravitationMode.ordinal(), HTMLUtil.ParticleGravitationOptions);
         if (gravityMode < GravitationMode.values().length) engineSettings.gravitationMode = GravitationMode.values()[gravityMode];
@@ -88,7 +70,7 @@ public class EngineMethods {
 
     private static void showFireworksOptions() {
         String input = JOptionPane.showInputDialog(OptionsMenu.frame, HeadingTag(3, HTMLUtil.FireworksOptions), null, JOptionPane.PLAIN_MESSAGE);
-        int rfoInt = InputUtil.canParseStringInt(input) ? Integer.parseInt(input) : -1;
+        int rfoInt = InputUtil.canParseInt(input) ? Integer.parseInt(input) : -1;
 
         switch (rfoInt) {
             case 1: ParticleSlideEditor.showFireworksWindAmountDialog(); break;
@@ -99,7 +81,7 @@ public class EngineMethods {
 
     private static void showParticleSizeSeedOptions() {
         String input = JOptionPane.showInputDialog(OptionsMenu.frame, HTMLUtil.ParticleSizeSeedOptions, null, JOptionPane.PLAIN_MESSAGE);
-        int seedOpt = InputUtil.canParseStringInt(input) ? Integer.parseInt(input) : -1;
+        int seedOpt = InputUtil.canParseInt(input) ? Integer.parseInt(input) : -1;
 
         switch (seedOpt) {
             case 1: ParticleSizeEditor.getInstance(0); break;
@@ -110,7 +92,7 @@ public class EngineMethods {
 
     private static void showParticleSpeedSeedOptions() {
         String input = JOptionPane.showInputDialog(OptionsMenu.frame, HTMLUtil.ParticleSpeedSeedOptions, null, JOptionPane.PLAIN_MESSAGE);
-        int seedOpt = InputUtil.canParseStringInt(input) ? Integer.parseInt(input) : -1;
+        int seedOpt = InputUtil.canParseInt(input) ? Integer.parseInt(input) : -1;
 
         switch (seedOpt) {
             case 1: ParticleSpeedEditor.getInstance(0); break;
@@ -120,10 +102,10 @@ public class EngineMethods {
     }
 
     private static void showParticleSizeDialog() {
-        float r = minValueGuard(0, .95f, HeadingTag(3, "Enter Particle Size"), OptionsMenu.frame);
+        float size = minValueGuard(0, .95f, HeadingTag(3, "Enter Particle Size"), OptionsMenu.frame);
         if (Particles.size() > 0) {
             for (int i = 0; i < Particles.size(); i++)
-                Particles.get(i).radius = r;
+                Particles.get(i).radius = size;
         }
     }
 
@@ -150,16 +132,6 @@ public class EngineMethods {
                 HeadingTag(3, "Enter Fireworks Amount"));
     }
 
-    public static void setEngineTitle() {
-        eFrame.setTitle(engineSettings.paused ? title + " - PAUSED" : title);
-    }
-
-    public static void togglePauseSimulation() {
-        engineSettings.togglePause();
-        CMenuBar.updateState();
-        setEngineTitle();
-    }
-
     public static void handleMenuOptionsSelection(int option) {
         switch (option) {
             case 1: showParticleSizeDialog(); break;
@@ -178,27 +150,47 @@ public class EngineMethods {
         }
     }
 
-    public static void updateEngineMode() {
-        if (!NotificationUtil.drawingNotification) {
-            engineSettings.changeEngineMode(true);
-            NotificationUtil.pushNotification(engineSettings.engineMode.name());
-            CMenuBar.updateEngineModeRadios();
+    public static List<List<? extends Molecule>> getAllMoleculeLists() {
+        return List.of(
+                Particles, GravityPoints, Fireworks, Emitters,
+                Fluxes, Erasers, QEDs, Ions,
+                BlackHoles, Duplexes, Portals
+        );
+    }
+
+    public static int getTotalMoleculesCount() {
+        List<List<? extends Molecule>> moleculeLists = getAllMoleculeLists();
+
+        int count = 0;
+        for (int i = 0; i < moleculeLists.size(); i++)
+            count += moleculeLists.get(i).size();
+
+        return count;
+    }
+
+    public static void clearAllMoleculeLists() {
+        List<List<? extends Molecule>> moleculeLists = getAllMoleculeLists();
+
+        for (int i = 0; i < moleculeLists.size(); i++) {
+            for (int j = 0; j < moleculeLists.get(i).size(); j++) {
+                if (moleculeLists.get(i).size() > 0)
+                    moleculeLists.get(i).clear();
+            }
         }
     }
 
-    public static <T extends Enum<T>> T getMode(T enumType, boolean advance) {
-        T[] values = enumType.getDeclaringClass().getEnumConstants();
-        if (advance) return values[(enumType.ordinal() + 1) % values.length];
-        else return values[(values.length + (enumType.ordinal() - 1)) % values.length];
-    }
+    public static void trimAllMoleculeLists() {
+        List<List<? extends Molecule>> moleculeLists = getAllMoleculeLists();
 
-    public static void changePhysicsEditorMode(PhysicsEditorMode editorMode) {
-        if (engineSettings.engineMode == RAGDOLL && !NotificationUtil.drawingNotification) {
-            PhysicsEditor.setEditorMode(editorMode);
-            NotificationUtil.pushNotification(editorMode.name());
+        for (int i = 0, t = 3; i < moleculeLists.size(); i++) {
+            for (int j = (moleculeLists.get(i).size() - 1) / t; j >= 0; j--) {
+                if (moleculeLists.get(i).size() > 0)
+                    moleculeLists.get(i).remove(j);
+            }
         }
     }
 
+    // Keyboard Input Methods
     public static void leftArrowFunction() {
         // Todo: Can possible replace check with using a notification queue?
         if (!NotificationUtil.drawingNotification) {
@@ -241,11 +233,46 @@ public class EngineMethods {
             engineSettings.particleDragAmount = 1;
     }
 
+    // Engine State Methods
+    public static void setEngineTitle() {
+        eFrame.setTitle(engineSettings.paused ? title + " - PAUSED" : title);
+    }
+
+    public static void togglePauseEngine() {
+        engineSettings.togglePause();
+        CMenuBar.updateState();
+        setEngineTitle();
+    }
+
+    public static void advanceEngineMode() {
+        if (!NotificationUtil.drawingNotification) {
+            engineSettings.changeEngineMode(true);
+            NotificationUtil.pushNotification(engineSettings.engineMode.name());
+            CMenuBar.updateEngineModeRadios();
+        }
+    }
+
     public static void displayMoleculeTypeText() {
         if (engineSettings.engineMode == RAGDOLL) NotificationUtil.pushNotification(PhysicsEditor.ITEM_TYPE.name());
         else NotificationUtil.pushNotification(engineSettings.moleculeType.name());
     }
 
+    // Physics Methods
+    public static void changePhysicsEditorMode(PhysicsEditorMode editorMode) {
+        if (engineSettings.engineMode == RAGDOLL && !NotificationUtil.drawingNotification) {
+            PhysicsEditor.setEditorMode(editorMode);
+            NotificationUtil.pushNotification(editorMode.name());
+        }
+    }
+
+    public static void handleGraphicsSmoothing() {
+        if (engineSettings.engineMode == RAGDOLL && engineSettings.smoothRenderingEnabled) {
+            graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
+            graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        }
+    }
+
+    // Graphing Methods
     public static void drawGraphLines() {
         final int vHeight = 35;
         graphics2D.setColor(Color.gray);
@@ -254,46 +281,7 @@ public class EngineMethods {
         graphics2D.drawLine(0, 0, 0, vHeight);
     }
 
-    public static List<List<? extends Molecule>> getAllMoleculeLists() {
-        return List.of(
-                Particles, GravityPoints, Fireworks, Emitters,
-                Fluxes, Erasers, QEDs, Ions,
-                BlackHoles, Duplexes, Portals
-        );
-    }
-
-    public static int getTotalMoleculesCount() {
-        List<List<? extends Molecule>> moleculeLists = getAllMoleculeLists();
-
-        int count = 0;
-        for (int i = 0; i < moleculeLists.size(); i++)
-            count += moleculeLists.get(i).size();
-
-        return count;
-    }
-
-    public static void clearAllMoleculeLists() {
-        List<List<? extends Molecule>> moleculeLists = getAllMoleculeLists();
-
-        for (int i = 0; i < moleculeLists.size(); i++) {
-            for (int j = 0; j < moleculeLists.get(i).size(); j++) {
-                if (moleculeLists.get(i).size() > 0)
-                    moleculeLists.get(i).clear();
-            }
-        }
-    }
-
-    public static void trimMoleculeLists() {
-        List<List<? extends Molecule>> moleculeLists = getAllMoleculeLists();
-
-        for (int i = 0, t = 3; i < moleculeLists.size(); i++) {
-            for (int j = (moleculeLists.get(i).size() - 1) / t; j >= 0; j--) {
-                if (moleculeLists.get(i).size() > 0)
-                    moleculeLists.get(i).remove(j);
-            }
-        }
-    }
-
+    // Update and Render Methods
     private static void updateAllMoleculeLists() {
         List<List<? extends Molecule>> moleculeLists = getAllMoleculeLists();
 

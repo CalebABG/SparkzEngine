@@ -7,6 +7,7 @@ import com.cabg.enums.MoleculeType;
 import com.cabg.gui.ExceptionLogger;
 import com.cabg.reactivecolors.ReactiveColors;
 import com.cabg.utilities.ColorUtil;
+import com.cabg.utilities.EnumUtil;
 import com.cabg.utilities.JsonUtil;
 
 import java.io.*;
@@ -129,11 +130,11 @@ public class EngineSettings {
     }
 
     public void changeEngineMode(boolean advance) {
-        engineMode = EngineMethods.getMode(engineMode, advance);
+        engineMode = EnumUtil.transition(engineMode, advance);
     }
 
     public void changeParticleType(boolean advance) {
-        moleculeType = EngineMethods.getMode(moleculeType, advance);
+        moleculeType = EnumUtil.transition(moleculeType, advance);
     }
 
     public static String getProjectTimeSpan() {
