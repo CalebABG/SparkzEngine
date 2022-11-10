@@ -55,13 +55,13 @@ public class CMenuBar extends JMenuBar {
         this.add(mnEdit);
         menus.add(mnEdit);
 
-        JMenuItem trimMoleculeListsMenuItem = new JMenuItem("Trim Molecule Lists");
-        trimMoleculeListsMenuItem.addActionListener(e -> EngineMethods.trimAllMoleculeLists());
+        JMenuItem trimMoleculeListsMenuItem = new JMenuItem("Trim All");
+        trimMoleculeListsMenuItem.addActionListener(e -> EngineMethods.trimAllEntityLists());
         mnEdit.add(trimMoleculeListsMenuItem);
         menuItems.add(trimMoleculeListsMenuItem);
 
-        JMenuItem clearAllMoleculesMenuItem = new JMenuItem("Clear All Molecules");
-        clearAllMoleculesMenuItem.addActionListener(e -> EngineMethods.clearAllMoleculeLists());
+        JMenuItem clearAllMoleculesMenuItem = new JMenuItem("Clear All");
+        clearAllMoleculesMenuItem.addActionListener(e -> EngineMethods.clearAllEntityLists());
         mnEdit.add(clearAllMoleculesMenuItem);
         menuItems.add(clearAllMoleculesMenuItem);
         //Edit End

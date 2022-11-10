@@ -13,7 +13,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import static com.cabg.core.EngineVariables.*;
-import static com.cabg.enums.EngineMode.RAGDOLL;
 
 public class KeyboardHandler extends KeyAdapter {
     public void keyPressed(KeyEvent e) {
@@ -28,7 +27,7 @@ public class KeyboardHandler extends KeyAdapter {
         }
 
         if (key == KeyEvent.VK_3 || key == KeyEvent.VK_NUMPAD3) {
-            EngineMethods.trimAllMoleculeLists();
+            EngineMethods.trimAllEntityLists();
         }
 
         if (key == KeyEvent.VK_SPACE) {
@@ -127,8 +126,7 @@ public class KeyboardHandler extends KeyAdapter {
         }
 
         if (key == KeyEvent.VK_C) {
-            if (engineSettings.engineMode == RAGDOLL) Physics.clearAllItems();
-            else EngineMethods.clearAllMoleculeLists();
+            EngineMethods.clearAllEntityLists();
         }
 
         if (key == KeyEvent.VK_LEFT) {

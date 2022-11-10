@@ -168,24 +168,37 @@ public class EngineMethods {
         return count;
     }
 
-    public static void clearAllMoleculeLists() {
-        List<List<? extends Molecule>> moleculeLists = getAllMoleculeLists();
+    public static void clearAllEntityLists() {
+        if (engineSettings.engineMode == RAGDOLL) {
+            Physics.clearAllItems();
+        }
+        else {
+            List<List<? extends Molecule>> moleculeLists = getAllMoleculeLists();
 
-        for (int i = 0; i < moleculeLists.size(); i++) {
-            for (int j = 0; j < moleculeLists.get(i).size(); j++) {
-                if (moleculeLists.get(i).size() > 0)
-                    moleculeLists.get(i).clear();
+            for (int i = 0; i < moleculeLists.size(); i++) {
+                for (int j = 0; j < moleculeLists.get(i).size(); j++) {
+                    if (moleculeLists.get(i).size() > 0)
+                        moleculeLists.get(i).clear();
+                }
             }
         }
     }
 
-    public static void trimAllMoleculeLists() {
-        List<List<? extends Molecule>> moleculeLists = getAllMoleculeLists();
+    public static void trimAllEntityLists() {
+        int t = 3;
+        if (engineSettings.engineMode == RAGDOLL) {
+            if (Vertices.size() > 0) {
+                for (int i = (Vertices.size() - 1) / t; i >= 0; i--)
+                    Vertices.remove(i);
+            }
+        } else {
+            List<List<? extends Molecule>> moleculeLists = getAllMoleculeLists();
 
-        for (int i = 0, t = 3; i < moleculeLists.size(); i++) {
-            for (int j = (moleculeLists.get(i).size() - 1) / t; j >= 0; j--) {
-                if (moleculeLists.get(i).size() > 0)
-                    moleculeLists.get(i).remove(j);
+            for (int i = 0; i < moleculeLists.size(); i++) {
+                for (int j = (moleculeLists.get(i).size() - 1) / t; j >= 0; j--) {
+                    if (moleculeLists.get(i).size() > 0)
+                        moleculeLists.get(i).remove(j);
+                }
             }
         }
     }
