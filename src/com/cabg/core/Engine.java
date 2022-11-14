@@ -2,6 +2,7 @@ package com.cabg.core;
 
 import com.cabg.gui.ExceptionLogger;
 import com.cabg.gui.QuitWindow;
+import com.cabg.gui.SplashScreen;
 import com.cabg.gui.StatsPanel;
 import com.cabg.inputhandlers.*;
 
@@ -21,9 +22,9 @@ public class Engine {
     }
 
     public static void main(String[] args) {
-//        new SplashScreen(1500).display();
+        new SplashScreen(1500).display();
         Engine e = new Engine();
-//        StatsPanel.getInstance();
+        StatsPanel.getInstance();
         e.run();
     }
 
