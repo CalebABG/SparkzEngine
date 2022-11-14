@@ -13,13 +13,14 @@ import java.awt.event.KeyEvent;
 import static com.cabg.core.EngineVariables.toolkit;
 
 public class InstructionsWindow {
-    private static final InstructionsWindow[] windows = new InstructionsWindow[2];
+    private static final InstructionsWindow[] instances = new InstructionsWindow[2];
+
     private final int index;
-    public JFrame frame;
+    private final JFrame frame;
 
     private static void getInstance(int index, JFrame parent, int w, int h, String title, String instructions) {
-        if (windows[index] == null) windows[index] = new InstructionsWindow(index, parent, w, h, title, instructions);
-        windows[index].frame.toFront();
+        if (instances[index] == null) instances[index] = new InstructionsWindow(index, parent, w, h, title, instructions);
+        instances[index].frame.toFront();
     }
 
     public static void createEngineInstructionsWindow(JFrame parent) {
@@ -62,7 +63,7 @@ public class InstructionsWindow {
 
     private void close() {
         frame.dispose();
-        windows[index] = null;
+        instances[index] = null;
     }
 
     private void close(KeyEvent e) {

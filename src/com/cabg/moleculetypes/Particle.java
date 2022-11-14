@@ -1,27 +1,23 @@
 package com.cabg.moleculetypes;
 
 import com.cabg.gui.FlowFieldEditor;
-import com.cabg.gui.ParticleGrapher;
+import com.cabg.gui.OrganicForcesEditor;
+import com.cabg.gui.ParticleGraphEditor;
 import com.flowpowered.noise.Noise;
 import com.flowpowered.noise.NoiseQuality;
 
 import static com.cabg.core.EngineVariables.PI;
 import static com.cabg.core.EngineVariables.*;
-import static com.cabg.enums.EngineMode.FIREWORKS;
-import static com.cabg.enums.EngineMode.GRAPH;
-import static com.cabg.enums.GravitationMode.FLOW_FIELD;
-import static com.cabg.enums.GravitationMode.ORGANIC;
-import static com.cabg.gui.OrganicForcesEditor.*;
-import static com.cabg.moleculehelpers.MoleculeFactory.fireworksMode;
+import static com.cabg.enums.EngineMode.*;
+import static com.cabg.moleculetypes.MoleculeFactory.fireworksMode;
 import static com.cabg.utilities.DrawingUtil.giveStyle;
 import static com.cabg.utilities.MathUtil.clamp;
 import static com.cabg.utilities.MathUtil.map;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public class Particle extends Molecule {
-    final float dampening = 0.9993f;
-    public int life = engineSettings.particleLife;
-    public float angle = 0.0f;
+    private float angle = 0.0f;
+    private int life = engineSettings.particleLife;
 
     public Particle(float x, float y, float radius) {
         super(x, y, 0, 0, radius);
@@ -81,21 +77,23 @@ public class Particle extends Molecule {
     }
 
     private void handleOrganic() {
-        ParticleGrapher.engine.put("x", angle);
+        // Fps drops past ~1400
+        if (Particles.size() > 1400) return;
 
-        Float tvx = ParticleGrapher.evaluateExpr(expressionForceX, false);
-        Float tvy = ParticleGrapher.evaluateExpr(expressionForceY, false);
+        angle += OrganicForcesEditor.angleIncrement;
+        if (angle > 1000 * (2 * PI) * OrganicForcesEditor.angleIncrement) angle = 0.0f;
+
+        ParticleGraphEditor.setParameter("x", angle);
+
+        Float tvx = OrganicForcesEditor.evalForceXExpression();
+        Float tvy = OrganicForcesEditor.evalForceYExpression();
 
         vx = tvx == null ? vx : tvx;
         vy = tvy == null ? vy : tvy;
-
-        angle += angleIncrement;
-
-        if (angle >= 1000 * (2 * PI) * angleIncrement) angle = 0.0f;
     }
 
     private void handleFlowField() {
-        float a = (float) (Noise.gradientCoherentNoise3D(
+        float noise = (float) (Noise.gradientCoherentNoise3D(
                 x * FlowFieldEditor.noiseX,
                 y * FlowFieldEditor.noiseY,
                 frameCount * FlowFieldEditor.noiseZ,
@@ -104,27 +102,27 @@ public class Particle extends Molecule {
         float x = (float) cos(FlowFieldEditor.startAngle);
         float y = (float) sin(FlowFieldEditor.startAngle);
 
-        //Rotate
+        // Rotate
         float xTemp = x;
-        x = (float) (x * cos(a) - y * sin(a));
-        y = (float) (xTemp * sin(a) + y * cos(a));
+        x = (float) (x * cos(noise) - y * sin(noise));
+        y = (float) (xTemp * sin(noise) + y * cos(noise));
 
-        //Normalize
+        // Normalize
         float m = (float) sqrt(x * x + y * y);
         if (m != 0.0 && m != 1.0) {
             x /= m;
             y /= m;
         }
 
-        //Set Magnitude
+        // Set Magnitude
         x *= FlowFieldEditor.velocityMagnitude;
         y *= FlowFieldEditor.velocityMagnitude;
 
-        //add to acceleration
+        // Add to acceleration
         ax += x;
         ay += y;
 
-        //Limit velocity
+        // Limit velocity
         vx = clamp(vx, -FlowFieldEditor.velocityLimit, FlowFieldEditor.velocityLimit);
         vy = clamp(vy, -FlowFieldEditor.velocityLimit, FlowFieldEditor.velocityLimit);
     }
@@ -132,14 +130,14 @@ public class Particle extends Molecule {
     private void connectAll() {
         for (int i = 0; i < Particles.size(); i++) {
             Particle particle = Particles.get(i);
-            graphics2D.setColor(particle.color);
+            graphics2D.setColor(particle.getReactiveColor());
             graphics2D.drawLine((int) particle.x, (int) particle.y, (int) x, (int) y);
         }
     }
 
     private void connectSequential() {
         Particle p2 = Particles.get((Particles.indexOf(this) + 1) % Particles.size());
-        graphics2D.setColor(color);
+        graphics2D.setColor(getReactiveColor());
         graphics2D.drawLine((int) p2.x, (int) p2.y, (int) x, (int) y);
     }
 
@@ -163,7 +161,7 @@ public class Particle extends Molecule {
     }
 
     public void render() {
-        if (engineSettings.connectParticles) {
+        if (engineSettings.linkMolecules) {
             if (engineSettings.showParticlesLink) connectSequential();
             else if (Particles.size() < 101) connectAll();
         }
@@ -182,12 +180,10 @@ public class Particle extends Molecule {
 
                 gravitateToPosition(mx, my);
             } else {
-                if (engineSettings.gravitationMode == ORGANIC && Particles.size() < 855) {
-                    handleOrganic();
-                } else if (engineSettings.gravitationMode == FLOW_FIELD) {
-                    handleFlowField();
-                } else {
-                    gravitateToPosition(MouseVec.x, MouseVec.y);
+                switch (engineSettings.gravitationMode) {
+                    case ORGANIC: handleOrganic(); break;
+                    case FLOW_FIELD: handleFlowField(); break;
+                    default: gravitateToPosition(MouseVec.x, MouseVec.y);break;
                 }
             }
         }
@@ -195,15 +191,15 @@ public class Particle extends Molecule {
         accelerate();
 
         if (engineSettings.particleFriction) {
+            final float dampening = 0.9993f;
             vx *= dampening;
             vy *= dampening;
         }
 
         checkBounds();
 
-        if (engineSettings.engineMode == FIREWORKS && --life < 1) {
-            if (Particles.size() < engineSettings.fireworksParticleSafetyAmount)
-                fireworksMode(x, y);
+        if (engineSettings.engineMode == FIREWORKS && --life < 0) {
+            if (Particles.size() < engineSettings.fireworksParticleSafetyAmount) fireworksMode(x, y);
             Particles.remove(this);
         }
     }

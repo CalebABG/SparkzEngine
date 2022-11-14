@@ -9,14 +9,14 @@ import java.util.List;
 
 import static com.cabg.core.EngineVariables.Vertices;
 import static com.cabg.core.EngineVariables.random;
-import static com.cabg.utilities.ColorUtil.randHSLColor;
+import static com.cabg.utilities.ColorUtil.randomHSLColor;
 import static com.cabg.verlet.Physics.*;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public class PhysicsFactory {
     public static void handleDrag(MouseEvent e) {
         final float radius = random.nextInt(5) + 5;
-        createPoint(e, randHSLColor(0, 20_000, 0.9f), radius, random.nextInt(100) + 20);
+        createPoint(e, randomHSLColor(0, 20_000, 0.9f), radius, random.nextInt(100) + 20);
     }
 
     public static void handleLeftClick(MouseEvent e) {
@@ -24,7 +24,7 @@ public class PhysicsFactory {
             case Add:
                 switch (PhysicsEditor.ITEM_TYPE) {
                     case Point:
-                        createPoint(e, randHSLColor(1000, 7000, 0.8f), 25, 100);
+                        createPoint(e, randomHSLColor(1000, 7000, 0.8f), 25, 100);
                         break;
                     case Stick:
                         createStick(e, LINK_COLOR, ITEM_COLOR, 50, 10, 10, 1, 30, 0.0444f, TEAR_DISTANCE, DRAW_LINKS, SEVERABLE);

@@ -1,6 +1,6 @@
 package com.cabg.inputhandlers;
 
-import com.cabg.moleculehelpers.MoleculeFactory;
+import com.cabg.moleculetypes.MoleculeFactory;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;

@@ -23,6 +23,7 @@ import static com.cabg.core.EngineVariables.engineSettings;
 
 public class PhysicsEditor {
     public static PhysicsEditor instance = null;
+
     private static JFrame frame;
 
     public static PhysicsEditorMode EDITOR_MODE = PhysicsEditorMode.Add;

@@ -2,12 +2,10 @@ package com.cabg.utilities;
 
 import com.cabg.core.EngineSettings;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
 import static com.cabg.core.EngineVariables.*;
-import static com.cabg.moleculetypes.Molecule.PLAIN_COLOR;
 
 public class ColorUtil {
     public static Color fromHex(String hex) {
@@ -32,7 +30,7 @@ public class ColorUtil {
                 toHex(c[4]);
     }
 
-    public static Color[] convertColors(int index, List<String> list) {
+    public static Color[] deserializeColors(int index, List<String> list) {
         String[] split = list.get(index).split(EngineSettings.colorsSpliceChar);
         return new Color[]{
                 fromHex(split[0]),
@@ -43,33 +41,23 @@ public class ColorUtil {
         };
     }
 
-    public static void setParticlePlainColor() {
-        Color l = JColorChooser.showDialog(eFrame, "Particle Plain Color", PLAIN_COLOR);
-        PLAIN_COLOR = (l != null) ? l : PLAIN_COLOR;
-    }
-
-    public static void setEngineBackgroundColor() {
-        Color f = JColorChooser.showDialog(eFrame, "Background Color", null);
-        backgroundColor = (f != null) ? f : backgroundColor;
-    }
-
-    public static Color randHSLColor() {
+    public static Color randomHSLColor() {
         // Saturation between 0.1 and 0.3
         float saturation = (random.nextFloat() * 2000 + 1000) / 10000f, luminance = 0.9f;
         return Color.getHSBColor(random.nextFloat(), saturation, luminance);
     }
 
-    public static Color randHSLColor(int minSat, int maxSat, float luminance) {
+    public static Color randomHSLColor(int minSat, int maxSat, float luminance) {
         float saturation = (random.nextFloat() * maxSat + minSat) / 10000f;
         return Color.getHSBColor(random.nextFloat(), saturation, luminance);
     }
 
-    public static Color randRGBColor() {
-        return new Color(random.nextInt(0x1000000));
+    public static Color randomRGBColor() {
+        return new Color(random.nextInt(0xFFFFFE));
     }
 
-    // Resource: http://www.nbdtech.com/Blog/archive/2008/04/27/Calculating-the-Perceived-Brightness-of-a-Color.aspx
-    public static int isDark(Color c) {
-        return ((c.getRed() << 5) + (c.getGreen() << 6) + (c.getBlue() << 2)) / 100;
+    // https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color
+    public static float brightness(Color c) {
+        return (0.2126f * c.getRed()) + (0.7152f * c.getGreen()) + (0.0722f * c.getBlue());
     }
 }

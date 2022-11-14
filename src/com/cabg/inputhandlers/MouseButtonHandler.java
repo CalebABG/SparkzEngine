@@ -1,6 +1,6 @@
 package com.cabg.inputhandlers;
 
-import com.cabg.moleculehelpers.MoleculeFactory;
+import com.cabg.moleculetypes.MoleculeFactory;
 import com.cabg.verlet.Physics;
 import com.cabg.verlet.PhysicsFactory;
 

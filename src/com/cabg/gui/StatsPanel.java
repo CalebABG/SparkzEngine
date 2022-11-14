@@ -20,17 +20,19 @@ import static com.cabg.core.EngineVariables.*;
 import static com.cabg.enums.EngineMode.RAGDOLL;
 
 public class StatsPanel {
+    private static StatsPanel instance = null;
+
     private static final DecimalFormat decimalFormat = new DecimalFormat("#,###");
     public static final Color bgColor = new Color(20, 23, 25).brighter();
     public static final Font font = new Font(Font.SERIF, Font.PLAIN, 25);
-    private static StatsPanel statsUI = null;
+
     private static JFrame frame;
     private static Timer timer;
     public static int fps = 0;
     private static CLabel particleAmount, dragAmount, engineMode, smartPt, connect, atm, ptFriction, fpsLabel, screenSize;
 
     public static void getInstance() {
-        if (statsUI == null) statsUI = new StatsPanel();
+        if (instance == null) instance = new StatsPanel();
         frame.toFront();
     }
 
@@ -60,18 +62,18 @@ public class StatsPanel {
         mnStyleOptions.setFont(new Font(Font.SERIF, Font.PLAIN, 17));
         menuBar.add(mnStyleOptions);
 
-        JMenuItem mntmShowhideLeft = new JMenuItem("Show/Hide Right");
-        mnStyleOptions.add(mntmShowhideLeft);
+        JMenuItem mntmShowHideLeft = new JMenuItem("Show/Hide Right");
+        mnStyleOptions.add(mntmShowHideLeft);
 
-        JMenuItem mntmShowhideRight = new JMenuItem("Show/Hide Left");
-        mnStyleOptions.add(mntmShowhideRight);
+        JMenuItem mntmShowHideRight = new JMenuItem("Show/Hide Left");
+        mnStyleOptions.add(mntmShowHideRight);
 
-        JSplitPane split_pane = new JSplitPane();
-        split_pane.setContinuousLayout(true);
-        split_pane.setDividerSize(2);
-        split_pane.setResizeWeight(0.5);
+        JSplitPane splitPane = new JSplitPane();
+        splitPane.setContinuousLayout(true);
+        splitPane.setDividerSize(2);
+        splitPane.setResizeWeight(0.5);
 
-        split_pane.setUI(new BasicSplitPaneUI() {
+        splitPane.setUI(new BasicSplitPaneUI() {
             public BasicSplitPaneDivider createDefaultDivider() {
                 return new BasicSplitPaneDivider(this) {
                     public void setBorder(Border border) {
@@ -85,186 +87,184 @@ public class StatsPanel {
                 };
             }
         });
-        split_pane.setBorder(null);
+        splitPane.setBorder(null);
 
-        frame.getContentPane().add(split_pane, BorderLayout.CENTER);
+        frame.getContentPane().add(splitPane, BorderLayout.CENTER);
 
         ActionListener actl = e -> {
             int loc = 0;
             JMenuItem source = (JMenuItem) e.getSource();
-            if (split_pane.getLeftComponent().isVisible() && split_pane.getRightComponent().isVisible()) {
-                split_pane.setDividerSize(0);
-                split_pane.getLeftComponent().setVisible(source == mntmShowhideLeft);
-                split_pane.getRightComponent().setVisible(source == mntmShowhideRight);
+            if (splitPane.getLeftComponent().isVisible() && splitPane.getRightComponent().isVisible()) {
+                splitPane.setDividerSize(0);
+                splitPane.getLeftComponent().setVisible(source == mntmShowHideLeft);
+                splitPane.getRightComponent().setVisible(source == mntmShowHideRight);
             } else {
-                split_pane.getLeftComponent().setVisible(true);
-                split_pane.getRightComponent().setVisible(true);
-                split_pane.setDividerLocation(loc);
-                split_pane.setDividerSize((Integer) UIManager.get("SplitPane.dividerSize"));
+                splitPane.getLeftComponent().setVisible(true);
+                splitPane.getRightComponent().setVisible(true);
+                splitPane.setDividerLocation(loc);
+                splitPane.setDividerSize((Integer) UIManager.get("SplitPane.dividerSize"));
             }
         };
 
-        mntmShowhideLeft.addActionListener(actl);
-        mntmShowhideRight.addActionListener(actl);
+        mntmShowHideLeft.addActionListener(actl);
+        mntmShowHideRight.addActionListener(actl);
 
-        JScrollPane stats_scrollpane = new JScrollPane();
-        split_pane.setLeftComponent(stats_scrollpane);
+        JScrollPane statsScrollPane = new JScrollPane();
+        splitPane.setLeftComponent(statsScrollPane);
 
-        ///////////
+        JPanel statsPanel = new JPanel();
+        statsPanel.setBackground(bgColor.darker());
+        statsScrollPane.setViewportView(statsPanel);
+        GridBagLayout gblStatsPanel = new GridBagLayout();
+        gblStatsPanel.columnWidths = new int[]{0, 0};
+        gblStatsPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gblStatsPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+        gblStatsPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        statsPanel.setLayout(gblStatsPanel);
 
-        JPanel stats_panel = new JPanel();
-        stats_panel.setBackground(bgColor.darker());
-        stats_scrollpane.setViewportView(stats_panel);
-        GridBagLayout gbl_stats_panel = new GridBagLayout();
-        gbl_stats_panel.columnWidths = new int[]{0, 0};
-        gbl_stats_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
-        gbl_stats_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-        gbl_stats_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-        stats_panel.setLayout(gbl_stats_panel);
-
-        particleAmount = new CLabel("Particles: 0", font, Color.white, bgColor);
-        GridBagConstraints gbc_label = new GridBagConstraints();
-        gbc_label.insets = new Insets(0, 0, 5, 0);
-        gbc_label.weighty = 1.0;
-        gbc_label.weightx = 1.0;
-        gbc_label.ipady = 10;
-        gbc_label.fill = GridBagConstraints.BOTH;
-        gbc_label.gridx = 0;
-        gbc_label.gridy = 0;
-        stats_panel.add(particleAmount, gbc_label);
+        particleAmount = new CLabel("Particles: ", font, Color.white, bgColor);
+        GridBagConstraints gbcLabel = new GridBagConstraints();
+        gbcLabel.insets = new Insets(0, 0, 5, 0);
+        gbcLabel.weighty = 1.0;
+        gbcLabel.weightx = 1.0;
+        gbcLabel.ipady = 10;
+        gbcLabel.fill = GridBagConstraints.BOTH;
+        gbcLabel.gridx = 0;
+        gbcLabel.gridy = 0;
+        statsPanel.add(particleAmount, gbcLabel);
 
         dragAmount = new CLabel("Drag Amount: ", font, Color.white, bgColor);
-        GridBagConstraints gbc_label_1 = new GridBagConstraints();
-        gbc_label_1.insets = new Insets(0, 0, 5, 0);
-        gbc_label_1.weighty = 1.0;
-        gbc_label_1.weightx = 1.0;
-        gbc_label_1.fill = GridBagConstraints.BOTH;
-        gbc_label_1.ipady = 10;
-        gbc_label_1.gridx = 0;
-        gbc_label_1.gridy = 1;
-        stats_panel.add(dragAmount, gbc_label_1);
+        GridBagConstraints gbcLabel1 = new GridBagConstraints();
+        gbcLabel1.insets = new Insets(0, 0, 5, 0);
+        gbcLabel1.weighty = 1.0;
+        gbcLabel1.weightx = 1.0;
+        gbcLabel1.fill = GridBagConstraints.BOTH;
+        gbcLabel1.ipady = 10;
+        gbcLabel1.gridx = 0;
+        gbcLabel1.gridy = 1;
+        statsPanel.add(dragAmount, gbcLabel1);
 
         fpsLabel = new CLabel("Frames Per Second: " + engineSettings.desiredFramesPerSecond, font, Color.white, bgColor);
-        GridBagConstraints gbc_label_2 = new GridBagConstraints();
-        gbc_label_2.insets = new Insets(0, 0, 5, 0);
-        gbc_label_2.weighty = 1.0;
-        gbc_label_2.weightx = 1.0;
-        gbc_label_2.fill = GridBagConstraints.BOTH;
-        gbc_label_2.ipady = 10;
-        gbc_label_2.gridx = 0;
-        gbc_label_2.gridy = 2;
-        stats_panel.add(fpsLabel, gbc_label_2);
+        GridBagConstraints gbcLabel2 = new GridBagConstraints();
+        gbcLabel2.insets = new Insets(0, 0, 5, 0);
+        gbcLabel2.weighty = 1.0;
+        gbcLabel2.weightx = 1.0;
+        gbcLabel2.fill = GridBagConstraints.BOTH;
+        gbcLabel2.ipady = 10;
+        gbcLabel2.gridx = 0;
+        gbcLabel2.gridy = 2;
+        statsPanel.add(fpsLabel, gbcLabel2);
 
         engineMode = new CLabel("Engine Mode: ", font, Color.white, bgColor);
-        GridBagConstraints gbc_label_3 = new GridBagConstraints();
-        gbc_label_3.insets = new Insets(0, 0, 5, 0);
-        gbc_label_3.weighty = 1.0;
-        gbc_label_3.weightx = 1.0;
-        gbc_label_3.fill = GridBagConstraints.BOTH;
-        gbc_label_3.ipady = 10;
-        gbc_label_3.gridx = 0;
-        gbc_label_3.gridy = 3;
-        stats_panel.add(engineMode, gbc_label_3);
+        GridBagConstraints gbcLabel3 = new GridBagConstraints();
+        gbcLabel3.insets = new Insets(0, 0, 5, 0);
+        gbcLabel3.weighty = 1.0;
+        gbcLabel3.weightx = 1.0;
+        gbcLabel3.fill = GridBagConstraints.BOTH;
+        gbcLabel3.ipady = 10;
+        gbcLabel3.gridx = 0;
+        gbcLabel3.gridy = 3;
+        statsPanel.add(engineMode, gbcLabel3);
 
         smartPt = new CLabel("Reactive Colors: ", font, Color.white, bgColor);
-        GridBagConstraints gbc_label_4 = new GridBagConstraints();
-        gbc_label_4.insets = new Insets(0, 0, 5, 0);
-        gbc_label_4.weighty = 1.0;
-        gbc_label_4.weightx = 1.0;
-        gbc_label_4.fill = GridBagConstraints.BOTH;
-        gbc_label_4.ipady = 10;
-        gbc_label_4.gridx = 0;
-        gbc_label_4.gridy = 4;
-        stats_panel.add(smartPt, gbc_label_4);
+        GridBagConstraints gbcLabel4 = new GridBagConstraints();
+        gbcLabel4.insets = new Insets(0, 0, 5, 0);
+        gbcLabel4.weighty = 1.0;
+        gbcLabel4.weightx = 1.0;
+        gbcLabel4.fill = GridBagConstraints.BOTH;
+        gbcLabel4.ipady = 10;
+        gbcLabel4.gridx = 0;
+        gbcLabel4.gridy = 4;
+        statsPanel.add(smartPt, gbcLabel4);
 
         connect = new CLabel("Link Mode: ", font, Color.white, bgColor);
-        GridBagConstraints gbc_label_5 = new GridBagConstraints();
-        gbc_label_5.insets = new Insets(0, 0, 5, 0);
-        gbc_label_5.weighty = 1.0;
-        gbc_label_5.weightx = 1.0;
-        gbc_label_5.fill = GridBagConstraints.BOTH;
-        gbc_label_5.ipady = 10;
-        gbc_label_5.gridx = 0;
-        gbc_label_5.gridy = 5;
-        stats_panel.add(connect, gbc_label_5);
+        GridBagConstraints gbcLabel5 = new GridBagConstraints();
+        gbcLabel5.insets = new Insets(0, 0, 5, 0);
+        gbcLabel5.weighty = 1.0;
+        gbcLabel5.weightx = 1.0;
+        gbcLabel5.fill = GridBagConstraints.BOTH;
+        gbcLabel5.ipady = 10;
+        gbcLabel5.gridx = 0;
+        gbcLabel5.gridy = 5;
+        statsPanel.add(connect, gbcLabel5);
 
         atm = new CLabel("Mouse Attraction: ", font, Color.white, bgColor);
-        GridBagConstraints gbc_label_6 = new GridBagConstraints();
-        gbc_label_6.insets = new Insets(0, 0, 5, 0);
-        gbc_label_6.weighty = 1.0;
-        gbc_label_6.weightx = 1.0;
-        gbc_label_6.fill = GridBagConstraints.BOTH;
-        gbc_label_6.ipady = 10;
-        gbc_label_6.gridx = 0;
-        gbc_label_6.gridy = 6;
-        stats_panel.add(atm, gbc_label_6);
+        GridBagConstraints gbcLabel6 = new GridBagConstraints();
+        gbcLabel6.insets = new Insets(0, 0, 5, 0);
+        gbcLabel6.weighty = 1.0;
+        gbcLabel6.weightx = 1.0;
+        gbcLabel6.fill = GridBagConstraints.BOTH;
+        gbcLabel6.ipady = 10;
+        gbcLabel6.gridx = 0;
+        gbcLabel6.gridy = 6;
+        statsPanel.add(atm, gbcLabel6);
 
         ptFriction = new CLabel("Particle Friction: ", font, Color.white, bgColor);
-        GridBagConstraints gbc_label_7 = new GridBagConstraints();
-        gbc_label_7.fill = GridBagConstraints.BOTH;
-        gbc_label_7.weighty = 1.0;
-        gbc_label_7.weightx = 1.0;
-        gbc_label_7.ipady = 10;
-        gbc_label_7.gridx = 0;
-        gbc_label_7.gridy = 7;
-        stats_panel.add(ptFriction, gbc_label_7);
+        GridBagConstraints gbcLabel7 = new GridBagConstraints();
+        gbcLabel7.fill = GridBagConstraints.BOTH;
+        gbcLabel7.weighty = 1.0;
+        gbcLabel7.weightx = 1.0;
+        gbcLabel7.ipady = 10;
+        gbcLabel7.gridx = 0;
+        gbcLabel7.gridy = 7;
+        statsPanel.add(ptFriction, gbcLabel7);
 
-        JScrollPane instructions_scrollpane = new JScrollPane();
-        split_pane.setRightComponent(instructions_scrollpane);
+        JScrollPane instructionsScrollPane = new JScrollPane();
+        splitPane.setRightComponent(instructionsScrollPane);
 
         JPanel instructions_panel = new JPanel();
         instructions_panel.setBackground(bgColor.darker());
-        instructions_scrollpane.setViewportView(instructions_panel);
-        GridBagLayout gbl_instructions_panel = new GridBagLayout();
-        gbl_instructions_panel.columnWidths = new int[]{0, 0};
-        gbl_instructions_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
-        gbl_instructions_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-        gbl_instructions_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-        instructions_panel.setLayout(gbl_instructions_panel);
+        instructionsScrollPane.setViewportView(instructions_panel);
+        GridBagLayout gblInstructionsPanel = new GridBagLayout();
+        gblInstructionsPanel.columnWidths = new int[]{0, 0};
+        gblInstructionsPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gblInstructionsPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+        gblInstructionsPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        instructions_panel.setLayout(gblInstructionsPanel);
 
-        CLabel shortCts = new CLabel("Press: (On Sparkz Engine)", new Font(Font.SERIF, Font.PLAIN, 26), Color.white, bgColor);
-        GridBagConstraints gbc_label_8 = new GridBagConstraints();
-        gbc_label_8.weighty = 1.0;
-        gbc_label_8.weightx = 1.0;
-        gbc_label_8.ipady = 10;
-        gbc_label_8.fill = GridBagConstraints.BOTH;
-        gbc_label_8.insets = new Insets(0, 0, 5, 0);
-        gbc_label_8.gridx = 0;
-        gbc_label_8.gridy = 0;
-        instructions_panel.add(shortCts, gbc_label_8);
+        CLabel shortCts = new CLabel("Press On Engine:", new Font(Font.SERIF, Font.PLAIN, 26), Color.white, bgColor);
+        GridBagConstraints gbcLabel8 = new GridBagConstraints();
+        gbcLabel8.weighty = 1.0;
+        gbcLabel8.weightx = 1.0;
+        gbcLabel8.ipady = 10;
+        gbcLabel8.fill = GridBagConstraints.BOTH;
+        gbcLabel8.insets = new Insets(0, 0, 5, 0);
+        gbcLabel8.gridx = 0;
+        gbcLabel8.gridy = 0;
+        instructions_panel.add(shortCts, gbcLabel8);
 
         CLabel a = new CLabel("Esc = Exit Program", font, Color.white, bgColor);
-        GridBagConstraints gbc_label_9 = new GridBagConstraints();
-        gbc_label_9.weighty = 1.0;
-        gbc_label_9.weightx = 1.0;
-        gbc_label_9.ipady = 10;
-        gbc_label_9.fill = GridBagConstraints.BOTH;
-        gbc_label_9.insets = new Insets(0, 0, 5, 0);
-        gbc_label_9.gridx = 0;
-        gbc_label_9.gridy = 1;
-        instructions_panel.add(a, gbc_label_9);
+        GridBagConstraints gbcLabel9 = new GridBagConstraints();
+        gbcLabel9.weighty = 1.0;
+        gbcLabel9.weightx = 1.0;
+        gbcLabel9.ipady = 10;
+        gbcLabel9.fill = GridBagConstraints.BOTH;
+        gbcLabel9.insets = new Insets(0, 0, 5, 0);
+        gbcLabel9.gridx = 0;
+        gbcLabel9.gridy = 1;
+        instructions_panel.add(a, gbcLabel9);
 
         CLabel b = new CLabel("Q = Engine Instructions", font, Color.white, bgColor);
-        GridBagConstraints gbc_label_10 = new GridBagConstraints();
-        gbc_label_10.weighty = 1.0;
-        gbc_label_10.weightx = 1.0;
-        gbc_label_10.ipady = 10;
-        gbc_label_10.fill = GridBagConstraints.BOTH;
-        gbc_label_10.insets = new Insets(0, 0, 5, 0);
-        gbc_label_10.gridx = 0;
-        gbc_label_10.gridy = 2;
-        instructions_panel.add(b, gbc_label_10);
+        GridBagConstraints gbcLabel10 = new GridBagConstraints();
+        gbcLabel10.weighty = 1.0;
+        gbcLabel10.weightx = 1.0;
+        gbcLabel10.ipady = 10;
+        gbcLabel10.fill = GridBagConstraints.BOTH;
+        gbcLabel10.insets = new Insets(0, 0, 5, 0);
+        gbcLabel10.gridx = 0;
+        gbcLabel10.gridy = 2;
+        instructions_panel.add(b, gbcLabel10);
 
         CLabel c = new CLabel("7 = Options Menu", font, Color.white, bgColor);
-        GridBagConstraints gbc_label_11 = new GridBagConstraints();
-        gbc_label_11.weighty = 1.0;
-        gbc_label_11.weightx = 1.0;
-        gbc_label_11.ipady = 10;
-        gbc_label_11.fill = GridBagConstraints.BOTH;
-        gbc_label_11.insets = new Insets(0, 0, 5, 0);
-        gbc_label_11.gridx = 0;
-        gbc_label_11.gridy = 3;
-        instructions_panel.add(c, gbc_label_11);
+        GridBagConstraints gbcLabel11 = new GridBagConstraints();
+        gbcLabel11.weighty = 1.0;
+        gbcLabel11.weightx = 1.0;
+        gbcLabel11.ipady = 10;
+        gbcLabel11.fill = GridBagConstraints.BOTH;
+        gbcLabel11.insets = new Insets(0, 0, 5, 0);
+        gbcLabel11.gridx = 0;
+        gbcLabel11.gridy = 3;
+        instructions_panel.add(c, gbcLabel11);
 
         CLabel e = new CLabel("W = Reactive Colors Editor", font, Color.white, bgColor);
         GridBagConstraints gbc_label_12 = new GridBagConstraints();
@@ -327,7 +327,7 @@ public class StatsPanel {
             if (dragAmount != null) dragAmount.setText("Drag Amount: " + decimalFormat.format(engineSettings.particleDragAmount));
             if (engineMode != null) engineMode.setText("Engine Mode: " + engineSettings.engineMode.name());
             if (smartPt != null) smartPt.setText("Reactive Colors: " + (engineSettings.reactiveColorsEnabled ? "On" : "Off"));
-            if (connect != null) connect.setText("Link Mode: " + (engineSettings.connectParticles && Particles.size() < 101 ? "On" : "Off"));
+            if (connect != null) connect.setText("Link Mode: " + (engineSettings.linkMolecules ? "On" : "Off"));
             if (atm != null) atm.setText("Mouse Attraction: " + (engineSettings.particlesGravitateToMouse ? "On" : "Off"));
             if (ptFriction != null) ptFriction.setText("Particle Friction: " + (engineSettings.particleFriction ? "On" : "Off"));
             if (screenSize != null) screenSize.setText(String.format("Canvas Size: %d x %d", canvas.getWidth(), canvas.getHeight()));
@@ -339,6 +339,6 @@ public class StatsPanel {
     private void close() {
         stopTimer();
         frame.dispose();
-        statsUI = null;
+        instance = null;
     }
 }

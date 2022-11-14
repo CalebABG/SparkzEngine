@@ -12,14 +12,15 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ReactiveColorsLoader {
-    private static ReactiveColorsLoader colorsLoaderUI = null;
-    public static JFrame frame;
-    private static int lastIndex = 0;
+    private static ReactiveColorsLoader instance = null;
+
+    private static JFrame frame;
+    private static int index = 0;
     private static JSlider colorSlider;
     private static final CLabel[] labels = new CLabel[5];
 
     public static void getInstance() {
-        if (colorsLoaderUI == null) colorsLoaderUI = new ReactiveColorsLoader();
+        if (instance == null) instance = new ReactiveColorsLoader();
         frame.toFront();
     }
 
@@ -36,18 +37,19 @@ public class ReactiveColorsLoader {
         frame.setLocationRelativeTo(ReactiveColorsEditor.frame);
 
         EngineSettings.loadColors();
-        ReactiveColors.setPresetColors(ColorUtil.convertColors(lastIndex, EngineSettings.savedReactiveColors));
+        ReactiveColorsPresets.setColors(ColorUtil.deserializeColors(index, EngineSettings.savedReactiveColors));
         frame.setTitle("You have " + EngineSettings.savedReactiveColors.size() + " Saved Colors!");
 
         int offsetX = 69;
         Color fgColor = Color.white;
         Font font = new Font(Font.SERIF, Font.PLAIN, 17);
-        labels[0] = new CLabel(new Rectangle(5, 10, 64, 45), font, fgColor, ReactiveColors.getComponent(0));
-        labels[1] = new CLabel(new Rectangle(offsetX + 5, 10, 64, 45), font, fgColor, ReactiveColors.getComponent(1));
-        labels[2] = new CLabel(new Rectangle(2 * offsetX + 5, 10, 64, 45), font, fgColor, ReactiveColors.getComponent(2));
-        labels[3] = new CLabel(new Rectangle(3 * offsetX + 5, 10, 64, 45), font, fgColor, ReactiveColors.getComponent(3));
-        labels[4] = new CLabel(new Rectangle(4 * offsetX + 5, 10, 64, 45), font, fgColor, ReactiveColors.getComponent(4));
-        addComps(frame, labels[0], labels[1], labels[2], labels[3], labels[4]);
+        labels[0] = new CLabel(new Rectangle(5, 10, 64, 45), font, fgColor, ReactiveColors.getColor(0));
+        labels[1] = new CLabel(new Rectangle(offsetX + 5, 10, 64, 45), font, fgColor, ReactiveColors.getColor(1));
+        labels[2] = new CLabel(new Rectangle(2 * offsetX + 5, 10, 64, 45), font, fgColor, ReactiveColors.getColor(2));
+        labels[3] = new CLabel(new Rectangle(3 * offsetX + 5, 10, 64, 45), font, fgColor, ReactiveColors.getColor(3));
+        labels[4] = new CLabel(new Rectangle(4 * offsetX + 5, 10, 64, 45), font, fgColor, ReactiveColors.getColor(4));
+
+        addComps(frame, labels);
 
         JButton button = new JButton("<html><body style='font-size: 12px'>Refresh Colors</body></html>");
         button.setBounds(350, 15, 160, 40);
@@ -55,7 +57,7 @@ public class ReactiveColorsLoader {
         button.addActionListener(e -> refreshButton());
         frame.add(button);
 
-        colorSlider = new JSlider(0, EngineSettings.savedReactiveColors.size() - 1, lastIndex);
+        colorSlider = new JSlider(0, EngineSettings.savedReactiveColors.size() - 1, index);
         colorSlider.setPaintTicks(true);
         colorSlider.setPaintLabels(true);
         colorSlider.setMinorTickSpacing(setMinorTicks());
@@ -69,10 +71,10 @@ public class ReactiveColorsLoader {
 
     private void colorSliderChangeColor() {
         int sliderIndex = colorSlider.getValue();
-        lastIndex = sliderIndex;
+        index = sliderIndex;
 
-        Color[] selectedColors = ColorUtil.convertColors(sliderIndex, EngineSettings.savedReactiveColors);
-        ReactiveColors.setPresetColors(selectedColors, selectedColors);
+        Color[] selectedColors = ColorUtil.deserializeColors(sliderIndex, EngineSettings.savedReactiveColors);
+        ReactiveColorsPresets.setColors(selectedColors, selectedColors);
         setLabelColors(selectedColors);
     }
 
@@ -83,18 +85,17 @@ public class ReactiveColorsLoader {
     }
 
     private static void setLabelColors(Color[] colors) {
-        labels[0].setBackground(colors[0]);
-        labels[1].setBackground(colors[1]);
-        labels[2].setBackground(colors[2]);
-        labels[3].setBackground(colors[3]);
-        labels[4].setBackground(colors[4]);
+        for (int i = 0; i < labels.length; i++)
+            labels[i].setBackground(colors[i]);
     }
 
     private int setMinorTicks() {
-        if (EngineSettings.savedReactiveColors.size() < 25) return 1;
-        else if (EngineSettings.savedReactiveColors.size() % 15 == 0) {
+        if (EngineSettings.savedReactiveColors.size() < 25)
+            return 1;
+        else if (EngineSettings.savedReactiveColors.size() % 15 == 0)
             return EngineSettings.savedReactiveColors.size() / 15;
-        } else return EngineSettings.savedReactiveColors.size() / 25;
+        else
+            return EngineSettings.savedReactiveColors.size() / 25;
     }
 
     private int setMajorTicks() {
@@ -102,12 +103,13 @@ public class ReactiveColorsLoader {
         return 1;
     }
 
-    private void addComps(JFrame root, JComponent... components) {
-        for (JComponent comps : components) root.add(comps);
+    private void addComps(JFrame root, JComponent[] components) {
+        for (JComponent comps : components)
+            root.add(comps);
     }
 
     private void close() {
         frame.dispose();
-        colorsLoaderUI = null;
+        instance = null;
     }
 }

@@ -2,6 +2,7 @@ package com.cabg.moleculetypes;
 
 import com.cabg.core.EngineEntity;
 import com.cabg.reactivecolors.ReactiveColors;
+import com.cabg.utilities.ColorUtil;
 
 import java.awt.*;
 
@@ -11,28 +12,26 @@ import static com.cabg.utilities.MathUtil.clamp;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public abstract class Molecule implements EngineEntity {
-    public final static Color DEFAULT_COLOR = Color.white;
-    public static Color PLAIN_COLOR = new Color(63, 138, 242);
     public static final float MAX_SPEED = 180.0f;
+    public static Color DEFAULT_COLOR = ColorUtil.fromHex("#fcaa00");
 
     public float radius, x, y, vx, vy, ax, ay;
 
     public Color color = DEFAULT_COLOR;
 
     public Molecule() {
-        radius = (random.nextFloat() * 10f) + 0.9f;
         x = (random.nextFloat() * canvas.getWidth()) - radius;
         y = (random.nextFloat() * canvas.getHeight()) - radius;
+        radius = (random.nextFloat() * 10f) + 0.9f;
         vx = (float) (cos(toRadians(random.nextFloat() * 360f)) * (random.nextFloat() * 10f));
         vy = (float) (sin(toRadians(random.nextFloat() * 360f)) * (random.nextFloat() * 10f));
     }
 
     public Molecule(float x, float y, float radius) {
-        this.radius = radius;
+        this();
         this.x = x;
         this.y = y;
-        this.vx = (float) (cos(toRadians(random.nextFloat() * 360f)) * (random.nextFloat() * 10f));
-        this.vy = (float) (sin(toRadians(random.nextFloat() * 360f)) * (random.nextFloat() * 10f));
+        this.radius = radius;
     }
 
     public Molecule(float x, float y, float vx, float vy, float radius) {
@@ -98,8 +97,8 @@ public abstract class Molecule implements EngineEntity {
 
     public Color getReactiveColor() {
         return engineSettings.reactiveColorsEnabled
-                ? ReactiveColors.getReactiveComponent(velocity())
-                : PLAIN_COLOR;
+                ? ReactiveColors.getReactiveColor(velocity())
+                : color;
     }
 
     public float length() {

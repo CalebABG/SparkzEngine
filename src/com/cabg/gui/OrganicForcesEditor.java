@@ -14,6 +14,7 @@ import static com.cabg.core.EngineVariables.eFrame;
 
 public class OrganicForcesEditor {
     private static OrganicForcesEditor instance = null;
+
     private static final Font font = new Font(Font.SERIF, Font.PLAIN, 18);
     public static float angleIncrement = 0.05f;
     public static String expressionForceX = "cos(x)", expressionForceY = "sin(x)";
@@ -22,11 +23,11 @@ public class OrganicForcesEditor {
     private final JTextField forceXTextField, forceYTextField, angleIncrementTextField;
 
     public static void getInstance() {
-        if (instance == null) instance = new OrganicForcesEditor(eFrame);
+        if (instance == null) instance = new OrganicForcesEditor();
         instance.frame.toFront();
     }
 
-    private OrganicForcesEditor(JFrame parent) {
+    private OrganicForcesEditor() {
         EngineThemes.setLookAndFeel();
 
         frame = new JFrame("Organic Forces");
@@ -34,31 +35,31 @@ public class OrganicForcesEditor {
         frame.setSize(335, 354);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
-        frame.setLocationRelativeTo(parent);
+        frame.setLocationRelativeTo(eFrame);
 
         JScrollPane scrollPane = new JScrollPane();
         frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
         JPanel panel = new JPanel();
         scrollPane.setViewportView(panel);
-        GridBagLayout gbl_panel = new GridBagLayout();
-        gbl_panel.columnWidths = new int[]{47, 116, 0};
-        gbl_panel.rowHeights = new int[]{73, 0, 0, 0, 0, 25, 0};
-        gbl_panel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-        gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-        panel.setLayout(gbl_panel);
+        GridBagLayout gblPanel = new GridBagLayout();
+        gblPanel.columnWidths = new int[]{47, 116, 0};
+        gblPanel.rowHeights = new int[]{73, 0, 0, 0, 0, 25, 0};
+        gblPanel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+        gblPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+        panel.setLayout(gblPanel);
 
         JLabel lblPleaseEnterTwo = new JLabel("Please Enter Two Force Expressions");
         lblPleaseEnterTwo.setForeground(Color.BLACK);
         lblPleaseEnterTwo.setFont(font);
         lblPleaseEnterTwo.setHorizontalAlignment(SwingConstants.CENTER);
-        GridBagConstraints gbc_lblPleaseEnterTwo = new GridBagConstraints();
-        gbc_lblPleaseEnterTwo.fill = GridBagConstraints.HORIZONTAL;
-        gbc_lblPleaseEnterTwo.gridwidth = 2;
-        gbc_lblPleaseEnterTwo.insets = new Insets(0, 0, 0, 0);
-        gbc_lblPleaseEnterTwo.gridx = 0;
-        gbc_lblPleaseEnterTwo.gridy = 0;
-        panel.add(lblPleaseEnterTwo, gbc_lblPleaseEnterTwo);
+        GridBagConstraints gbcLblPleaseEnterTwo = new GridBagConstraints();
+        gbcLblPleaseEnterTwo.fill = GridBagConstraints.HORIZONTAL;
+        gbcLblPleaseEnterTwo.gridwidth = 2;
+        gbcLblPleaseEnterTwo.insets = new Insets(0, 0, 0, 0);
+        gbcLblPleaseEnterTwo.gridx = 0;
+        gbcLblPleaseEnterTwo.gridy = 0;
+        panel.add(lblPleaseEnterTwo, gbcLblPleaseEnterTwo);
 
         JLabel lblNewLabel = new JLabel("Force X Expression");
         lblNewLabel.setForeground(Color.DARK_GRAY);
@@ -81,8 +82,8 @@ public class OrganicForcesEditor {
             if (e.getKeyCode() != KeyEvent.VK_ENTER) forceXTextField.setForeground(Color.black);
         }));
 
-        AutoCompletion ac = new AutoCompletion(ParticleGrapher.autoCompleteProvider);
-        ac.setListCellRenderer(ParticleGrapher.cellRenderer);
+        AutoCompletion ac = new AutoCompletion(ParticleGraphEditor.autoCompleteProvider);
+        ac.setListCellRenderer(ParticleGraphEditor.cellRenderer);
         ac.install(forceXTextField);
 
         GridBagConstraints gbc_textField = new GridBagConstraints();
@@ -114,8 +115,8 @@ public class OrganicForcesEditor {
             if (e.getKeyCode() != KeyEvent.VK_ENTER) forceYTextField.setForeground(Color.black);
         }));
 
-        AutoCompletion ac2 = new AutoCompletion(ParticleGrapher.autoCompleteProvider);
-        ac2.setListCellRenderer(ParticleGrapher.cellRenderer);
+        AutoCompletion ac2 = new AutoCompletion(ParticleGraphEditor.autoCompleteProvider);
+        ac2.setListCellRenderer(ParticleGraphEditor.cellRenderer);
         ac2.install(forceYTextField);
 
         GridBagConstraints gbc_textField_1 = new GridBagConstraints();
@@ -147,8 +148,8 @@ public class OrganicForcesEditor {
             if (e.getKeyCode() != KeyEvent.VK_ENTER) angleIncrementTextField.setForeground(Color.black);
         }));
 
-        AutoCompletion ac3 = new AutoCompletion(ParticleGrapher.autoCompleteProvider);
-        ac3.setListCellRenderer(ParticleGrapher.cellRenderer);
+        AutoCompletion ac3 = new AutoCompletion(ParticleGraphEditor.autoCompleteProvider);
+        ac3.setListCellRenderer(ParticleGraphEditor.cellRenderer);
         ac3.install(angleIncrementTextField);
 
         GridBagConstraints gbc_textField_2 = new GridBagConstraints();
@@ -176,16 +177,24 @@ public class OrganicForcesEditor {
         frame.setVisible(true);
     }
 
+    public static Float evalForceXExpression() {
+        return ParticleGraphEditor.evalExpression(expressionForceX);
+    }
+
+    public static Float evalForceYExpression() {
+        return ParticleGraphEditor.evalExpression(expressionForceY);
+    }
+
     private void setForces() {
         String fxText = forceXTextField.getText();
         String fyText = forceYTextField.getText();
         String axText = angleIncrementTextField.getText();
 
-        float tempAngleIncrement = ParticleGrapher.guardDouble(axText, angleIncrementTextField);
+        float angleInc = ParticleGraphEditor.guardFloat(axText, angleIncrementTextField);
 
         expressionForceX = fxText;
         expressionForceY = fyText;
-        angleIncrement = tempAngleIncrement;
+        angleIncrement = angleInc;
     }
 
     private void close() {

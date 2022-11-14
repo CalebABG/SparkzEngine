@@ -5,7 +5,7 @@ import com.cabg.core.EngineMethods;
 import com.cabg.core.EngineSettings;
 import com.cabg.enums.PhysicsEditorMode;
 import com.cabg.gui.*;
-import com.cabg.moleculehelpers.MoleculeFactory;
+import com.cabg.moleculetypes.MoleculeFactory;
 import com.cabg.utilities.ColorUtil;
 import com.cabg.verlet.Physics;
 
@@ -142,7 +142,7 @@ public class KeyboardHandler extends KeyAdapter {
         }
 
         if (key == KeyEvent.VK_R) {
-            ColorUtil.setEngineBackgroundColor();
+            EngineMethods.setEngineBackgroundColor();
         }
 
         if (key == KeyEvent.VK_T) {
@@ -178,7 +178,7 @@ public class KeyboardHandler extends KeyAdapter {
         }
 
         if (key == KeyEvent.VK_X && e.isShiftDown()) {
-            BackgroundThread.run(ParticleGrapher::getInstance);
+            BackgroundThread.run(ParticleGraphEditor::getInstance);
         }
     }
 }

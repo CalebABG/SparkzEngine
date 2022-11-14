@@ -2,9 +2,9 @@ package com.cabg.gui;
 
 import com.cabg.core.EngineThemes;
 import com.cabg.core.EngineVariables;
+import com.cabg.enums.MoleculeRenderMode;
 import com.cabg.inputhandlers.ExtendedKeyAdapter;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
-import com.cabg.moleculehelpers.MoleculeRenderOptions;
 import com.cabg.utilities.HTMLUtil;
 import com.cabg.utilities.InputUtil;
 
@@ -12,18 +12,26 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
+import static com.cabg.core.EngineVariables.*;
+import static com.cabg.utilities.HTMLUtil.HeadingTag;
+import static com.cabg.utilities.InputUtil.valueGuardString;
+
 public class MoleculeTypePicker {
-    public static MoleculeTypePicker[] moleculeTypePickers = new MoleculeTypePicker[2];
+    private static final MoleculeTypePicker[] instances = new MoleculeTypePicker[2];
 
-    public JFrame frame;
-    public JTextField textField;
+    private final JFrame frame;
+    private final JTextField textField;
 
-    public static void getInstance(int type, String title) {
-        if (moleculeTypePickers[type] == null) moleculeTypePickers[type] = new MoleculeTypePicker(type, title);
-        moleculeTypePickers[type].frame.toFront();
+    public static void getInstance(int type, String title, JFrame parent) {
+        if (instances[type] == null) instances[type] = new MoleculeTypePicker(type, title, parent);
+        instances[type].frame.toFront();
     }
 
-    private MoleculeTypePicker(int type, String title) {
+    public static void getInstance(int type, String title) {
+        getInstance(type, title, null);
+    }
+
+    private MoleculeTypePicker(int type, String title, JFrame parent) {
         EngineThemes.setLookAndFeel();
 
         frame = new JFrame(title);
@@ -31,7 +39,7 @@ public class MoleculeTypePicker {
         frame.setSize(320, 520);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(e -> close(type)));
-        frame.setLocationRelativeTo(OptionsMenu.frame);
+        frame.setLocationRelativeTo(parent);
 
         JScrollPane jScrollPane1 = new JScrollPane();
 
@@ -63,26 +71,39 @@ public class MoleculeTypePicker {
         frame.setVisible(true);
     }
 
+    private void close(int index) {
+        frame.dispose();
+        instances[index] = null;
+    }
+
     private void getOption(int type) {
-        if (!textField.getText().isEmpty()) {
-            try {
-                if (type == 0) {
-                    if (InputUtil.canParseInt(textField.getText())) {
-                        MoleculeRenderOptions.particleOptions(Integer.parseInt(textField.getText()));
-                    }
-                } else if (type == 1) {
-                    if (InputUtil.canParseInt(textField.getText())) {
-                        MoleculeRenderOptions.fireworksOptions(Integer.parseInt(textField.getText()));
-                    }
-                }
-            } catch (Exception ex) {
-                ExceptionLogger.append(ex);
+        String text = textField.getText();
+        if (!InputUtil.canParseInt(text)) return;
+
+        int amount = Integer.parseInt(text);
+        switch (type) {
+            case 0: particleOptions(amount); break;
+            case 1: fireworksOptions(amount); break;
+        }
+    }
+
+    private static void particleOptions(int x) {
+        if (x > -1 && x < MoleculeRenderMode.values().length) {
+            engineSettings.particleRenderMode = MoleculeRenderMode.values()[x];
+
+            if (x == 4) {
+                baseParticleText = valueGuardString(1, instances[0].frame, baseParticleText, HeadingTag(3, "Enter Custom Text"));
             }
         }
     }
 
-    private void close(int index) {
-        frame.dispose();
-        moleculeTypePickers[index] = null;
+    private static void fireworksOptions(int x) {
+        if (x > -1 && x < MoleculeRenderMode.values().length) {
+            engineSettings.fireworksRenderMode = MoleculeRenderMode.values()[x];
+
+            if (x == 4) {
+                fireworksParticleText = valueGuardString(1, instances[1].frame, fireworksParticleText, HeadingTag(3, "Enter Custom Text"));
+            }
+        }
     }
 }

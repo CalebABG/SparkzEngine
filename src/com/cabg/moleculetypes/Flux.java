@@ -1,7 +1,7 @@
 package com.cabg.moleculetypes;
 
 import java.awt.*;
-import com.cabg.moleculehelpers.MoleculeFactory;
+
 import static com.cabg.core.EngineVariables.*;
 import static org.apache.commons.math3.util.FastMath.*;
 

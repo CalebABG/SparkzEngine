@@ -13,9 +13,11 @@ import static com.cabg.core.EngineVariables.eFrame;
 
 public class QuitWindow {
     private static QuitWindow instance = null;
+
     private static final Font font = new Font(Font.SERIF, Font.PLAIN, 45);
     private static final Color NO_COLOR = new Color(72, 0, 18, 255);
     private static final Color YES_COLOR = new Color(21, 50, 21, 255);
+
     private final JFrame frame;
 
     public static void getInstance() {

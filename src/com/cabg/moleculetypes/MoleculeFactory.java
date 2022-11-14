@@ -1,6 +1,5 @@
-package com.cabg.moleculehelpers;
+package com.cabg.moleculetypes;
 
-import com.cabg.moleculetypes.*;
 import com.cabg.verlet.PhysicsFactory;
 
 import java.awt.event.MouseEvent;

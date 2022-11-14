@@ -8,7 +8,7 @@ import static org.apache.commons.math3.util.FastMath.sqrt;
 public class Portal extends Molecule {
     public Portal(float x, float y, float radius) {
         super(x, y, 0, 0, radius);
-        color = ReactiveColors.getComponents()[(int) (random.nextFloat() * 4)];
+        color = ReactiveColors.getColors()[(int) (random.nextFloat() * 4)];
     }
 
     private void movePortal() {

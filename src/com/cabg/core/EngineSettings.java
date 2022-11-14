@@ -44,7 +44,7 @@ public class EngineSettings {
     public boolean
             paused,
             reactiveColorsEnabled = true,
-            connectParticles,
+            linkMolecules,
             particleFriction = true,
             particleBoundless,
             particlesGravitateToMouse = true,
@@ -98,7 +98,7 @@ public class EngineSettings {
     }
 
     public void toggleConnectedParticlesMode() {
-        connectParticles = !connectParticles;
+        linkMolecules = !linkMolecules;
     }
 
     public void toggleReactiveColors() {
@@ -153,7 +153,7 @@ public class EngineSettings {
         try (Writer writer = new OutputStreamWriter(new FileOutputStream(colorsFilePath, true), StandardCharsets.UTF_8)) {
             new File("./" + folderName).mkdir();
             if (colorsString != null) writer.write(colorsString + '\n');
-            else writer.write(ColorUtil.serializeColors(ReactiveColors.getComponents()) + '\n');
+            else writer.write(ColorUtil.serializeColors(ReactiveColors.getColors()) + '\n');
         } catch (Exception e) {
             ExceptionLogger.append(e);
         }

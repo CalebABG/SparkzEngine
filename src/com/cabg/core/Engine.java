@@ -2,7 +2,6 @@ package com.cabg.core;
 
 import com.cabg.gui.ExceptionLogger;
 import com.cabg.gui.QuitWindow;
-import com.cabg.gui.SplashScreen;
 import com.cabg.gui.StatsPanel;
 import com.cabg.inputhandlers.*;
 
@@ -22,9 +21,9 @@ public class Engine {
     }
 
     public static void main(String[] args) {
-        new SplashScreen(1500).display();
+//        new SplashScreen(1500).display();
         Engine e = new Engine();
-        StatsPanel.getInstance();
+//        StatsPanel.getInstance();
         e.run();
     }
 
@@ -33,7 +32,7 @@ public class Engine {
 
         eFrame = new JFrame(title);
         eFrame.setIconImage(EngineVariables.iconImage);
-        eFrame.setSize(736, 553);
+        eFrame.setSize(735, 550);
         eFrame.setLocationRelativeTo(null);
         eFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         eFrame.addWindowListener(new ExtendedWindowAdapter(e -> BackgroundThread.run(QuitWindow::getInstance)));

@@ -1,7 +1,6 @@
 package com.cabg.gui;
 
 import com.cabg.components.CSlider;
-import com.cabg.core.EngineMethods;
 import com.cabg.core.EngineThemes;
 import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
@@ -9,8 +8,7 @@ import com.cabg.inputhandlers.ExtendedWindowAdapter;
 import javax.swing.*;
 import java.awt.*;
 
-import static com.cabg.core.EngineVariables.eFrame;
-import static com.cabg.core.EngineVariables.engineSettings;
+import static com.cabg.core.EngineVariables.*;
 import static com.cabg.utilities.HTMLUtil.HeadingTag;
 import static com.cabg.utilities.InputUtil.minValueGuard;
 
@@ -63,7 +61,7 @@ public class ParticleSlideEditor {
         ptsslider.addChangeListener(e -> {
             int particleSize = ptsslider.getValue();
             ptsamount.setText("" + particleSize);
-            EngineMethods.setParticleSize(particleSize);
+            setParticleSize(particleSize);
             setPaintLabels(ptsslider);
         });
         particleOptionsPanel.add(ptsslider);
@@ -225,7 +223,7 @@ public class ParticleSlideEditor {
         btnEditJitter.setBounds(177, 555, 137, 36);
         fireworksOptionsPanel.add(btnEditJitter);
 
-        //Particle Size Seed
+        //Particle Size
         JPanel particleSizeOptionsPanel = new JPanel(null);
         jTabbedPane.addTab("Particle Size Options", null, particleSizeOptionsPanel, null);
 
@@ -531,6 +529,11 @@ public class ParticleSlideEditor {
 
     private static void setParticleDragSizeMax(int amount) {
         if (amount > -1) engineSettings.particleDragSizeMin = amount;
+    }
+
+    public static void setParticleSize(int size) {
+        for (int i = 0; i < Particles.size(); i++)
+            if (size > -1) Particles.get(i).radius = size;
     }
 
     private static void setSingleClickSpeed(int amount) {

@@ -1,7 +1,5 @@
 package com.cabg.utilities;
 
-import com.cabg.gui.OptionsMenu;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -30,11 +28,11 @@ public class InputUtil {
         JLabel label = new JLabel(promptText);
         label.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
 
-        String amount = JOptionPane.showInputDialog(OptionsMenu.frame, label, null, JOptionPane.PLAIN_MESSAGE);
+        String amount = JOptionPane.showInputDialog(null, label, null, JOptionPane.PLAIN_MESSAGE);
         float newAmount = (amount != null && amount.length() > 0 && canParseFloat(amount)) ? Float.parseFloat(amount) : defaultVal;
         if (newAmount < min) {
             while (newAmount < min) {
-                amount = JOptionPane.showInputDialog(OptionsMenu.frame, HeadingTag(3, "Not Allowed, Enter an Amount > " + min));
+                amount = JOptionPane.showInputDialog(null, HeadingTag(3, "Not Allowed, Enter an Amount > " + min));
                 newAmount = (amount != null && amount.length() > 0) ? Float.parseFloat(amount) : defaultVal;
             }
         }

@@ -12,8 +12,8 @@ import static org.apache.commons.math3.util.FastMath.pow;
 
 public class Physics {
     private static final Font renderFont = new Font(Font.SERIF, Font.PLAIN, 14);
-    public static Color LINK_COLOR = Color.ORANGE.darker();
-    public static Color ITEM_COLOR = Color.ORANGE;
+    public static final Color LINK_COLOR = Color.ORANGE.darker();
+    public static final Color ITEM_COLOR = Color.ORANGE;
     public static final int MAX_COLLISIONS = 1000;
     public static float MESH_SIZE = 50.0f;
     public static float TEAR_DISTANCE = 80.0f;

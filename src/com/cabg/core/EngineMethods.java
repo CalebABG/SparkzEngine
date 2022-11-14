@@ -1,15 +1,10 @@
 package com.cabg.core;
 
 import com.cabg.components.CMenuBar;
-import com.cabg.enums.GravitationMode;
 import com.cabg.enums.PhysicsEditorMode;
-import com.cabg.gui.*;
+import com.cabg.gui.PhysicsEditor;
 import com.cabg.moleculetypes.Molecule;
 import com.cabg.moleculetypes.Particle;
-import com.cabg.reactivecolors.ReactiveColorsRandomizer;
-import com.cabg.utilities.ColorUtil;
-import com.cabg.utilities.HTMLUtil;
-import com.cabg.utilities.InputUtil;
 import com.cabg.utilities.NotificationUtil;
 import com.cabg.verlet.Physics;
 
@@ -18,23 +13,12 @@ import java.awt.*;
 import java.util.List;
 
 import static com.cabg.core.EngineVariables.*;
-import static com.cabg.enums.EngineMode.*;
-import static com.cabg.enums.MoleculeType.*;
-import static com.cabg.utilities.HTMLUtil.HeadingTag;
-import static com.cabg.utilities.InputUtil.minValueGuard;
+import static com.cabg.enums.EngineMode.GRAPH;
+import static com.cabg.enums.EngineMode.RAGDOLL;
+import static com.cabg.enums.MoleculeType.DUPLEX;
 
 public class EngineMethods {
     // Molecule Methods
-    public static void setParticleSize(int size) {
-        for (int i = 0; i < Particles.size(); i++)
-            if (size > -1) Particles.get(i).radius = size;
-    }
-
-    public static void increaseParticleSize() {
-        for (int i = 0; i < Particles.size(); i++)
-            Particles.get(i).radius += 0.2;
-    }
-
     public static void slowParticles() {
         for (int i = 0; i < Particles.size(); i++) {
             final float n = 0.6f;
@@ -53,100 +37,17 @@ public class EngineMethods {
         }
     }
 
+    public static void increaseParticleSize() {
+        for (int i = 0; i < Particles.size(); i++)
+            Particles.get(i).radius += 0.2f;
+    }
+
     public static void decreaseParticleSize() {
         for (int i = 0; i < Particles.size(); i++) {
             final float n = 0.2f;
             Particle p = Particles.get(i);
             p.radius -= n;
             if (p.radius < n) p.radius = n;
-        }
-    }
-
-    private static void showGravitationOptions() {
-        int gravityMode = (int) minValueGuard(0, engineSettings.gravitationMode.ordinal(), HTMLUtil.ParticleGravitationOptions);
-        if (gravityMode < GravitationMode.values().length) engineSettings.gravitationMode = GravitationMode.values()[gravityMode];
-        CMenuBar.updateGravitationModeRadios();
-    }
-
-    private static void showFireworksOptions() {
-        String input = JOptionPane.showInputDialog(OptionsMenu.frame, HeadingTag(3, HTMLUtil.FireworksOptions), null, JOptionPane.PLAIN_MESSAGE);
-        int rfoInt = InputUtil.canParseInt(input) ? Integer.parseInt(input) : -1;
-
-        switch (rfoInt) {
-            case 1: ParticleSlideEditor.showFireworksWindAmountDialog(); break;
-            case 2: ParticleSlideEditor.showParticleLifeAmountDialog(); break;
-            case 3: ParticleSlideEditor.showFireworksJitterAmountDialog(); break;
-        }
-    }
-
-    private static void showParticleSizeSeedOptions() {
-        String input = JOptionPane.showInputDialog(OptionsMenu.frame, HTMLUtil.ParticleSizeSeedOptions, null, JOptionPane.PLAIN_MESSAGE);
-        int seedOpt = InputUtil.canParseInt(input) ? Integer.parseInt(input) : -1;
-
-        switch (seedOpt) {
-            case 1: ParticleSizeEditor.getInstance(0); break;
-            case 2: ParticleSizeEditor.getInstance(1); break;
-            case 3: ParticleSizeEditor.getInstance(2); break;
-        }
-    }
-
-    private static void showParticleSpeedSeedOptions() {
-        String input = JOptionPane.showInputDialog(OptionsMenu.frame, HTMLUtil.ParticleSpeedSeedOptions, null, JOptionPane.PLAIN_MESSAGE);
-        int seedOpt = InputUtil.canParseInt(input) ? Integer.parseInt(input) : -1;
-
-        switch (seedOpt) {
-            case 1: ParticleSpeedEditor.getInstance(0); break;
-            case 2: ParticleSpeedEditor.getInstance(1); break;
-            case 3: ParticleSpeedEditor.getInstance(2); break;
-        }
-    }
-
-    private static void showParticleSizeDialog() {
-        float size = minValueGuard(0, .95f, HeadingTag(3, "Enter Particle Size"), OptionsMenu.frame);
-        if (Particles.size() > 0) {
-            for (int i = 0; i < Particles.size(); i++)
-                Particles.get(i).radius = size;
-        }
-    }
-
-    private static void showReactiveColorsCycleTimeOptions() {
-        engineSettings.reactiveColorsCycleRateInSeconds = (int) minValueGuard(1, engineSettings.reactiveColorsCycleRateInSeconds,
-                HeadingTag(3, "Enter Cycle Time (In Seconds)"));
-
-        if (engineSettings.cycleReactiveColors)
-            ReactiveColorsRandomizer.restartCycle();
-    }
-
-    private static void showParticleDragDialog() {
-        engineSettings.particleDragAmount = (int) minValueGuard(1, engineSettings.particleDragAmount,
-                HeadingTag(3, "Enter Particle Drag Amount"));
-    }
-
-    private static void showFireworksSafetyAmountDialog() {
-        engineSettings.fireworksParticleSafetyAmount = (int) minValueGuard(0, engineSettings.fireworksParticleSafetyAmount,
-                HeadingTag(3, "Enter Safety Amount"));
-    }
-
-    private static void showFireworksAmountDialog() {
-        engineSettings.fireworksAmount = (int) minValueGuard(1, engineSettings.fireworksAmount,
-                HeadingTag(3, "Enter Fireworks Amount"));
-    }
-
-    public static void handleMenuOptionsSelection(int option) {
-        switch (option) {
-            case 1: showParticleSizeDialog(); break;
-            case 2: showParticleDragDialog(); break;
-            case 3: showFireworksAmountDialog(); break;
-            case 4: MoleculeTypePicker.getInstance(0, "Particle Type Options"); break;
-            case 5: ColorUtil.setParticlePlainColor(); break;
-            case 6: showGravitationOptions(); break;
-            case 7: showParticleSizeSeedOptions(); break;
-            case 8: showParticleSpeedSeedOptions(); break;
-            case 9: showFireworksOptions(); break;
-            case 10: MoleculeTypePicker.getInstance(1, "Firework Type Options"); break;
-            case 11: ReactiveColorsEditor.getInstance(); break;
-            case 12: showFireworksSafetyAmountDialog(); break;
-            case 13: showReactiveColorsCycleTimeOptions(); break;
         }
     }
 
@@ -249,6 +150,11 @@ public class EngineMethods {
     // Engine State Methods
     public static void setEngineTitle() {
         eFrame.setTitle(engineSettings.paused ? title + " - PAUSED" : title);
+    }
+
+    public static void setEngineBackgroundColor() {
+        Color f = JColorChooser.showDialog(eFrame, "Engine Background Color", backgroundColor);
+        backgroundColor = (f != null) ? f : backgroundColor;
     }
 
     public static void togglePauseEngine() {

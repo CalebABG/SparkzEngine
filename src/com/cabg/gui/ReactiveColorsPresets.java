@@ -3,19 +3,21 @@ package com.cabg.gui;
 import com.cabg.core.EngineThemes;
 import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
+import com.cabg.reactivecolors.ReactiveColors;
+import com.cabg.utilities.ColorUtil;
 
 import javax.swing.*;
 
-import static com.cabg.reactivecolors.ReactiveColors.*;
+import java.awt.*;
 
 public class ReactiveColorsPresets {
-    private static ReactiveColorsPresets reactiveColorsPresetsUI = null;
-    private static JFrame frame;
-    private static final JButton[] presetButtons = new JButton[15];
+    private static ReactiveColorsPresets instance = null;
+
+    private final JFrame frame;
 
     public static void getInstance() {
-        if (reactiveColorsPresetsUI == null) reactiveColorsPresetsUI = new ReactiveColorsPresets();
-        frame.toFront();
+        if (instance == null) instance = new ReactiveColorsPresets();
+        instance.frame.toFront();
     }
 
     private ReactiveColorsPresets() {
@@ -30,85 +32,246 @@ public class ReactiveColorsPresets {
         frame.getContentPane().setLayout(null);
         frame.setLocationRelativeTo(ReactiveColorsEditor.frame);
 
+        JButton[] presetButtons = new JButton[15];
         presetButtons[0] = new JButton("Propane");
         presetButtons[0].setBounds(10, 11, 89, 39);
-        presetButtons[0].addActionListener(e -> setPresetColors(propaneColor()));
+        presetButtons[0].addActionListener(e -> setColors(propaneColor()));
         frame.add(presetButtons[0]);
 
         presetButtons[1] = new JButton("Maritime");
         presetButtons[1].setBounds(219, 11, 89, 39);
-        presetButtons[1].addActionListener(e -> setPresetColors(maritime()));
+        presetButtons[1].addActionListener(e -> setColors(maritime()));
         frame.add(presetButtons[1]);
 
         presetButtons[2] = new JButton("Day & Night");
         presetButtons[2].setBounds(109, 11, 100, 39);
-        presetButtons[2].addActionListener(e -> setPresetColors(dayAndNight()));
+        presetButtons[2].addActionListener(e -> setColors(dayAndNight()));
         frame.add(presetButtons[2]);
 
         presetButtons[3] = new JButton("Plant Life");
         presetButtons[3].setBounds(10, 61, 89, 39);
-        presetButtons[3].addActionListener(e -> setPresetColors(plantLife()));
+        presetButtons[3].addActionListener(e -> setColors(plantLife()));
         frame.add(presetButtons[3]);
 
         presetButtons[4] = new JButton("Coffee");
         presetButtons[4].setBounds(109, 61, 100, 39);
-        presetButtons[4].addActionListener(e -> setPresetColors(fancyCoffee()));
+        presetButtons[4].addActionListener(e -> setColors(fancyCoffee()));
         frame.add(presetButtons[4]);
 
         presetButtons[5] = new JButton("Cinnamon");
         presetButtons[5].setBounds(219, 61, 89, 39);
-        presetButtons[5].addActionListener(e -> setPresetColors(cinnamonSpice()));
+        presetButtons[5].addActionListener(e -> setColors(cinnamonSpice()));
         frame.add(presetButtons[5]);
 
         presetButtons[6] = new JButton("Pastels");
         presetButtons[6].setBounds(10, 111, 89, 39);
-        presetButtons[6].addActionListener(e -> setPresetColors(pastels()));
+        presetButtons[6].addActionListener(e -> setColors(pastels()));
         frame.add(presetButtons[6]);
 
         presetButtons[7] = new JButton("Exotic Berry");
         presetButtons[7].setBounds(109, 111, 100, 39);
-        presetButtons[7].addActionListener(e -> setPresetColors(exoticBerries()));
+        presetButtons[7].addActionListener(e -> setColors(exoticBerries()));
         frame.add(presetButtons[7]);
 
         presetButtons[8] = new JButton("Citrus");
         presetButtons[8].setBounds(219, 111, 89, 39);
-        presetButtons[8].addActionListener(e -> setPresetColors(citrus()));
+        presetButtons[8].addActionListener(e -> setColors(citrus()));
         frame.add(presetButtons[8]);
 
         presetButtons[9] = new JButton("Candy");
         presetButtons[9].setBounds(10, 161, 89, 39);
-        presetButtons[9].addActionListener(e -> setPresetColors(candy()));
+        presetButtons[9].addActionListener(e -> setColors(candy()));
         frame.add(presetButtons[9]);
 
         presetButtons[10] = new JButton("Ocean");
         presetButtons[10].setBounds(109, 161, 100, 39);
-        presetButtons[10].addActionListener(e -> setPresetColors(oceanBlues()));
+        presetButtons[10].addActionListener(e -> setColors(oceanBlues()));
         frame.add(presetButtons[10]);
 
         presetButtons[11] = new JButton("Hazy Day");
         presetButtons[11].setBounds(219, 161, 89, 39);
-        presetButtons[11].addActionListener(e -> setPresetColors(hazyDay()));
+        presetButtons[11].addActionListener(e -> setColors(hazyDay()));
         frame.add(presetButtons[11]);
 
         presetButtons[12] = new JButton("Retro");
         presetButtons[12].setBounds(10, 211, 89, 39);
-        presetButtons[12].addActionListener(e -> setPresetColors(retro()));
+        presetButtons[12].addActionListener(e -> setColors(retro()));
         frame.add(presetButtons[12]);
 
         presetButtons[13] = new JButton("Shadow");
         presetButtons[13].setBounds(109, 211, 100, 39);
-        presetButtons[13].addActionListener(e -> setPresetColors(shadowSlate()));
+        presetButtons[13].addActionListener(e -> setColors(shadowSlate()));
         frame.add(presetButtons[13]);
 
         presetButtons[14] = new JButton("Onyx");
         presetButtons[14].setBounds(219, 211, 89, 39);
-        presetButtons[14].addActionListener(e -> setPresetColors(onyxImpact()));
+        presetButtons[14].addActionListener(e -> setColors(onyxImpact()));
         frame.add(presetButtons[14]);
+
         frame.setVisible(true);
     }
 
     public void close() {
         frame.dispose();
-        reactiveColorsPresetsUI = null;
+        instance = null;
+    }
+
+    public static void setColors(Color[] colors) {
+        ReactiveColors.setColors(colors);
+        ReactiveColorsEditor.setColors(colors);
+    }
+
+    public static void setColors(Color[] particleColors, Color[] editorColors) {
+        ReactiveColors.setColors(particleColors);
+        ReactiveColorsEditor.setColors(editorColors);
+    }
+
+    public static Color[] defaultColor() {
+        return furiousFire();
+    }
+
+    public static Color[] randomColor() {
+        Color f = ColorUtil.randomRGBColor();
+        Color s = ColorUtil.randomRGBColor();
+        Color thr = ColorUtil.randomRGBColor();
+        Color fr = ColorUtil.randomRGBColor();
+        Color l = ColorUtil.randomRGBColor();
+        return new Color[]{f, s, thr, fr, l};
+    }
+
+    public static Color[] propaneColor() {
+        Color f = new Color(204, 204, 255);
+        Color s = Color.yellow;
+        Color thr = Color.red;
+        Color fourth = Color.blue;
+        Color l = new Color(0, 0, 51);
+        return new Color[]{f, s, thr, fourth, l};
+    }
+
+    public static Color[] oceanBlues() {
+        Color f = ColorUtil.fromHex("#C4DFE6");
+        Color s = ColorUtil.fromHex("#66A5AD");
+        Color thr = ColorUtil.fromHex("#07575b");
+        Color fourth = ColorUtil.fromHex("#003B46");
+        Color l = ColorUtil.fromHex("#021C1E");
+        return new Color[]{f, s, thr, fourth, l};
+    }
+
+    public static Color[] dayAndNight() {
+        Color f = ColorUtil.fromHex("#E6DF44");
+        Color s = ColorUtil.fromHex("#F0810F");
+        Color thr = ColorUtil.fromHex("#2D4262");
+        Color fourth = ColorUtil.fromHex("#063852");
+        Color l = ColorUtil.fromHex("#011A27");
+        return new Color[]{f, s, thr, fourth, l};
+    }
+
+    public static Color[] plantLife() {
+        Color f = ColorUtil.fromHex("#C6D166");
+        Color s = ColorUtil.fromHex("#739F3D");
+        Color thr = ColorUtil.fromHex("#5C821A");
+        Color fourth = ColorUtil.fromHex("#339900");
+        Color l = ColorUtil.fromHex("#203513");
+        return new Color[]{f, s, thr, fourth, l};
+    }
+
+    public static Color[] fancyCoffee() {
+        Color f = Color.white;
+        Color s = ColorUtil.fromHex("#F1F3CE");
+        Color thr = ColorUtil.fromHex("#DDBC95");
+        Color fourth = ColorUtil.fromHex("#B38867");
+        Color l = ColorUtil.fromHex("#CDCDC0");
+        return new Color[]{f, s, thr, fourth, l};
+    }
+
+    public static Color[] cinnamonSpice() {
+        Color f = ColorUtil.fromHex("#EBDCB2");
+        Color s = ColorUtil.fromHex("#C9A66B");
+        Color thr = ColorUtil.fromHex("#805A3B");
+        Color fourth = ColorUtil.fromHex("#662E1C");
+        return new Color[]{f, s, thr, fourth, fourth.darker()};
+    }
+
+    public static Color[] citrus() {
+        Color f = ColorUtil.fromHex("#FEF3E2");
+        Color s = ColorUtil.fromHex("#FA4032");
+        Color thr = ColorUtil.fromHex("#FA812F");
+        Color fourth = ColorUtil.fromHex("#FAAF08");
+        Color l = ColorUtil.fromHex("#E73F0B");
+        return new Color[]{f, s, thr, fourth, l};
+    }
+
+    public static Color[] pastels() {
+        Color f = ColorUtil.fromHex("#C1E1DC");
+        Color s = ColorUtil.fromHex("#FFCCAC");
+        Color thr = ColorUtil.fromHex("#FFEB94");
+        Color fourth = ColorUtil.fromHex("#FDD475");
+        return new Color[]{f, s, thr, fourth, fourth.darker()};
+    }
+
+    public static Color[] exoticBerries() {
+        Color f = ColorUtil.fromHex("#C0B2B5");
+        Color s = ColorUtil.fromHex("#F0EFEA");
+        Color thr = ColorUtil.fromHex("#D72C16");
+        Color fourth = ColorUtil.fromHex("#A10115");
+        return new Color[]{f, s, thr, fourth, fourth.darker()};
+    }
+
+    public static Color[] candy() {
+        Color f = ColorUtil.fromHex("#008DCB");
+        Color s = ColorUtil.fromHex("#FFEC5C");
+        Color thr = ColorUtil.fromHex("#E1315B");
+        Color fourth = ColorUtil.fromHex("#F47D4A");
+        Color l = ColorUtil.fromHex("#D24135");
+        return new Color[]{f, s, thr, fourth, l};
+    }
+
+    public static Color[] maritime() {
+        Color f = ColorUtil.fromHex("#FF4447").darker();
+        Color s = ColorUtil.fromHex("#FFFFFF");
+        Color thr = ColorUtil.fromHex("#5EA8A7");
+        Color fourth = ColorUtil.fromHex("#257985");
+        Color l = ColorUtil.fromHex("#113743");
+        return new Color[]{f, s, thr, fourth, l};
+    }
+
+    public static Color[] hazyDay() {
+        Color f = ColorUtil.fromHex("#F4EBDb").darker();
+        Color s = ColorUtil.fromHex("#8E9B97");
+        Color thr = ColorUtil.fromHex("#97B8C2");
+        Color fourth = ColorUtil.fromHex("#537072");
+        Color l = ColorUtil.fromHex("#2C4A52");
+        return new Color[]{f, s, thr, fourth, l};
+    }
+
+    public static Color[] retro() {
+        Color f = ColorUtil.fromHex("#B3DBC0");
+        Color s = ColorUtil.fromHex("#FE0000");
+        Color thr = ColorUtil.fromHex("#FDF6F6");
+        Color fourth = ColorUtil.fromHex("#67BACA");
+        return new Color[]{f, s, thr, fourth, fourth.darker().darker()};
+    }
+
+    public static Color[] furiousFire() {
+        Color f = ColorUtil.fromHex("#e6df44");
+        Color s = ColorUtil.fromHex("#fcaa00");
+        Color thr = ColorUtil.fromHex("#fa6001");
+        Color fourth = ColorUtil.fromHex("#ff3300");
+        Color l = ColorUtil.fromHex("#cc0000");
+        return new Color[]{f, s, thr, fourth, l};
+    }
+
+    public static Color[] onyxImpact() {
+        Color f = ColorUtil.fromHex("#0F1F38");
+        Color s = ColorUtil.fromHex("#8E7970");
+        Color thr = new Color(15, 0, 0);
+        Color fourth = ColorUtil.fromHex("#42313A");
+        return new Color[]{f, s, thr, fourth, fourth.darker()};
+    }
+
+    public static Color[] shadowSlate() {
+        Color f = ColorUtil.fromHex("#262F34");
+        Color fourth = new Color(51, 51, 51);
+        return new Color[]{f, f.darker(), f.darker().darker(), fourth, fourth.darker()};
     }
 }

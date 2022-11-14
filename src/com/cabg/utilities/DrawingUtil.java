@@ -105,10 +105,10 @@ public class DrawingUtil {
 
         switch (particleMode) {
             case CIRCLE_NO_FILL:        drawCircle(x, y, radius, radius);       break;
-            case RECTANGLE_3D_NO_FILL:   draw3DRect(x, y, radius, radius);       break;
+            case RECTANGLE_3D_NO_FILL:  draw3DRect(x, y, radius, radius);       break;
             case NUMBERS:               drawNumbers(x, y, radius);              break;
             case CUSTOM_TEXT:           drawCustomText(txt, x, y, radius);      break;
-            case RECTANGLE_3D_FILL:      fill3DRect(x, y, radius, radius);       break;
+            case RECTANGLE_3D_FILL:     fill3DRect(x, y, radius, radius);       break;
             case CIRCLE_FILL:           fillCircle(x, y, radius, radius);       break;
             case SMILEY_FACE:           drawSmileyFace(x, y, radius);           break;
             case MUSIC_NOTE_1:          drawMusicNote1(x, y, radius);           break;
@@ -124,18 +124,5 @@ public class DrawingUtil {
             case DIAMOND_SYMBOL:        drawDiamond(x, y, radius);              break;
             default:                    drawRect(x, y, radius, radius);         break;
         }
-    }
-
-    public static void DrawGravConnections(GravityPoint point, float x, float y) {
-        if (engineSettings.showGravityPointsLink) DrawQuads(point, x, y);
-        else DrawLines(point.x, point.y, x, y);
-    }
-
-    private static void DrawLines(float x1, float y1, float x2, float y2) {
-        graphics2D.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
-    }
-
-    private static void DrawQuads(GravityPoint point, float x, float y) {
-        graphics2D.draw(new QuadCurve2D.Float(point.x, point.y, point.x, y, x, y));
     }
 }

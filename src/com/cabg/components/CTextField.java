@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CTextField extends JTextField {
-    public GridBagConstraints gridBagConstraints = new GridBagConstraints();
+    public final GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
     public CTextField(String text, Font font, int gridWidth, int fill,
                       int gridX, int gridY, int ipadX, int ipadY, float weightX, float weightY) {

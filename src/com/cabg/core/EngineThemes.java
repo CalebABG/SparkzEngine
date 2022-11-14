@@ -31,7 +31,7 @@ public class EngineThemes {
         setTheme(ColorUtil.fromHex("#3B151E"), Color.white);
     }
 
-    public static void winterGreenDream() {
+    public static void winterGreen() {
         setTheme(ColorUtil.fromHex("#1C312C"), Color.white);
     }
 

@@ -26,24 +26,18 @@ import java.io.InputStreamReader;
 import static com.cabg.core.EngineVariables.*;
 import static org.apache.commons.math3.util.FastMath.pow;
 
-public class ParticleGrapher {
-    // Best x-scale for all functions = 0.02
-    private static ParticleGrapher particleGrapher = null;
-    public static JFrame frame;
-    public static final CTextField[] textFields = new CTextField[5];
+public class ParticleGraphEditor {
+    private static ParticleGraphEditor instance = null;
+
+    private static JFrame frame;
     private static RButton graphButton;
-    private static final Font font = new Font(Font.SERIF, Font.PLAIN, 18);
-    public static boolean isOkToGraph = true;
+    private static final CTextField[] textFields = new CTextField[5];
 
-    public static final ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
-
-    static {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(ParticleGrapher.class.getResourceAsStream("/GraphFunc.js")))) {
-            engine.eval(br);
-        } catch (Exception e) {
-            ExceptionLogger.append(e);
-        }
-    }
+    private static boolean isOkToGraph = true;
+    private static boolean isGraphing = false;
+    private static float scaleY = 40f; // Best at 40
+    private static float scaleX = 0.02f; // Best at 0.02
+    private static String mathExpression = "2*sin(x)";
 
     private static final String[] suggestions = {
             "sin(x)", "cos(x)", "tan(x)", "asin(x)", "acos(x)", "atan(x)",
@@ -54,20 +48,25 @@ public class ParticleGrapher {
             "clamp(x, 20, 40)", "map(sin(x), -1, 1, -10, 20)", "e", "pi"
     };
 
-    private static String mathExpression = "2*sin(x)";
-    private static float scaleY = 40f; //Best at 40
-    private static float scaleX = 0.02f;
-    private static boolean isGraphing = false;
+    private static final Font font = new Font(Font.SERIF, Font.PLAIN, 18);
+    public static final ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("nashorn");
+    public static final CCellRenderer cellRenderer = new CCellRenderer(font);
+    public static final CompletionProvider autoCompleteProvider = createAutoCompletionProvider();
 
-    public static final CCellRenderer cellRenderer = new CCellRenderer(new Font(Font.SERIF, Font.PLAIN, 18));
-    public static final CompletionProvider autoCompleteProvider = createCompletionProvider();
+    static {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(ParticleGraphEditor.class.getResourceAsStream("/GraphFunc.js")))) {
+            scriptEngine.eval(br);
+        } catch (Exception e) {
+            ExceptionLogger.append(e);
+        }
+    }
 
     public static void getInstance() {
-        if (particleGrapher == null) particleGrapher = new ParticleGrapher();
+        if (instance == null) instance = new ParticleGraphEditor();
         frame.toFront();
     }
 
-    private ParticleGrapher() {
+    private ParticleGraphEditor() {
         EngineThemes.setLookAndFeel();
 
         frame = new JFrame("Particle Graph Editor");
@@ -114,7 +113,7 @@ public class ParticleGrapher {
         textFields[0] = new CTextField(mathExpression, new Font(Font.SERIF, Font.PLAIN, 20), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{0, 1});
         textFields[0].gridBagConstraints.gridwidth = 2;
         textFields[0].setFocusTraversalKeysEnabled(false);
-        textFields[0].addKeyListener(new ExtendedKeyAdapter(e -> textFields[0].setForeground(Color.black), ParticleGrapher::isEnter));
+        textFields[0].addKeyListener(new ExtendedKeyAdapter(e -> textFields[0].setForeground(Color.black), ParticleGraphEditor::isEnter));
 
         AutoCompletion ac = new AutoCompletion(autoCompleteProvider);
         ac.setListCellRenderer(cellRenderer);
@@ -143,7 +142,7 @@ public class ParticleGrapher {
         panel.add(yscale, yscale.gridBagConstraints);
 
         textFields[1] = new CTextField("" + scaleY, font, new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 11});
-        textFields[1].addKeyListener(new ExtendedKeyAdapter(e -> textFields[1].setForeground(Color.black), ParticleGrapher::isEnter));
+        textFields[1].addKeyListener(new ExtendedKeyAdapter(e -> textFields[1].setForeground(Color.black), ParticleGraphEditor::isEnter));
         panel.add(textFields[1], textFields[1].gridBagConstraints);
 
         RLabel xscale = new RLabel("X Scale", font, GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 12);
@@ -151,7 +150,7 @@ public class ParticleGrapher {
         panel.add(xscale, xscale.gridBagConstraints);
 
         textFields[2] = new CTextField("" + scaleX, font, new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 12});
-        textFields[2].addKeyListener(new ExtendedKeyAdapter(e -> textFields[2].setForeground(Color.black), ParticleGrapher::isEnter));
+        textFields[2].addKeyListener(new ExtendedKeyAdapter(e -> textFields[2].setForeground(Color.black), ParticleGraphEditor::isEnter));
         panel.add(textFields[2], textFields[2].gridBagConstraints);
 
         graphButton = new RButton("<html><span style='color:#008DCB'>Graph</span></html>",
@@ -166,19 +165,23 @@ public class ParticleGrapher {
         frame.setVisible(true);
     }
 
+    public void close() {
+        frame.dispose();
+        instance = null;
+    }
+
     private static void graph() {
         if (Particles.size() > 0) Particles.clear();
 
-        float inc = (float) pow(2, -3);
-        float positive_width = canvas.getWidth() / 2f;
-        float negative_width = -positive_width;
+        float spacing = 0.125f;
+        float positiveWidth = canvas.getWidth() / 2f;
+        float negativeWidth = -positiveWidth;
 
-        for (float i = negative_width; i < positive_width && isOkToGraph; i += inc) {
-            engine.put("x", i * scaleX);
-
-            float y = -(guardDouble(mathExpression, textFields[0]) * scaleY);
-
-            Particles.add(new Particle(i, y, .45f));
+        for (float i = negativeWidth; i < positiveWidth && isOkToGraph; i += spacing) {
+            float x = i * scaleX;
+            float y = -(guardFloat(mathExpression, textFields[0]) * scaleY);
+            scriptEngine.put("x", x);
+            Particles.add(new Particle(i, y, 0.2f));
         }
     }
 
@@ -208,22 +211,28 @@ public class ParticleGrapher {
     }
 
     private static void evalInput(String express) {
-        scaleY = guardDouble(textFields[1].getText(), textFields[1]);
-        scaleX = guardDouble(textFields[2].getText(), textFields[2]);
+        scaleY = guardFloat(textFields[1].getText(), textFields[1]);
+        scaleX = guardFloat(textFields[2].getText(), textFields[2]);
         mathExpression = express == null ? textFields[0].getText() : express;
     }
 
-    public static Float evaluateExpr(String express, boolean useIntendedForGraphing) {
+    public static void setInputTextField(String sampleFunction) {
+        textFields[0].setText(sampleFunction);
+    }
+
+    public static void setParameter(String key, Object value) {
+        scriptEngine.put(key, value);
+    }
+
+    public static Float evalExpression(String express) {
         Float result = null;
         boolean isOk = true;
 
         try {
-            result = ((Double) engine.eval(express)).floatValue();
+            result = ((Double) scriptEngine.eval(express)).floatValue();
         } catch (Exception e) {
-            if (useIntendedForGraphing) {
-                isOk = false;
-                throwError(e);
-            }
+            isOk = false;
+            throwError(e);
         }
 
         isOkToGraph = isOk;
@@ -231,39 +240,34 @@ public class ParticleGrapher {
         return result;
     }
 
-    public static float guardDouble(String expr, Object textfield) {
-        Float result = 0f;
+    public static float guardFloat(String expr, Object textField) {
+        Float result = evalExpression(expr);
 
-        //Null pointer handling
-        if (engine != null) {
-            result = evaluateExpr(expr, true);
-
-            if (result == null) {
-                result = 0f;
-                if (textfield != null) throwError(textfield);
-            }
+        if (result == null) {
+            result = 0f;
+            if (textField != null) throwError(textField);
         }
 
         return result;
     }
 
-    private static void isEnter(KeyEvent k) {
-        if (k.getKeyCode() == KeyEvent.VK_ENTER) threadGraph(null);
+    private static void isEnter(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.VK_ENTER) threadGraph(null);
     }
 
-    private void addPopup(Component c, JPopupMenu p) {
-        c.addMouseListener(new MouseAdapter() {
+    private void addPopup(Component component, JPopupMenu popupMenu) {
+        component.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                if (e.isPopupTrigger()) showMenu(e, p);
+                if (e.isPopupTrigger()) showMenu(e, popupMenu);
             }
 
             public void mouseReleased(MouseEvent e) {
-                if (e.isPopupTrigger()) showMenu(e, p);
+                if (e.isPopupTrigger()) showMenu(e, popupMenu);
             }
         });
     }
 
-    // Credit for Undo functionality: http://stackoverflow.com/questions/10532286/how-to-use-ctrlz-and-ctrly-with-all-text-components
+    // https://stackoverflow.com/questions/10532286/how-to-use-ctrlz-and-ctrly-with-all-text-components
     private static void addUndoFunctionality(JTextComponent pTextComponent) {
         final UndoManager undoMgr = new UndoManager();
 
@@ -294,10 +298,7 @@ public class ParticleGrapher {
         pTextComponent.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK), "redoKeystroke");
     }
 
-    /**
-     * Create a simple provider that adds some Java-related completions.
-     */
-    private static CompletionProvider createCompletionProvider() {
+    private static CompletionProvider createAutoCompletionProvider() {
         DefaultCompletionProvider provider = new DefaultCompletionProvider();
 
         for (String suggestion : suggestions)
@@ -306,8 +307,8 @@ public class ParticleGrapher {
         return provider;
     }
 
-    private void showMenu(MouseEvent e, JPopupMenu p) {
-        p.show(e.getComponent(), e.getX(), e.getY());
+    private void showMenu(MouseEvent event, JPopupMenu popupMenu) {
+        popupMenu.show(event.getComponent(), event.getX(), event.getY());
     }
 
     private static void throwError(Object... objects) {
@@ -320,11 +321,6 @@ public class ParticleGrapher {
                 } else ExceptionLogger.append(new NullPointerException("Object passed was null"));
             }
         }
-    }
-
-    public void close() {
-        frame.dispose();
-        particleGrapher = null;
     }
 
     static class CCellRenderer implements ListCellRenderer<Object> {

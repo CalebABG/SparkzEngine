@@ -6,24 +6,29 @@ import com.cabg.components.RLabel;
 import com.cabg.core.EngineThemes;
 import com.cabg.core.EngineVariables;
 import com.cabg.inputhandlers.ExtendedWindowAdapter;
+import com.cabg.utilities.InputUtil;
 
 import javax.swing.*;
 import java.awt.*;
 
 import static com.cabg.core.EngineVariables.engineSettings;
-import static com.cabg.utilities.InputUtil.stringNotNullOrEmpty;
 
 public class ParticleSizeEditor {
-    private static ParticleSizeEditor particleSizeEditor = null;
-    public static JFrame frame;
-    public static CTextField minTextField, maxTextField;
+    private static ParticleSizeEditor instance = null;
 
-    public static void getInstance(int type) {
-        if (particleSizeEditor == null) particleSizeEditor = new ParticleSizeEditor(type);
-        frame.toFront();
+    private final JFrame frame;
+    private final CTextField minTextField, maxTextField;
+
+    public static void getInstance(int type, JFrame parent) {
+        if (instance == null) instance = new ParticleSizeEditor(type, parent);
+        instance.frame.toFront();
     }
 
-    private ParticleSizeEditor(int type) {
+    public static void getInstance(int type) {
+        getInstance(type, null);
+    }
+
+    private ParticleSizeEditor(int type, JFrame parent) {
         EngineThemes.setLookAndFeel();
 
         frame = new JFrame(setTitle(type));
@@ -31,21 +36,21 @@ public class ParticleSizeEditor {
         frame.setSize(402, 215);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(e -> close()));
-        frame.setLocationRelativeTo(OptionsMenu.frame);
+        frame.setLocationRelativeTo(parent);
 
         JScrollPane scrollPane = new JScrollPane();
         frame.add(scrollPane, BorderLayout.CENTER);
 
         JPanel panel = new JPanel();
         scrollPane.setViewportView(panel);
-        GridBagLayout gbl_panel = new GridBagLayout();
-        gbl_panel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 102, 0};
-        gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-        gbl_panel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-        gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-        panel.setLayout(gbl_panel);
+        GridBagLayout gblPanel = new GridBagLayout();
+        gblPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 102, 0};
+        gblPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+        gblPanel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gblPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+        panel.setLayout(gblPanel);
 
-        RLabel minSize = new RLabel("Min Size(Integer or Float)", new Font(Font.SERIF, Font.BOLD, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, 8, 0, 0);
+        RLabel minSize = new RLabel("Min Size", new Font(Font.SERIF, Font.BOLD, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, 8, 0, 0);
         minSize.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(minSize, minSize.gridBagConstraints);
 
@@ -53,7 +58,7 @@ public class ParticleSizeEditor {
         minTextField.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(minTextField, minTextField.gridBagConstraints);
 
-        RLabel maxSize = new RLabel("Max Size(Integer or Float)", new Font(Font.SERIF, Font.BOLD, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, 8, 0, 2);
+        RLabel maxSize = new RLabel("Max Size", new Font(Font.SERIF, Font.BOLD, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, 8, 0, 2);
         maxSize.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(maxSize, maxSize.gridBagConstraints);
 
@@ -62,7 +67,7 @@ public class ParticleSizeEditor {
         panel.add(maxTextField, maxTextField.gridBagConstraints);
 
         RButton ok = new RButton("Ok", new Font(Font.SERIF, Font.BOLD, 14), 4, GridBagConstraints.HORIZONTAL, GridBagConstraints.SOUTH, 0, 4, 98, 10, 0, 0);
-        ok.addActionListener(e -> handleSeed(type));
+        ok.addActionListener(e -> setSize(type));
         panel.add(ok, ok.gridBagConstraints);
 
         RButton cancel = new RButton("Cancel", new Font(Font.SERIF, Font.BOLD, 14), 4, GridBagConstraints.HORIZONTAL, GridBagConstraints.SOUTH, 4, 4, 98, 10, 0, 0);
@@ -71,53 +76,44 @@ public class ParticleSizeEditor {
         frame.setVisible(true);
     }
 
-    private static String setTitle(int type) {
-        if (type == 0) return "Single Click Size Seed";
-        else if (type == 1) return "Fireworks Size Seed";
-        else if (type == 2) return "Drag Size Seed";
-        return null;
+    private void close() {
+        frame.dispose();
+        instance = null;
     }
 
-    private void handleSeed(int type) {
-        try {
-            switch (type) {
-                case 0:
-                    engineSettings.singleClickSizeMin = stringNotNullOrEmpty(minTextField.getText())
-                            ? Float.parseFloat(minTextField.getText())
-                            : engineSettings.singleClickSizeMin;
-
-                    engineSettings.singleClickSizeMax = stringNotNullOrEmpty(maxTextField.getText())
-                            ? Float.parseFloat(maxTextField.getText())
-                            : engineSettings.singleClickSizeMax;
-                    break;
-                case 1:
-                    engineSettings.fireworksSizeMin = stringNotNullOrEmpty(minTextField.getText())
-                            ? Float.parseFloat(minTextField.getText())
-                            : engineSettings.fireworksSizeMin;
-
-                    engineSettings.fireworksSizeMax = stringNotNullOrEmpty(maxTextField.getText())
-                            ? Float.parseFloat(maxTextField.getText())
-                            : engineSettings.fireworksSizeMax;
-                    break;
-                case 2:
-                    engineSettings.particleDragSizeMin = stringNotNullOrEmpty(minTextField.getText())
-                            ? Float.parseFloat(minTextField.getText())
-                            : engineSettings.particleDragSizeMin;
-
-                    engineSettings.particleDragSizeMax = stringNotNullOrEmpty(maxTextField.getText())
-                            ? Float.parseFloat(maxTextField.getText())
-                            : engineSettings.particleDragSizeMax;
-                    break;
-            }
-        } catch (Exception e) {
-            ExceptionLogger.append(e);
-        } finally {
-            close();
+    private static String setTitle(int type) {
+        switch (type) {
+            case 0: return "Single Click Size";
+            case 1: return "Fireworks Size";
+            case 2: return "Drag Size";
+            default: return null;
         }
     }
 
-    private void close() {
-        frame.dispose();
-        particleSizeEditor = null;
+    private void setSize(int type) {
+        String minText = minTextField.getText();
+        String maxText = maxTextField.getText();
+
+        if (InputUtil.canParseFloat(minText) && InputUtil.canParseFloat(maxText)) {
+            float minAmount = Float.parseFloat(minText);
+            float maxAmount = Float.parseFloat(maxText);
+
+            switch (type) {
+                case 0:
+                    engineSettings.singleClickSizeMin = minAmount;
+                    engineSettings.singleClickSizeMax = maxAmount;
+                    break;
+                case 1:
+                    engineSettings.fireworksSizeMin = minAmount;
+                    engineSettings.fireworksSizeMax = maxAmount;
+                    break;
+                case 2:
+                    engineSettings.particleDragSizeMin = minAmount;
+                    engineSettings.particleDragSizeMax = maxAmount;
+                    break;
+            }
+        }
+
+        close();
     }
 }

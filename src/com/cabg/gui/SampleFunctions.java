@@ -15,12 +15,13 @@ import java.io.InputStreamReader;
 import static java.awt.Component.LEFT_ALIGNMENT;
 
 public class SampleFunctions {
-    private static SampleFunctions sampleFunctions = null;
-    public static JFrame frame;
+    private static SampleFunctions instance = null;
+
+    private final JFrame frame;
 
     public static void getInstance(JFrame parent) {
-        if (sampleFunctions == null) sampleFunctions = new SampleFunctions(parent);
-        frame.toFront();
+        if (instance == null) instance = new SampleFunctions(parent);
+        instance.frame.toFront();
     }
 
     private SampleFunctions(JFrame parent) {
@@ -79,12 +80,12 @@ public class SampleFunctions {
 
     private void graphSelectedSample(JList<String> list) {
         String selectedSampleFunction = list.getSelectedValue();
-        ParticleGrapher.textFields[0].setText(selectedSampleFunction);
-        ParticleGrapher.threadGraph(selectedSampleFunction);
+        ParticleGraphEditor.setInputTextField(selectedSampleFunction);
+        ParticleGraphEditor.threadGraph(selectedSampleFunction);
     }
 
     private void close() {
         frame.dispose();
-        sampleFunctions = null;
+        instance = null;
     }
 }

@@ -101,7 +101,7 @@ public class CMenuBar extends JMenuBar {
         menuItems.add(colorEditor);
 
         JMenuItem particleGraphUI = new JMenuItem("Graph Editor");
-        particleGraphUI.addActionListener(e -> BackgroundThread.run(ParticleGrapher::getInstance));
+        particleGraphUI.addActionListener(e -> BackgroundThread.run(ParticleGraphEditor::getInstance));
         mnUIWindows.add(particleGraphUI);
         menuItems.add(particleGraphUI);
 
@@ -161,70 +161,70 @@ public class CMenuBar extends JMenuBar {
         menuItems.add(settingsLoad);
 
         //Add themes
-        JMenu theme_menu = new JMenu("Themes");
-        theme_menu.getPopupMenu().setBorder(BorderFactory.createLineBorder(bgColor.darker()));
-        theme_menu.setOpaque(true); //Have to set opaque inside another menu
-        mnSettings.add(theme_menu);
-        menuItems.add(theme_menu);
+        JMenu themeMenu = new JMenu("Themes");
+        themeMenu.getPopupMenu().setBorder(BorderFactory.createLineBorder(bgColor.darker()));
+        themeMenu.setOpaque(true); //Have to set opaque inside another menu
+        mnSettings.add(themeMenu);
+        menuItems.add(themeMenu);
 
         JMenuItem theme1 = new JMenuItem("Default");
         theme1.addActionListener(e -> EngineThemes.defaultTheme());
         theme1.setBorder(BorderFactory.createLineBorder(bgColor));
-        theme_menu.add(theme1);
+        themeMenu.add(theme1);
         menuItems.add(theme1);
 
         JMenuItem theme2 = new JMenuItem("Midnight Blues");
         theme2.addActionListener(e -> EngineThemes.midnightBlues());
         theme2.setBorder(BorderFactory.createLineBorder(bgColor));
-        theme_menu.add(theme2);
+        themeMenu.add(theme2);
         menuItems.add(theme2);
 
         JMenuItem theme3 = new JMenuItem("Dark Mocha");
         theme3.addActionListener(e -> EngineThemes.darkMocha());
         theme3.setBorder(BorderFactory.createLineBorder(bgColor));
-        theme_menu.add(theme3);
+        themeMenu.add(theme3);
         menuItems.add(theme3);
 
         JMenuItem theme4 = new JMenuItem("Mild Tangerine");
         theme4.addActionListener(e -> EngineThemes.darkTangerine());
         theme4.setBorder(BorderFactory.createLineBorder(bgColor));
-        theme_menu.add(theme4);
+        themeMenu.add(theme4);
         menuItems.add(theme4);
 
         JMenuItem theme5 = new JMenuItem("Serene Sienna");
         theme5.addActionListener(e -> EngineThemes.sienna());
         theme5.setBorder(BorderFactory.createLineBorder(bgColor));
-        theme_menu.add(theme5);
+        themeMenu.add(theme5);
         menuItems.add(theme5);
 
-        JMenuItem theme6 = new JMenuItem("WinterGreen Dream");
-        theme6.addActionListener(e -> EngineThemes.winterGreenDream());
+        JMenuItem theme6 = new JMenuItem("Winter Green");
+        theme6.addActionListener(e -> EngineThemes.winterGreen());
         theme6.setBorder(BorderFactory.createLineBorder(bgColor));
-        theme_menu.add(theme6);
+        themeMenu.add(theme6);
         menuItems.add(theme6);
 
         JMenuItem theme7 = new JMenuItem("Vegas Gold");
         theme7.addActionListener(e -> EngineThemes.vegasGold());
         theme7.setBorder(BorderFactory.createLineBorder(bgColor));
-        theme_menu.add(theme7);
+        themeMenu.add(theme7);
         menuItems.add(theme7);
 
-        JMenuItem theme8 = new JMenuItem("RoseWood");
+        JMenuItem theme8 = new JMenuItem("Rose Wood");
         theme8.addActionListener(e -> EngineThemes.roseWood());
         theme8.setBorder(BorderFactory.createLineBorder(bgColor));
-        theme_menu.add(theme8);
+        themeMenu.add(theme8);
         menuItems.add(theme8);
 
         JMenuItem theme9 = new JMenuItem("Antique Pink");
         theme9.addActionListener(e -> EngineThemes.antiquePink());
         theme9.setBorder(BorderFactory.createLineBorder(bgColor));
-        theme_menu.add(theme9);
+        themeMenu.add(theme9);
         menuItems.add(theme9);
 
         JMenuItem theme10 = new JMenuItem("Night Violet");
         theme10.addActionListener(e -> EngineThemes.nightViolet());
         theme10.setBorder(BorderFactory.createLineBorder(bgColor));
-        theme_menu.add(theme10);
+        themeMenu.add(theme10);
         menuItems.add(theme10);
 
         this.add(Box.createHorizontalStrut(11));

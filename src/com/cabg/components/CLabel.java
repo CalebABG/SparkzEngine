@@ -49,7 +49,7 @@ public class CLabel extends JLabel {
         setBounds((int) (bounds.getX()), (int) (bounds.getY()), (int) (bounds.getWidth()), (int) (bounds.getHeight()));
     }
 
-    public String getBGColorText() {
+    public String getBackgroundRGBText() {
         Color bg = getBackground();
         return "<html><h2> R: " + bg.getRed() + "<br> G: " + bg.getGreen() + "<br> B: " + bg.getBlue() + "</h2></html>";
     }

@@ -17,15 +17,16 @@ import java.util.Date;
 import static com.cabg.core.EngineVariables.*;
 
 public class ExceptionLogger {
-    private static ExceptionLogger logger = null;
+    private static ExceptionLogger instance = null;
 
-    public static JFrame frame;
-    private static final JTextArea textArea = new JTextArea();
     private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("h:mm:ss a");
 
+    private final JFrame frame;
+    private static JTextArea textArea;
+
     public static void getInstance() {
-        if (logger == null) logger = new ExceptionLogger();
-        frame.toFront();
+        if (instance == null) instance = new ExceptionLogger();
+        instance.frame.toFront();
     }
 
     private ExceptionLogger() {
@@ -48,6 +49,7 @@ public class ExceptionLogger {
         panel.setLayout(new BorderLayout());
         frame.add(panel);
 
+        textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setLineWrap(true);
         textArea.setDragEnabled(false);
@@ -60,6 +62,7 @@ public class ExceptionLogger {
         scrollPane.setBackground(Color.BLACK);
         scrollPane.getViewport().add(textArea);
         panel.add(scrollPane, BorderLayout.CENTER);
+
         frame.setVisible(true);
     }
 
@@ -79,6 +82,6 @@ public class ExceptionLogger {
 
     private void close() {
         frame.dispose();
-        logger = null;
+        instance = null;
     }
 }

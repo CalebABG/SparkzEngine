@@ -1,7 +1,5 @@
 package com.cabg.moleculetypes;
 
-import com.cabg.moleculehelpers.MoleculeFactory;
-
 import static com.cabg.core.EngineVariables.*;
 
 public class Emitter extends Molecule {

@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 import java.util.function.Consumer;
 
 public class ExtendedKeyAdapter extends KeyAdapter {
-    public Consumer<KeyEvent> releaseFunction, pressedFunction;
+    private final Consumer<KeyEvent> releaseFunction, pressedFunction;
 
     public ExtendedKeyAdapter(Consumer<KeyEvent> pressedFunction, Consumer<KeyEvent> releaseFunction) {
         this.pressedFunction = pressedFunction;

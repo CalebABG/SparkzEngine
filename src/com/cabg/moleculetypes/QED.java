@@ -1,6 +1,5 @@
 package com.cabg.moleculetypes;
 
-import com.cabg.moleculehelpers.MoleculeFactory;
 import com.cabg.reactivecolors.ReactiveColors;
 
 import java.awt.*;
@@ -29,17 +28,16 @@ public class QED extends Molecule {
             case 6: MoleculeFactory.singleBlackHole(x, y); break;
             case 7: MoleculeFactory.singleDuplex(x, y); break;
             case 9: MoleculeFactory.singleQED(x, y); break;
-            default: break;
         }
     }
 
     public void giveStyle() {
         graphics2D.setFont(font);
-        graphics2D.setColor(ReactiveColors.getComponents()[(int) (random.nextFloat() * 4)].darker());
+        graphics2D.setColor(ReactiveColors.getColors()[(int) (random.nextFloat() * 5)].darker());
 
         int size = (int) (2 * radius);
         graphics2D.drawOval((int) (x - radius), (int) (y - radius), size, size);
-        graphics2D.setColor(ReactiveColors.getComponents()[(int) (random.nextFloat() * 4)]);
+        graphics2D.setColor(ReactiveColors.getColors()[(int) (random.nextFloat() * 5)]);
 
         String mark = "?";
         float qx = (float) ((x + (radius / 5) - 2.5) - (graphics2D.getFontMetrics().stringWidth(mark) / 2));

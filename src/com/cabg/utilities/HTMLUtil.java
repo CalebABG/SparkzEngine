@@ -11,8 +11,8 @@ public class HTMLUtil {
     public static final String ParticleDrawOptions = getHtml("/HTML/DrawOptions.html");
     public static final String ParticleGraphInstructions = getHtml("/HTML/GraphInstructions.html");
     public static final String ParticleGravitationOptions = getHtml("/HTML/GravOptions.html");
-    public static final String ParticleSizeSeedOptions = getHtml("/HTML/ParticleSizeOptions.html");
-    public static final String ParticleSpeedSeedOptions = getHtml("/HTML/ParticleSpeedOptions.html");
+    public static final String ParticleSizeOptions = getHtml("/HTML/ParticleSizeOptions.html");
+    public static final String ParticleSpeedOptions = getHtml("/HTML/ParticleSpeedOptions.html");
     public static final String FireworksOptions = getHtml("/HTML/FireworksOptions.html");
 
     public static String getHtml(String file) {
