@@ -19,7 +19,7 @@ import static com.cabg.utilities.HTMLUtil.HeadingWithStyleCenteredTag;
 public class ReactiveColorsTimeMachine {
     public static ReactiveColorsTimeMachine instance = null;
 
-    private static final String title = "Color Time Machine";
+    private static final String title = "Colors Time Machine";
     private static final Font font = new Font(Font.SERIF, Font.BOLD, 13);
 
     private static int index = 0;

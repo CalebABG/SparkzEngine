@@ -95,7 +95,7 @@ public class CMenuBar extends JMenuBar {
         mnUIWindows.add(exceptionUI);
         menuItems.add(exceptionUI);
 
-        JMenuItem colorEditor = new JMenuItem("Color Editor");
+        JMenuItem colorEditor = new JMenuItem("Colors Editor");
         colorEditor.addActionListener(e -> BackgroundThread.run(ReactiveColorsEditor::getInstance));
         mnUIWindows.add(colorEditor);
         menuItems.add(colorEditor);
@@ -110,7 +110,7 @@ public class CMenuBar extends JMenuBar {
         mnUIWindows.add(vphysicseditor);
         menuItems.add(vphysicseditor);
 
-        JMenuItem timemachine = new JMenuItem("Color Time Machine");
+        JMenuItem timemachine = new JMenuItem("Colors Time Machine");
         timemachine.addActionListener(e -> BackgroundThread.run(ReactiveColorsTimeMachine::getInstance));
         mnUIWindows.add(timemachine);
         menuItems.add(timemachine);

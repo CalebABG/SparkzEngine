@@ -35,7 +35,7 @@ public class ReactiveColorsEditor {
     private ReactiveColorsEditor(JFrame parent) {
         EngineThemes.setLookAndFeel();
 
-        frame = new JFrame("Reactive Colors Editor");
+        frame = new JFrame("Colors Editor");
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(950, 250);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
