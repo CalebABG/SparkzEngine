@@ -7,7 +7,7 @@ public enum GravitationMode {
     HORIZONTAL_WAVE,
     VERTICAL_WAVE,
     SPIRALS,
-    PARTICLE_REPELLENT,
+    REPELLENT,
     ORGANIC,
     FLOW_FIELD
 }

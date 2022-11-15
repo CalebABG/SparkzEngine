@@ -64,7 +64,7 @@ public class Particle extends Molecule {
                 ax += forceX;
                 ay += forceY;
                 break;
-            case PARTICLE_REPELLENT:
+            case REPELLENT:
                 float scale = .35f;
                 ax += -forceX * scale;
                 ay += -forceY * scale;
