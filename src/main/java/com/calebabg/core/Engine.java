@@ -23,7 +23,6 @@ public class Engine {
 
         eFrame.setJMenuBar(menuBar);
 
-        eCanvas.setIgnoreRepaint(true);
         eCanvas.addMouseListener(new MouseButtonHandler());
         eCanvas.addMouseMotionListener(new MouseMotionHandler());
         eCanvas.addMouseWheelListener(new MouseWheelHandler());
