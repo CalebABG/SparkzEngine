@@ -26,7 +26,7 @@ public class NotificationUtil {
             graphics2D.setColor(Color.white);
 
             if (engineSettings.engineMode == GRAPH) graphics2D.drawString(text, (-graphics2D.getFontMetrics().stringWidth(text) / 2f) + -5f, 0);
-            else graphics2D.drawString(text, (canvas.getWidth() - graphics2D.getFontMetrics().stringWidth(text)) / 2, canvas.getHeight() / 2);
+            else graphics2D.drawString(text, (eCanvas.getWidth() - graphics2D.getFontMetrics().stringWidth(text)) / 2, eCanvas.getHeight() / 2);
         }
 
         if (timeout < 0) drawingNotification = false;

@@ -15,7 +15,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 import static com.calebabg.core.EngineVariables.*;
-import static com.calebabg.elements.Molecule.DEFAULT_COLOR;
+import static com.calebabg.molecules.Molecule.DEFAULT_COLOR;
 import static com.calebabg.utilities.HTMLUtil.HeadingTag;
 import static com.calebabg.utilities.InputUtil.minValueGuard;
 

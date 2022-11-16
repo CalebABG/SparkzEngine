@@ -1,4 +1,4 @@
-package com.calebabg.elements;
+package com.calebabg.molecules;
 
 import com.calebabg.core.EngineVariables;
 import com.calebabg.gui.FlowFieldEditor;
@@ -8,7 +8,7 @@ import com.flowpowered.noise.Noise;
 import com.flowpowered.noise.NoiseQuality;
 
 import static com.calebabg.core.EngineVariables.*;
-import static com.calebabg.elements.MoleculeFactory.fireworksMode;
+import static com.calebabg.molecules.MoleculeFactory.fireworksMode;
 import static com.calebabg.enums.EngineMode.*;
 import static com.calebabg.utilities.RenderUtil.giveStyle;
 import static com.calebabg.utilities.MathUtil.clamp;
@@ -142,8 +142,8 @@ public class Particle extends Molecule {
     }
 
     public void checkBounds() {
-        float cw = canvas.getWidth();
-        float ch = canvas.getHeight();
+        float cw = eCanvas.getWidth();
+        float ch = eCanvas.getHeight();
 
         if (engineSettings.engineMode == GRAPH) {
             if (x > cw / 2) x = -cw / 2;
@@ -172,8 +172,8 @@ public class Particle extends Molecule {
     public void update() {
         if (engineSettings.particlesGravitateToMouse) {
             if (engineSettings.engineMode == GRAPH) {
-                int cw = canvas.getWidth();
-                int ch = canvas.getHeight();
+                int cw = eCanvas.getWidth();
+                int ch = eCanvas.getHeight();
 
                 int mx = (int) map(MouseVec.x, 0, cw, -cw / 2f, cw / 2f);
                 int my = (int) map(MouseVec.y, 0, ch, -ch / 2f, ch / 2f);

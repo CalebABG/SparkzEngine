@@ -1,7 +1,7 @@
 package com.calebabg.core;
 
-import com.calebabg.elements.Molecule;
-import com.calebabg.elements.Particle;
+import com.calebabg.molecules.Molecule;
+import com.calebabg.molecules.Particle;
 import com.calebabg.enums.PhysicsEditorMode;
 import com.calebabg.gui.PhysicsEditor;
 import com.calebabg.jcomponents.CMenuBar;
@@ -153,8 +153,8 @@ public class EngineMethods {
     }
 
     public static void setEngineBackgroundColor() {
-        Color f = JColorChooser.showDialog(eFrame, "Engine Background Color", backgroundColor);
-        backgroundColor = (f != null) ? f : backgroundColor;
+        Color f = JColorChooser.showDialog(eFrame, "Engine Background Color", engineBackgroundColor);
+        engineBackgroundColor = (f != null) ? f : engineBackgroundColor;
     }
 
     public static void togglePauseEngine() {
@@ -195,7 +195,7 @@ public class EngineMethods {
     public static void drawGraphLines() {
         final int vHeight = 35;
         graphics2D.setColor(Color.gray);
-        graphics2D.drawLine(-canvas.getWidth() / 2, 0, canvas.getWidth() / 2, 0);
+        graphics2D.drawLine(-eCanvas.getWidth() / 2, 0, eCanvas.getWidth() / 2, 0);
         graphics2D.drawLine(0, 0, 0, -vHeight);
         graphics2D.drawLine(0, 0, 0, vHeight);
     }
@@ -229,10 +229,10 @@ public class EngineMethods {
     public static void handleRenders() {
         handleGraphicsSmoothing();
 
-        graphics2D.setColor(backgroundColor);
-        graphics2D.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        graphics2D.setColor(engineBackgroundColor);
+        graphics2D.fillRect(0, 0, eCanvas.getWidth(), eCanvas.getHeight());
 
-        if (engineSettings.engineMode == GRAPH) graphics2D.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
+        if (engineSettings.engineMode == GRAPH) graphics2D.translate(eCanvas.getWidth() / 2, eCanvas.getHeight() / 2);
         else graphics2D.translate(0, 0);
 
         if (engineSettings.engineMode == PHYSICS) {

@@ -49,7 +49,7 @@ public class Physics {
 
         if (selectedVertex != null) {
             String text = "Select - " + selectedVertex;
-            graphics2D.drawString(text, (canvas.getWidth() - graphics2D.getFontMetrics().stringWidth(text)) / 2, canvas.getHeight() / 2);
+            graphics2D.drawString(text, (eCanvas.getWidth() - graphics2D.getFontMetrics().stringWidth(text)) / 2, eCanvas.getHeight() / 2);
         }
     }
 

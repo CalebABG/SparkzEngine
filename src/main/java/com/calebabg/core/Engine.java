@@ -2,7 +2,6 @@ package com.calebabg.core;
 
 import com.calebabg.gui.ExceptionWindow;
 import com.calebabg.gui.QuitWindow;
-import com.calebabg.gui.SplashScreen;
 import com.calebabg.gui.StatsPanel;
 import com.calebabg.inputs.*;
 
@@ -12,52 +11,37 @@ import java.awt.*;
 import static com.calebabg.core.EngineVariables.*;
 
 public class Engine {
-    static {
-        System.setProperty("sun.java2d.transaccel", "True");
-        System.setProperty("sun.java2d.ddforcevram", "True");
-        System.setProperty("apple.laf.useScreenMenuBar", "True");
-        System.setProperty("com.apple.macos.use-file-dialog-packages", "True");
-    }
-
-    public static void main(String[] args) {
-        new SplashScreen(1500).display();
-        Engine e = new Engine();
-        StatsPanel.getInstance();
-        e.run();
-    }
-
     public Engine() {
         EngineThemes.setLookAndFeel();
+        EngineSettings.loadSettings();
 
-        eFrame = new JFrame(title);
-        eFrame.setIconImage(EngineVariables.iconImage);
         eFrame.setSize(735, 550);
         eFrame.setLocationRelativeTo(null);
+        eFrame.setIconImage(EngineVariables.iconImage);
         eFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         eFrame.addWindowListener(new ExtendedWindowAdapter(e -> BackgroundThread.run(QuitWindow::getInstance)));
 
-        EngineSettings.loadSettings();
-
         eFrame.setJMenuBar(menuBar);
 
-        canvas.addMouseListener(new MouseButtonHandler());
-        canvas.addMouseMotionListener(new MouseMotionHandler());
-        canvas.addMouseWheelListener(new MouseWheelHandler());
+        eCanvas.setIgnoreRepaint(true);
+        eCanvas.addMouseListener(new MouseButtonHandler());
+        eCanvas.addMouseMotionListener(new MouseMotionHandler());
+        eCanvas.addMouseWheelListener(new MouseWheelHandler());
 
         KeyboardHandler handler = new KeyboardHandler();
-        canvas.addKeyListener(handler);
+        eCanvas.addKeyListener(handler);
         eFrame.addKeyListener(handler);
 
-        eFrame.add(canvas);
+        eFrame.add(eCanvas);
         eFrame.setVisible(true);
     }
 
-    private void run() {
+    public void run() {
         engineSettings.running = true;
 
         final long tB = 1_000_000_000;
         final int TIME_BETWEEN_UPDATES = (int) (tB / engineSettings.desiredFramesPerSecond);
-        final short MAX_UPDATES_BEFORE_RENDER = 1;
+        final int MAX_UPDATES_BEFORE_RENDER = 1;
         long lastUpdateTime = System.nanoTime();
         long lastSecondTime = lastUpdateTime / tB;
 
@@ -74,12 +58,14 @@ public class Engine {
             render();
 
             while (((now - lastUpdateTime) > TIME_BETWEEN_UPDATES) && (updateCount < MAX_UPDATES_BEFORE_RENDER)) {
-                if (!engineSettings.paused) update();
+                update();
+
                 lastUpdateTime += TIME_BETWEEN_UPDATES;
-                updateCount++;
+                ++updateCount;
             }
 
-            if (now - lastUpdateTime > TIME_BETWEEN_UPDATES) lastUpdateTime = now - TIME_BETWEEN_UPDATES;
+            if (now - lastUpdateTime > TIME_BETWEEN_UPDATES)
+                lastUpdateTime = now - TIME_BETWEEN_UPDATES;
 
             int thisSecond = (int) (lastUpdateTime / tB);
             if (thisSecond > lastSecondTime) {
@@ -93,23 +79,30 @@ public class Engine {
     }
 
     private void render() {
-        if ((buff = canvas.getBufferStrategy()) == null) {
-            canvas.createBufferStrategy(2);
-            return;
+        try {
+            if ((bufferStrategy = eCanvas.getBufferStrategy()) == null) {
+                eCanvas.createBufferStrategy(2);
+                return;
+            }
+
+            graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
+
+            EngineMethods.handleRenders();
+
+            if (graphics2D != null) graphics2D.dispose();
+            bufferStrategy.show();
+            toolkit.sync();
+        } catch (Exception e) {
+            ExceptionWindow.append(e);
         }
-
-        graphics2D = (Graphics2D) buff.getDrawGraphics();
-
-        try { EngineMethods.handleRenders(); }
-        catch (Exception e){ ExceptionWindow.append(e); }
-
-        if (graphics2D != null) graphics2D.dispose();
-        buff.show();
-        toolkit.sync();
     }
 
     private void update() {
-        try { EngineMethods.handleUpdates(); }
-        catch (Exception e){ ExceptionWindow.append(e); }
+        if (engineSettings.paused) return;
+        try {
+            EngineMethods.handleUpdates();
+        } catch (Exception e) {
+            ExceptionWindow.append(e);
+        }
     }
 }

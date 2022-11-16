@@ -4,42 +4,22 @@ import com.calebabg.core.EngineVariables;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import static com.calebabg.core.EngineVariables.toolkit;
 
 public class SplashScreen extends JWindow {
-    private final int duration;
-    private final Point mpt = new Point();
-
-    public SplashScreen(int d) {
-        duration = d;
-        addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                mpt.x = e.getX();
-                mpt.y = e.getY();
-            }
-        });
-        addMouseMotionListener(new MouseAdapter() {
-            public void mouseDragged(MouseEvent e) {
-                setLocation((e.getXOnScreen() - mpt.x), (e.getYOnScreen() - mpt.y));
-            }
-        });
-    }
-
     public void display() {
-        SplashPanel content = new SplashPanel();
-        setContentPane(content);
-        int w = 434;
-        int h = 536;
-        Dimension screen = toolkit.getScreenSize();
-        int x = (screen.width - w) / 2;
-        int y = (screen.height - h) / 2;
-        setBounds(x, y, w, h);
+        Dimension screenSize = EngineVariables.toolkit.getScreenSize();
+
+        int width = 434;
+        int height = 536;
+        int x = (screenSize.width - width) / 2;
+        int y = (screenSize.height - height) / 2;
+
+        setContentPane(new SplashPanel());
+        setBounds(x, y, width, height);
         setVisible(true);
+
         try {
-            Thread.sleep(duration);
+            Thread.sleep(1500);
         } catch (Exception e) {
             ExceptionWindow.append(e);
         }
@@ -49,8 +29,7 @@ public class SplashScreen extends JWindow {
     static class SplashPanel extends JPanel {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            if (EngineVariables.splashImage != null)
-                g.drawImage(EngineVariables.splashImage, 0, 0, getWidth(), getHeight(), this);
+            g.drawImage(EngineVariables.splashImage, 0, 0, getWidth(), getHeight(), this);
         }
     }
 }

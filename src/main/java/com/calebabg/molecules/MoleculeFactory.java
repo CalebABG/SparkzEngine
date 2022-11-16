@@ -1,4 +1,4 @@
-package com.calebabg.elements;
+package com.calebabg.molecules;
 
 import com.calebabg.physics.PhysicsFactory;
 
@@ -173,7 +173,7 @@ public class MoleculeFactory {
         // Disable gravitation to mouse for fireworks
         engineSettings.particlesGravitateToMouse = false;
 
-        int w = canvas.getWidth(), h = canvas.getHeight();
+        int w = eCanvas.getWidth(), h = eCanvas.getHeight();
         Particles.add(new Particle((w / 2f), (h - 1),
                 (random.nextFloat() * engineSettings.singleClickSizeMax) + engineSettings.singleClickSizeMin,
                 (random.nextFloat() * engineSettings.singleClickSpeed) + 3, (w / 2), (h - 1), e.getX(), e.getY()));
@@ -188,8 +188,8 @@ public class MoleculeFactory {
             case GRAPH:
                 if (engineSettings.leftMouseButtonIsDown) {
                     for (int i = 0; i < engineSettings.particleDragAmount; i++) {
-                        float mouseX = map(MouseVec.x, 0, canvas.getWidth(), -canvas.getWidth() / 2.0f, canvas.getWidth() / 2.0f);
-                        float mouseY = map(MouseVec.y, 0, canvas.getHeight(), -canvas.getHeight() / 2.0f, canvas.getHeight() / 2.0f);
+                        float mouseX = map(MouseVec.x, 0, eCanvas.getWidth(), -eCanvas.getWidth() / 2.0f, eCanvas.getWidth() / 2.0f);
+                        float mouseY = map(MouseVec.y, 0, eCanvas.getHeight(), -eCanvas.getHeight() / 2.0f, eCanvas.getHeight() / 2.0f);
 
                         singleParticle(mouseX, mouseY, engineSettings.particleDragSizeMax, engineSettings.particleDragSizeMin, engineSettings.particleDragSpeed);
                     }

@@ -2,7 +2,7 @@ package com.calebabg.gui;
 
 import com.calebabg.core.EngineThemes;
 import com.calebabg.core.EngineVariables;
-import com.calebabg.elements.Particle;
+import com.calebabg.molecules.Particle;
 import com.calebabg.inputs.ExtendedKeyAdapter;
 import com.calebabg.inputs.ExtendedWindowAdapter;
 import com.calebabg.jcomponents.CTextField;
@@ -173,7 +173,7 @@ public class ParticleGraphEditor {
         if (Particles.size() > 0) Particles.clear();
 
         float spacing = 0.125f;
-        float positiveWidth = canvas.getWidth() / 2f;
+        float positiveWidth = eCanvas.getWidth() / 2f;
         float negativeWidth = -positiveWidth;
 
         for (float i = negativeWidth; i < positiveWidth && isOkToGraph; i += spacing) {

@@ -37,7 +37,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>com.calebabg.core.Engine</mainClass>
+                                    <mainClass>com.calebabg.core.Main</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>

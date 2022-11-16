@@ -1,6 +1,6 @@
 package com.calebabg.core;
 
-import com.calebabg.elements.*;
+import com.calebabg.molecules.*;
 import com.calebabg.jcomponents.CMenuBar;
 import com.calebabg.physics.Vec2;
 import com.calebabg.physics.Vertex;
@@ -27,7 +27,7 @@ public class EngineVariables {
 
     public static final Random random                               = new Random();
 
-    public static Color backgroundColor                             = Color.black;
+    public static Color engineBackgroundColor                       = Color.black;
 
     public static final Vec2 MouseVec                               = new Vec2();
 
@@ -45,10 +45,10 @@ public class EngineVariables {
     public static final List<Vertex> Vertices                       = new ArrayList<>(1000);
 
     public static CMenuBar menuBar                                  = new CMenuBar();
-    public static JFrame eFrame;
-    public static BufferStrategy buff;
+    public static JFrame eFrame                                     = new JFrame(title);
+    public static BufferStrategy bufferStrategy;
     public static Graphics2D graphics2D;
-    public static Canvas canvas                                     = new Canvas();
+    public static Canvas eCanvas                                    = new Canvas();
     public static Toolkit toolkit                                   = Toolkit.getDefaultToolkit();
     public static Image iconImage                                   = toolkit.getImage(EngineSettings.class.getResource("/images/EngineLogo.png"));
     public static Image splashImage                                 = toolkit.getImage(EngineSettings.class.getResource("/images/EngineSplash.png"));

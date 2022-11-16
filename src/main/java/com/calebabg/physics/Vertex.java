@@ -81,16 +81,16 @@ public class Vertex {
             currX = 2 * radius - currX;
         }
 
-        if (currX + radius > canvas.getWidth()) {
-            currX = 2 * (canvas.getWidth() - radius) - currX;
+        if (currX + radius > eCanvas.getWidth()) {
+            currX = 2 * (eCanvas.getWidth() - radius) - currX;
         }
 
         if (currY - radius < 0) {
             currY = 2 * radius - currY;
         }
 
-        if (currY + radius > canvas.getHeight()) {
-            currY = 2 * (canvas.getHeight() - radius) - currY;
+        if (currY + radius > eCanvas.getHeight()) {
+            currY = 2 * (eCanvas.getHeight() - radius) - currY;
         }
 
         if (Physics.COLLISION_DETECTION && collidable)

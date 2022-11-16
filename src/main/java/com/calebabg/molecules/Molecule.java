@@ -1,4 +1,4 @@
-package com.calebabg.elements;
+package com.calebabg.molecules;
 
 import com.calebabg.core.EngineEntity;
 import com.calebabg.reactivity.ReactiveColors;
@@ -19,8 +19,8 @@ public abstract class Molecule implements EngineEntity {
     public Color color = DEFAULT_COLOR;
 
     public Molecule() {
-        x = (random.nextFloat() * canvas.getWidth()) - radius;
-        y = (random.nextFloat() * canvas.getHeight()) - radius;
+        x = (random.nextFloat() * eCanvas.getWidth()) - radius;
+        y = (random.nextFloat() * eCanvas.getHeight()) - radius;
         radius = (random.nextFloat() * 10f) + 0.9f;
         vx = (float) (cos(toRadians(random.nextFloat() * 360f)) * (random.nextFloat() * 10f));
         vy = (float) (sin(toRadians(random.nextFloat() * 360f)) * (random.nextFloat() * 10f));
@@ -67,8 +67,8 @@ public abstract class Molecule implements EngineEntity {
             vx = -vx;
         }
 
-        if (x + radius > canvas.getWidth()) {
-            x = 2 * (canvas.getWidth() - radius) - x;
+        if (x + radius > eCanvas.getWidth()) {
+            x = 2 * (eCanvas.getWidth() - radius) - x;
             vx = -vx;
         }
 
@@ -77,8 +77,8 @@ public abstract class Molecule implements EngineEntity {
             vy = -vy;
         }
 
-        if (y + radius > canvas.getHeight()) {
-            y = 2 * (canvas.getHeight() - radius) - y;
+        if (y + radius > eCanvas.getHeight()) {
+            y = 2 * (eCanvas.getHeight() - radius) - y;
             vy = -vy;
         }
     }

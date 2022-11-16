@@ -330,7 +330,7 @@ public class StatsPanel {
             if (connect != null) connect.setText("Link Mode: " + (engineSettings.linkMolecules ? "On" : "Off"));
             if (atm != null) atm.setText("Mouse Attraction: " + (engineSettings.particlesGravitateToMouse ? "On" : "Off"));
             if (ptFriction != null) ptFriction.setText("Particle Friction: " + (engineSettings.particleFriction ? "On" : "Off"));
-            if (screenSize != null) screenSize.setText(String.format("Canvas Size: %d x %d", canvas.getWidth(), canvas.getHeight()));
+            if (screenSize != null) screenSize.setText(String.format("Canvas Size: %d x %d", eCanvas.getWidth(), eCanvas.getHeight()));
         } catch (Exception ex) {
             ExceptionWindow.append(ex);
         }

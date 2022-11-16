@@ -1,6 +1,6 @@
 package com.calebabg.inputs;
 
-import com.calebabg.elements.MoleculeFactory;
+import com.calebabg.molecules.MoleculeFactory;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;

@@ -3,7 +3,7 @@ package com.calebabg.inputs;
 import com.calebabg.core.BackgroundThread;
 import com.calebabg.core.EngineMethods;
 import com.calebabg.core.EngineSettings;
-import com.calebabg.elements.MoleculeFactory;
+import com.calebabg.molecules.MoleculeFactory;
 import com.calebabg.enums.PhysicsEditorMode;
 import com.calebabg.gui.*;
 import com.calebabg.physics.Physics;
@@ -31,8 +31,8 @@ public class KeyboardHandler extends KeyAdapter {
 
         if (key == KeyEvent.VK_SPACE) {
             MoleculeFactory.singleGravityPoint(
-                    random.nextFloat() * canvas.getWidth(),
-                    random.nextFloat() * canvas.getHeight());
+                    random.nextFloat() * eCanvas.getWidth(),
+                    random.nextFloat() * eCanvas.getHeight());
         }
 
         if (key == KeyEvent.VK_UP) {

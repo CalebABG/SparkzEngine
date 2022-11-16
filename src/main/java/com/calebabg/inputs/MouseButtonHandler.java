@@ -1,6 +1,6 @@
 package com.calebabg.inputs;
 
-import com.calebabg.elements.MoleculeFactory;
+import com.calebabg.molecules.MoleculeFactory;
 import com.calebabg.physics.Physics;
 import com.calebabg.physics.PhysicsFactory;
 
