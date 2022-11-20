@@ -74,15 +74,12 @@ public class EngineMethods {
     public static void clearAllEntityLists() {
         if (engineSettings.engineMode == PHYSICS) {
             Physics.clearAllItems();
-        }
-        else {
+        } else {
             List<List<? extends Molecule>> moleculeLists = getAllMoleculeLists();
 
             for (int i = 0; i < moleculeLists.size(); i++) {
-                for (int j = 0; j < moleculeLists.get(i).size(); j++) {
-                    if (!moleculeLists.get(i).isEmpty())
-                        moleculeLists.get(i).clear();
-                }
+                if (!moleculeLists.get(i).isEmpty())
+                    moleculeLists.get(i).clear();
             }
         }
     }
@@ -207,9 +204,8 @@ public class EngineMethods {
         List<List<? extends Molecule>> moleculeLists = getAllMoleculeLists();
 
         for (int i = 0; i < moleculeLists.size(); i++) {
-            for (int j = 0; j < moleculeLists.get(i).size(); j++) {
+            for (int j = 0; j < moleculeLists.get(i).size(); j++)
                 moleculeLists.get(i).get(j).update();
-            }
         }
     }
 
@@ -217,9 +213,8 @@ public class EngineMethods {
         List<List<? extends Molecule>> moleculeLists = getAllMoleculeLists();
 
         for (int i = 0; i < moleculeLists.size(); i++) {
-            for (int j = 0; j < moleculeLists.get(i).size(); j++) {
+            for (int j = 0; j < moleculeLists.get(i).size(); j++)
                 moleculeLists.get(i).get(j).render();
-            }
         }
     }
 
