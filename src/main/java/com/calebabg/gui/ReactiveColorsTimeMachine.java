@@ -7,6 +7,7 @@ import com.calebabg.inputs.ExtendedWindowAdapter;
 import com.calebabg.jcomponents.CLabel;
 import com.calebabg.reactivity.ReactiveColors;
 import com.calebabg.utilities.ColorUtil;
+import com.calebabg.utilities.FontUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,19 +15,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.calebabg.core.EngineVariables.eFrame;
-import static com.calebabg.utilities.HTMLUtil.HeadingWithStyleCenteredTag;
+import static com.calebabg.utilities.HTMLUtil.headingWithStyleCenteredTag;
 
 public class ReactiveColorsTimeMachine {
-    public static ReactiveColorsTimeMachine instance = null;
+    private static ReactiveColorsTimeMachine instance = null;
 
-    private static final String title = "Colors Time Machine";
-    private static final Font font = new Font(Font.SERIF, Font.BOLD, 13);
+    private static final String TITLE = "Colors Time Machine";
 
     private static int index = 0;
     private static JFrame frame;
     public static JToggleButton colorInfoBtn;
     private static final CLabel[] colorLabels = new CLabel[5];
-    public static List<String> serializedColorsList = new ArrayList<>();
+    private static final List<String> serializedColorsList = new ArrayList<>();
 
     public static void getInstance() {
         if (instance == null) instance = new ReactiveColorsTimeMachine();
@@ -36,10 +36,10 @@ public class ReactiveColorsTimeMachine {
     private ReactiveColorsTimeMachine() {
         EngineThemes.setLookAndFeel();
 
-        frame = new JFrame(title + " - Colors Seen: " + serializedColorsList.size());
+        frame = new JFrame(TITLE + " - Colors Seen: " + serializedColorsList.size());
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(795, 205);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
         frame.setLocationRelativeTo(ReactiveColorsEditor.frame == null ? eFrame : ReactiveColorsEditor.frame);
 
@@ -55,31 +55,31 @@ public class ReactiveColorsTimeMachine {
 
         JButton presets = new JButton("Save Colors");
         presets.addActionListener(e -> saveColors());
-        presets.setFont(font);
+        presets.setFont(FontUtil.BOLD_13);
         buttons_panel.add(presets);
 
         JButton set_colors = new JButton("Set Colors");
-        set_colors.setFont(font);
+        set_colors.setFont(FontUtil.BOLD_13);
         set_colors.addActionListener(e -> setReactiveColors());
         buttons_panel.add(set_colors);
 
         colorInfoBtn = new JToggleButton("Show/Hide Values");
-        colorInfoBtn.setFont(font);
+        colorInfoBtn.setFont(FontUtil.BOLD_13);
         colorInfoBtn.addItemListener(e -> showColorValues());
         buttons_panel.add(colorInfoBtn);
 
         JButton last = new JButton("Last Color");
         last.addActionListener(e -> changeColors(false));
-        last.setFont(font);
+        last.setFont(FontUtil.BOLD_13);
         buttons_panel.add(last);
 
         JButton next = new JButton("Next Color");
-        next.setFont(font);
+        next.setFont(FontUtil.BOLD_13);
         next.addActionListener(e -> changeColors(true));
         buttons_panel.add(next);
 
         JButton clear = new JButton("Clear Colors");
-        clear.setFont(font);
+        clear.setFont(FontUtil.BOLD_13);
         clear.addActionListener(e -> clearColors());
         buttons_panel.add(clear);
 
@@ -122,27 +122,27 @@ public class ReactiveColorsTimeMachine {
         );
         panel_5.setLayout(new BorderLayout(0, 0));
 
-        colorLabels[4] = new CLabel(font, null, null);
+        colorLabels[4] = new CLabel(FontUtil.BOLD_13, null, null);
         colorLabels[4].setHorizontalAlignment(SwingConstants.CENTER);
         panel_5.add(colorLabels[4], BorderLayout.CENTER);
         panel_4.setLayout(new BorderLayout(0, 0));
 
-        colorLabels[3] = new CLabel(font, null, null);
+        colorLabels[3] = new CLabel(FontUtil.BOLD_13, null, null);
         colorLabels[3].setHorizontalAlignment(SwingConstants.CENTER);
         panel_4.add(colorLabels[3], BorderLayout.CENTER);
         panel_3.setLayout(new BorderLayout(0, 0));
 
-        colorLabels[2] = new CLabel(font, null, null);
+        colorLabels[2] = new CLabel(FontUtil.BOLD_13, null, null);
         colorLabels[2].setHorizontalAlignment(SwingConstants.CENTER);
         panel_3.add(colorLabels[2], BorderLayout.CENTER);
         panel_2.setLayout(new BorderLayout(0, 0));
 
-        colorLabels[1] = new CLabel(font, null, null);
+        colorLabels[1] = new CLabel(FontUtil.BOLD_13, null, null);
         colorLabels[1].setHorizontalAlignment(SwingConstants.CENTER);
         panel_2.add(colorLabels[1], BorderLayout.CENTER);
         panel_1.setLayout(new BorderLayout(0, 0));
 
-        colorLabels[0] = new CLabel(font, null, null);
+        colorLabels[0] = new CLabel(FontUtil.BOLD_13, null, null);
         colorLabels[0].setHorizontalAlignment(SwingConstants.CENTER);
         panel_1.add(colorLabels[0], BorderLayout.CENTER);
         panel.setLayout(gl_panel);
@@ -158,7 +158,7 @@ public class ReactiveColorsTimeMachine {
     }
 
     private void setReactiveColors() {
-        if (serializedColorsList.size() > 0)
+        if (!serializedColorsList.isEmpty())
             ReactiveColorsPresets.setColors(ColorUtil.deserializeColors(index, serializedColorsList));
     }
 
@@ -179,7 +179,7 @@ public class ReactiveColorsTimeMachine {
     }
 
     private void clearColors() {
-        String msg = HeadingWithStyleCenteredTag("h4", "Clear All Seen Colors?");
+        String msg = headingWithStyleCenteredTag("h4", "Clear All Seen Colors?");
         Object[] options = {"Yes, please", "No, cancel!"};
 
         int opt = JOptionPane.showOptionDialog(frame, msg, "Clear Colors", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
@@ -192,7 +192,7 @@ public class ReactiveColorsTimeMachine {
     }
 
     private void saveColors() {
-        if (serializedColorsList == null || serializedColorsList.size() < 1)
+        if (serializedColorsList.isEmpty())
             EngineSettings.saveColors(null);
         else
             EngineSettings.saveColors(ColorUtil.serializeColors(ColorUtil.deserializeColors(index, serializedColorsList)));
@@ -211,7 +211,7 @@ public class ReactiveColorsTimeMachine {
     }
 
     private static void updateTitle() {
-        frame.setTitle(title + " - Colors Seen: " + serializedColorsList.size());
+        frame.setTitle(TITLE + " - Colors Seen: " + serializedColorsList.size());
     }
 
     private static void updateLabelsTextColor() {
@@ -232,7 +232,7 @@ public class ReactiveColorsTimeMachine {
     }
 
     private static void updateLabelsBackgroundColors() {
-        if (serializedColorsList.size() > 0)
+        if (!serializedColorsList.isEmpty())
             setLabelsBackgroundColor(ColorUtil.deserializeColors(index, serializedColorsList));
         else
             setLabelsBackgroundColor(ReactiveColors.getColors());

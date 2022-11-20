@@ -2,16 +2,17 @@ package com.calebabg.physics;
 
 import com.calebabg.enums.PhysicsEditorMode;
 import com.calebabg.gui.PhysicsEditor;
+import com.calebabg.utilities.FontUtil;
 
 import java.awt.*;
 import java.util.List;
 
 import static com.calebabg.core.EngineVariables.*;
-import static com.calebabg.gui.PhysicsEditor.showSelectionConstraintCheckbox;
 import static org.apache.commons.math3.util.FastMath.pow;
 
 public class Physics {
-    private static final Font renderFont = new Font(Font.SERIF, Font.PLAIN, 14);
+    private Physics(){}
+
     public static final Color LINK_COLOR = Color.ORANGE.darker();
     public static final Color ITEM_COLOR = Color.ORANGE;
     public static final int MAX_COLLISIONS = 1000;
@@ -26,6 +27,7 @@ public class Physics {
     public static boolean DEBUG_MODE = false;
     public static boolean COLLISION_DETECTION = false;
     public static int SIM_ACCURACY = 12; // The higher = better accuracy but slightly slower render
+
     public static Vertex selectedVertex;
     public static int mouseTearSize = (int) pow(3, 2);
 
@@ -44,11 +46,11 @@ public class Physics {
     public static void debugPhysics() {
         if (!DEBUG_MODE) return;
 
-        graphics2D.setFont(renderFont);
+        graphics2D.setFont(FontUtil.PLAIN_14);
         graphics2D.setColor(Color.white);
 
         if (selectedVertex != null) {
-            String text = "Select - " + selectedVertex;
+            String text = "Selected - " + selectedVertex;
             graphics2D.drawString(text, (eCanvas.getWidth() - graphics2D.getFontMetrics().stringWidth(text)) / 2, eCanvas.getHeight() / 2);
         }
     }
@@ -71,10 +73,10 @@ public class Physics {
         for (int i = 0; i < Vertices.size(); i++)
             Vertices.get(i).draw();
 
-        if (PhysicsEditor.instance != null && selectedVertex != null) {
+        if (selectedVertex != null) {
             List<Integer> constraintList = PhysicsEditor.constraintsList.getSelectedValuesList();
 
-            if (!constraintList.isEmpty() && showSelectionConstraintCheckbox.isSelected()) {
+            if (!constraintList.isEmpty() && PhysicsEditor.showSelectionConstraintCheckbox.isSelected()) {
                 for (int i = 0; i < constraintList.size(); i++) {
                     Integer constraintIndex = constraintList.get(i);
                     Vertex constraintVertex = selectedVertex.edges.get(constraintIndex).v2;
@@ -99,7 +101,7 @@ public class Physics {
     }
 
     private static void handleMouseInteraction() {
-        if (PhysicsEditor.EDITOR_MODE == PhysicsEditorMode.Drag) {
+        if (PhysicsEditor.EDITOR_MODE == PhysicsEditorMode.DRAG) {
             if (engineSettings.leftMouseButtonIsDown) {
                 // Todo: Fix drag stickiness on deselect click
                 if (selectedVertex != null) {
@@ -117,8 +119,7 @@ public class Physics {
                         }
                     }
                 }
-            }
-            else if (engineSettings.rightMouseButtonIsDown) {
+            } else if (engineSettings.rightMouseButtonIsDown) {
                 for (int i = 0; i < Vertices.size(); i++) {
                     Vertex vertex = Vertices.get(i);
                     if (vertex.getDistance(MouseVec) > mouseTearSize) continue;
@@ -144,6 +145,6 @@ public class Physics {
 
     public static void clearAllItems() {
         Physics.resetSelectedVertex();
-        if (Vertices.size() > 0) Vertices.clear();
+        if (!Vertices.isEmpty()) Vertices.clear();
     }
 }

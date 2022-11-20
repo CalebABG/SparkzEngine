@@ -31,11 +31,11 @@ public class Flux extends Molecule {
         checkBounds();
 
         if (life % 140 == 0) radius += 10;
-        if (life % 40 == 1) color = Color.red;
-        else color = Color.white;
+
+        color = life % 40 == 1 ? Color.red : Color.white;
 
         if (--life < 0) {
-            if (Particles.size() < 13_000) MoleculeFactory.createEraser(x, y, 3);
+            if (Particles.size() < 30_000) MoleculeFactory.createEraser(x, y, 3);
             Fluxes.remove(this);
         }
 

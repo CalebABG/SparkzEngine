@@ -8,11 +8,13 @@ import com.calebabg.enums.EngineMode;
 import com.calebabg.enums.GravitationMode;
 import com.calebabg.enums.MoleculeType;
 import com.calebabg.gui.*;
+import com.calebabg.utilities.FontUtil;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static com.calebabg.core.EngineVariables.eFrame;
 import static com.calebabg.core.EngineVariables.engineSettings;
@@ -20,10 +22,8 @@ import static com.calebabg.core.EngineVariables.engineSettings;
 public class CMenuBar extends JMenuBar {
     public static Color bgColor = new Color(20, 23, 25).brighter();
     private static JMenuItem enginePauseMenuItem;
-    private static final Font font1 = new Font(Font.SERIF, Font.PLAIN, 21);
-    public static Font menuItemFont = new Font(Font.SERIF, Font.PLAIN, 18);
-    public static ArrayList<JMenu> menus = new ArrayList<>();
-    public static ArrayList<JMenuItem> menuItems = new ArrayList<>();
+    public static List<JMenu> menus = new ArrayList<>();
+    public static List<JMenuItem> menuItems = new ArrayList<>();
     public static JRadioButtonMenuItem[] engineModesMenuItems, moleculeTypesMenuItems, gravitationModesMenuItems;
     public static ButtonGroup engineModesGroup, moleculeTypesGroup, particleGravitationGroup;
 
@@ -35,7 +35,7 @@ public class CMenuBar extends JMenuBar {
 
         //File Begin
         JMenu mnFile = new JMenu("File");
-        mnFile.setFont(font1);
+        mnFile.setFont(FontUtil.PLAIN_21);
         mnFile.setForeground(Color.white);
         this.add(mnFile);
         this.add(Box.createHorizontalStrut(11));
@@ -43,14 +43,14 @@ public class CMenuBar extends JMenuBar {
         //File End
 
         JMenuItem exit = new JMenuItem("Exit");
-        exit.setFont(font1);
+        exit.setFont(FontUtil.PLAIN_21);
         exit.addActionListener(e -> BackgroundThread.run(QuitWindow::getInstance));
         mnFile.add(exit);
         menuItems.add(exit);
 
         //Edit Begin
         JMenu mnEdit = new JMenu("Edit");
-        mnEdit.setFont(font1);
+        mnEdit.setFont(FontUtil.PLAIN_21);
         mnEdit.setForeground(Color.white);
         this.add(mnEdit);
         menus.add(mnEdit);
@@ -71,7 +71,7 @@ public class CMenuBar extends JMenuBar {
         //Windows Begin
         JMenu mnUIWindows = new JMenu("Windows");
         mnUIWindows.setForeground(Color.white);
-        mnUIWindows.setFont(font1);
+        mnUIWindows.setFont(FontUtil.PLAIN_21);
         this.add(mnUIWindows);
         menus.add(mnUIWindows);
 
@@ -80,10 +80,10 @@ public class CMenuBar extends JMenuBar {
         mnUIWindows.add(optionsMenu);
         menuItems.add(optionsMenu);
 
-        JMenuItem stats_panel = new JMenuItem("Stats Panel");
-        stats_panel.addActionListener(e -> BackgroundThread.run(StatsPanel::getInstance));
-        mnUIWindows.add(stats_panel);
-        menuItems.add(stats_panel);
+        JMenuItem statsPanel = new JMenuItem("Stats Panel");
+        statsPanel.addActionListener(e -> BackgroundThread.run(StatsPanel::getInstance));
+        mnUIWindows.add(statsPanel);
+        menuItems.add(statsPanel);
 
         JMenuItem sliderUI = new JMenuItem("Slide Editor");
         sliderUI.addActionListener(e -> BackgroundThread.run(ParticleSlideEditor::getInstance));
@@ -137,7 +137,7 @@ public class CMenuBar extends JMenuBar {
 
         JMenu mnSettings = new JMenu("Settings");
         mnSettings.setForeground(Color.white);
-        mnSettings.setFont(font1);
+        mnSettings.setFont(FontUtil.PLAIN_21);
         this.add(mnSettings);
         menus.add(mnSettings);
 
@@ -230,7 +230,7 @@ public class CMenuBar extends JMenuBar {
         this.add(Box.createHorizontalStrut(11));
 
         JMenu mnHelp = new JMenu("Help");
-        mnHelp.setFont(font1);
+        mnHelp.setFont(FontUtil.PLAIN_21);
         mnHelp.setForeground(Color.white);
         menus.add(mnHelp);
 
@@ -260,7 +260,7 @@ public class CMenuBar extends JMenuBar {
 
         //Setup design
         for (JMenu menu : menus) {
-            menu.setFont(font1);
+            menu.setFont(FontUtil.PLAIN_21);
             menu.getPopupMenu().setBorder(BorderFactory.createLineBorder(bgColor.darker()));
             menu.setForeground(Color.white);
         }
@@ -269,17 +269,16 @@ public class CMenuBar extends JMenuBar {
             menuItem.setOpaque(true);
             menuItem.setBackground(bgColor);
             menuItem.setForeground(Color.white);
-            menuItem.setFont(menuItemFont);
+            menuItem.setFont(FontUtil.PLAIN_18);
         }
 
         updateState();
-        //updateAllRadios();
     }
 
     private void setUpModes() {
         JMenu modes = new JMenu("Modes");
         modes.setForeground(Color.white);
-        modes.setFont(font1);
+        modes.setFont(FontUtil.PLAIN_21);
         this.add(modes);
         menus.add(modes);
 
@@ -499,6 +498,7 @@ public class CMenuBar extends JMenuBar {
         enginePauseMenuItem.setText(enginePauseStatus());
     }
 
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(bgColor);

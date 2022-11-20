@@ -7,6 +7,7 @@ import com.calebabg.inputs.ExtendedWindowAdapter;
 import com.calebabg.jcomponents.CLabel;
 import com.calebabg.reactivity.ReactiveColors;
 import com.calebabg.utilities.ColorUtil;
+import com.calebabg.utilities.FontUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +32,7 @@ public class ReactiveColorsLoader {
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(523, 155);
         frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
         frame.getContentPane().setLayout(null);
         frame.setLocationRelativeTo(ReactiveColorsEditor.frame);
@@ -42,12 +43,11 @@ public class ReactiveColorsLoader {
 
         int offsetX = 69;
         Color fgColor = Color.white;
-        Font font = new Font(Font.SERIF, Font.PLAIN, 17);
-        labels[0] = new CLabel(new Rectangle(5, 10, 64, 45), font, fgColor, ReactiveColors.getColor(0));
-        labels[1] = new CLabel(new Rectangle(offsetX + 5, 10, 64, 45), font, fgColor, ReactiveColors.getColor(1));
-        labels[2] = new CLabel(new Rectangle(2 * offsetX + 5, 10, 64, 45), font, fgColor, ReactiveColors.getColor(2));
-        labels[3] = new CLabel(new Rectangle(3 * offsetX + 5, 10, 64, 45), font, fgColor, ReactiveColors.getColor(3));
-        labels[4] = new CLabel(new Rectangle(4 * offsetX + 5, 10, 64, 45), font, fgColor, ReactiveColors.getColor(4));
+        labels[0] = new CLabel(new Rectangle(5, 10, 64, 45), FontUtil.BOLD_16, fgColor, ReactiveColors.getColor(0));
+        labels[1] = new CLabel(new Rectangle(offsetX + 5, 10, 64, 45), FontUtil.BOLD_16, fgColor, ReactiveColors.getColor(1));
+        labels[2] = new CLabel(new Rectangle(2 * offsetX + 5, 10, 64, 45), FontUtil.BOLD_16, fgColor, ReactiveColors.getColor(2));
+        labels[3] = new CLabel(new Rectangle(3 * offsetX + 5, 10, 64, 45), FontUtil.BOLD_16, fgColor, ReactiveColors.getColor(3));
+        labels[4] = new CLabel(new Rectangle(4 * offsetX + 5, 10, 64, 45), FontUtil.BOLD_16, fgColor, ReactiveColors.getColor(4));
 
         addComps(frame, labels);
 

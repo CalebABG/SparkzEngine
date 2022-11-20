@@ -10,12 +10,10 @@ public class Emitter extends Molecule {
     }
 
     private void emitAtPoint() {
-        MoleculeFactory.fireworksMode(x, y, engineSettings.fireworksWind, engineSettings.fireworksSpeed, engineSettings.fireworksAmount);
+        MoleculeFactory.multiFireworks(x, y, engineSettings.fireworksWind, engineSettings.fireworksSpeed, engineSettings.fireworksAmount);
     }
 
-    public void render() {
-        graphics2D.setColor(color);
-    }
+    public void render() {}
 
     public void update() {
         emitAtPoint();

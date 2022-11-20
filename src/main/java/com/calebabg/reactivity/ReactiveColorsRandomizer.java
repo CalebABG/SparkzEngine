@@ -10,9 +10,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ReactiveColorsRandomizer {
+    private ReactiveColorsRandomizer(){}
+
     private static Timer timer;
 
-    public synchronized static void startCycle() {
+    public static void startCycle() {
         if (EngineSettings.colorsFileExists()) EngineSettings.loadColors();
 
         timer = new Timer();

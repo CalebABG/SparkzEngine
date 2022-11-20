@@ -8,7 +8,6 @@ import com.flowpowered.noise.Noise;
 import com.flowpowered.noise.NoiseQuality;
 
 import static com.calebabg.core.EngineVariables.*;
-import static com.calebabg.molecules.MoleculeFactory.fireworksMode;
 import static com.calebabg.enums.EngineMode.*;
 import static com.calebabg.utilities.RenderUtil.giveStyle;
 import static com.calebabg.utilities.MathUtil.clamp;
@@ -141,6 +140,7 @@ public class Particle extends Molecule {
         graphics2D.drawLine((int) p2.x, (int) p2.y, (int) x, (int) y);
     }
 
+    @Override
     public void checkBounds() {
         float cw = eCanvas.getWidth();
         float ch = eCanvas.getHeight();
@@ -199,7 +199,7 @@ public class Particle extends Molecule {
         checkBounds();
 
         if (engineSettings.engineMode == FIREWORKS && --life < 0) {
-            if (Particles.size() < engineSettings.fireworksParticleSafetyAmount) fireworksMode(x, y);
+            if (Particles.size() < engineSettings.fireworksParticleSafetyAmount) MoleculeFactory.multiFireworks(x, y);
             Particles.remove(this);
         }
     }

@@ -18,7 +18,7 @@ public abstract class Molecule implements EngineEntity {
 
     public Color color = DEFAULT_COLOR;
 
-    public Molecule() {
+    protected Molecule() {
         x = (random.nextFloat() * eCanvas.getWidth()) - radius;
         y = (random.nextFloat() * eCanvas.getHeight()) - radius;
         radius = (random.nextFloat() * 10f) + 0.9f;
@@ -26,20 +26,20 @@ public abstract class Molecule implements EngineEntity {
         vy = (float) (sin(toRadians(random.nextFloat() * 360f)) * (random.nextFloat() * 10f));
     }
 
-    public Molecule(float x, float y, float radius) {
+    protected Molecule(float x, float y, float radius) {
         this();
         this.x = x;
         this.y = y;
         this.radius = radius;
     }
 
-    public Molecule(float x, float y, float vx, float vy, float radius) {
+    protected Molecule(float x, float y, float vx, float vy, float radius) {
         this(x, y, radius);
         this.vx = vx;
         this.vy = vy;
     }
 
-    public Molecule(float x, float y, float radius, float speed, float direction, int dummy) {
+    protected Molecule(float x, float y, float radius, float speed, float direction, int dummy) {
         this(x, y, (float) (cos(toRadians(direction)) * speed), (float) (sin(toRadians(direction)) * speed), radius);
     }
 

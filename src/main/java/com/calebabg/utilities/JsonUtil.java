@@ -12,10 +12,12 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class JsonUtil {
+    private JsonUtil(){}
+
     public static void writeEngineSettingsJson() {
         String settings = getEngineSettingsJson();
 
-        try (FileOutputStream out = new FileOutputStream(EngineSettings.settingsFilePath, false);
+        try (FileOutputStream out = new FileOutputStream(EngineSettings.SETTINGS_FILE_PATH, false);
              Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8)) {
             writer.write(settings);
         } catch (Exception e) {
@@ -30,7 +32,7 @@ public class JsonUtil {
 
     public static void loadEngineSettingsJson() {
         //  Try Parsing and setting engine properties
-        try (FileInputStream fin = new FileInputStream(EngineSettings.settingsFilePath);
+        try (FileInputStream fin = new FileInputStream(EngineSettings.SETTINGS_FILE_PATH);
              BufferedReader br = new BufferedReader(new InputStreamReader(fin))) {
             EngineVariables.engineSettings = new Gson().fromJson(br, EngineSettings.class);
         } catch (Exception e) {

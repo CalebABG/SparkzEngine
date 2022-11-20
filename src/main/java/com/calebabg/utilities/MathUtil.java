@@ -4,6 +4,8 @@ import static org.apache.commons.math3.util.FastMath.max;
 import static org.apache.commons.math3.util.FastMath.min;
 
 public class MathUtil {
+    private MathUtil(){}
+
     public static int lerp(int start, int stop, int amt) {
         return start + (stop - start) * amt;
     }

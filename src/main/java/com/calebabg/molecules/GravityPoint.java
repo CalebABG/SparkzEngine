@@ -19,34 +19,35 @@ public class GravityPoint extends Molecule {
 
     private void gravProximity() {
         for (int i = 0; i < GravityPoints.size(); i++) {
-            GravityPoint gPoint = GravityPoints.get(i);
-            float dx = gPoint.x - x;
-            float dy = gPoint.y - y;
+            GravityPoint point = GravityPoints.get(i);
+
+            float dx = point.x - x;
+            float dy = point.y - y;
             float dist = (float) sqrt(dx * dx + dy * dy);
 
             if (dist < 400) {
                 graphics2D.setColor(ReactiveColors.getColor(0));
-                drawGravConnections(gPoint, x, y);
+                drawGravConnections(point, x, y);
             }
 
             if (dist < 300) {
                 graphics2D.setColor(ReactiveColors.getColor(1));
-                drawGravConnections(gPoint, x, y);
+                drawGravConnections(point, x, y);
             }
 
             if (dist < 200) {
                 graphics2D.setColor(ReactiveColors.getColor(2));
-                drawGravConnections(gPoint, x, y);
+                drawGravConnections(point, x, y);
             }
 
             if (dist < 100) {
                 graphics2D.setColor(ReactiveColors.getColor(3));
-                drawGravConnections(gPoint, x, y);
+                drawGravConnections(point, x, y);
             }
 
             if (dist < 50) {
                 graphics2D.setColor(ReactiveColors.getColor(4));
-                drawGravConnections(gPoint, x, y);
+                drawGravConnections(point, x, y);
             }
         }
     }

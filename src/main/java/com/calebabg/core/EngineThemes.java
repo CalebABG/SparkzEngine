@@ -8,9 +8,34 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
-import static com.calebabg.core.EngineVariables.menuBar;
-
 public class EngineThemes {
+    private EngineThemes() {}
+
+    public static void setTheme(Color backgroundColor, Color foregroundColor) {
+        CMenuBar.bgColor = backgroundColor;
+        EngineVariables.eMenuBar.setBorder(BorderFactory.createLineBorder(backgroundColor, 1, false));
+
+        Color borderColor = backgroundColor.darker();
+        Border border = BorderFactory.createLineBorder(borderColor);
+
+        for (JMenu menu : CMenuBar.menus) {
+            menu.getPopupMenu().setBorder(border);
+        }
+
+        for (JMenuItem menuItem : CMenuBar.menuItems) {
+            menuItem.setBackground(backgroundColor);
+            menuItem.setForeground(foregroundColor);
+        }
+    }
+
+    public static void setLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            ExceptionWindow.append(e);
+        }
+    }
+
     public static void defaultTheme() {
         setTheme(new Color(20, 23, 25).brighter(), Color.white);
     }
@@ -49,30 +74,5 @@ public class EngineThemes {
 
     public static void nightViolet() {
         setTheme(ColorUtil.fromHex("#1A0F30"), Color.white);
-    }
-
-    public static void setTheme(Color backgroundColor, Color foregroundColor) {
-        CMenuBar.bgColor = backgroundColor;
-        menuBar.setBorder(BorderFactory.createLineBorder(backgroundColor, 1, false));
-
-        Color borderColor = backgroundColor.darker();
-        Border border = BorderFactory.createLineBorder(borderColor);
-
-        for (JMenu menu : CMenuBar.menus) {
-            menu.getPopupMenu().setBorder(border);
-        }
-
-        for (JMenuItem menuItem : CMenuBar.menuItems) {
-            menuItem.setBackground(backgroundColor);
-            menuItem.setForeground(foregroundColor);
-        }
-    }
-
-    public static void setLookAndFeel() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            ExceptionWindow.append(e);
-        }
     }
 }

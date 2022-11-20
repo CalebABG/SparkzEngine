@@ -12,6 +12,22 @@ import java.awt.*;
 public class ReactiveColorsPresets {
     private static ReactiveColorsPresets instance = null;
 
+    public static final Color[] PROPANE = propaneColor();
+    public static final Color[] MARITIME = maritime();
+    public static final Color[] DAY_AND_NIGHT = dayAndNight();
+    public static final Color[] PLANT_LIFE = plantLife();
+    public static final Color[] COFFEE = coffee();
+    public static final Color[] CINNAMON = cinnamon();
+    public static final Color[] PASTELS = pastels();
+    public static final Color[] EXOTIC_BERRY = exoticBerry();
+    public static final Color[] CITRUS = citrus();
+    public static final Color[] CANDY = candy();
+    public static final Color[] OCEAN = ocean();
+    public static final Color[] HAZY_DAY = hazyDay();
+    public static final Color[] RETRO = retro();
+    public static final Color[] SHADOW = shadow();
+    public static final Color[] ONYX = onyx();
+
     private final JFrame frame;
 
     public static void getInstance() {
@@ -26,7 +42,7 @@ public class ReactiveColorsPresets {
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(323, 290);
         frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
         frame.getContentPane().setLayout(null);
         frame.setLocationRelativeTo(ReactiveColorsEditor.frame);
@@ -34,77 +50,77 @@ public class ReactiveColorsPresets {
         JButton[] presetButtons = new JButton[15];
         presetButtons[0] = new JButton("Propane");
         presetButtons[0].setBounds(10, 11, 89, 39);
-        presetButtons[0].addActionListener(e -> setColors(propaneColor()));
+        presetButtons[0].addActionListener(e -> setColors(PROPANE));
         frame.add(presetButtons[0]);
 
         presetButtons[1] = new JButton("Maritime");
         presetButtons[1].setBounds(219, 11, 89, 39);
-        presetButtons[1].addActionListener(e -> setColors(maritime()));
+        presetButtons[1].addActionListener(e -> setColors(MARITIME));
         frame.add(presetButtons[1]);
 
         presetButtons[2] = new JButton("Day & Night");
         presetButtons[2].setBounds(109, 11, 100, 39);
-        presetButtons[2].addActionListener(e -> setColors(dayAndNight()));
+        presetButtons[2].addActionListener(e -> setColors(DAY_AND_NIGHT));
         frame.add(presetButtons[2]);
 
         presetButtons[3] = new JButton("Plant Life");
         presetButtons[3].setBounds(10, 61, 89, 39);
-        presetButtons[3].addActionListener(e -> setColors(plantLife()));
+        presetButtons[3].addActionListener(e -> setColors(PLANT_LIFE));
         frame.add(presetButtons[3]);
 
         presetButtons[4] = new JButton("Coffee");
         presetButtons[4].setBounds(109, 61, 100, 39);
-        presetButtons[4].addActionListener(e -> setColors(fancyCoffee()));
+        presetButtons[4].addActionListener(e -> setColors(COFFEE));
         frame.add(presetButtons[4]);
 
         presetButtons[5] = new JButton("Cinnamon");
         presetButtons[5].setBounds(219, 61, 89, 39);
-        presetButtons[5].addActionListener(e -> setColors(cinnamonSpice()));
+        presetButtons[5].addActionListener(e -> setColors(CINNAMON));
         frame.add(presetButtons[5]);
 
         presetButtons[6] = new JButton("Pastels");
         presetButtons[6].setBounds(10, 111, 89, 39);
-        presetButtons[6].addActionListener(e -> setColors(pastels()));
+        presetButtons[6].addActionListener(e -> setColors(PASTELS));
         frame.add(presetButtons[6]);
 
         presetButtons[7] = new JButton("Exotic Berry");
         presetButtons[7].setBounds(109, 111, 100, 39);
-        presetButtons[7].addActionListener(e -> setColors(exoticBerries()));
+        presetButtons[7].addActionListener(e -> setColors(EXOTIC_BERRY));
         frame.add(presetButtons[7]);
 
         presetButtons[8] = new JButton("Citrus");
         presetButtons[8].setBounds(219, 111, 89, 39);
-        presetButtons[8].addActionListener(e -> setColors(citrus()));
+        presetButtons[8].addActionListener(e -> setColors(CITRUS));
         frame.add(presetButtons[8]);
 
         presetButtons[9] = new JButton("Candy");
         presetButtons[9].setBounds(10, 161, 89, 39);
-        presetButtons[9].addActionListener(e -> setColors(candy()));
+        presetButtons[9].addActionListener(e -> setColors(CANDY));
         frame.add(presetButtons[9]);
 
         presetButtons[10] = new JButton("Ocean");
         presetButtons[10].setBounds(109, 161, 100, 39);
-        presetButtons[10].addActionListener(e -> setColors(oceanBlues()));
+        presetButtons[10].addActionListener(e -> setColors(OCEAN));
         frame.add(presetButtons[10]);
 
         presetButtons[11] = new JButton("Hazy Day");
         presetButtons[11].setBounds(219, 161, 89, 39);
-        presetButtons[11].addActionListener(e -> setColors(hazyDay()));
+        presetButtons[11].addActionListener(e -> setColors(HAZY_DAY));
         frame.add(presetButtons[11]);
 
         presetButtons[12] = new JButton("Retro");
         presetButtons[12].setBounds(10, 211, 89, 39);
-        presetButtons[12].addActionListener(e -> setColors(retro()));
+        presetButtons[12].addActionListener(e -> setColors(RETRO));
         frame.add(presetButtons[12]);
 
         presetButtons[13] = new JButton("Shadow");
         presetButtons[13].setBounds(109, 211, 100, 39);
-        presetButtons[13].addActionListener(e -> setColors(shadowSlate()));
+        presetButtons[13].addActionListener(e -> setColors(SHADOW));
         frame.add(presetButtons[13]);
 
         presetButtons[14] = new JButton("Onyx");
         presetButtons[14].setBounds(219, 211, 89, 39);
-        presetButtons[14].addActionListener(e -> setColors(onyxImpact()));
+        presetButtons[14].addActionListener(e -> setColors(ONYX));
         frame.add(presetButtons[14]);
 
         frame.setVisible(true);
@@ -147,7 +163,7 @@ public class ReactiveColorsPresets {
         return new Color[]{f, s, thr, fourth, l};
     }
 
-    public static Color[] oceanBlues() {
+    public static Color[] ocean() {
         Color f = ColorUtil.fromHex("#C4DFE6");
         Color s = ColorUtil.fromHex("#66A5AD");
         Color thr = ColorUtil.fromHex("#07575b");
@@ -174,7 +190,7 @@ public class ReactiveColorsPresets {
         return new Color[]{f, s, thr, fourth, l};
     }
 
-    public static Color[] fancyCoffee() {
+    public static Color[] coffee() {
         Color f = Color.white;
         Color s = ColorUtil.fromHex("#F1F3CE");
         Color thr = ColorUtil.fromHex("#DDBC95");
@@ -183,7 +199,7 @@ public class ReactiveColorsPresets {
         return new Color[]{f, s, thr, fourth, l};
     }
 
-    public static Color[] cinnamonSpice() {
+    public static Color[] cinnamon() {
         Color f = ColorUtil.fromHex("#EBDCB2");
         Color s = ColorUtil.fromHex("#C9A66B");
         Color thr = ColorUtil.fromHex("#805A3B");
@@ -208,7 +224,7 @@ public class ReactiveColorsPresets {
         return new Color[]{f, s, thr, fourth, fourth.darker()};
     }
 
-    public static Color[] exoticBerries() {
+    public static Color[] exoticBerry() {
         Color f = ColorUtil.fromHex("#C0B2B5");
         Color s = ColorUtil.fromHex("#F0EFEA");
         Color thr = ColorUtil.fromHex("#D72C16");
@@ -260,7 +276,7 @@ public class ReactiveColorsPresets {
         return new Color[]{f, s, thr, fourth, l};
     }
 
-    public static Color[] onyxImpact() {
+    public static Color[] onyx() {
         Color f = ColorUtil.fromHex("#0F1F38");
         Color s = ColorUtil.fromHex("#8E7970");
         Color thr = new Color(15, 0, 0);
@@ -268,7 +284,7 @@ public class ReactiveColorsPresets {
         return new Color[]{f, s, thr, fourth, fourth.darker()};
     }
 
-    public static Color[] shadowSlate() {
+    public static Color[] shadow() {
         Color f = ColorUtil.fromHex("#262F34");
         Color fourth = new Color(51, 51, 51);
         return new Color[]{f, f.darker(), f.darker().darker(), fourth, fourth.darker()};

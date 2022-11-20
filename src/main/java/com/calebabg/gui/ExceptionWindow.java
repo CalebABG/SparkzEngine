@@ -5,6 +5,7 @@ import com.calebabg.core.EngineThemes;
 import com.calebabg.core.EngineVariables;
 import com.calebabg.inputs.ExtendedKeyAdapter;
 import com.calebabg.inputs.ExtendedWindowAdapter;
+import com.calebabg.utilities.FontUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,9 +21,9 @@ public class ExceptionWindow {
     private static ExceptionWindow instance = null;
 
     private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("h:mm:ss a");
+    private static final JTextArea textArea = new JTextArea();
 
     private final JFrame frame;
-    private static JTextArea textArea;
 
     public static void getInstance() {
         if (instance == null) instance = new ExceptionWindow();
@@ -35,7 +36,7 @@ public class ExceptionWindow {
         frame = new JFrame("Exception Window");
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(430, 260);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
         frame.setLocationRelativeTo(eFrame);
         frame.addKeyListener(new ExtendedKeyAdapter.KeyReleased(e -> {
@@ -49,12 +50,11 @@ public class ExceptionWindow {
         panel.setLayout(new BorderLayout());
         frame.add(panel);
 
-        textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setLineWrap(true);
         textArea.setDragEnabled(false);
         textArea.setEnabled(false);
-        textArea.setFont(new Font(Font.SERIF, Font.ITALIC, 14));
+        textArea.setFont(FontUtil.ITALIC_14);
         textArea.setBackground(Color.BLACK);
         textArea.setForeground(Color.WHITE);
 

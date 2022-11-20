@@ -16,10 +16,12 @@ public class Eraser extends Molecule {
     private void destroy() {
         for (int i = 0; i < Particles.size(); i++) {
             Particle p = Particles.get(i);
+
             float dx = p.x - x;
             float dy = p.y - y;
-            float distance = (float) sqrt(dx * dx + dy * dy);
-            if (distance < 2 * radius) {
+            float dist = (float) sqrt(dx * dx + dy * dy);
+
+            if (dist < radius) {
                 color = Color.red;
                 Particles.remove(p);
             }
@@ -37,7 +39,7 @@ public class Eraser extends Molecule {
         checkBounds();
         destroy();
         if (--life < 0) {
-            MoleculeFactory.fireworksMode(x, y, 2, 5, 30);
+            MoleculeFactory.multiFireworks(x, y, 2, 5, 30);
             Erasers.remove(this);
         }
     }

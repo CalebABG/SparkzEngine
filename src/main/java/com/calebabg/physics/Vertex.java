@@ -5,6 +5,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static com.calebabg.core.EngineVariables.*;
@@ -18,7 +19,7 @@ public class Vertex {
     public boolean pinned = false, collidable = true;
 
     public Color color = Color.white;
-    public ArrayList<Edge> edges = new ArrayList<>(30);
+    public final List<Edge> edges = new ArrayList<>(30);
 
     public Vertex(float x, float y) {
         currX = x;
@@ -60,7 +61,8 @@ public class Vertex {
             currX = prevX;
             currY = prevY;
         } else {
-            float tempX = currX, tempY = currY;
+            float tempX = currX;
+            float tempY = currY;
             float gravity = Physics.ZERO_GRAVITY ? 0.0f : Physics.GRAVITY;
 
             currX += ((Physics.AIR_VISCOSITY * currX) - (Physics.AIR_VISCOSITY * prevX)) * damping;
@@ -109,7 +111,7 @@ public class Vertex {
         float lenDiff = (float) sqrt(diffX * diffX + diffY * diffY);
 
         // First make sure they're intersecting
-        if (!(lenDiff <= radii)) return;
+        if (lenDiff > radii) return;
 
         // Distance between centers
         float d = lenDiff;
@@ -172,38 +174,39 @@ public class Vertex {
         return currY - prevY;
     }
 
-    public float getDistance(Vertex p) {
-        return (float) hypot(currX - p.currX, currY - p.currY);
+    public float getDistance(Vertex vertex) {
+        return (float) hypot(currX - vertex.currX, currY - vertex.currY);
     }
 
-    public float getDistance(Vec2 p) {
-        return (float) hypot(currX - p.x, currY - p.y);
+    public float getDistance(Vec2 vec) {
+        return (float) hypot(currX - vec.x, currY - vec.y);
     }
 
-    public void attachTo(Vertex P, float restingDist, float stiff) {
-        attachTo(P, restingDist, stiff, 30, true);
+    public void attachTo(Vertex vertex, float restingDist, float stiff) {
+        attachTo(vertex, restingDist, stiff, 30, true);
     }
 
-    public void attachTo(Vertex P, float restingDist, float stiff, boolean drawLink) {
-        attachTo(P, restingDist, stiff, 30, drawLink);
+    public void attachTo(Vertex vertex, float restingDist, float stiff, boolean drawLink) {
+        attachTo(vertex, restingDist, stiff, 30, drawLink);
     }
 
-    public void attachTo(Vertex P, float restingDist, float stiff, float tearSensitivity) {
-        attachTo(P, restingDist, stiff, tearSensitivity, true);
+    public void attachTo(Vertex vertex, float restingDist, float stiff, float tearSensitivity) {
+        attachTo(vertex, restingDist, stiff, tearSensitivity, true);
     }
 
-    public void attachTo(Vertex P, float restingDist, float stiff, float tearSensitivity, boolean drawLink) {
-        Edge lnk = new Edge(this, P, restingDist, stiff, tearSensitivity, drawLink);
+    public void attachTo(Vertex vertex, float restingDist, float stiff, float tearSensitivity, boolean drawLink) {
+        Edge lnk = new Edge(this, vertex, restingDist, stiff, tearSensitivity, drawLink);
         edges.add(lnk);
     }
 
-    public void attachTo(Vertex P, float restingDist, float stiff, float tearSensitivity, boolean drawLink, boolean severable, Color c) {
-        Edge lnk = new Edge(this, P, restingDist, stiff, tearSensitivity, drawLink, severable, c);
+    public void attachTo(Vertex vertex, float restingDist, float stiff, float tearSensitivity,
+                         boolean drawLink, boolean severable, Color color) {
+        Edge lnk = new Edge(this, vertex, restingDist, stiff, tearSensitivity, drawLink, severable, color);
         edges.add(lnk);
     }
 
-    public void removeLink(Edge lnk) {
-        edges.remove(lnk);
+    public void removeEdge(Edge edge) {
+        edges.remove(edge);
     }
 
     public void togglePin() {

@@ -18,6 +18,8 @@ import static com.calebabg.enums.EngineMode.PHYSICS;
 import static com.calebabg.enums.MoleculeType.DUPLEX;
 
 public class EngineMethods {
+    private EngineMethods(){}
+
     // Molecule Methods
     public static void slowParticles() {
         for (int i = 0; i < Particles.size(); i++) {
@@ -78,7 +80,7 @@ public class EngineMethods {
 
             for (int i = 0; i < moleculeLists.size(); i++) {
                 for (int j = 0; j < moleculeLists.get(i).size(); j++) {
-                    if (moleculeLists.get(i).size() > 0)
+                    if (!moleculeLists.get(i).isEmpty())
                         moleculeLists.get(i).clear();
                 }
             }
@@ -86,18 +88,18 @@ public class EngineMethods {
     }
 
     public static void trimAllEntityLists() {
-        int t = 3;
+        int n = 3;
         if (engineSettings.engineMode == PHYSICS) {
-            if (Vertices.size() > 0) {
-                for (int i = (Vertices.size() - 1) / t; i >= 0; i--)
+            if (!Vertices.isEmpty()) {
+                for (int i = (Vertices.size() - 1) / n; i >= 0; i--)
                     Vertices.remove(i);
             }
         } else {
             List<List<? extends Molecule>> moleculeLists = getAllMoleculeLists();
 
             for (int i = 0; i < moleculeLists.size(); i++) {
-                for (int j = (moleculeLists.get(i).size() - 1) / t; j >= 0; j--) {
-                    if (moleculeLists.get(i).size() > 0)
+                if (!moleculeLists.get(i).isEmpty()) {
+                    for (int j = (moleculeLists.get(i).size() - 1) / n; j >= 0; j--)
                         moleculeLists.get(i).remove(j);
                 }
             }
@@ -112,7 +114,7 @@ public class EngineMethods {
                 PhysicsEditor.changeItemType(false);
                 displayMoleculeTypeText();
             } else {
-                engineSettings.changeParticleType(false);
+                engineSettings.changeMoleculeType(false);
                 displayMoleculeTypeText();
                 CMenuBar.updateMoleculeTypeRadios();
             }
@@ -125,7 +127,7 @@ public class EngineMethods {
                 PhysicsEditor.changeItemType(true);
                 displayMoleculeTypeText();
             } else {
-                engineSettings.changeParticleType(true);
+                engineSettings.changeMoleculeType(true);
                 displayMoleculeTypeText();
                 CMenuBar.updateMoleculeTypeRadios();
             }

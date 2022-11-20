@@ -1,11 +1,10 @@
 package com.calebabg.inputs;
 
+import com.calebabg.core.EngineVariables;
 import com.calebabg.molecules.MoleculeFactory;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-
-import static com.calebabg.core.EngineVariables.MouseVec;
 
 public class MouseMotionHandler implements MouseMotionListener {
     public void mouseDragged(MouseEvent e) {
@@ -18,7 +17,7 @@ public class MouseMotionHandler implements MouseMotionListener {
     }
 
     public static void updateMouseVec(MouseEvent e) {
-        MouseVec.x = e.getX();
-        MouseVec.y = e.getY();
+        EngineVariables.MouseVec.x = e.getX();
+        EngineVariables.MouseVec.y = e.getY();
     }
 }

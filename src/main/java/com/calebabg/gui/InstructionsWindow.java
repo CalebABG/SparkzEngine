@@ -4,6 +4,7 @@ import com.calebabg.core.EngineThemes;
 import com.calebabg.core.EngineVariables;
 import com.calebabg.inputs.ExtendedKeyAdapter;
 import com.calebabg.inputs.ExtendedWindowAdapter;
+import com.calebabg.utilities.FontUtil;
 import com.calebabg.utilities.HTMLUtil;
 
 import javax.swing.*;
@@ -18,21 +19,21 @@ public class InstructionsWindow {
     private final int index;
     private final JFrame frame;
 
-    private static void getInstance(int index, JFrame parent, int w, int h, String title, String instructions) {
-        if (instances[index] == null) instances[index] = new InstructionsWindow(index, parent, w, h, title, instructions);
+    private static void getInstance(int index, JFrame parent, int width, int height, String title, String instructions) {
+        if (instances[index] == null) instances[index] = new InstructionsWindow(index, parent, width, height, title, instructions);
         instances[index].frame.toFront();
     }
 
     public static void createEngineInstructionsWindow(JFrame parent) {
-        Dimension d = toolkit.getScreenSize();
-        InstructionsWindow.getInstance(0, parent, (int) (d.width * .44), (int) (d.height * .55),
-                "Particle Engine Instructions", HTMLUtil.EngineInstructions);
+        Dimension screenSize = toolkit.getScreenSize();
+        InstructionsWindow.getInstance(0, parent, (int) (screenSize.width * .44), (int) (screenSize.height * .55),
+                "Engine Instructions", HTMLUtil.ENGINE_INSTRUCTIONS);
     }
 
     public static void createGraphInstructionsWindow(JFrame parent) {
-        Dimension d = toolkit.getScreenSize();
-        InstructionsWindow.getInstance(1, parent, (int) (d.width * .37), (int) (d.height * .55),
-                "Particle Graph Instructions", HTMLUtil.ParticleGraphInstructions);
+        Dimension screenSize = toolkit.getScreenSize();
+        InstructionsWindow.getInstance(1, parent, (int) (screenSize.width * .37), (int) (screenSize.height * .55),
+                "Graph Instructions", HTMLUtil.GRAPH_INSTRUCTIONS);
     }
 
     private InstructionsWindow(int type, JFrame parent, int w, int h, String title, String instructions) {
@@ -41,7 +42,7 @@ public class InstructionsWindow {
         frame = new JFrame(title);
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(w, h);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
         frame.setLocationRelativeTo(parent);
         frame.addKeyListener(new ExtendedKeyAdapter.KeyReleased(this::close));
@@ -53,11 +54,12 @@ public class InstructionsWindow {
         frame.getContentPane().add(panel);
 
         JLabel label = new JLabel(instructions);
-        label.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+        label.setFont(FontUtil.PLAIN_18);
         label.setHorizontalAlignment(SwingConstants.LEFT);
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.getViewport().add(label);
         panel.add(scrollPane, BorderLayout.CENTER);
+
         frame.setVisible(true);
     }
 

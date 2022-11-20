@@ -6,7 +6,7 @@ import static com.calebabg.core.EngineVariables.*;
 import static org.apache.commons.math3.util.FastMath.sqrt;
 
 public class Ion extends Molecule {
-    private static final Color hoverColor = new Color(65, 106, 236);
+    private static final Color HOVER_COLOR = new Color(65, 106, 236);
 
     public Ion(float x, float y, float radius, float speed, float direction) {
         super(x, y, radius, speed, direction, 0);
@@ -23,7 +23,7 @@ public class Ion extends Molecule {
             boolean mouseIsOver = dist < ion.radius;
 
             if (mouseIsOver) {
-                ion.color = hoverColor;
+                ion.color = HOVER_COLOR;
                 graphics2D.setColor(Color.orange);
                 graphics2D.drawLine((int) ion.x, (int) ion.y, (int) x, (int) y);
             } else {

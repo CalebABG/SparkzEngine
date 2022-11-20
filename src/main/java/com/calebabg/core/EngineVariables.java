@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Random;
 
 public class EngineVariables {
+    private EngineVariables(){}
+
     public static EngineSettings engineSettings                     = new EngineSettings();
 
     public static int frameCount                                    = 0;
@@ -44,11 +46,11 @@ public class EngineVariables {
     public static final List<Portal> Portals                        = new ArrayList<>(2);
     public static final List<Vertex> Vertices                       = new ArrayList<>(1000);
 
-    public static CMenuBar menuBar                                  = new CMenuBar();
+    public static CMenuBar eMenuBar                                 = new CMenuBar();
     public static JFrame eFrame                                     = new JFrame(title);
+    public static Canvas eCanvas                                    = new Canvas();
     public static BufferStrategy bufferStrategy;
     public static Graphics2D graphics2D;
-    public static Canvas eCanvas                                    = new Canvas();
     public static Toolkit toolkit                                   = Toolkit.getDefaultToolkit();
     public static Image iconImage                                   = toolkit.getImage(EngineSettings.class.getResource("/images/EngineLogo.png"));
     public static Image splashImage                                 = toolkit.getImage(EngineSettings.class.getResource("/images/EngineSplash.png"));

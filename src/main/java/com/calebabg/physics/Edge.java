@@ -25,14 +25,14 @@ public class Edge {
     }
 
     Edge(Vertex link1, Vertex link2, float restingDist, float stiff,
-         float tearDistance, boolean render, Color c) {
+         float tearDistance, boolean render, Color color) {
         this(link1, link2, restingDist, stiff, tearDistance, render);
-        color = c;
+        this.color = color;
     }
 
     Edge(Vertex link1, Vertex link2, float restingDist, float stiff,
-         float tearDistance, boolean render, boolean severable, Color c) {
-        this(link1, link2, restingDist, stiff, tearDistance, render, c);
+         float tearDistance, boolean render, boolean severable, Color color) {
+        this(link1, link2, restingDist, stiff, tearDistance, render, color);
         this.severable = severable;
     }
 
@@ -46,7 +46,7 @@ public class Edge {
         float delta = (restingDistance / (dist + restingDistance)) - 0.5f;
 
         if (severable && dist > tearDistance) {
-            v1.removeLink(this);
+            v1.removeEdge(this);
 
             if (v1 == Physics.selectedVertex || v2 == Physics.selectedVertex)
                 PhysicsEditor.updateConstraintsList(Physics.selectedVertex.edges);

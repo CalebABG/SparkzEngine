@@ -11,6 +11,7 @@ public class ExtendedWindowAdapter extends WindowAdapter {
         this.closingFunction = closingFunction;
     }
 
+    @Override
     public void windowClosing(WindowEvent e) {
         closingFunction.accept(e);
     }

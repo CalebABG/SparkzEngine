@@ -7,6 +7,7 @@ import com.calebabg.inputs.ExtendedWindowAdapter;
 import com.calebabg.jcomponents.CLabel;
 import com.calebabg.reactivity.ReactiveColors;
 import com.calebabg.reactivity.ReactiveColorsRandomizer;
+import com.calebabg.utilities.FontUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,9 +17,6 @@ import static com.calebabg.core.EngineVariables.engineSettings;
 
 public class ReactiveColorsEditor {
     private static ReactiveColorsEditor instance = null;
-
-    private static final Font font = new Font(Font.SERIF, Font.PLAIN, 18);
-    private static final Font uiFont = new Font(Font.SERIF, Font.BOLD, 16);
 
     public static JFrame frame;
     private static final CLabel[] labels = new CLabel[5];
@@ -38,7 +36,7 @@ public class ReactiveColorsEditor {
         frame = new JFrame("Colors Editor");
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(950, 250);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
         frame.setLocationRelativeTo(parent);
 
@@ -53,38 +51,38 @@ public class ReactiveColorsEditor {
         container.add(buttons_panel, BorderLayout.SOUTH);
 
         JButton presets = new JButton("Presets");
-        presets.setFont(uiFont);
+        presets.setFont(FontUtil.BOLD_16);
         presets.addActionListener(e -> ReactiveColorsPresets.getInstance());
         buttons_panel.add(presets);
 
         JButton random_colors = new JButton("Random");
-        random_colors.setFont(uiFont);
+        random_colors.setFont(FontUtil.BOLD_16);
         random_colors.addActionListener(e -> setRandomColors());
         buttons_panel.add(random_colors);
 
         JButton default_colors = new JButton("Default");
-        default_colors.setFont(uiFont);
+        default_colors.setFont(FontUtil.BOLD_16);
         default_colors.addActionListener(e -> ReactiveColorsPresets.setColors(ReactiveColorsPresets.defaultColor()));
         buttons_panel.add(default_colors);
 
         JButton cycle_colors = new JButton("Cycle: " + (engineSettings.cycleReactiveColors ? "On" : "Off"));
-        cycle_colors.setFont(uiFont);
+        cycle_colors.setFont(FontUtil.BOLD_16);
         cycle_colors.addActionListener(e -> handleColorCycle(cycle_colors));
         buttons_panel.add(cycle_colors);
 
         JButton save_colors = new JButton("Save");
-        save_colors.setFont(uiFont);
+        save_colors.setFont(FontUtil.BOLD_16);
         save_colors.addActionListener(e -> EngineSettings.saveColors(null));
         buttons_panel.add(save_colors);
 
         JButton load_colors = new JButton("Load");
-        load_colors.setFont(uiFont);
+        load_colors.setFont(FontUtil.BOLD_16);
         load_colors.addActionListener(e -> loadColors());
         buttons_panel.add(load_colors);
 
         JButton timeMachine = new JButton("Time Machine");
         timeMachine.addActionListener(e -> ReactiveColorsTimeMachine.getInstance());
-        timeMachine.setFont(uiFont);
+        timeMachine.setFont(FontUtil.BOLD_16);
         buttons_panel.add(timeMachine);
 
         JPanel colors_panel = new JPanel();
@@ -122,7 +120,7 @@ public class ReactiveColorsEditor {
         );
 
         JButton color_5_button = new JButton("Change Color");
-        color_5_button.setFont(uiFont);
+        color_5_button.setFont(FontUtil.BOLD_16);
         color_5_button.addActionListener(e -> pickColor(4));
         color_5_panel.add(color_5_button, BorderLayout.SOUTH);
 
@@ -131,12 +129,12 @@ public class ReactiveColorsEditor {
         color_5_inner_panel.setLayout(new BorderLayout(0, 0));
 
         Color fgColor = Color.white;
-        labels[4] = new CLabel(font, fgColor, ReactiveColors.getColor(4));
+        labels[4] = new CLabel(FontUtil.PLAIN_18, fgColor, ReactiveColors.getColor(4));
         labels[4].setHorizontalAlignment(SwingConstants.CENTER);
         color_5_inner_panel.add(labels[4], BorderLayout.CENTER);
 
         JButton color_4_button = new JButton("Change Color");
-        color_4_button.setFont(uiFont);
+        color_4_button.setFont(FontUtil.BOLD_16);
         color_4_button.addActionListener(e -> pickColor(3));
         color_4_panel.add(color_4_button, BorderLayout.SOUTH);
 
@@ -144,12 +142,12 @@ public class ReactiveColorsEditor {
         color_4_panel.add(color_4_inner_panel, BorderLayout.CENTER);
         color_4_inner_panel.setLayout(new BorderLayout(0, 0));
 
-        labels[3] = new CLabel(font, fgColor, ReactiveColors.getColor(3));
+        labels[3] = new CLabel(FontUtil.PLAIN_18, fgColor, ReactiveColors.getColor(3));
         labels[3].setHorizontalAlignment(SwingConstants.CENTER);
         color_4_inner_panel.add(labels[3], BorderLayout.CENTER);
 
         JButton color_3_button = new JButton("Change Color");
-        color_3_button.setFont(uiFont);
+        color_3_button.setFont(FontUtil.BOLD_16);
         color_3_button.addActionListener(e -> pickColor(2));
         color_3_panel.add(color_3_button, BorderLayout.SOUTH);
 
@@ -157,12 +155,12 @@ public class ReactiveColorsEditor {
         color_3_panel.add(color_3_inner_panel, BorderLayout.CENTER);
         color_3_inner_panel.setLayout(new BorderLayout(0, 0));
 
-        labels[2] = new CLabel(font, fgColor, ReactiveColors.getColor(2));
+        labels[2] = new CLabel(FontUtil.PLAIN_18, fgColor, ReactiveColors.getColor(2));
         labels[2].setHorizontalAlignment(SwingConstants.CENTER);
         color_3_inner_panel.add(labels[2], BorderLayout.CENTER);
 
         JButton color_2_button = new JButton("Change Color");
-        color_2_button.setFont(uiFont);
+        color_2_button.setFont(FontUtil.BOLD_16);
         color_2_button.addActionListener(e -> pickColor(1));
         color_2_panel.add(color_2_button, BorderLayout.SOUTH);
 
@@ -170,12 +168,12 @@ public class ReactiveColorsEditor {
         color_2_panel.add(color_2_inner_panel, BorderLayout.CENTER);
         color_2_inner_panel.setLayout(new BorderLayout(0, 0));
 
-        labels[1] = new CLabel(font, fgColor, ReactiveColors.getColor(1));
+        labels[1] = new CLabel(FontUtil.PLAIN_18, fgColor, ReactiveColors.getColor(1));
         labels[1].setHorizontalAlignment(SwingConstants.CENTER);
         color_2_inner_panel.add(labels[1], BorderLayout.CENTER);
 
         JButton color_1_button = new JButton("Change Color");
-        color_1_button.setFont(uiFont);
+        color_1_button.setFont(FontUtil.BOLD_16);
         color_1_button.addActionListener(e -> pickColor(0));
         color_1_panel.add(color_1_button, BorderLayout.SOUTH);
 
@@ -183,7 +181,7 @@ public class ReactiveColorsEditor {
         color_1_panel.add(color_1_inner_panel, BorderLayout.CENTER);
         color_1_inner_panel.setLayout(new BorderLayout(0, 0));
 
-        labels[0] = new CLabel(font, fgColor, ReactiveColors.getColor(0));
+        labels[0] = new CLabel(FontUtil.PLAIN_18, fgColor, ReactiveColors.getColor(0));
         labels[0].setHorizontalAlignment(SwingConstants.CENTER);
         color_1_inner_panel.add(labels[0], BorderLayout.CENTER);
         colors_panel.setLayout(gl_colors_panel);
@@ -237,7 +235,7 @@ public class ReactiveColorsEditor {
     }
 
     public static void setLabelReactiveBackgroundColor(int index) {
-        labels[index].setBackground(ReactiveColors.getColors()[index]);
+        labels[index].setBackground(ReactiveColors.getColor(index));
     }
 
     public void close() {

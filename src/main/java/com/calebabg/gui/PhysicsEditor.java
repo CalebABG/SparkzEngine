@@ -7,6 +7,7 @@ import com.calebabg.enums.PhysicsItemType;
 import com.calebabg.inputs.ExtendedWindowAdapter;
 import com.calebabg.jcomponents.CLabel;
 import com.calebabg.utilities.EnumUtil;
+import com.calebabg.utilities.FontUtil;
 import com.calebabg.utilities.InputUtil;
 import com.calebabg.physics.Edge;
 import com.calebabg.physics.Physics;
@@ -22,14 +23,13 @@ import static com.calebabg.core.EngineVariables.eFrame;
 import static com.calebabg.core.EngineVariables.engineSettings;
 
 public class PhysicsEditor {
-    public static PhysicsEditor instance = null;
+    private static PhysicsEditor instance = null;
 
     private static JFrame frame;
 
-    public static PhysicsEditorMode EDITOR_MODE = PhysicsEditorMode.Add;
-    public static PhysicsItemType ITEM_TYPE = PhysicsItemType.Point;
+    public static PhysicsEditorMode EDITOR_MODE = PhysicsEditorMode.ADD;
+    public static PhysicsItemType ITEM_TYPE = PhysicsItemType.POINT;
 
-    private static final Font font = new Font(Font.SERIF, Font.PLAIN, 14);
     private static CLabel pointColorPanel, linkColorPanel, lblSelectionColor, lblConstraintLink;
 
     private static final DefaultListModel<Integer> constraintsListModel = new DefaultListModel<>();
@@ -71,175 +71,172 @@ public class PhysicsEditor {
         frame = new JFrame("Physics Editor");
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(568, 610);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
         frame.setLocationRelativeTo(parent);
 
-        JScrollPane simEditorScrollpane = new JScrollPane();
-        frame.getContentPane().add(simEditorScrollpane, BorderLayout.CENTER);
+        JScrollPane simEditorScrollPane = new JScrollPane();
+        frame.getContentPane().add(simEditorScrollPane, BorderLayout.CENTER);
 
         JToolBar simEditorToolbar = new JToolBar();
-        simEditorScrollpane.setColumnHeaderView(simEditorToolbar);
+        simEditorScrollPane.setColumnHeaderView(simEditorToolbar);
 
         JPanel toolbarPanel = new JPanel();
         simEditorToolbar.add(toolbarPanel);
-        GridBagLayout gbl_toolbarpanel = new GridBagLayout();
-        gbl_toolbarpanel.columnWidths = new int[]{69, 70, 63, 0, 72, 0, 0};
-        gbl_toolbarpanel.rowHeights = new int[]{0, 0};
-        gbl_toolbarpanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-        gbl_toolbarpanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-        toolbarPanel.setLayout(gbl_toolbarpanel);
+        GridBagLayout gblToolbarpanel = new GridBagLayout();
+        gblToolbarpanel.columnWidths = new int[]{69, 70, 63, 0, 72, 0, 0};
+        gblToolbarpanel.rowHeights = new int[]{0, 0};
+        gblToolbarpanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gblToolbarpanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+        toolbarPanel.setLayout(gblToolbarpanel);
 
-        JLabel editormode_label = new JLabel("Editor Mode");
-        GridBagConstraints gbc_editormode_label = new GridBagConstraints();
-        gbc_editormode_label.anchor = GridBagConstraints.WEST;
-        gbc_editormode_label.insets = new Insets(0, 0, 0, 5);
-        gbc_editormode_label.gridx = 0;
-        gbc_editormode_label.gridy = 0;
-        toolbarPanel.add(editormode_label, gbc_editormode_label);
-        editormode_label.setFont(font);
-        editormode_label.setIconTextGap(5);
+        JLabel editormodeLabel = new JLabel("Editor Mode");
+        GridBagConstraints gbcEditormodeLabel = new GridBagConstraints();
+        gbcEditormodeLabel.anchor = GridBagConstraints.WEST;
+        gbcEditormodeLabel.insets = new Insets(0, 0, 0, 5);
+        gbcEditormodeLabel.gridx = 0;
+        gbcEditormodeLabel.gridy = 0;
+        toolbarPanel.add(editormodeLabel, gbcEditormodeLabel);
+        editormodeLabel.setFont(FontUtil.PLAIN_14);
+        editormodeLabel.setIconTextGap(5);
 
         editorModesJComboBox.setModel(new DefaultComboBoxModel<>(PhysicsEditorMode.values()));
         editorModesJComboBox.setSelectedItem(EDITOR_MODE);
-        editorModesJComboBox.setFont(font);
-        editorModesJComboBox.addActionListener(e -> {
-            PhysicsEditorMode selectedMode = (PhysicsEditorMode) editorModesJComboBox.getSelectedItem();
-            if (selectedMode != EDITOR_MODE) EDITOR_MODE = selectedMode;
-        });
-        GridBagConstraints gbc_editormode_combobox = new GridBagConstraints();
-        gbc_editormode_combobox.fill = GridBagConstraints.HORIZONTAL;
-        gbc_editormode_combobox.insets = new Insets(0, 0, 0, 5);
-        gbc_editormode_combobox.gridx = 1;
-        gbc_editormode_combobox.gridy = 0;
-        toolbarPanel.add(editorModesJComboBox, gbc_editormode_combobox);
+        editorModesJComboBox.setFont(FontUtil.PLAIN_14);
+        editorModesJComboBox.addActionListener(e -> EDITOR_MODE = (PhysicsEditorMode) editorModesJComboBox.getSelectedItem());
+        GridBagConstraints gbcEditormodeCombobox = new GridBagConstraints();
+        gbcEditormodeCombobox.fill = GridBagConstraints.HORIZONTAL;
+        gbcEditormodeCombobox.insets = new Insets(0, 0, 0, 5);
+        gbcEditormodeCombobox.gridx = 1;
+        gbcEditormodeCombobox.gridy = 0;
+        toolbarPanel.add(editorModesJComboBox, gbcEditormodeCombobox);
 
-        JCheckBox gravitycheckbox = new JCheckBox("Zero Gravity");
-        gravitycheckbox.setSelected(Physics.ZERO_GRAVITY);
-        gravitycheckbox.addActionListener(e -> Physics.toggleGravity());
-        gravitycheckbox.setToolTipText("Toggles Gravity");
-        gravitycheckbox.setFont(font);
-        GridBagConstraints gbc_gravitycheckbox = new GridBagConstraints();
-        gbc_gravitycheckbox.insets = new Insets(0, 0, 0, 5);
-        gbc_gravitycheckbox.gridx = 2;
-        gbc_gravitycheckbox.gridy = 0;
-        toolbarPanel.add(gravitycheckbox, gbc_gravitycheckbox);
+        JCheckBox gravityCheckbox = new JCheckBox("Zero Gravity");
+        gravityCheckbox.setSelected(Physics.ZERO_GRAVITY);
+        gravityCheckbox.addActionListener(e -> Physics.toggleGravity());
+        gravityCheckbox.setToolTipText("Toggles Gravity");
+        gravityCheckbox.setFont(FontUtil.PLAIN_14);
+        GridBagConstraints gbcGravityCheckbox = new GridBagConstraints();
+        gbcGravityCheckbox.insets = new Insets(0, 0, 0, 5);
+        gbcGravityCheckbox.gridx = 2;
+        gbcGravityCheckbox.gridy = 0;
+        toolbarPanel.add(gravityCheckbox, gbcGravityCheckbox);
 
-        JCheckBox debugcheckbox = new JCheckBox("Debug");
-        debugcheckbox.setSelected(Physics.DEBUG_MODE);
-        debugcheckbox.addActionListener(e -> Physics.toggleDebug());
-        debugcheckbox.setToolTipText("Toggles Debug Mode");
-        debugcheckbox.setFont(font);
-        GridBagConstraints gbc_debugcheckbox = new GridBagConstraints();
-        gbc_debugcheckbox.insets = new Insets(0, 0, 0, 5);
-        gbc_debugcheckbox.gridx = 3;
-        gbc_debugcheckbox.gridy = 0;
-        toolbarPanel.add(debugcheckbox, gbc_debugcheckbox);
+        JCheckBox debugCheckbox = new JCheckBox("Debug");
+        debugCheckbox.setSelected(Physics.DEBUG_MODE);
+        debugCheckbox.addActionListener(e -> Physics.toggleDebug());
+        debugCheckbox.setToolTipText("Toggles Debug Mode");
+        debugCheckbox.setFont(FontUtil.PLAIN_14);
+        GridBagConstraints gbcDebugcheckbox = new GridBagConstraints();
+        gbcDebugcheckbox.insets = new Insets(0, 0, 0, 5);
+        gbcDebugcheckbox.gridx = 3;
+        gbcDebugcheckbox.gridy = 0;
+        toolbarPanel.add(debugCheckbox, gbcDebugcheckbox);
 
-        JCheckBox chckbxSmoothing = new JCheckBox("Smoothing");
-        chckbxSmoothing.setSelected(engineSettings.smoothRenderingEnabled);
-        chckbxSmoothing.addActionListener(e -> engineSettings.toggleGraphicsSmoothing());
-        chckbxSmoothing.setToolTipText("Toggles Graphics Smoothing");
-        chckbxSmoothing.setFont(font);
-        GridBagConstraints gbc_chckbxSmoothing = new GridBagConstraints();
-        gbc_chckbxSmoothing.gridx = 4;
-        gbc_chckbxSmoothing.gridy = 0;
-        toolbarPanel.add(chckbxSmoothing, gbc_chckbxSmoothing);
+        JCheckBox smoothingCheckbox = new JCheckBox("Smoothing");
+        smoothingCheckbox.setSelected(engineSettings.smoothRenderingEnabled);
+        smoothingCheckbox.addActionListener(e -> engineSettings.toggleGraphicsSmoothing());
+        smoothingCheckbox.setToolTipText("Toggles Graphics Smoothing");
+        smoothingCheckbox.setFont(FontUtil.PLAIN_14);
+        GridBagConstraints gbcSmoothingCheckbox = new GridBagConstraints();
+        gbcSmoothingCheckbox.gridx = 4;
+        gbcSmoothingCheckbox.gridy = 0;
+        toolbarPanel.add(smoothingCheckbox, gbcSmoothingCheckbox);
 
-        JTabbedPane simeditorpane = new JTabbedPane(JTabbedPane.TOP);
-        simeditorpane.setFont(font);
-        simEditorScrollpane.setViewportView(simeditorpane);
+        JTabbedPane simEditorPane = new JTabbedPane(SwingConstants.TOP);
+        simEditorPane.setFont(FontUtil.PLAIN_14);
+        simEditorScrollPane.setViewportView(simEditorPane);
 
-        JPanel simproperties_panel = new JPanel();
-        simproperties_panel.setFont(font);
-        simeditorpane.addTab("Simulation Properties", null, simproperties_panel, "You can change simulation properties here");
-        simeditorpane.setEnabledAt(0, true);
-        GridBagLayout gbl_simproperties_panel = new GridBagLayout();
-        gbl_simproperties_panel.columnWidths = new int[]{164, -44};
-        gbl_simproperties_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 37, 0, 0};
-        gbl_simproperties_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-        gbl_simproperties_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-        simproperties_panel.setLayout(gbl_simproperties_panel);
+        JPanel simPropertiesPanel = new JPanel();
+        simPropertiesPanel.setFont(FontUtil.PLAIN_14);
+        simEditorPane.addTab("Simulation Properties", null, simPropertiesPanel, "You can change simulation properties here");
+        simEditorPane.setEnabledAt(0, true);
+        GridBagLayout gblSimPropertiesPanel = new GridBagLayout();
+        gblSimPropertiesPanel.columnWidths = new int[]{164, -44};
+        gblSimPropertiesPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 37, 0, 0};
+        gblSimPropertiesPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+        gblSimPropertiesPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+        simPropertiesPanel.setLayout(gblSimPropertiesPanel);
 
-        JLabel simacc_label = new JLabel("Simulation Accuracy (higher value = performance hit)");
-        simacc_label.setFont(font);
-        GridBagConstraints gbc_simacc_label = new GridBagConstraints();
-        gbc_simacc_label.fill = GridBagConstraints.VERTICAL;
-        gbc_simacc_label.insets = new Insets(5, 0, 5, 0);
-        gbc_simacc_label.gridwidth = 2;
-        gbc_simacc_label.gridx = 0;
-        gbc_simacc_label.gridy = 0;
-        simproperties_panel.add(simacc_label, gbc_simacc_label);
+        JLabel simAccuracyLabel = new JLabel("Simulation Accuracy (higher value = performance hit)");
+        simAccuracyLabel.setFont(FontUtil.PLAIN_14);
+        GridBagConstraints gbcSimAccuracyLabel = new GridBagConstraints();
+        gbcSimAccuracyLabel.fill = GridBagConstraints.VERTICAL;
+        gbcSimAccuracyLabel.insets = new Insets(5, 0, 5, 0);
+        gbcSimAccuracyLabel.gridwidth = 2;
+        gbcSimAccuracyLabel.gridx = 0;
+        gbcSimAccuracyLabel.gridy = 0;
+        simPropertiesPanel.add(simAccuracyLabel, gbcSimAccuracyLabel);
 
         simAccField.setText("" + Physics.SIM_ACCURACY);
         simAccField.setHorizontalAlignment(SwingConstants.CENTER);
-        simAccField.setFont(font);
-        GridBagConstraints gbc_simacc_field = new GridBagConstraints();
-        gbc_simacc_field.insets = new Insets(0, 0, 5, 0);
-        gbc_simacc_field.gridwidth = 2;
-        gbc_simacc_field.fill = GridBagConstraints.BOTH;
-        gbc_simacc_field.gridx = 0;
-        gbc_simacc_field.gridy = 1;
-        simproperties_panel.add(simAccField, gbc_simacc_field);
+        simAccField.setFont(FontUtil.PLAIN_14);
+        GridBagConstraints gbcSimAccuracyField = new GridBagConstraints();
+        gbcSimAccuracyField.insets = new Insets(0, 0, 5, 0);
+        gbcSimAccuracyField.gridwidth = 2;
+        gbcSimAccuracyField.fill = GridBagConstraints.BOTH;
+        gbcSimAccuracyField.gridx = 0;
+        gbcSimAccuracyField.gridy = 1;
+        simPropertiesPanel.add(simAccField, gbcSimAccuracyField);
 
 
-        JLabel dragforce_label = new JLabel("Drag Force (smaller value = stronger force)");
-        dragforce_label.setFont(font);
-        GridBagConstraints gbc_dragforce_label = new GridBagConstraints();
-        gbc_dragforce_label.fill = GridBagConstraints.VERTICAL;
-        gbc_dragforce_label.insets = new Insets(0, 0, 5, 0);
-        gbc_dragforce_label.gridwidth = 2;
-        gbc_dragforce_label.gridx = 0;
-        gbc_dragforce_label.gridy = 2;
-        simproperties_panel.add(dragforce_label, gbc_dragforce_label);
+        JLabel dragForceLabel = new JLabel("Drag Force (smaller value = stronger force)");
+        dragForceLabel.setFont(FontUtil.PLAIN_14);
+        GridBagConstraints gbcDragForceLabel = new GridBagConstraints();
+        gbcDragForceLabel.fill = GridBagConstraints.VERTICAL;
+        gbcDragForceLabel.insets = new Insets(0, 0, 5, 0);
+        gbcDragForceLabel.gridwidth = 2;
+        gbcDragForceLabel.gridx = 0;
+        gbcDragForceLabel.gridy = 2;
+        simPropertiesPanel.add(dragForceLabel, gbcDragForceLabel);
 
         dragForceField.setText("" + Physics.DRAG_FORCE);
         dragForceField.setHorizontalAlignment(SwingConstants.CENTER);
-        dragForceField.setFont(font);
+        dragForceField.setFont(FontUtil.PLAIN_14);
 
-        GridBagConstraints gbc_dragforce_field = new GridBagConstraints();
-        gbc_dragforce_field.insets = new Insets(0, 0, 5, 0);
-        gbc_dragforce_field.gridwidth = 2;
-        gbc_dragforce_field.fill = GridBagConstraints.BOTH;
-        gbc_dragforce_field.gridx = 0;
-        gbc_dragforce_field.gridy = 3;
-        simproperties_panel.add(dragForceField, gbc_dragforce_field);
+        GridBagConstraints gbcDragForceField = new GridBagConstraints();
+        gbcDragForceField.insets = new Insets(0, 0, 5, 0);
+        gbcDragForceField.gridwidth = 2;
+        gbcDragForceField.fill = GridBagConstraints.BOTH;
+        gbcDragForceField.gridx = 0;
+        gbcDragForceField.gridy = 3;
+        simPropertiesPanel.add(dragForceField, gbcDragForceField);
 
-        JLabel gravity_label = new JLabel("Gravity");
-        gravity_label.setFont(font);
-        GridBagConstraints gbc_gravity_label = new GridBagConstraints();
-        gbc_gravity_label.fill = GridBagConstraints.VERTICAL;
-        gbc_gravity_label.insets = new Insets(0, 0, 5, 0);
-        gbc_gravity_label.gridwidth = 2;
-        gbc_gravity_label.gridx = 0;
-        gbc_gravity_label.gridy = 4;
-        simproperties_panel.add(gravity_label, gbc_gravity_label);
+        JLabel gravityLabel = new JLabel("Gravity");
+        gravityLabel.setFont(FontUtil.PLAIN_14);
+        GridBagConstraints gbcGravityLabel = new GridBagConstraints();
+        gbcGravityLabel.fill = GridBagConstraints.VERTICAL;
+        gbcGravityLabel.insets = new Insets(0, 0, 5, 0);
+        gbcGravityLabel.gridwidth = 2;
+        gbcGravityLabel.gridx = 0;
+        gbcGravityLabel.gridy = 4;
+        simPropertiesPanel.add(gravityLabel, gbcGravityLabel);
 
         gravityField.setText("" + Physics.GRAVITY);
         gravityField.setHorizontalAlignment(SwingConstants.CENTER);
-        gravityField.setFont(font);
+        gravityField.setFont(FontUtil.PLAIN_14);
 
-        GridBagConstraints gbc_gravity_field = new GridBagConstraints();
-        gbc_gravity_field.insets = new Insets(0, 0, 5, 0);
-        gbc_gravity_field.gridwidth = 2;
-        gbc_gravity_field.fill = GridBagConstraints.BOTH;
-        gbc_gravity_field.gridx = 0;
-        gbc_gravity_field.gridy = 5;
-        simproperties_panel.add(gravityField, gbc_gravity_field);
+        GridBagConstraints gbcGravityField = new GridBagConstraints();
+        gbcGravityField.insets = new Insets(0, 0, 5, 0);
+        gbcGravityField.gridwidth = 2;
+        gbcGravityField.fill = GridBagConstraints.BOTH;
+        gbcGravityField.gridx = 0;
+        gbcGravityField.gridy = 5;
+        simPropertiesPanel.add(gravityField, gbcGravityField);
 
-        JLabel airviscosity_label = new JLabel("Air Viscosity");
-        airviscosity_label.setFont(font);
-        GridBagConstraints gbc_airviscosity_label = new GridBagConstraints();
-        gbc_airviscosity_label.fill = GridBagConstraints.VERTICAL;
-        gbc_airviscosity_label.gridwidth = 2;
-        gbc_airviscosity_label.insets = new Insets(0, 0, 5, 0);
-        gbc_airviscosity_label.gridx = 0;
-        gbc_airviscosity_label.gridy = 6;
-        simproperties_panel.add(airviscosity_label, gbc_airviscosity_label);
+        JLabel airViscosityLabel = new JLabel("Air Viscosity");
+        airViscosityLabel.setFont(FontUtil.PLAIN_14);
+        GridBagConstraints gbcAirViscosityLabel = new GridBagConstraints();
+        gbcAirViscosityLabel.fill = GridBagConstraints.VERTICAL;
+        gbcAirViscosityLabel.gridwidth = 2;
+        gbcAirViscosityLabel.insets = new Insets(0, 0, 5, 0);
+        gbcAirViscosityLabel.gridx = 0;
+        gbcAirViscosityLabel.gridy = 6;
+        simPropertiesPanel.add(airViscosityLabel, gbcAirViscosityLabel);
 
         airViscosityField.setText("" + Physics.AIR_VISCOSITY);
         airViscosityField.setHorizontalAlignment(SwingConstants.CENTER);
-        airViscosityField.setFont(font);
+        airViscosityField.setFont(FontUtil.PLAIN_14);
 
         GridBagConstraints gbc_airviscosity_field = new GridBagConstraints();
         gbc_airviscosity_field.gridwidth = 2;
@@ -247,18 +244,18 @@ public class PhysicsEditor {
         gbc_airviscosity_field.fill = GridBagConstraints.BOTH;
         gbc_airviscosity_field.gridx = 0;
         gbc_airviscosity_field.gridy = 7;
-        simproperties_panel.add(airViscosityField, gbc_airviscosity_field);
+        simPropertiesPanel.add(airViscosityField, gbc_airviscosity_field);
 
         JButton btnSetSimulationProperties = new JButton("Set Simulation Properties");
         btnSetSimulationProperties.addActionListener(e -> setSimulationProperties());
-        btnSetSimulationProperties.setFont(font);
+        btnSetSimulationProperties.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_btnSetSimulationProperties = new GridBagConstraints();
         gbc_btnSetSimulationProperties.gridwidth = 2;
         gbc_btnSetSimulationProperties.fill = GridBagConstraints.BOTH;
         gbc_btnSetSimulationProperties.insets = new Insets(0, 0, 5, 0);
         gbc_btnSetSimulationProperties.gridx = 0;
         gbc_btnSetSimulationProperties.gridy = 8;
-        simproperties_panel.add(btnSetSimulationProperties, gbc_btnSetSimulationProperties);
+        simPropertiesPanel.add(btnSetSimulationProperties, gbc_btnSetSimulationProperties);
 
         JPanel addmode_panel = new JPanel();
         GridBagConstraints gbc_addmode_panel = new GridBagConstraints();
@@ -266,7 +263,7 @@ public class PhysicsEditor {
         gbc_addmode_panel.fill = GridBagConstraints.BOTH;
         gbc_addmode_panel.gridx = 0;
         gbc_addmode_panel.gridy = 9;
-        simproperties_panel.add(addmode_panel, gbc_addmode_panel);
+        simPropertiesPanel.add(addmode_panel, gbc_addmode_panel);
         GridBagLayout gbl_addmode_panel = new GridBagLayout();
         gbl_addmode_panel.columnWidths = new int[]{103, 110, 74, 112};
         gbl_addmode_panel.rowHeights = new int[]{30, 30, 33, 32, 29, 30, 31, 0};
@@ -275,7 +272,7 @@ public class PhysicsEditor {
         addmode_panel.setLayout(gbl_addmode_panel);
 
         JLabel creationModeLabel = new JLabel("Item Type");
-        creationModeLabel.setFont(font);
+        creationModeLabel.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_addmode_label = new GridBagConstraints();
         gbc_addmode_label.fill = GridBagConstraints.VERTICAL;
         gbc_addmode_label.insets = new Insets(5, 0, 5, 0);
@@ -286,12 +283,8 @@ public class PhysicsEditor {
 
         creationModesJComboBox.setModel(new DefaultComboBoxModel<>(PhysicsItemType.values()));
         creationModesJComboBox.setSelectedItem(ITEM_TYPE);
-        creationModesJComboBox.setFont(font);
-        creationModesJComboBox.addActionListener(e -> {
-            PhysicsItemType selectedMode = (PhysicsItemType) creationModesJComboBox.getSelectedItem();
-            if (selectedMode != ITEM_TYPE) ITEM_TYPE = selectedMode;
-
-        });
+        creationModesJComboBox.setFont(FontUtil.PLAIN_14);
+        creationModesJComboBox.addActionListener(e -> ITEM_TYPE = (PhysicsItemType) creationModesJComboBox.getSelectedItem());
         GridBagConstraints gbc_addmode_combobox = new GridBagConstraints();
         gbc_addmode_combobox.fill = GridBagConstraints.BOTH;
         gbc_addmode_combobox.insets = new Insets(0, 0, 5, 0);
@@ -301,7 +294,7 @@ public class PhysicsEditor {
         addmode_panel.add(creationModesJComboBox, gbc_addmode_combobox);
 
         JLabel numpoints_label = new JLabel("Num Points");
-        numpoints_label.setFont(font);
+        numpoints_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_numpoints_label = new GridBagConstraints();
         gbc_numpoints_label.fill = GridBagConstraints.VERTICAL;
         gbc_numpoints_label.anchor = GridBagConstraints.WEST;
@@ -320,7 +313,7 @@ public class PhysicsEditor {
 
 
         JCheckBox drawlinks_checkbox = new JCheckBox("Draw Links");
-        drawlinks_checkbox.setFont(font);
+        drawlinks_checkbox.setFont(FontUtil.PLAIN_14);
         drawlinks_checkbox.setSelected(true);
         GridBagConstraints gbc_drawlinks_checkbox = new GridBagConstraints();
         gbc_drawlinks_checkbox.anchor = GridBagConstraints.WEST;
@@ -332,7 +325,7 @@ public class PhysicsEditor {
 
         JCheckBox isSeverableCheckbox = new JCheckBox("Is Severable");
         isSeverableCheckbox.setSelected(true);
-        isSeverableCheckbox.setFont(font);
+        isSeverableCheckbox.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_isSeverableCheckbox = new GridBagConstraints();
         gbc_isSeverableCheckbox.fill = GridBagConstraints.VERTICAL;
         gbc_isSeverableCheckbox.insets = new Insets(0, 0, 5, 0);
@@ -341,7 +334,7 @@ public class PhysicsEditor {
         addmode_panel.add(isSeverableCheckbox, gbc_isSeverableCheckbox);
 
         JLabel objectsize_label = new JLabel("Size");
-        objectsize_label.setFont(font);
+        objectsize_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_objectsize_label = new GridBagConstraints();
         gbc_objectsize_label.anchor = GridBagConstraints.WEST;
         gbc_objectsize_label.fill = GridBagConstraints.VERTICAL;
@@ -360,7 +353,7 @@ public class PhysicsEditor {
         addmode_panel.add(objectSizeField, gbc_objectsize_field);
 
         JLabel teardistance_label = new JLabel("Tear Distance");
-        teardistance_label.setFont(font);
+        teardistance_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_teardistance_label = new GridBagConstraints();
         gbc_teardistance_label.fill = GridBagConstraints.VERTICAL;
         gbc_teardistance_label.anchor = GridBagConstraints.WEST;
@@ -379,7 +372,7 @@ public class PhysicsEditor {
         addmode_panel.add(tearDistanceField, gbc_teardistance_field);
 
         JLabel dampening_label = new JLabel("Dampening");
-        dampening_label.setFont(font);
+        dampening_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_dampening_label = new GridBagConstraints();
         gbc_dampening_label.fill = GridBagConstraints.VERTICAL;
         gbc_dampening_label.anchor = GridBagConstraints.WEST;
@@ -398,7 +391,7 @@ public class PhysicsEditor {
         addmode_panel.add(dampeningField, gbc_dampening_field);
 
         JLabel objectmass_label = new JLabel("Mass");
-        objectmass_label.setFont(font);
+        objectmass_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_objectmass_label = new GridBagConstraints();
         gbc_objectmass_label.fill = GridBagConstraints.VERTICAL;
         gbc_objectmass_label.anchor = GridBagConstraints.WEST;
@@ -417,7 +410,7 @@ public class PhysicsEditor {
         addmode_panel.add(objectMassField, gbc_objectmass_field);
 
         JLabel spacing_label = new JLabel("Spacing");
-        spacing_label.setFont(font);
+        spacing_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_spacing_label = new GridBagConstraints();
         gbc_spacing_label.fill = GridBagConstraints.VERTICAL;
         gbc_spacing_label.anchor = GridBagConstraints.WEST;
@@ -436,7 +429,7 @@ public class PhysicsEditor {
         addmode_panel.add(spacingField, gbc_spacing_field);
 
         JLabel stiffness_label = new JLabel("Stiffness");
-        stiffness_label.setFont(font);
+        stiffness_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_stiffness_label = new GridBagConstraints();
         gbc_stiffness_label.fill = GridBagConstraints.VERTICAL;
         gbc_stiffness_label.insets = new Insets(0, 0, 5, 5);
@@ -455,7 +448,7 @@ public class PhysicsEditor {
         addmode_panel.add(stiffnessField, gbc_stiffness_field);
 
         JLabel pointcolor_label = new JLabel("Point Color");
-        pointcolor_label.setFont(font);
+        pointcolor_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_pointcolor_label = new GridBagConstraints();
         gbc_pointcolor_label.fill = GridBagConstraints.VERTICAL;
         gbc_pointcolor_label.anchor = GridBagConstraints.WEST;
@@ -466,10 +459,11 @@ public class PhysicsEditor {
 
         pointColorPanel = new CLabel(Color.GREEN, false);
         pointColorPanel.addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent e) {
-                Color default_c = pointColorPanel.getBackground();
-                Color c = JColorChooser.showDialog(frame, "Point Color", default_c);
-                pointColorPanel.setBackground((c != null) ? c : default_c);
+                Color panelBackground = pointColorPanel.getBackground();
+                Color c = JColorChooser.showDialog(frame, "Point Color", panelBackground);
+                pointColorPanel.setBackground((c != null) ? c : panelBackground);
             }
         });
         GridBagConstraints gbc_pointcolor_panel = new GridBagConstraints();
@@ -480,7 +474,7 @@ public class PhysicsEditor {
         addmode_panel.add(pointColorPanel, gbc_pointcolor_panel);
 
         JLabel linkcolor_label = new JLabel("Link Color");
-        linkcolor_label.setFont(font);
+        linkcolor_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_linkcolor_label = new GridBagConstraints();
         gbc_linkcolor_label.fill = GridBagConstraints.VERTICAL;
         gbc_linkcolor_label.anchor = GridBagConstraints.WEST;
@@ -491,10 +485,11 @@ public class PhysicsEditor {
 
         linkColorPanel = new CLabel(Color.PINK, false);
         linkColorPanel.addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent e) {
-                Color default_c = linkColorPanel.getBackground();
-                Color c = JColorChooser.showDialog(frame, "Link Color", default_c);
-                linkColorPanel.setBackground((c != null) ? c : default_c);
+                Color panelBackground = linkColorPanel.getBackground();
+                Color c = JColorChooser.showDialog(frame, "Link Color", panelBackground);
+                linkColorPanel.setBackground((c != null) ? c : panelBackground);
             }
         });
         GridBagConstraints gbc_linkcolor_panel = new GridBagConstraints();
@@ -504,7 +499,7 @@ public class PhysicsEditor {
         addmode_panel.add(linkColorPanel, gbc_linkcolor_panel);
 
         JPanel selection_panel = new JPanel();
-        simeditorpane.addTab("Selection Properties", null, selection_panel, "You can change the selected objects properties here");
+        simEditorPane.addTab("Selection Properties", null, selection_panel, "You can change the selected objects properties here");
         GridBagLayout gbl_selection_panel = new GridBagLayout();
         gbl_selection_panel.columnWidths = new int[]{103, 110, 74, 112, 0};
         gbl_selection_panel.rowHeights = new int[]{0, 31, 30, 27, 0, 29, 0, 0};
@@ -513,7 +508,7 @@ public class PhysicsEditor {
         selection_panel.setLayout(gbl_selection_panel);
 
         JLabel selectionobjectproperties_label = new JLabel("Selection Object Properties");
-        selectionobjectproperties_label.setFont(font);
+        selectionobjectproperties_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_selectionobjectproperties_label = new GridBagConstraints();
         gbc_selectionobjectproperties_label.gridwidth = 4;
         gbc_selectionobjectproperties_label.insets = new Insets(5, 0, 5, 0);
@@ -522,7 +517,7 @@ public class PhysicsEditor {
         selection_panel.add(selectionobjectproperties_label, gbc_selectionobjectproperties_label);
 
         selectionShowPointCheckbox.setSelected(false);
-        selectionShowPointCheckbox.setFont(font);
+        selectionShowPointCheckbox.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_pinned_checkbox = new GridBagConstraints();
         gbc_pinned_checkbox.anchor = GridBagConstraints.WEST;
         gbc_pinned_checkbox.insets = new Insets(0, 5, 5, 5);
@@ -531,7 +526,7 @@ public class PhysicsEditor {
         selection_panel.add(selectionShowPointCheckbox, gbc_pinned_checkbox);
 
         selectionCollidableCheckbox.setSelected(true);
-        selectionCollidableCheckbox.setFont(font);
+        selectionCollidableCheckbox.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_collidable_checkbox = new GridBagConstraints();
         gbc_collidable_checkbox.anchor = GridBagConstraints.WEST;
         gbc_collidable_checkbox.insets = new Insets(0, 0, 5, 5);
@@ -540,7 +535,7 @@ public class PhysicsEditor {
         selection_panel.add(selectionCollidableCheckbox, gbc_collidable_checkbox);
 
         JLabel objectcolor_label = new JLabel("Selection Color(Click to Change)");
-        objectcolor_label.setFont(font);
+        objectcolor_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_objectcolor_label = new GridBagConstraints();
         gbc_objectcolor_label.anchor = GridBagConstraints.WEST;
         gbc_objectcolor_label.insets = new Insets(0, 0, 5, 5);
@@ -550,10 +545,11 @@ public class PhysicsEditor {
 
         lblSelectionColor = new CLabel(Color.CYAN, false);
         lblSelectionColor.addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent e) {
-                Color default_c = lblSelectionColor.getBackground();
-                Color c = JColorChooser.showDialog(frame, "Color", default_c);
-                lblSelectionColor.setBackground((c != null) ? c : default_c);
+                Color selectionColorBackground = lblSelectionColor.getBackground();
+                Color c = JColorChooser.showDialog(frame, "Color", selectionColorBackground);
+                lblSelectionColor.setBackground((c != null) ? c : selectionColorBackground);
             }
         });
         GridBagConstraints gbc_objectcolor_panel = new GridBagConstraints();
@@ -564,7 +560,7 @@ public class PhysicsEditor {
         selection_panel.add(lblSelectionColor, gbc_objectcolor_panel);
 
         JLabel radius_label = new JLabel("Radius");
-        radius_label.setFont(font);
+        radius_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_radius_label = new GridBagConstraints();
         gbc_radius_label.anchor = GridBagConstraints.WEST;
         gbc_radius_label.insets = new Insets(0, 5, 5, 5);
@@ -581,7 +577,7 @@ public class PhysicsEditor {
         selection_panel.add(selectionRadiusField, gbc_radius_field);
 
         JLabel mass_label = new JLabel("Mass");
-        mass_label.setFont(font);
+        mass_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_mass_label = new GridBagConstraints();
         gbc_mass_label.fill = GridBagConstraints.VERTICAL;
         gbc_mass_label.anchor = GridBagConstraints.WEST;
@@ -600,7 +596,7 @@ public class PhysicsEditor {
         selection_panel.add(selectionMassField, gbc_mass_field);
 
         JLabel objectdampening_label = new JLabel("Dampening");
-        objectdampening_label.setFont(font);
+        objectdampening_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_objectdampening_label = new GridBagConstraints();
         gbc_objectdampening_label.anchor = GridBagConstraints.WEST;
         gbc_objectdampening_label.insets = new Insets(0, 5, 5, 5);
@@ -618,7 +614,7 @@ public class PhysicsEditor {
         selection_panel.add(selectionDampeningField, gbc_objectdampening_field);
 
         JLabel objectstiffness_label = new JLabel("Stiffness");
-        objectstiffness_label.setFont(font);
+        objectstiffness_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_objectstiffness_label = new GridBagConstraints();
         gbc_objectstiffness_label.anchor = GridBagConstraints.WEST;
         gbc_objectstiffness_label.insets = new Insets(0, 0, 5, 5);
@@ -636,7 +632,7 @@ public class PhysicsEditor {
         selection_panel.add(selectionStiffnessField, gbc_objectstiffness_field);
 
         JButton btnSetProperties = new JButton("Set Object Properties");
-        btnSetProperties.setFont(font);
+        btnSetProperties.setFont(FontUtil.PLAIN_14);
         btnSetProperties.addActionListener(e -> setPhysicsItemProperties());
         GridBagConstraints gbc_objectsetproperties_button = new GridBagConstraints();
         gbc_objectsetproperties_button.fill = GridBagConstraints.BOTH;
@@ -648,7 +644,7 @@ public class PhysicsEditor {
 
         JLabel lblConstraintProperties = new JLabel("<html><h3>Selection Constraint Properties <br> <span style='color: green'>Green = Selected Point</span>" +
                 " <br> <span style='color: red'>Red = Selected Constraint</span></h3></html>");
-        lblConstraintProperties.setFont(font);
+        lblConstraintProperties.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_lblConstraintProperties = new GridBagConstraints();
         gbc_lblConstraintProperties.insets = new Insets(0, 0, 5, 0);
         gbc_lblConstraintProperties.gridwidth = 4;
@@ -684,11 +680,11 @@ public class PhysicsEditor {
 
         JLabel lblConstraintList = new JLabel("Constraint List");
         lblConstraintList.setHorizontalAlignment(SwingConstants.CENTER);
-        lblConstraintList.setFont(font);
+        lblConstraintList.setFont(FontUtil.PLAIN_14);
         scrollPane_1.setColumnHeaderView(lblConstraintList);
 
         JPanel panel_2 = new JPanel();
-        panel_2.setFont(font);
+        panel_2.setFont(FontUtil.PLAIN_14);
         scrollPane_1.setViewportView(panel_2);
         panel_2.setLayout(new BorderLayout(0, 0));
 
@@ -697,11 +693,11 @@ public class PhysicsEditor {
 
         constraintsList.setSelectedIndex(0);
         constraintsList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        constraintsList.setFont(font);
+        constraintsList.setFont(FontUtil.PLAIN_14);
         scrollPane_2.setViewportView(constraintsList);
 
         JLabel label = new JLabel("Constraint Properties");
-        label.setFont(font);
+        label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_label = new GridBagConstraints();
         gbc_label.gridwidth = 3;
         gbc_label.insets = new Insets(5, 0, 5, 0);
@@ -710,7 +706,7 @@ public class PhysicsEditor {
         panel.add(label, gbc_label);
 
         showSelectionConstraintCheckbox.setSelected(false);
-        showSelectionConstraintCheckbox.setFont(font);
+        showSelectionConstraintCheckbox.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_checkBox = new GridBagConstraints();
         gbc_checkBox.fill = GridBagConstraints.VERTICAL;
         gbc_checkBox.anchor = GridBagConstraints.WEST;
@@ -720,7 +716,7 @@ public class PhysicsEditor {
         panel.add(showSelectionConstraintCheckbox, gbc_checkBox);
 
         constraintDrawLinkCheckbox.setSelected(true);
-        constraintDrawLinkCheckbox.setFont(font);
+        constraintDrawLinkCheckbox.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_checkBox_1 = new GridBagConstraints();
         gbc_checkBox_1.fill = GridBagConstraints.VERTICAL;
         gbc_checkBox_1.anchor = GridBagConstraints.WEST;
@@ -730,7 +726,7 @@ public class PhysicsEditor {
         panel.add(constraintDrawLinkCheckbox, gbc_checkBox_1);
 
         constraintSeverableCheckbox.setSelected(true);
-        constraintSeverableCheckbox.setFont(font);
+        constraintSeverableCheckbox.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_checkBox_2 = new GridBagConstraints();
         gbc_checkBox_2.fill = GridBagConstraints.VERTICAL;
         gbc_checkBox_2.anchor = GridBagConstraints.WEST;
@@ -741,7 +737,7 @@ public class PhysicsEditor {
         panel.add(constraintSeverableCheckbox, gbc_checkBox_2);
 
         JLabel constraint_stiffness_label = new JLabel("Stiffness");
-        constraint_stiffness_label.setFont(font);
+        constraint_stiffness_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_label_1 = new GridBagConstraints();
         gbc_label_1.fill = GridBagConstraints.VERTICAL;
         gbc_label_1.anchor = GridBagConstraints.WEST;
@@ -760,7 +756,7 @@ public class PhysicsEditor {
         panel.add(constraintStiffnessField, gbc_textField);
 
         JLabel label_2 = new JLabel("Tear Distance");
-        label_2.setFont(font);
+        label_2.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_label_2 = new GridBagConstraints();
         gbc_label_2.fill = GridBagConstraints.VERTICAL;
         gbc_label_2.anchor = GridBagConstraints.WEST;
@@ -779,7 +775,7 @@ public class PhysicsEditor {
         panel.add(constraintTearDistanceField, gbc_textField_1);
 
         JLabel constraint_link_color_label = new JLabel("Link Color (Click to Change)");
-        constraint_link_color_label.setFont(font);
+        constraint_link_color_label.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_label_3 = new GridBagConstraints();
         gbc_label_3.fill = GridBagConstraints.VERTICAL;
         gbc_label_3.anchor = GridBagConstraints.WEST;
@@ -790,10 +786,11 @@ public class PhysicsEditor {
 
         lblConstraintLink = new CLabel(Color.BLUE, false);
         lblConstraintLink.addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent e) {
-                Color default_c = lblConstraintLink.getBackground();
-                Color c = JColorChooser.showDialog(frame, "Link Color", default_c);
-                lblConstraintLink.setBackground((c != null) ? c : default_c);
+                Color linkBackground = lblConstraintLink.getBackground();
+                Color c = JColorChooser.showDialog(frame, "Link Color", linkBackground);
+                lblConstraintLink.setBackground((c != null) ? c : linkBackground);
             }
         });
         GridBagConstraints gbc_panel_1 = new GridBagConstraints();
@@ -806,7 +803,7 @@ public class PhysicsEditor {
 
         JButton btnSetConstraints = new JButton("Set Constraint Properties");
         btnSetConstraints.addActionListener(e -> setPhysicsItemConstraints());
-        btnSetConstraints.setFont(font);
+        btnSetConstraints.setFont(FontUtil.PLAIN_14);
         GridBagConstraints gbc_button = new GridBagConstraints();
         gbc_button.fill = GridBagConstraints.BOTH;
         gbc_button.gridwidth = 3;
@@ -858,8 +855,8 @@ public class PhysicsEditor {
             edge.render = constraintDrawLinkCheckbox.isSelected();
             edge.severable = constraintSeverableCheckbox.isSelected();
             edge.color = lblConstraintLink.getBackground();
-            edge.stiffness = InputUtil.floatTextFieldGuardDefault(0.0f, edge.stiffness, cStiffness);
-            edge.tearDistance = InputUtil.floatTextFieldGuardDefault(0.0f, edge.tearDistance, cTearDist);
+            edge.stiffness = InputUtil.floatGuardDefault(0.0f, edge.stiffness, cStiffness);
+            edge.tearDistance = InputUtil.floatGuardDefault(0.0f, edge.tearDistance, cTearDist);
         }
     }
 
@@ -888,10 +885,10 @@ public class PhysicsEditor {
         String simAcc = simAccField.getText(), dragForce = dragForceField.getText(),
                 grav = gravityField.getText(), airVis = airViscosityField.getText();
 
-        Physics.SIM_ACCURACY = InputUtil.intTextFieldGuardDefault(1, Physics.SIM_ACCURACY, simAcc);
-        Physics.DRAG_FORCE = InputUtil.floatTextFieldGuardDefault(0.0f, Physics.DRAG_FORCE, dragForce);
-        Physics.GRAVITY = InputUtil.floatTextFieldGuardDefault(0.0f, Physics.GRAVITY , grav);
-        Physics.AIR_VISCOSITY = InputUtil.floatTextFieldGuardDefault(0.0f, Physics.AIR_VISCOSITY, airVis);
+        Physics.SIM_ACCURACY = InputUtil.intGuardDefault(1, Physics.SIM_ACCURACY, simAcc);
+        Physics.DRAG_FORCE = InputUtil.floatGuardDefault(0.0f, Physics.DRAG_FORCE, dragForce);
+        Physics.GRAVITY = InputUtil.floatGuardDefault(0.0f, Physics.GRAVITY , grav);
+        Physics.AIR_VISCOSITY = InputUtil.floatGuardDefault(0.0f, Physics.AIR_VISCOSITY, airVis);
     }
 
     private void close() {

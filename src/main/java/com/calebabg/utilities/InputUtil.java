@@ -1,11 +1,12 @@
 package com.calebabg.utilities;
 
 import javax.swing.*;
-import java.awt.*;
 
-import static com.calebabg.utilities.HTMLUtil.HeadingTag;
+import static com.calebabg.utilities.HTMLUtil.headingTag;
 
 public class InputUtil {
+    private InputUtil(){}
+
     public static boolean canParseInt(String input) {
         try {
             Integer.parseInt(input);
@@ -26,13 +27,13 @@ public class InputUtil {
 
     public static float minValueGuard(float min, float defaultVal, String promptText) {
         JLabel label = new JLabel(promptText);
-        label.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+        label.setFont(FontUtil.PLAIN_18);
 
         String amount = JOptionPane.showInputDialog(null, label, null, JOptionPane.PLAIN_MESSAGE);
         float newAmount = (amount != null && amount.length() > 0 && canParseFloat(amount)) ? Float.parseFloat(amount) : defaultVal;
         if (newAmount < min) {
             while (newAmount < min) {
-                amount = JOptionPane.showInputDialog(null, HeadingTag(3, "Not Allowed, Enter an Amount >= " + min));
+                amount = JOptionPane.showInputDialog(null, HTMLUtil.headingTag(3, "Not Allowed, Enter an Amount >= " + min));
                 newAmount = (amount != null && amount.length() > 0) ? Float.parseFloat(amount) : defaultVal;
             }
         }
@@ -41,13 +42,13 @@ public class InputUtil {
 
     public static float minValueGuard(float min, float defaultVal, String promptText, JFrame parent) {
         JLabel label = new JLabel(promptText);
-        label.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+        label.setFont(FontUtil.PLAIN_18);
 
         String amount = JOptionPane.showInputDialog(parent, label, null, JOptionPane.PLAIN_MESSAGE);
         float newAmount = (amount != null && amount.length() > 0 && canParseFloat(amount)) ? Float.parseFloat(amount) : defaultVal;
         if (newAmount < min) {
             while (newAmount < min) {
-                amount = JOptionPane.showInputDialog(parent, HeadingTag(3, "Not Allowed, Enter an Amount >= " + min));
+                amount = JOptionPane.showInputDialog(parent, HTMLUtil.headingTag(3, "Not Allowed, Enter an Amount >= " + min));
                 newAmount = (amount != null && amount.length() > 0) ? Float.parseFloat(amount) : defaultVal;
             }
         }
@@ -63,7 +64,7 @@ public class InputUtil {
         }
     }
 
-    public static int intTextFieldGuardDefault(int min, int defaultVal, String input) {
+    public static int intGuardDefault(int min, int defaultVal, String input) {
         if (input == null || input.isEmpty()) {
             return defaultVal;
         } else {
@@ -74,7 +75,7 @@ public class InputUtil {
         }
     }
 
-    public static float floatTextFieldGuardDefault(float min, float defaultVal, String input) {
+    public static float floatGuardDefault(float min, float defaultVal, String input) {
         if (input == null || input.isEmpty()) {
             return defaultVal;
         } else {

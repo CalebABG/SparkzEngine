@@ -26,13 +26,13 @@ import static com.calebabg.enums.MoleculeRenderMode.RECTANGLE_NO_FILL;
 import static com.calebabg.enums.MoleculeType.PARTICLE;
 
 public class EngineSettings {
-    public static String folderName = "SparkzEngineSettings";
-    public static String settingsFileName = "EngineSettings.json";
-    public static String colorsFileName = "SavedColors.txt";
-    public static String colorsSpliceChar = ";";
-    public static String engineSettingsFolderPath = "." + Paths.get("/" + folderName);
-    public static String settingsFilePath = engineSettingsFolderPath + "/" + settingsFileName;
-    public static String colorsFilePath = engineSettingsFolderPath + "/" + colorsFileName;
+    public static final String SETTINGS_FOLDER_NAME = "SparkzEngineSettings";
+    public static final String SETTINGS_FILE_NAME = "EngineSettings.json";
+    public static final String COLORS_FILE_NAME = "SavedColors.txt";
+    public static final String COLORS_SPLIT_DELIMITER = ";";
+    public static final String SETTINGS_FOLDER_PATH = "." + Paths.get("/" + SETTINGS_FOLDER_NAME);
+    public static final String SETTINGS_FILE_PATH = SETTINGS_FOLDER_PATH + "/" + SETTINGS_FILE_NAME;
+    public static final String COLORS_FILE_PATH = SETTINGS_FOLDER_PATH + "/" + COLORS_FILE_NAME;
     public static final List<String> savedReactiveColors = new ArrayList<>(125);
 
     public transient boolean
@@ -57,6 +57,7 @@ public class EngineSettings {
     public int
             particleDragAmount = 1,
             particleLife = 65,
+            multiAmount = 5,
             fireworksAmount = 30,
             fireworksLife = 90,
             fireworksWind = 2,
@@ -133,7 +134,7 @@ public class EngineSettings {
         engineMode = EnumUtil.transition(engineMode, advance);
     }
 
-    public void changeParticleType(boolean advance) {
+    public void changeMoleculeType(boolean advance) {
         moleculeType = EnumUtil.transition(moleculeType, advance);
     }
 
@@ -142,16 +143,16 @@ public class EngineSettings {
     }
 
     public static boolean settingsFileExists() {
-        return Files.exists(Paths.get(settingsFilePath));
+        return Files.exists(Paths.get(SETTINGS_FILE_PATH));
     }
 
     public static boolean colorsFileExists() {
-        return Files.exists(Paths.get(colorsFilePath));
+        return Files.exists(Paths.get(COLORS_FILE_PATH));
     }
 
     public static void saveColors(String colorsString) {
-        try (Writer writer = new OutputStreamWriter(new FileOutputStream(colorsFilePath, true), StandardCharsets.UTF_8)) {
-            new File("./" + folderName).mkdir();
+        try (Writer writer = new OutputStreamWriter(new FileOutputStream(COLORS_FILE_PATH, true), StandardCharsets.UTF_8)) {
+            new File("./" + SETTINGS_FOLDER_NAME).mkdir();
             if (colorsString != null) writer.write(colorsString + '\n');
             else writer.write(ColorUtil.serializeColors(ReactiveColors.getColors()) + '\n');
         } catch (Exception e) {
@@ -161,7 +162,7 @@ public class EngineSettings {
 
     public static void loadColors() {
         savedReactiveColors.clear();
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(colorsFilePath)))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(COLORS_FILE_PATH)))) {
             String line;
             while ((line = br.readLine()) != null) savedReactiveColors.add(line);
         } catch (Exception e) {
@@ -170,7 +171,7 @@ public class EngineSettings {
     }
 
     public static void saveSettings() {
-        new File("./" + folderName).mkdir();
+        new File("./" + SETTINGS_FOLDER_NAME).mkdir();
         JsonUtil.writeEngineSettingsJson();
     }
 

@@ -7,6 +7,7 @@ import com.calebabg.inputs.ExtendedKeyAdapter;
 import com.calebabg.inputs.ExtendedWindowAdapter;
 import com.calebabg.jcomponents.CMenuBar;
 import com.calebabg.reactivity.ReactiveColorsRandomizer;
+import com.calebabg.utilities.FontUtil;
 import com.calebabg.utilities.HTMLUtil;
 import com.calebabg.utilities.InputUtil;
 
@@ -16,7 +17,7 @@ import java.awt.event.KeyEvent;
 
 import static com.calebabg.core.EngineVariables.*;
 import static com.calebabg.molecules.Molecule.DEFAULT_COLOR;
-import static com.calebabg.utilities.HTMLUtil.HeadingTag;
+import static com.calebabg.utilities.HTMLUtil.headingTag;
 import static com.calebabg.utilities.InputUtil.minValueGuard;
 
 public class OptionsMenu {
@@ -36,7 +37,7 @@ public class OptionsMenu {
         frame = new JFrame("Options Menu");
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(575, 480);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
         frame.setLocationRelativeTo(eFrame);
 
@@ -46,15 +47,15 @@ public class OptionsMenu {
         jPanel1.setLayout(new BorderLayout());
 
         textField = new JTextField();
-        textField.setHorizontalAlignment(JTextField.CENTER);
-        textField.setFont(new Font(Font.SERIF, Font.PLAIN, 17));
+        textField.setHorizontalAlignment(SwingConstants.CENTER);
+        textField.setFont(FontUtil.PLAIN_17);
         textField.addKeyListener(new ExtendedKeyAdapter.KeyPressed(e -> {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) getOption();
         }));
         jPanel1.add(textField, BorderLayout.CENTER);
 
         JButton jButton1 = new JButton();
-        jButton1.setFont(new Font(Font.SERIF, Font.BOLD, 14));
+        jButton1.setFont(FontUtil.BOLD_14);
         jButton1.setText("Enter");
         jButton1.addActionListener(e -> {
             if (e.getSource() == jButton1) getOption();
@@ -63,8 +64,8 @@ public class OptionsMenu {
 
         frame.add(jPanel1, BorderLayout.PAGE_END);
 
-        JLabel jLabel2 = new JLabel(HTMLUtil.GeneralOptions);
-        jLabel2.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+        JLabel jLabel2 = new JLabel(HTMLUtil.GENERAL_OPTIONS);
+        jLabel2.setFont(FontUtil.PLAIN_18);
         jLabel2.setHorizontalAlignment(SwingConstants.LEFT);
         jScrollPane1.setViewportView(jLabel2);
 
@@ -101,7 +102,7 @@ public class OptionsMenu {
     }
 
     private static void showFireworksOptions() {
-        String input = JOptionPane.showInputDialog(instance.frame, HTMLUtil.FireworksOptions, null, JOptionPane.PLAIN_MESSAGE);
+        String input = JOptionPane.showInputDialog(instance.frame, HTMLUtil.FIREWORKS_OPTIONS, null, JOptionPane.PLAIN_MESSAGE);
         int rfoInt = InputUtil.canParseInt(input) ? Integer.parseInt(input) : -1;
 
         switch (rfoInt) {
@@ -112,7 +113,7 @@ public class OptionsMenu {
     }
 
     private static void showParticleSizeOptions() {
-        String input = JOptionPane.showInputDialog(instance.frame, HTMLUtil.ParticleSizeOptions, null, JOptionPane.PLAIN_MESSAGE);
+        String input = JOptionPane.showInputDialog(instance.frame, HTMLUtil.PARTICLE_SIZE_OPTIONS, null, JOptionPane.PLAIN_MESSAGE);
         int opt = InputUtil.canParseInt(input) ? Integer.parseInt(input) : -1;
 
         switch (opt) {
@@ -123,7 +124,7 @@ public class OptionsMenu {
     }
 
     private static void showParticleSpeedOptions() {
-        String input = JOptionPane.showInputDialog(instance.frame, HTMLUtil.ParticleSpeedOptions, null, JOptionPane.PLAIN_MESSAGE);
+        String input = JOptionPane.showInputDialog(instance.frame, HTMLUtil.PARTICLE_SPEED_OPTIONS, null, JOptionPane.PLAIN_MESSAGE);
         int opt = InputUtil.canParseInt(input) ? Integer.parseInt(input) : -1;
 
         switch (opt) {
@@ -134,10 +135,10 @@ public class OptionsMenu {
     }
 
     private static void showParticleSizeDialog() {
-        String input = JOptionPane.showInputDialog(instance.frame, HeadingTag(3, "Enter Particle Size"), null, JOptionPane.PLAIN_MESSAGE);
+        String input = JOptionPane.showInputDialog(instance.frame, HTMLUtil.headingTag(3, "Enter Particle Size"), null, JOptionPane.PLAIN_MESSAGE);
         float size = InputUtil.canParseFloat(input) ? Float.parseFloat(input) : -1;
 
-        if (size == -1 || Particles.size() < 1) return;
+        if (size == -1 || Particles.isEmpty()) return;
         if (size < 0f) size = 0.2f;
 
         for (int i = 0; i < Particles.size(); i++)
@@ -150,14 +151,14 @@ public class OptionsMenu {
     }
 
     private static void showGravitationOptions() {
-        int gravityMode = (int) minValueGuard(0, engineSettings.gravitationMode.ordinal(), HTMLUtil.ParticleGravitationOptions, instance.frame);
+        int gravityMode = (int) minValueGuard(0, engineSettings.gravitationMode.ordinal(), HTMLUtil.GRAVITATION_OPTIONS, instance.frame);
         if (gravityMode < GravitationMode.values().length) engineSettings.gravitationMode = GravitationMode.values()[gravityMode];
         CMenuBar.updateGravitationModeRadios();
     }
 
     private static void showReactiveColorsCycleIntervalOptions() {
         engineSettings.reactiveColorsCycleInterval = (int) minValueGuard(1, engineSettings.reactiveColorsCycleInterval,
-                HeadingTag(3, "Enter Cycle Interval (In Seconds)"), instance.frame);
+                HTMLUtil.headingTag(3, "Enter Cycle Interval (In Seconds)"), instance.frame);
 
         if (engineSettings.cycleReactiveColors)
             ReactiveColorsRandomizer.restartCycle();
@@ -165,16 +166,16 @@ public class OptionsMenu {
 
     private static void showParticleDragDialog() {
         engineSettings.particleDragAmount = (int) minValueGuard(1, engineSettings.particleDragAmount,
-                HeadingTag(3, "Enter Particle Drag Amount"), instance.frame);
+                HTMLUtil.headingTag(3, "Enter Particle Drag Amount"), instance.frame);
     }
 
     private static void showFireworksSafetyAmountDialog() {
         engineSettings.fireworksParticleSafetyAmount = (int) minValueGuard(0, engineSettings.fireworksParticleSafetyAmount,
-                HeadingTag(3, "Enter Safety Amount"), instance.frame);
+                HTMLUtil.headingTag(3, "Enter Safety Amount"), instance.frame);
     }
 
     private static void showFireworksAmountDialog() {
         engineSettings.fireworksAmount = (int) minValueGuard(1, engineSettings.fireworksAmount,
-                HeadingTag(3, "Enter Fireworks Amount"), instance.frame);
+                HTMLUtil.headingTag(3, "Enter Fireworks Amount"), instance.frame);
     }
 }

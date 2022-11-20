@@ -6,6 +6,7 @@ import com.calebabg.inputs.ExtendedWindowAdapter;
 import com.calebabg.jcomponents.CTextField;
 import com.calebabg.jcomponents.RButton;
 import com.calebabg.jcomponents.RLabel;
+import com.calebabg.utilities.FontUtil;
 import com.calebabg.utilities.InputUtil;
 
 import javax.swing.*;
@@ -34,7 +35,7 @@ public class ParticleSpeedEditor {
         frame = new JFrame(setTitle(type));
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(402, 145);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(e -> close()));
         frame.setLocationRelativeTo(parent);
 
@@ -50,19 +51,19 @@ public class ParticleSpeedEditor {
         gblPanel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
         panel.setLayout(gblPanel);
 
-        RLabel speedLabel = new RLabel("Speed", new Font(Font.SERIF, Font.BOLD, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, 8, 0, 0);
+        RLabel speedLabel = new RLabel("Speed", FontUtil.BOLD_17, new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, 8, 0, 0);
         speedLabel.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(speedLabel, speedLabel.gridBagConstraints);
 
-        speedTextField = new CTextField("", new Font(Font.SERIF, Font.PLAIN, 17), 8, GridBagConstraints.BOTH, 0, 1, 0, 10, 0, 0);
+        speedTextField = new CTextField("", FontUtil.PLAIN_17, 8, GridBagConstraints.BOTH, 0, 1, 0, 10, 0, 0);
         speedTextField.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(speedTextField, speedTextField.gridBagConstraints);
 
-        RButton ok = new RButton("Ok", new Font(Font.SERIF, Font.BOLD, 14), 4, GridBagConstraints.HORIZONTAL, GridBagConstraints.SOUTH, 0, 2, 98, 10, .9f, .9f);
+        RButton ok = new RButton("Ok", FontUtil.BOLD_14, 4, GridBagConstraints.HORIZONTAL, GridBagConstraints.SOUTH, 0, 2, 98, 10, .9f, .9f);
         ok.addActionListener(e -> setSpeed(type));
         panel.add(ok, ok.gridBagConstraints);
 
-        RButton cancel = new RButton("Cancel", new Font(Font.SERIF, Font.BOLD, 14), 4, GridBagConstraints.HORIZONTAL, GridBagConstraints.SOUTH, 4, 2, 98, 10, 0, 0);
+        RButton cancel = new RButton("Cancel", FontUtil.BOLD_14, 4, GridBagConstraints.HORIZONTAL, GridBagConstraints.SOUTH, 4, 2, 98, 10, 0, 0);
         cancel.addActionListener(e -> close());
         panel.add(cancel, cancel.gridBagConstraints);
 

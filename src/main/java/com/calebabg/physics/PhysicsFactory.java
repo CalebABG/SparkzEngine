@@ -14,42 +14,45 @@ import static com.calebabg.physics.Physics.*;
 import static org.apache.commons.math3.util.FastMath.*;
 
 public class PhysicsFactory {
+    private PhysicsFactory(){}
+
     public static void handleDrag(MouseEvent e) {
-        final float radius = random.nextInt(5) + 5;
-        createPoint(e, randomHSLColor(0, 20_000, 0.9f), radius, random.nextInt(100) + 20);
+        if (!e.isControlDown()) return;
+        final float radius = random.nextInt(5) + 5f;
+        createPoint(e, randomHSLColor(0, 20_000, 0.9f), radius, random.nextInt(100) + 20f);
     }
 
     public static void handleLeftClick(MouseEvent e) {
         switch (PhysicsEditor.EDITOR_MODE) {
-            case Add:
+            case ADD:
                 switch (PhysicsEditor.ITEM_TYPE) {
-                    case Point:
+                    case POINT:
                         createPoint(e, randomHSLColor(1000, 7000, 0.8f), 25, 100);
                         break;
-                    case Stick:
+                    case STICK:
                         createStick(e, LINK_COLOR, ITEM_COLOR, 50, 10, 10, 1, 30, 0.0444f, TEAR_DISTANCE, DRAW_LINKS, SEVERABLE);
                         break;
-                    case IKChain:
+                    case IK_CHAIN:
                         createIKChain(e, 25, 10, 6, 1, TEAR_DISTANCE, DRAW_LINKS, SEVERABLE, Color.red, Color.orange);
                         break;
-                    case Box:
+                    case BOX:
                         singleBox(e, Color.blue, Color.cyan, 30, 8, 0.4f, TEAR_DISTANCE, DRAW_LINKS, SEVERABLE);
                         break;
-                    case SolidMesh:
+                    case SOLID_MESH:
                         singleSolidMesh(e, 15, MESH_SIZE, 10, 0.1f, TEAR_DISTANCE, true, SEVERABLE, Color.blue, Color.cyan);
                         break;
-                    case ElasticMesh:
+                    case ELASTIC_MESH:
                         singleElasticMesh(e, 5, MESH_SIZE, 17, 0.4f, TEAR_DISTANCE, DRAW_LINKS, SEVERABLE, Color.blue, Color.cyan);
                         break;
-                    case Cloth:
+                    case CLOTH:
                         createCloth(e.getX(), e.getY(), 10, 10, 15);
                         break;
                     default:
                         break;
                 }
                 break;
-            case Select:
-            case Drag:
+            case SELECT:
+            case DRAG:
                 for (int i = 0; i < Vertices.size(); i++) {
                     Vertex vertex = Vertices.get(i);
                     if (vertex.contains(e.getX(), e.getY())) {
@@ -77,11 +80,6 @@ public class PhysicsFactory {
 
     public static void createPoint(MouseEvent e, Color pc, float r, float mass) {
         Vertices.add(new Vertex(e.getX(), e.getY(), r, mass, pc));
-    }
-
-    public static void createPoint(MouseEvent e, Color pc, float r, float mass, float dampening,
-                                   float stiffness, boolean collidable, boolean pinned) {
-        Vertices.add(new Vertex(e.getX(), e.getY(), r, mass, stiffness, dampening, collidable, pinned, pc));
     }
 
     public static void createStick(MouseEvent e, Color lc, Color pc, float size, float r, float r2,
@@ -119,7 +117,8 @@ public class PhysicsFactory {
     public static void singleSolidMesh(MouseEvent e, int numPoints, float size, float rad,
                                        float stiffness, float tearDistance, boolean drawLinks,
                                        boolean tear, Color lc, Color pc) {
-        int x = e.getX(), y = e.getY();
+        int x = e.getX();
+        int y = e.getY();
 
         List<Vertex> vertexList = new ArrayList<>(numPoints);
 
@@ -141,7 +140,8 @@ public class PhysicsFactory {
     public static void singleElasticMesh(MouseEvent e, int numPoints, float size, float rad,
                                          float stiffness, float tearDistance, boolean drawLinks,
                                          boolean tear, Color lc, Color pc) {
-        int x = e.getX(), y = e.getY();
+        int x = e.getX();
+        int y = e.getY();
 
         List<Vertex> vertexList = new ArrayList<>(numPoints);
 
@@ -177,7 +177,8 @@ public class PhysicsFactory {
     public static void createIKChain(MouseEvent e, int numPoints, float size, float rad,
                                      float stiffness, float tearDistance, boolean drawLinks,
                                      boolean tear, Color lc, Color pc) {
-        int startX = (int) (e.getX() - rad / 2), mY = e.getY();
+        int startX = (int) (e.getX() - rad / 2);
+        int mY = e.getY();
 
         float spacing = (1f / numPoints) + size;
 
@@ -201,7 +202,7 @@ public class PhysicsFactory {
                                    boolean drawLinks, boolean tear, boolean collidable) {
         List<Vertex> vertexList = new ArrayList<>((clothHeight + 1) * (clothWidth + 1));
 
-        int startX = (int) (xStart - ((clothWidth * restingDistance) / 2));
+        int startX = (int) (xStart - ((clothWidth * restingDistance) / 2f));
 
         for (int y = 0; y <= clothHeight; y++) {
             for (int x = 0; x <= clothWidth; x++) {

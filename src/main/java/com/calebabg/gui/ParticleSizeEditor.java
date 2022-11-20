@@ -6,6 +6,7 @@ import com.calebabg.inputs.ExtendedWindowAdapter;
 import com.calebabg.jcomponents.CTextField;
 import com.calebabg.jcomponents.RButton;
 import com.calebabg.jcomponents.RLabel;
+import com.calebabg.utilities.FontUtil;
 import com.calebabg.utilities.InputUtil;
 
 import javax.swing.*;
@@ -34,7 +35,7 @@ public class ParticleSizeEditor {
         frame = new JFrame(setTitle(type));
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(402, 215);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(e -> close()));
         frame.setLocationRelativeTo(parent);
 
@@ -50,27 +51,27 @@ public class ParticleSizeEditor {
         gblPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
         panel.setLayout(gblPanel);
 
-        RLabel minSize = new RLabel("Min Size", new Font(Font.SERIF, Font.BOLD, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, 8, 0, 0);
+        RLabel minSize = new RLabel("Min Size", FontUtil.BOLD_17, new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, 8, 0, 0);
         minSize.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(minSize, minSize.gridBagConstraints);
 
-        minTextField = new CTextField("", new Font(Font.SERIF, Font.PLAIN, 17), 8, GridBagConstraints.BOTH, 0, 1, 0, 10, 0, 0);
+        minTextField = new CTextField("", FontUtil.PLAIN_17, 8, GridBagConstraints.BOTH, 0, 1, 0, 10, 0, 0);
         minTextField.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(minTextField, minTextField.gridBagConstraints);
 
-        RLabel maxSize = new RLabel("Max Size", new Font(Font.SERIF, Font.BOLD, 17), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, 8, 0, 2);
+        RLabel maxSize = new RLabel("Max Size", FontUtil.BOLD_17, new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, 8, 0, 2);
         maxSize.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(maxSize, maxSize.gridBagConstraints);
 
-        maxTextField = new CTextField("", new Font(Font.SERIF, Font.PLAIN, 17), 8, GridBagConstraints.BOTH, 0, 3, 0, 10, 0, 0);
+        maxTextField = new CTextField("", FontUtil.PLAIN_17, 8, GridBagConstraints.BOTH, 0, 3, 0, 10, 0, 0);
         maxTextField.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(maxTextField, maxTextField.gridBagConstraints);
 
-        RButton ok = new RButton("Ok", new Font(Font.SERIF, Font.BOLD, 14), 4, GridBagConstraints.HORIZONTAL, GridBagConstraints.SOUTH, 0, 4, 98, 10, 0, 0);
+        RButton ok = new RButton("Ok", FontUtil.BOLD_14, 4, GridBagConstraints.HORIZONTAL, GridBagConstraints.SOUTH, 0, 4, 98, 10, 0, 0);
         ok.addActionListener(e -> setSize(type));
         panel.add(ok, ok.gridBagConstraints);
 
-        RButton cancel = new RButton("Cancel", new Font(Font.SERIF, Font.BOLD, 14), 4, GridBagConstraints.HORIZONTAL, GridBagConstraints.SOUTH, 4, 4, 98, 10, 0, 0);
+        RButton cancel = new RButton("Cancel", FontUtil.BOLD_14, 4, GridBagConstraints.HORIZONTAL, GridBagConstraints.SOUTH, 4, 4, 98, 10, 0, 0);
         cancel.addActionListener(e -> close());
         panel.add(cancel, cancel.gridBagConstraints);
         frame.setVisible(true);

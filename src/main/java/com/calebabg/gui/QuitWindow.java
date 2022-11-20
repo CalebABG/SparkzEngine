@@ -3,6 +3,7 @@ package com.calebabg.gui;
 import com.calebabg.core.EngineVariables;
 import com.calebabg.inputs.ExtendedWindowAdapter;
 import com.calebabg.jcomponents.CLabel;
+import com.calebabg.utilities.FontUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,6 @@ import static com.calebabg.core.EngineVariables.eFrame;
 public class QuitWindow {
     private static QuitWindow instance = null;
 
-    private static final Font font = new Font(Font.SERIF, Font.PLAIN, 45);
     private static final Color NO_COLOR = new Color(72, 0, 18, 255);
     private static final Color YES_COLOR = new Color(21, 50, 21, 255);
 
@@ -31,7 +31,7 @@ public class QuitWindow {
         frame.setUndecorated(true);
         frame.setResizable(false);
         frame.setSize(350, 80);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(windowEvent -> close()));
         frame.setLocationRelativeTo(eFrame);
 
@@ -41,20 +41,23 @@ public class QuitWindow {
         frame.getContentPane().add(panel, BorderLayout.CENTER);
 
         CLabel label = new CLabel(new Rectangle((frame.getWidth() / 2) - 100, (frame.getHeight() / 2) - 45, 200, 90), "Exit?",
-                font, Color.white, new Color(0.0f, 0.0f, 0.0f, 0.0f));
+                FontUtil.PLAIN_45, Color.white, new Color(0.0f, 0.0f, 0.0f, 0.0f));
         panel.add(label);
 
-        CLabel label2 = new CLabel(new Rectangle(20, (frame.getHeight() / 2) - 26, 90, 50), "Yes", font, Color.white, YES_COLOR);
+        CLabel label2 = new CLabel(new Rectangle(20, (frame.getHeight() / 2) - 26, 90, 50), "Yes", FontUtil.PLAIN_45, Color.white, YES_COLOR);
 
         label2.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 System.exit(0);
             }
 
+            @Override
             public void mouseEntered(MouseEvent e) {
                 label2.setBackground(YES_COLOR.brighter());
             }
 
+            @Override
             public void mouseExited(MouseEvent e) {
                 label2.setBackground(YES_COLOR.darker());
             }
@@ -62,17 +65,20 @@ public class QuitWindow {
 
         panel.add(label2);
 
-        CLabel label3 = new CLabel(new Rectangle(frame.getWidth() - 109, (frame.getHeight() / 2) - 26, 90, 50), "No", font, Color.white, NO_COLOR);
+        CLabel label3 = new CLabel(new Rectangle(frame.getWidth() - 109, (frame.getHeight() / 2) - 26, 90, 50), "No", FontUtil.PLAIN_45, Color.white, NO_COLOR);
 
         label3.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 close();
             }
 
+            @Override
             public void mouseEntered(MouseEvent e) {
                 label3.setBackground(NO_COLOR.brighter());
             }
 
+            @Override
             public void mouseExited(MouseEvent e) {
                 label3.setBackground(NO_COLOR.darker());
             }

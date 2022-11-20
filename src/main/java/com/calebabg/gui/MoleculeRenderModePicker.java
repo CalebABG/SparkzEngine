@@ -5,6 +5,7 @@ import com.calebabg.core.EngineVariables;
 import com.calebabg.enums.MoleculeRenderMode;
 import com.calebabg.inputs.ExtendedKeyAdapter;
 import com.calebabg.inputs.ExtendedWindowAdapter;
+import com.calebabg.utilities.FontUtil;
 import com.calebabg.utilities.HTMLUtil;
 import com.calebabg.utilities.InputUtil;
 
@@ -13,7 +14,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 import static com.calebabg.core.EngineVariables.*;
-import static com.calebabg.utilities.HTMLUtil.HeadingTag;
+import static com.calebabg.utilities.HTMLUtil.headingTag;
 import static com.calebabg.utilities.InputUtil.valueGuardString;
 
 public class MoleculeRenderModePicker {
@@ -37,7 +38,7 @@ public class MoleculeRenderModePicker {
         frame = new JFrame(title);
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(320, 520);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(e -> close(type)));
         frame.setLocationRelativeTo(parent);
 
@@ -47,14 +48,14 @@ public class MoleculeRenderModePicker {
         jPanel1.setLayout(new BorderLayout());
 
         JButton jButton1 = new JButton();
-        jButton1.setFont(new Font(Font.SERIF, Font.BOLD, 14));
+        jButton1.setFont(FontUtil.BOLD_14);
         jButton1.setText("Enter");
         jButton1.addActionListener(e -> getOption(type));
         jPanel1.add(jButton1, BorderLayout.LINE_END);
 
         textField = new JTextField();
-        textField.setHorizontalAlignment(JTextField.CENTER);
-        textField.setFont(new Font(Font.SERIF, Font.PLAIN, 17));
+        textField.setHorizontalAlignment(SwingConstants.CENTER);
+        textField.setFont(FontUtil.PLAIN_17);
         textField.addKeyListener(new ExtendedKeyAdapter(e -> {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) getOption(type);
         }, e -> {}));
@@ -62,8 +63,8 @@ public class MoleculeRenderModePicker {
 
         frame.add(jPanel1, BorderLayout.PAGE_END);
 
-        JLabel jLabel2 = new JLabel(HTMLUtil.MoleculeRenderOptions);
-        jLabel2.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+        JLabel jLabel2 = new JLabel(HTMLUtil.MOLECULE_RENDER_OPTIONS);
+        jLabel2.setFont(FontUtil.PLAIN_18);
         jLabel2.setHorizontalAlignment(SwingConstants.LEFT);
         jScrollPane1.setViewportView(jLabel2);
 
@@ -81,29 +82,21 @@ public class MoleculeRenderModePicker {
         if (!InputUtil.canParseInt(text)) return;
 
         int amount = Integer.parseInt(text);
-        switch (type) {
-            case 0: particleOptions(amount); break;
-            case 1: fireworksOptions(amount); break;
-        }
+        if (type == 0) particleOptions(amount);
+        else if (type == 1) fireworksOptions(amount);
     }
 
     private static void particleOptions(int x) {
         if (x > -1 && x < MoleculeRenderMode.values().length) {
             engineSettings.particleRenderMode = MoleculeRenderMode.values()[x];
-
-            if (x == 4) {
-                baseParticleText = valueGuardString(1, instances[0].frame, baseParticleText, HeadingTag(3, "Enter Custom Text"));
-            }
+            if (x == 4) baseParticleText = valueGuardString(1, instances[0].frame, baseParticleText, HTMLUtil.headingTag(3, "Enter Custom Text"));
         }
     }
 
     private static void fireworksOptions(int x) {
         if (x > -1 && x < MoleculeRenderMode.values().length) {
             engineSettings.fireworksRenderMode = MoleculeRenderMode.values()[x];
-
-            if (x == 4) {
-                fireworksParticleText = valueGuardString(1, instances[1].frame, fireworksParticleText, HeadingTag(3, "Enter Custom Text"));
-            }
+            if (x == 4) fireworksParticleText = valueGuardString(1, instances[1].frame, fireworksParticleText, HTMLUtil.headingTag(3, "Enter Custom Text"));
         }
     }
 }

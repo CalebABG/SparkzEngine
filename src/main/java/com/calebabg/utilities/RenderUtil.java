@@ -7,6 +7,8 @@ import java.awt.*;
 import static com.calebabg.core.EngineVariables.graphics2D;
 
 public class RenderUtil {
+    private RenderUtil(){}
+
     private static void drawRect(float x, float y, float width, float height) {
         graphics2D.drawRect((int) x, (int) y, (int) width, (int) height);
     }
@@ -28,72 +30,72 @@ public class RenderUtil {
     }
 
     private static void drawCustomText(String text, float x, float y, float radius) {
-        graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
+        graphics2D.setFont(new Font(FontUtil.DEFAULT_FONT_NAME, Font.PLAIN, (int) radius));
         graphics2D.drawString(text, x, y);
     }
 
     private static void drawNumbers(float x, float y, float radius) {
-        graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
+        graphics2D.setFont(new Font(FontUtil.DEFAULT_FONT_NAME, Font.PLAIN, (int) radius));
         graphics2D.drawString("" + radius, x, y);
     }
 
     private static void drawSmileyFace(float x, float y, float radius) {
-        graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
+        graphics2D.setFont(new Font(FontUtil.DEFAULT_FONT_NAME, Font.PLAIN, (int) radius));
         graphics2D.drawString("☻", x, y);
     }
 
     private static void drawMusicNote1(float x, float y, float radius) {
-        graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
+        graphics2D.setFont(new Font(FontUtil.DEFAULT_FONT_NAME, Font.PLAIN, (int) radius));
         graphics2D.drawString("♪", x, y);
     }
 
     private static void drawMusicNote2(float x, float y, float radius) {
-        graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
+        graphics2D.setFont(new Font(FontUtil.DEFAULT_FONT_NAME, Font.PLAIN, (int) radius));
         graphics2D.drawString("♫", x, y);
     }
 
     private static void drawHearts(float x, float y, float radius) {
-        graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
+        graphics2D.setFont(new Font(FontUtil.DEFAULT_FONT_NAME, Font.PLAIN, (int) radius));
         graphics2D.drawString("♥", x, y);
     }
 
     private static void drawTradeMark(float x, float y, float radius) {
-        graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
+        graphics2D.setFont(new Font(FontUtil.DEFAULT_FONT_NAME, Font.PLAIN, (int) radius));
         graphics2D.drawString("®", x, y);
     }
 
     private static void drawCopyRight(float x, float y, float radius) {
-        graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
+        graphics2D.setFont(new Font(FontUtil.DEFAULT_FONT_NAME, Font.PLAIN, (int) radius));
         graphics2D.drawString("©", x, y);
     }
 
     private static void drawCentSymbol(float x, float y, float radius) {
-        graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
+        graphics2D.setFont(new Font(FontUtil.DEFAULT_FONT_NAME, Font.PLAIN, (int) radius));
         graphics2D.drawString("¢", x, y);
     }
 
     private static void drawInfinity(float x, float y, float radius) {
-        graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
+        graphics2D.setFont(new Font(FontUtil.DEFAULT_FONT_NAME, Font.PLAIN, (int) radius));
         graphics2D.drawString("∞", x, y);
     }
 
     private static void drawKappaSymbol(float x, float y, float radius) {
-        graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
+        graphics2D.setFont(new Font(FontUtil.DEFAULT_FONT_NAME, Font.PLAIN, (int) radius));
         graphics2D.drawString("ϰ", x, y);
     }
 
     private static void drawSpade(float x, float y, float radius) {
-        graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
+        graphics2D.setFont(new Font(FontUtil.DEFAULT_FONT_NAME, Font.PLAIN, (int) radius));
         graphics2D.drawString("♠", x, y);
     }
 
     private static void drawClub(float x, float y, float radius) {
-        graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
+        graphics2D.setFont(new Font(FontUtil.DEFAULT_FONT_NAME, Font.PLAIN, (int) radius));
         graphics2D.drawString("♣", x, y);
     }
 
     private static void drawDiamond(float x, float y, float radius) {
-        graphics2D.setFont(new Font("Arial", Font.PLAIN, (int) radius));
+        graphics2D.setFont(new Font(FontUtil.DEFAULT_FONT_NAME, Font.PLAIN, (int) radius));
         graphics2D.drawString("♦", x, y);
     }
 

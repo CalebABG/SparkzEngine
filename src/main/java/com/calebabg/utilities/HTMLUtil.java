@@ -6,14 +6,16 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class HTMLUtil {
-    public static final String EngineInstructions = getHtml("/html/EngineInstructions.html");
-    public static final String GeneralOptions = getHtml("/html/GeneralOptions.html");
-    public static final String MoleculeRenderOptions = getHtml("/html/MoleculeRenderOptions.html");
-    public static final String ParticleGraphInstructions = getHtml("/html/GraphInstructions.html");
-    public static final String ParticleGravitationOptions = getHtml("/html/GravitationOptions.html");
-    public static final String ParticleSizeOptions = getHtml("/html/ParticleSizeOptions.html");
-    public static final String ParticleSpeedOptions = getHtml("/html/ParticleSpeedOptions.html");
-    public static final String FireworksOptions = getHtml("/html/FireworksOptions.html");
+    private HTMLUtil(){}
+
+    public static final String ENGINE_INSTRUCTIONS = getHtml("/html/EngineInstructions.html");
+    public static final String GENERAL_OPTIONS = getHtml("/html/GeneralOptions.html");
+    public static final String MOLECULE_RENDER_OPTIONS = getHtml("/html/MoleculeRenderOptions.html");
+    public static final String GRAPH_INSTRUCTIONS = getHtml("/html/GraphInstructions.html");
+    public static final String GRAVITATION_OPTIONS = getHtml("/html/GravitationOptions.html");
+    public static final String PARTICLE_SIZE_OPTIONS = getHtml("/html/ParticleSizeOptions.html");
+    public static final String PARTICLE_SPEED_OPTIONS = getHtml("/html/ParticleSpeedOptions.html");
+    public static final String FIREWORKS_OPTIONS = getHtml("/html/FireworksOptions.html");
 
     public static String getHtml(String file) {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(HTMLUtil.class.getResourceAsStream(file)))) {
@@ -27,28 +29,28 @@ public class HTMLUtil {
         return null;
     }
 
-    public static String HeadingTag(int type, String str) {
-        String content = type > 0 && type < 7 ? HeadingTag("h"+type, str) : HeadingTag("h3", str);
-        return HTMLTag(content);
+    public static String headingTag(int type, String str) {
+        String content = type > 0 && type < 7 ? headingTag("h"+type, str) : headingTag("h3", str);
+        return htmlTag(content);
     }
 
-    public static String HTMLTag(String content) {
+    public static String htmlTag(String content) {
         return "<html>" + content + "</html>";
     }
 
-    public static String HeadingTag(String tag, String text) {
+    public static String headingTag(String tag, String text) {
         return "<" + tag + ">" + text + "</" + tag + ">";
     }
 
-    public static String HeadingWithStyleTag(String tag, String styleText, String text) {
+    public static String headingWithStyleTag(String tag, String styleText, String text) {
         return "<" + tag + " style=" + "'" + styleText + "'" + ">" + text + "</" + tag + ">";
     }
 
-    public static String HeadingWithStyleCenteredTag(String tag, String text) {
+    public static String headingWithStyleCenteredTag(String tag, String text) {
         return "<html>" + "<" + tag + " style=" + "'text-align: center'" + ">" + text + "</" + tag + ">" + "</html>";
     }
 
-    public static String DivTag(String text) {
+    public static String divTag(String text) {
         return "<div>"+ text +"</div>";
     }
 }

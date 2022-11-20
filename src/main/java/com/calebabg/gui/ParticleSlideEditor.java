@@ -4,17 +4,18 @@ import com.calebabg.core.EngineThemes;
 import com.calebabg.core.EngineVariables;
 import com.calebabg.inputs.ExtendedWindowAdapter;
 import com.calebabg.jcomponents.CSlider;
+import com.calebabg.utilities.FontUtil;
+import com.calebabg.utilities.HTMLUtil;
 
 import javax.swing.*;
 import java.awt.*;
 
 import static com.calebabg.core.EngineVariables.*;
-import static com.calebabg.utilities.HTMLUtil.HeadingTag;
+import static com.calebabg.utilities.HTMLUtil.headingTag;
 import static com.calebabg.utilities.InputUtil.minValueGuard;
 
 public class ParticleSlideEditor {
     private static ParticleSlideEditor instance = null;
-    private static final Font font = new Font(Font.SERIF, Font.PLAIN, 17);
     private static final int MAX_TICK_LINES = 500;
     private final JFrame frame;
 
@@ -45,18 +46,18 @@ public class ParticleSlideEditor {
         frame.setSize(489, 690);
         frame.setResizable(false);
         frame.setLayout(null);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(e -> close()));
         frame.setLocationRelativeTo(eFrame);
 
-        JTabbedPane jTabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        JTabbedPane jTabbedPane = new JTabbedPane(SwingConstants.TOP);
         jTabbedPane.setBounds(0, 0, 483, 653);
         frame.add(jTabbedPane);
 
         JPanel particleOptionsPanel = new JPanel(null);
         jTabbedPane.addTab("Particle Options", null, particleOptionsPanel, null);
 
-        int MAX_TICKS = 49;
+        final int MAX_TICKS = 49;
         ptsslider = new CSlider(0, 200, 1, new Rectangle(10, 60, 463, 43), 1, MAX_TICKS, true, true, true);
         ptsslider.addChangeListener(e -> {
             int particleSize = ptsslider.getValue();
@@ -67,19 +68,19 @@ public class ParticleSlideEditor {
         particleOptionsPanel.add(ptsslider);
 
         ptslabel = new JLabel("Particle Size:");
-        ptslabel.setFont(font);
+        ptslabel.setFont(FontUtil.PLAIN_17);
 
         ptslabel.setBounds(10, 32, 106, 22);
         particleOptionsPanel.add(ptslabel);
 
         ptsamount = new JLabel("" + ptsslider.getValue());
-        ptsamount.setFont(font);
-        ptsamount.setHorizontalAlignment(JLabel.CENTER);
+        ptsamount.setFont(FontUtil.PLAIN_17);
+        ptsamount.setHorizontalAlignment(SwingConstants.CENTER);
         ptsamount.setBounds(149, 32, 187, 22);
         particleOptionsPanel.add(ptsamount);
 
         drlabel = new JLabel("Drag Amount:");
-        drlabel.setFont(font);
+        drlabel.setFont(FontUtil.PLAIN_17);
         drlabel.setBounds(10, 245, 106, 22);
         particleOptionsPanel.add(drlabel);
 
@@ -93,13 +94,13 @@ public class ParticleSlideEditor {
         particleOptionsPanel.add(ptdrslider);
 
         dramount = new JLabel("" + engineSettings.particleDragAmount);
-        dramount.setFont(font);
-        dramount.setHorizontalAlignment(JLabel.CENTER);
+        dramount.setFont(FontUtil.PLAIN_17);
+        dramount.setHorizontalAlignment(SwingConstants.CENTER);
         dramount.setBounds(149, 245, 187, 22);
         particleOptionsPanel.add(dramount);
 
         frlabel = new JLabel("Fireworks Amount:");
-        frlabel.setFont(font);
+        frlabel.setFont(FontUtil.PLAIN_17);
         frlabel.setBounds(10, 469, 142, 22);
         particleOptionsPanel.add(frlabel);
 
@@ -113,26 +114,26 @@ public class ParticleSlideEditor {
         particleOptionsPanel.add(ptfrslider);
 
         framount = new JLabel("" + engineSettings.fireworksAmount);
-        framount.setFont(font);
-        framount.setHorizontalAlignment(JLabel.CENTER);
+        framount.setFont(FontUtil.PLAIN_17);
+        framount.setHorizontalAlignment(SwingConstants.CENTER);
         framount.setBounds(169, 469, 187, 22);
         particleOptionsPanel.add(framount);
 
         JButton btnEditSize = new JButton("Edit Size");
         btnEditSize.addActionListener(e -> setMaxParticleSizeSlider());
-        btnEditSize.setFont(font);
+        btnEditSize.setFont(FontUtil.PLAIN_17);
         btnEditSize.setBounds(169, 147, 137, 39);
         particleOptionsPanel.add(btnEditSize);
 
         JButton btnEditDrag = new JButton("Edit Drag");
         btnEditDrag.addActionListener(e -> setMaxDragSlider());
-        btnEditDrag.setFont(font);
+        btnEditDrag.setFont(FontUtil.PLAIN_17);
         btnEditDrag.setBounds(172, 363, 134, 39);
         particleOptionsPanel.add(btnEditDrag);
 
         JButton btnEditFireworks = new JButton("Edit Fireworks");
         btnEditFireworks.addActionListener(e -> setMaxFireworksSlider());
-        btnEditFireworks.setFont(font);
+        btnEditFireworks.setFont(FontUtil.PLAIN_17);
         btnEditFireworks.setBounds(169, 561, 144, 39);
         particleOptionsPanel.add(btnEditFireworks);
 
@@ -140,13 +141,13 @@ public class ParticleSlideEditor {
         jTabbedPane.addTab("Fireworks Options", null, fireworksOptionsPanel, null);
 
         ptlifelabel = new JLabel("Particle Life:");
-        ptlifelabel.setFont(font);
+        ptlifelabel.setFont(FontUtil.PLAIN_17);
         ptlifelabel.setBounds(10, 39, 106, 22);
         fireworksOptionsPanel.add(ptlifelabel);
 
         ptlifeamount = new JLabel("" + engineSettings.particleLife);
-        ptlifeamount.setFont(font);
-        ptlifeamount.setHorizontalAlignment(JLabel.CENTER);
+        ptlifeamount.setFont(FontUtil.PLAIN_17);
+        ptlifeamount.setHorizontalAlignment(SwingConstants.CENTER);
         ptlifeamount.setBounds(149, 39, 187, 22);
         fireworksOptionsPanel.add(ptlifeamount);
 
@@ -169,13 +170,13 @@ public class ParticleSlideEditor {
         fireworksOptionsPanel.add(ptwindslider);
 
         ptwindamount = new JLabel("" + engineSettings.fireworksWind);
-        ptwindamount.setFont(font);
-        ptwindamount.setHorizontalAlignment(JLabel.CENTER);
+        ptwindamount.setFont(FontUtil.PLAIN_17);
+        ptwindamount.setHorizontalAlignment(SwingConstants.CENTER);
         ptwindamount.setBounds(149, 229, 187, 22);
         fireworksOptionsPanel.add(ptwindamount);
 
         ptwindlabel = new JLabel("Particle Wind:");
-        ptwindlabel.setFont(font);
+        ptwindlabel.setFont(FontUtil.PLAIN_17);
         ptwindlabel.setBounds(10, 229, 106, 22);
         fireworksOptionsPanel.add(ptwindlabel);
 
@@ -189,37 +190,37 @@ public class ParticleSlideEditor {
         fireworksOptionsPanel.add(ptjitterslider);
 
         ptjitteramount = new JLabel("" + engineSettings.fireworksJitter);
-        ptjitteramount.setFont(font);
-        ptjitteramount.setHorizontalAlignment(JLabel.CENTER);
+        ptjitteramount.setFont(FontUtil.PLAIN_17);
+        ptjitteramount.setHorizontalAlignment(SwingConstants.CENTER);
         ptjitteramount.setBounds(149, 440, 187, 22);
         fireworksOptionsPanel.add(ptjitteramount);
 
         ptjitterlabel = new JLabel("Particle Jitter:");
-        ptjitterlabel.setFont(font);
+        ptjitterlabel.setFont(FontUtil.PLAIN_17);
         ptjitterlabel.setBounds(10, 440, 106, 22);
         fireworksOptionsPanel.add(ptjitterlabel);
 
         JButton btnEditBaseLife = new JButton("<html>Edit Base Life <br> <h4 style='text-align:center;color:blue'>(Single Particle)</h4></html>");
         btnEditBaseLife.addActionListener(e -> showParticleLifeAmountDialog(frame));
-        btnEditBaseLife.setFont(font);
+        btnEditBaseLife.setFont(FontUtil.PLAIN_17);
         btnEditBaseLife.setBounds(27, 134, 186, 66);
         fireworksOptionsPanel.add(btnEditBaseLife);
 
         JButton btnEditRfLife = new JButton("<html>Edit Fireworks Life <br> <h4 style='text-align:center;color:blue'>(Explosion Fireworks)</h4></html>");
         btnEditRfLife.addActionListener(e -> fireworksLifeAmount());
-        btnEditRfLife.setFont(font);
+        btnEditRfLife.setFont(FontUtil.PLAIN_17);
         btnEditRfLife.setBounds(227, 134, 226, 66);
         fireworksOptionsPanel.add(btnEditRfLife);
 
         JButton btnEditWind = new JButton("Edit Wind");
         btnEditWind.addActionListener(e -> showFireworksWindAmountDialog(frame));
-        btnEditWind.setFont(font);
+        btnEditWind.setFont(FontUtil.PLAIN_17);
         btnEditWind.setBounds(177, 344, 139, 36);
         fireworksOptionsPanel.add(btnEditWind);
 
         JButton btnEditJitter = new JButton("Edit Jitter");
         btnEditJitter.addActionListener(e -> showFireworksJitterAmountDialog(frame));
-        btnEditJitter.setFont(font);
+        btnEditJitter.setFont(FontUtil.PLAIN_17);
         btnEditJitter.setBounds(177, 555, 137, 36);
         fireworksOptionsPanel.add(btnEditJitter);
 
@@ -229,13 +230,13 @@ public class ParticleSlideEditor {
 
         ptscslabel = new JLabel("Single Click Size:");
         ptscslabel.setForeground(Color.BLACK);
-        ptscslabel.setFont(font);
+        ptscslabel.setFont(FontUtil.PLAIN_17);
         ptscslabel.setBounds(10, 25, 131, 22);
         particleSizeOptionsPanel.add(ptscslabel);
 
         ptscminlabel = new JLabel("" + engineSettings.singleClickSizeMin);
-        ptscminlabel.setFont(font);
-        ptscminlabel.setHorizontalAlignment(JLabel.CENTER);
+        ptscminlabel.setFont(FontUtil.PLAIN_17);
+        ptscminlabel.setHorizontalAlignment(SwingConstants.CENTER);
         ptscminlabel.setBounds(256, 25, 146, 22);
         particleSizeOptionsPanel.add(ptscminlabel);
 
@@ -258,8 +259,8 @@ public class ParticleSlideEditor {
         particleSizeOptionsPanel.add(ptscmaxslider);
 
         ptscmaxlabel = new JLabel("" + engineSettings.singleClickSizeMax);
-        ptscmaxlabel.setFont(font);
-        ptscmaxlabel.setHorizontalAlignment(JLabel.CENTER);
+        ptscmaxlabel.setFont(FontUtil.PLAIN_17);
+        ptscmaxlabel.setHorizontalAlignment(SwingConstants.CENTER);
         ptscmaxlabel.setBounds(256, 124, 146, 22);
         particleSizeOptionsPanel.add(ptscmaxlabel);
 
@@ -274,8 +275,8 @@ public class ParticleSlideEditor {
         particleSizeOptionsPanel.add(ptfrmaxslider);
 
         ptfrmaxlabel = new JLabel("" + engineSettings.fireworksSizeMax);
-        ptfrmaxlabel.setFont(font);
-        ptfrmaxlabel.setHorizontalAlignment(JLabel.CENTER);
+        ptfrmaxlabel.setFont(FontUtil.PLAIN_17);
+        ptfrmaxlabel.setHorizontalAlignment(SwingConstants.CENTER);
         ptfrmaxlabel.setBounds(256, 326, 146, 22);
         particleSizeOptionsPanel.add(ptfrmaxlabel);
 
@@ -289,14 +290,14 @@ public class ParticleSlideEditor {
         particleSizeOptionsPanel.add(ptfrminslider);
 
         ptfrminlabel = new JLabel("" + engineSettings.fireworksSizeMin);
-        ptfrminlabel.setFont(font);
-        ptfrminlabel.setHorizontalAlignment(JLabel.CENTER);
+        ptfrminlabel.setFont(FontUtil.PLAIN_17);
+        ptfrminlabel.setHorizontalAlignment(SwingConstants.CENTER);
         ptfrminlabel.setBounds(256, 227, 146, 22);
         particleSizeOptionsPanel.add(ptfrminlabel);
 
         ptfrslabel = new JLabel("Fireworks Size:");
         ptfrslabel.setForeground(Color.BLACK);
-        ptfrslabel.setFont(font);
+        ptfrslabel.setFont(FontUtil.PLAIN_17);
         ptfrslabel.setBounds(10, 227, 117, 22);
         particleSizeOptionsPanel.add(ptfrslabel);
 
@@ -311,8 +312,8 @@ public class ParticleSlideEditor {
         particleSizeOptionsPanel.add(ptdragmaxslider);
 
         ptdragmaxlabel = new JLabel("" + engineSettings.particleDragSizeMax);
-        ptdragmaxlabel.setFont(font);
-        ptdragmaxlabel.setHorizontalAlignment(JLabel.CENTER);
+        ptdragmaxlabel.setFont(FontUtil.PLAIN_17);
+        ptdragmaxlabel.setHorizontalAlignment(SwingConstants.CENTER);
         ptdragmaxlabel.setBounds(256, 527, 146, 22);
         particleSizeOptionsPanel.add(ptdragmaxlabel);
 
@@ -326,44 +327,44 @@ public class ParticleSlideEditor {
         particleSizeOptionsPanel.add(ptdragminslider);
 
         ptdragminlabel = new JLabel("" + engineSettings.particleDragSizeMin);
-        ptdragminlabel.setFont(font);
-        ptdragminlabel.setHorizontalAlignment(JLabel.CENTER);
+        ptdragminlabel.setFont(FontUtil.PLAIN_17);
+        ptdragminlabel.setHorizontalAlignment(SwingConstants.CENTER);
         ptdragminlabel.setBounds(256, 428, 146, 22);
         particleSizeOptionsPanel.add(ptdragminlabel);
 
         ptdraglabel = new JLabel("Drag Size:");
         ptdraglabel.setForeground(Color.BLACK);
-        ptdraglabel.setFont(font);
+        ptdraglabel.setFont(FontUtil.PLAIN_17);
         ptdraglabel.setBounds(10, 428, 82, 22);
         particleSizeOptionsPanel.add(ptdraglabel);
 
         lblMin = new JLabel("Min:");
-        lblMin.setFont(font);
+        lblMin.setFont(FontUtil.PLAIN_17);
         lblMin.setBounds(189, 25, 46, 14);
         particleSizeOptionsPanel.add(lblMin);
 
         lblMax = new JLabel("Max:");
-        lblMax.setFont(font);
+        lblMax.setFont(FontUtil.PLAIN_17);
         lblMax.setBounds(189, 124, 46, 14);
         particleSizeOptionsPanel.add(lblMax);
 
         label = new JLabel("Min:");
-        label.setFont(font);
+        label.setFont(FontUtil.PLAIN_17);
         label.setBounds(189, 227, 46, 14);
         particleSizeOptionsPanel.add(label);
 
         label_1 = new JLabel("Max:");
-        label_1.setFont(font);
+        label_1.setFont(FontUtil.PLAIN_17);
         label_1.setBounds(189, 326, 46, 14);
         particleSizeOptionsPanel.add(label_1);
 
         label_2 = new JLabel("Min:");
-        label_2.setFont(font);
+        label_2.setFont(FontUtil.PLAIN_17);
         label_2.setBounds(189, 428, 46, 14);
         particleSizeOptionsPanel.add(label_2);
 
         label_3 = new JLabel("Max:");
-        label_3.setFont(font);
+        label_3.setFont(FontUtil.PLAIN_17);
         label_3.setBounds(189, 527, 46, 14);
         particleSizeOptionsPanel.add(label_3);
 
@@ -373,13 +374,13 @@ public class ParticleSlideEditor {
 
         ptscspeedlabel = new JLabel("Single Click Speed:");
         ptscspeedlabel.setForeground(Color.BLACK);
-        ptscspeedlabel.setFont(font);
+        ptscspeedlabel.setFont(FontUtil.PLAIN_17);
         ptscspeedlabel.setBounds(10, 21, 146, 22);
         particleSpeedOptionsPanel.add(ptscspeedlabel);
 
         ptscspeedmin = new JLabel("" + engineSettings.singleClickSpeed);
-        ptscspeedmin.setFont(font);
-        ptscspeedmin.setHorizontalAlignment(JLabel.CENTER);
+        ptscspeedmin.setFont(FontUtil.PLAIN_17);
+        ptscspeedmin.setHorizontalAlignment(SwingConstants.CENTER);
         ptscspeedmin.setBounds(190, 21, 146, 22);
         particleSpeedOptionsPanel.add(ptscspeedmin);
 
@@ -394,14 +395,14 @@ public class ParticleSlideEditor {
 
         //fireworks
         ptfrspeedminlabel = new JLabel("" + engineSettings.fireworksSpeed);
-        ptfrspeedminlabel.setFont(font);
-        ptfrspeedminlabel.setHorizontalAlignment(JLabel.CENTER);
+        ptfrspeedminlabel.setFont(FontUtil.PLAIN_17);
+        ptfrspeedminlabel.setHorizontalAlignment(SwingConstants.CENTER);
         ptfrspeedminlabel.setBounds(190, 223, 146, 22);
         particleSpeedOptionsPanel.add(ptfrspeedminlabel);
 
         ptfrspeedlabel = new JLabel("Fireworks Speed:");
         ptfrspeedlabel.setForeground(Color.BLACK);
-        ptfrspeedlabel.setFont(font);
+        ptfrspeedlabel.setFont(FontUtil.PLAIN_17);
         ptfrspeedlabel.setBounds(10, 223, 132, 22);
         particleSpeedOptionsPanel.add(ptfrspeedlabel);
 
@@ -417,13 +418,13 @@ public class ParticleSlideEditor {
         //drag
         ptdrspeedlabel = new JLabel("Drag Speed:");
         ptdrspeedlabel.setForeground(Color.BLACK);
-        ptdrspeedlabel.setFont(font);
+        ptdrspeedlabel.setFont(FontUtil.PLAIN_17);
         ptdrspeedlabel.setBounds(10, 424, 97, 22);
         particleSpeedOptionsPanel.add(ptdrspeedlabel);
 
         ptdrminspeedlabel = new JLabel("" + engineSettings.particleDragSpeed);
-        ptdrminspeedlabel.setFont(font);
-        ptdrminspeedlabel.setHorizontalAlignment(JLabel.CENTER);
+        ptdrminspeedlabel.setFont(FontUtil.PLAIN_17);
+        ptdrminspeedlabel.setHorizontalAlignment(SwingConstants.CENTER);
         ptdrminspeedlabel.setBounds(190, 424, 146, 22);
         particleSpeedOptionsPanel.add(ptdrminspeedlabel);
 
@@ -449,37 +450,37 @@ public class ParticleSlideEditor {
 
     private void setMaxParticleSizeSlider() {
         ptsslider.setMaximum((int) minValueGuard(1, ptsslider.getMaximum(),
-                HeadingTag(3, "Enter Max Particle Size"), frame));
+                HTMLUtil.headingTag(3, "Enter Max Particle Size"), frame));
     }
 
     private void setMaxDragSlider() {
         ptdrslider.setMaximum((int) minValueGuard(1, ptdrslider.getMaximum(),
-                HeadingTag(3, "Enter Max Particle Drag Amount"), frame));
+                HTMLUtil.headingTag(3, "Enter Max Particle Drag Amount"), frame));
     }
 
     private void setMaxFireworksSlider() {
         ptfrslider.setMaximum((int) minValueGuard(1, ptfrslider.getMaximum(),
-                HeadingTag(3, "Enter Max Fireworks Amount"), frame));
+                HTMLUtil.headingTag(3, "Enter Max Fireworks Amount"), frame));
     }
 
     private static void fireworksLifeAmount() {
         engineSettings.fireworksLife = (int) minValueGuard(0, engineSettings.fireworksLife,
-                HeadingTag(3, "Enter Fireworks Life Amount"), instance.frame);
+                HTMLUtil.headingTag(3, "Enter Fireworks Life Amount"), instance.frame);
     }
 
     public static void showParticleLifeAmountDialog(JFrame frame) {
         engineSettings.particleLife = (int) minValueGuard(0, engineSettings.particleLife,
-                HeadingTag(3, "Enter Particle Life Amount"), frame);
+                HTMLUtil.headingTag(3, "Enter Particle Life Amount"), frame);
     }
 
     public static void showFireworksWindAmountDialog(JFrame frame) {
         engineSettings.fireworksWind = (int) minValueGuard(0, engineSettings.fireworksWind,
-                HeadingTag(3, "Enter Fireworks Wind Amount"), frame);
+                HTMLUtil.headingTag(3, "Enter Fireworks Wind Amount"), frame);
     }
 
     public static void showFireworksJitterAmountDialog(JFrame frame) {
         engineSettings.fireworksJitter = (int) minValueGuard(0, engineSettings.fireworksJitter,
-                HeadingTag(3, "Enter Fireworks Jitter Amount"), frame);
+                HTMLUtil.headingTag(3, "Enter Fireworks Jitter Amount"), frame);
     }
 
     // Todo: Make generic method to take property from type and set value

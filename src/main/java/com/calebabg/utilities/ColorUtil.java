@@ -7,6 +7,8 @@ import java.awt.*;
 import java.util.List;
 
 public class ColorUtil {
+    private ColorUtil(){}
+
     public static Color fromHex(String hex) {
         return new Color(
                 Integer.parseInt(hex.substring(1, 3), 16),
@@ -22,15 +24,15 @@ public class ColorUtil {
     }
 
     public static String serializeColors(Color[] c) {
-        return toHex(c[0]) + EngineSettings.colorsSpliceChar +
-                toHex(c[1]) + EngineSettings.colorsSpliceChar +
-                toHex(c[2]) + EngineSettings.colorsSpliceChar +
-                toHex(c[3]) + EngineSettings.colorsSpliceChar +
+        return toHex(c[0]) + EngineSettings.COLORS_SPLIT_DELIMITER +
+                toHex(c[1]) + EngineSettings.COLORS_SPLIT_DELIMITER +
+                toHex(c[2]) + EngineSettings.COLORS_SPLIT_DELIMITER +
+                toHex(c[3]) + EngineSettings.COLORS_SPLIT_DELIMITER +
                 toHex(c[4]);
     }
 
     public static Color[] deserializeColors(int index, List<String> list) {
-        String[] split = list.get(index).split(EngineSettings.colorsSpliceChar);
+        String[] split = list.get(index).split(EngineSettings.COLORS_SPLIT_DELIMITER);
         return new Color[] {
                 fromHex(split[0]),
                 fromHex(split[1]),
@@ -42,7 +44,8 @@ public class ColorUtil {
 
     public static Color randomHSLColor() {
         // Saturation between 0.1 and 0.3
-        float saturation = (EngineVariables.random.nextFloat() * 2000 + 1000) / 10000f, luminance = 0.9f;
+        float luminance = 0.9f;
+        float saturation = (EngineVariables.random.nextFloat() * 2000 + 1000) / 10000f;
         return Color.getHSBColor(EngineVariables.random.nextFloat(), saturation, luminance);
     }
 

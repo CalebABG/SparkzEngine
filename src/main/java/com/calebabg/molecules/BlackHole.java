@@ -23,7 +23,7 @@ public class BlackHole extends Molecule {
             float dist = (float) sqrt(dx * dx + dy * dy);
 
             if (dist < bigR) {
-                final float dampening = 0.37f;
+                final float dampening = 0.38f;
                 p.vx *= dampening;
                 p.vy *= dampening;
                 p.gravitateToMolecule(this, 1);
@@ -52,7 +52,7 @@ public class BlackHole extends Molecule {
         open();
         checkBounds();
         if (radius < 0) {
-            MoleculeFactory.fireworksMode(x, y, 6, 4, 320);
+            MoleculeFactory.multiFireworks(x, y, 6, 4, 320);
             BlackHoles.remove(this);
         }
         radius -= 0.015;

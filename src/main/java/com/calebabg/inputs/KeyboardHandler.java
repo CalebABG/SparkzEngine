@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import static com.calebabg.core.EngineVariables.*;
 
 public class KeyboardHandler extends KeyAdapter {
+    @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
@@ -61,6 +62,7 @@ public class KeyboardHandler extends KeyAdapter {
         }
     }
 
+    @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
 
@@ -97,15 +99,15 @@ public class KeyboardHandler extends KeyAdapter {
         }
 
         if (key == KeyEvent.VK_A) {
-            EngineMethods.changePhysicsEditorMode(PhysicsEditorMode.Add);
+            EngineMethods.changePhysicsEditorMode(PhysicsEditorMode.ADD);
         }
 
         if (key == KeyEvent.VK_D) {
-            EngineMethods.changePhysicsEditorMode(PhysicsEditorMode.Drag);
+            EngineMethods.changePhysicsEditorMode(PhysicsEditorMode.DRAG);
         }
 
         if (key == KeyEvent.VK_S) {
-            EngineMethods.changePhysicsEditorMode(PhysicsEditorMode.Select);
+            EngineMethods.changePhysicsEditorMode(PhysicsEditorMode.SELECT);
         }
 
         if (key == KeyEvent.VK_W) {

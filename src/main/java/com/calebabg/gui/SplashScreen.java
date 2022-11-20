@@ -27,6 +27,7 @@ public class SplashScreen extends JWindow {
     }
 
     static class SplashPanel extends JPanel {
+        @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(EngineVariables.splashImage, 0, 0, getWidth(), getHeight(), this);

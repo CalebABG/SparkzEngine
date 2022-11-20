@@ -8,6 +8,7 @@ import com.calebabg.inputs.ExtendedWindowAdapter;
 import com.calebabg.jcomponents.CTextField;
 import com.calebabg.jcomponents.RButton;
 import com.calebabg.jcomponents.RLabel;
+import com.calebabg.utilities.FontUtil;
 import org.fife.ui.autocomplete.AutoCompletion;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
@@ -47,9 +48,8 @@ public class ParticleGraphEditor {
             "clamp(x, 20, 40)", "map(sin(x), -1, 1, -10, 20)", "e", "pi"
     };
 
-    private static final Font font = new Font(Font.SERIF, Font.PLAIN, 18);
     public static final ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("nashorn");
-    public static final CCellRenderer cellRenderer = new CCellRenderer(font);
+    public static final CCellRenderer cellRenderer = new CCellRenderer(FontUtil.PLAIN_18);
     public static final CompletionProvider autoCompleteProvider = createAutoCompletionProvider();
 
     static {
@@ -71,7 +71,7 @@ public class ParticleGraphEditor {
         frame = new JFrame("Particle Graph Editor");
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(460, 280);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new ExtendedWindowAdapter(e -> close()));
         frame.setLocationRelativeTo(eFrame);
 
@@ -80,36 +80,36 @@ public class ParticleGraphEditor {
 
         JPanel panel = new JPanel();
         scrollPane.setViewportView(panel);
-        GridBagLayout gbl_panel = new GridBagLayout();
-        gbl_panel.columnWidths = new int[]{138, 64, 0};
-        gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        gbl_panel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-        gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+        GridBagLayout gblPanel = new GridBagLayout();
+        gblPanel.columnWidths = new int[]{138, 64, 0};
+        gblPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gblPanel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+        gblPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-        panel.setLayout(gbl_panel);
+        panel.setLayout(gblPanel);
 
         JMenuBar menuBar = new JMenuBar();
         scrollPane.setColumnHeaderView(menuBar);
 
         JButton mnHelp = new JButton("Help");
-        mnHelp.setFont(font);
+        mnHelp.setFont(FontUtil.PLAIN_18);
         mnHelp.addActionListener(e -> InstructionsWindow.createGraphInstructionsWindow(frame));
         menuBar.add(mnHelp);
 
         JButton sampleFunctions = new JButton("Samples");
-        sampleFunctions.setFont(font);
+        sampleFunctions.setFont(FontUtil.PLAIN_18);
         sampleFunctions.addActionListener(e -> SampleFunctions.getInstance(frame));
         menuBar.add(sampleFunctions);
 
         JLabel syntaxErr = new JLabel("<html><span style='color:red;font-style:italic'>Red Text</span> = Syntax Error</html>", SwingConstants.CENTER);
-        syntaxErr.setFont(font);
+        syntaxErr.setFont(FontUtil.PLAIN_18);
         menuBar.add(syntaxErr);
 
-        RLabel enterFunction = new RLabel("Enter an Expression (Enter = Graph)", new Font(Font.SERIF, Font.BOLD, 18), 2, new Insets(3, 0, 5, 0), new int[]{0, 0});
+        RLabel enterFunction = new RLabel("Enter an Expression (Enter = Graph)", FontUtil.BOLD_18, 2, new Insets(3, 0, 5, 0), new int[]{0, 0});
         panel.add(enterFunction, enterFunction.gridBagConstraints);
 
-        textFields[0] = new CTextField(mathExpression, new Font(Font.SERIF, Font.PLAIN, 20), new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{0, 1});
+        textFields[0] = new CTextField(mathExpression, FontUtil.PLAIN_20, new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{0, 1});
         textFields[0].gridBagConstraints.gridwidth = 2;
         textFields[0].setFocusTraversalKeysEnabled(false);
         textFields[0].addKeyListener(new ExtendedKeyAdapter(e -> textFields[0].setForeground(Color.black), ParticleGraphEditor::isEnter));
@@ -136,24 +136,24 @@ public class ParticleGraphEditor {
         popupMenu.add(clear);
         addPopup(textFields[0], popupMenu);
 
-        RLabel yscale = new RLabel("Y Scale", font, GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 11);
+        RLabel yscale = new RLabel("Y Scale", FontUtil.PLAIN_18, GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 11);
         yscale.setToolTipText("<html><h5 style='font-size:11px'>Best at 40</h5></html?");
         panel.add(yscale, yscale.gridBagConstraints);
 
-        textFields[1] = new CTextField("" + scaleY, font, new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 11});
+        textFields[1] = new CTextField("" + scaleY, FontUtil.PLAIN_18, new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 11});
         textFields[1].addKeyListener(new ExtendedKeyAdapter(e -> textFields[1].setForeground(Color.black), ParticleGraphEditor::isEnter));
         panel.add(textFields[1], textFields[1].gridBagConstraints);
 
-        RLabel xscale = new RLabel("X Scale", font, GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 12);
+        RLabel xscale = new RLabel("X Scale", FontUtil.PLAIN_18, GridBagConstraints.WEST, new Insets(0, 3, 5, 5), 0, 12);
         xscale.setToolTipText("<html><h5 style='font-size:11px'>Best at 0.02</h5></html?");
         panel.add(xscale, xscale.gridBagConstraints);
 
-        textFields[2] = new CTextField("" + scaleX, font, new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 12});
+        textFields[2] = new CTextField("" + scaleX, FontUtil.PLAIN_18, new Insets(0, 0, 5, 0), GridBagConstraints.HORIZONTAL, new int[]{1, 12});
         textFields[2].addKeyListener(new ExtendedKeyAdapter(e -> textFields[2].setForeground(Color.black), ParticleGraphEditor::isEnter));
         panel.add(textFields[2], textFields[2].gridBagConstraints);
 
         graphButton = new RButton("<html><span style='color:#008DCB'>Graph</span></html>",
-                new Font(Font.SERIF, Font.PLAIN, 23), 2, GridBagConstraints.HORIZONTAL, new int[]{0, 13}, new int[]{20, 15});
+                FontUtil.PLAIN_23, 2, GridBagConstraints.HORIZONTAL, new int[]{0, 13}, new int[]{20, 15});
         graphButton.addActionListener(e -> threadGraph(null));
         graphButton.gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
         graphButton.gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -170,7 +170,7 @@ public class ParticleGraphEditor {
     }
 
     private static void graph() {
-        if (Particles.size() > 0) Particles.clear();
+        if (!Particles.isEmpty()) Particles.clear();
 
         float spacing = 0.125f;
         float positiveWidth = eCanvas.getWidth() / 2f;
@@ -195,6 +195,7 @@ public class ParticleGraphEditor {
                     return null;
                 }
 
+                @Override
                 protected void done() {
                     isGraphing = false;
                     graphButton.setEnabled(true);
@@ -256,10 +257,12 @@ public class ParticleGraphEditor {
 
     private void addPopup(Component component, JPopupMenu popupMenu) {
         component.addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent e) {
                 if (e.isPopupTrigger()) showMenu(e, popupMenu);
             }
 
+            @Override
             public void mouseReleased(MouseEvent e) {
                 if (e.isPopupTrigger()) showMenu(e, popupMenu);
             }
@@ -268,13 +271,16 @@ public class ParticleGraphEditor {
 
     // https://stackoverflow.com/questions/10532286/how-to-use-ctrlz-and-ctrly-with-all-text-components
     private static void addUndoFunctionality(JTextComponent pTextComponent) {
+        final String undoKeyStrokeName = "undoKeystroke";
+        final String redoKeyStrokeName = "redoKeystroke";
+
         final UndoManager undoMgr = new UndoManager();
 
         // Add listener for undoable events
         pTextComponent.getDocument().addUndoableEditListener(evt -> undoMgr.addEdit(evt.getEdit()));
 
         // Add undo/redo actions
-        pTextComponent.getActionMap().put("undoKeystroke", new AbstractAction("undoKeystroke") {
+        pTextComponent.getActionMap().put(undoKeyStrokeName, new AbstractAction(undoKeyStrokeName) {
             public void actionPerformed(ActionEvent evt) {
                 try {
                     if (undoMgr.canUndo()) undoMgr.undo();
@@ -283,7 +289,7 @@ public class ParticleGraphEditor {
             }
         });
 
-        pTextComponent.getActionMap().put("redoKeystroke", new AbstractAction("redoKeystroke") {
+        pTextComponent.getActionMap().put(redoKeyStrokeName, new AbstractAction(redoKeyStrokeName) {
             public void actionPerformed(ActionEvent evt) {
                 try {
                     if (undoMgr.canRedo()) undoMgr.redo();
@@ -293,8 +299,8 @@ public class ParticleGraphEditor {
         });
 
         // Create keyboard accelerators for undo/redo actions (Ctrl+Z/Ctrl+Y)
-        pTextComponent.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK), "undoKeystroke");
-        pTextComponent.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK), "redoKeystroke");
+        pTextComponent.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK), undoKeyStrokeName);
+        pTextComponent.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK), redoKeyStrokeName);
     }
 
     private static CompletionProvider createAutoCompletionProvider() {
@@ -317,7 +323,9 @@ public class ParticleGraphEditor {
                     if (o instanceof JTextField) ((JTextField) o).setForeground(Color.red);
                     else if (o instanceof Exception) ExceptionWindow.append(((Exception) o));
                     else ExceptionWindow.append(o.toString());
-                } else ExceptionWindow.append(new NullPointerException("Object passed was null"));
+                } else {
+                    ExceptionWindow.append("Graph - Object passed was null");
+                }
             }
         }
     }

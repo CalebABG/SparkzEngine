@@ -12,7 +12,7 @@ public class ReactiveColors {
     private ReactiveColors() {}
 
     public static Color getReactiveColor(float velocity) {
-        return colors[(int) clamp(velocity / 2.0f, 0, colors.length - 1)];
+        return colors[(int) clamp(velocity / 2.0f, 0f, colors.length - 1f)];
     }
 
     public static Color[] getColors() {

@@ -1,10 +1,10 @@
 package com.calebabg.enums;
 
 public enum PhysicsEditorMode {
-    Add,
-    Delete,
-    Select,
-    Drag,
-    Position,
-    Attach
+    ADD,
+    DELETE,
+    SELECT,
+    DRAG,
+    POSITION,
+    ATTACH
 }

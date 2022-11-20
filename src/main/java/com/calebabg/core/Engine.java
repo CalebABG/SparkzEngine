@@ -18,10 +18,10 @@ public class Engine {
         eFrame.setSize(735, 550);
         eFrame.setLocationRelativeTo(null);
         eFrame.setIconImage(EngineVariables.iconImage);
-        eFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        eFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         eFrame.addWindowListener(new ExtendedWindowAdapter(e -> BackgroundThread.run(QuitWindow::getInstance)));
 
-        eFrame.setJMenuBar(menuBar);
+        eFrame.setJMenuBar(eMenuBar);
 
         eCanvas.addMouseListener(new MouseButtonHandler());
         eCanvas.addMouseMotionListener(new MouseMotionHandler());
