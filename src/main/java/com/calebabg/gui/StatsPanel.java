@@ -28,7 +28,7 @@ public class StatsPanel {
 
     private static JFrame frame;
     private static Timer timer;
-    public static int fps = 0;
+    public static int framesPerSecond = 0;
     private static CLabel particleAmount, dragAmount, engineMode, smartPt, connect, atm, ptFriction, fpsLabel, screenSize;
 
     public static void getInstance() {
@@ -328,7 +328,7 @@ public class StatsPanel {
         if (engineSettings.engineMode == PHYSICS) particleAmount.setText("Items: " + decimalFormat.format(Vertices.size()));
         else particleAmount.setText("Molecules: " + decimalFormat.format(EngineMethods.getTotalMoleculesCount()));
 
-        fpsLabel.setText("Frames Per Second: " + fps);
+        fpsLabel.setText("Frames Per Second: " + framesPerSecond);
         dragAmount.setText("Drag Amount: " + decimalFormat.format(engineSettings.particleDragAmount));
         engineMode.setText("Engine Mode: " + engineSettings.engineMode.name());
         smartPt.setText("Reactive Colors: " + (engineSettings.reactiveColorsEnabled ? "On" : "Off"));

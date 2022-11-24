@@ -17,8 +17,10 @@ public class EngineVariables {
 
     public static EngineSettings engineSettings                     = new EngineSettings();
 
-    public static int frameCount                                    = 0;
-    public static int framesPerSecond                               = 0;
+    public static long frameCount                                   = 0;
+
+    public static final long BILLION                                = 1_000_000_000;
+    public static final long TIME_BETWEEN_UPDATES                   = BILLION / engineSettings.desiredFramesPerSecond;
 
     public static final float PI                                    = 3.141592653589793f;
     public static final float TWO_PI                                = 2f * PI;

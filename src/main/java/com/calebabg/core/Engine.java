@@ -38,42 +38,32 @@ public class Engine {
     public void run() {
         engineSettings.running = true;
 
-        final long tB = 1_000_000_000;
-        final int TIME_BETWEEN_UPDATES = (int) (tB / engineSettings.desiredFramesPerSecond);
-        final int MAX_UPDATES_BEFORE_RENDER = 1;
+        int frames = 0;
         long lastUpdateTime = System.nanoTime();
-        long lastSecondTime = lastUpdateTime / tB;
+        long lastSecondTime = lastUpdateTime / BILLION;
 
         while (engineSettings.running) {
             long now = System.nanoTime();
-            short updateCount = 0;
 
-            //  Keep track of frameCount
-            if (++frameCount > Integer.MAX_VALUE - 1) frameCount = 0;
+            ++frames;
+            if (++frameCount > Long.MAX_VALUE - 1) frameCount = 0;
 
-            // Keep track of fps
-            ++framesPerSecond;
+            while (now - lastUpdateTime > TIME_BETWEEN_UPDATES) {
+                update();
+                lastUpdateTime += TIME_BETWEEN_UPDATES;
+            }
 
             render();
 
-            while (((now - lastUpdateTime) > TIME_BETWEEN_UPDATES) && (updateCount < MAX_UPDATES_BEFORE_RENDER)) {
-                update();
-
-                lastUpdateTime += TIME_BETWEEN_UPDATES;
-                ++updateCount;
-            }
-
-            if (now - lastUpdateTime > TIME_BETWEEN_UPDATES)
-                lastUpdateTime = now - TIME_BETWEEN_UPDATES;
-
-            int thisSecond = (int) (lastUpdateTime / tB);
+            long thisSecond = lastUpdateTime / BILLION;
             if (thisSecond > lastSecondTime) {
-                StatsPanel.fps = framesPerSecond;
-                framesPerSecond = 0;
+                StatsPanel.framesPerSecond = frames;
+                frames = 0;
                 lastSecondTime = thisSecond;
             }
 
-            while ((now - lastUpdateTime) < TIME_BETWEEN_UPDATES) now = System.nanoTime();
+            while (now - lastUpdateTime < TIME_BETWEEN_UPDATES)
+                now = System.nanoTime();
         }
     }
 

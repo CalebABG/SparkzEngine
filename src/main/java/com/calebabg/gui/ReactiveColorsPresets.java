@@ -38,7 +38,7 @@ public class ReactiveColorsPresets {
     private ReactiveColorsPresets() {
         EngineThemes.setLookAndFeel();
 
-        frame = new JFrame("ReactiveColor Presets");
+        frame = new JFrame("Color Presets");
         frame.setIconImage(EngineVariables.iconImage);
         frame.setSize(323, 290);
         frame.setResizable(false);
